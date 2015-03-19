@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="5.7">
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/autocorrect/Main.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/autocorrect/Constants.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/autocorrect/Engine.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/autocorrect/package-info.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/Trie/Trie.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/Trie/TrieNode.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/Trie/package-info.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/util/CommandProcessor.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/util/package-info.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/util/DictReader.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/suggestion/BasicCandidate.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/suggestion/Candidate.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/suggestion/SmartCandidate.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/suggestion/SmartRanker.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/suggestion/Ranker.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/suggestion/Suggestor.java">
+</file>
+<file name="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/suggestion/package-info.java">
+</file>
+</checkstyle>
