@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+   <duplication lines="14" tokens="110">
+      <file line="209"
+            path="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/autocorrect/Main.java"/>
+      <file line="437"
+            path="/gpfs/main/home/wh7/course/cs032/autocorrect/src/main/java/edu/brown/cs/wh7/autocorrect/Main.java"/>
+      <codefragment><![CDATA[      suggestions.remove(toMatch);
+      toPrint = Constants.PRINT_NUM - 1;
+    }
+
+    List<Candidate> candidates = new ArrayList<Candidate>();
+    if (!smartRank) {
+      candidates = eng.makeBasicCandidates(suggestions, prev);
+      Collections.sort(candidates, new Ranker<Candidate>());
+    } else {
+      candidates = eng.makeSmartCandidates(suggestions, prev, toMatch);
+      Collections.sort(candidates, new SmartRanker<Candidate>());
+    }
+    int len = Math.min(toPrint, candidates.size());
+    for (int i = 0; i < len; i++) {]]></codefragment>
+   </duplication>
+</pmd-cpd>
