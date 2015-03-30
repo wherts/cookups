@@ -1,5 +1,7 @@
 package edu.brown.cs.cookups;
 
+import java.util.List;
+
 public interface Meal {
 	public double time();
 	public double duration();
