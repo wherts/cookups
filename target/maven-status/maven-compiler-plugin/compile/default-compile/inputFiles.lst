@@ -1,7 +1,8 @@
-/Users/tderosa/Documents/cs032/cookups/src/main/java/edu/brown/cs/cookups/Manager.java
-/Users/tderosa/Documents/cs032/cookups/src/main/java/edu/brown/cs/cookups/Recipe.java
-/Users/tderosa/Documents/cs032/cookups/src/main/java/edu/brown/cs/cookups/Person.java
-/Users/tderosa/Documents/cs032/cookups/src/main/java/edu/brown/cs/cookups/User.java
-/Users/tderosa/Documents/cs032/cookups/src/main/java/edu/brown/cs/cookups/Ingredient.java
-/Users/tderosa/Documents/cs032/cookups/src/main/java/edu/brown/cs/cookups/IngredientProxy.java
-/Users/tderosa/Documents/cs032/cookups/src/main/java/edu/brown/cs/cookups/Meal.java
+/Users/Wes/Desktop/CS32/cookups/src/main/java/edu/brown/cs/cookups/DBInit.java
+/Users/Wes/Desktop/CS32/cookups/src/main/java/edu/brown/cs/cookups/IngredientProxy.java
+/Users/Wes/Desktop/CS32/cookups/src/main/java/edu/brown/cs/cookups/Person.java
+/Users/Wes/Desktop/CS32/cookups/src/main/java/edu/brown/cs/cookups/Manager.java
+/Users/Wes/Desktop/CS32/cookups/src/main/java/edu/brown/cs/cookups/Recipe.java
+/Users/Wes/Desktop/CS32/cookups/src/main/java/edu/brown/cs/cookups/Ingredient.java
+/Users/Wes/Desktop/CS32/cookups/src/main/java/edu/brown/cs/cookups/User.java
+/Users/Wes/Desktop/CS32/cookups/src/main/java/edu/brown/cs/cookups/Meal.java

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>cookups</name>
+=======
+	<name>autocorrect</name>
+>>>>>>> 961926eef6ad79a5a365fc56582490fec046db38
 	<comment></comment>
 	<projects>
 	</projects>
