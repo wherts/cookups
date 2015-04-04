@@ -1,5 +1,7 @@
 package edu.brown.cs.cookups;
 
+import java.util.List;
+
 public interface Recipe {
 	public String id();
 	public String name();

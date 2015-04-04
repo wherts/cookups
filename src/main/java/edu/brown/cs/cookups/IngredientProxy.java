@@ -1,12 +1,14 @@
 package edu.brown.cs.cookups;
 
+import java.util.List;
+
 public interface IngredientProxy {
-	public String name();
-	public String id();
-	public List<Recipe> recipes();
-	private void fill();
-	public Ingedient value();
-	public Double ounces(); //amount in ounces
-	public Double teaspoons(); //amount in teaspoons
-	public Double expiration(); //seconds until expiration
+	String name();
+	String id();
+	List<Recipe> recipes();
+	void fill();
+	Ingredient value();
+	Double ounces(); //amount in ounces
+	Double teaspoons(); //amount in teaspoons
+	Double expiration(); //seconds until expiration
 }
