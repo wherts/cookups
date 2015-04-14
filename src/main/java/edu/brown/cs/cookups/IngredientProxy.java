@@ -5,6 +5,7 @@ import java.util.List;
 public interface IngredientProxy {
   public String name();
 
+
   public String id();
 
   public List<Recipe> recipes();
@@ -19,3 +20,4 @@ public interface IngredientProxy {
 
   public Double expiration(); // seconds until expiration
 }
+
