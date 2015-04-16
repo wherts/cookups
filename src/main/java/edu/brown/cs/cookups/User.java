@@ -2,63 +2,49 @@ package edu.brown.cs.cookups;
 
 import java.util.List;
 
-public interface User {
+public class User implements Person{
+	
+	private String name;
+	private String id;
+	private List<Ingredient> ingredients;
+	
+	public User (String name, String id, List<Ingredient> ingredients) {
+		this.name = name;
+		this.id = id;
+		this.ingredients = ingredients;
+	}
+	
+	@Override
+	public String name() {
+		return this.name;
+	}
 
-	/**
-	  * Gets a User's ID.
-	  * @return id
-	  */
-	String id();
+	@Override
+	public String id() {
+		return this.id;
+	}
 
-	/**
-	  * Sets a User's ID.
-	  * @param id of user
-	  */
-	void setId(String id);
+	@Override
+	public List<Ingredient> ingredients() {
+		return ingredients;
+	}
 
-	/**
-	  * Gets a User's name.
-	  * @return name
-	  */
-	String name();
+	@Override
+	public Double latitude() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	/**
-	  * Sets a User's name.
-	  * @param name username
-	  */
-	void setName(String name);
+	@Override
+	public Double longitude() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	/**
-	  * Gets a User's ingredients.
-	  * @return list of UserIngredients
-	  */
-	List<Ingredient> ingredients();
-
-	/**
-	  * Gets a user's schedule.
-	  * If a person is not active, return null.  
-	  * @return schedule
-	  */
-	Schedule schedule();
-
-	/**
-	  * Setss a user's schedule.
-	  * If a person is not active, set's null.  
-	  * @param schedule user's schedule
-	  */
-	void setSchedule(Schedule schedule);
-
-	/** 
-	  * Gets a User's location.
-	  * @return lat long
-	  */
-	LatLong location();
-
-	/** 
-	  * Get's a User's location.
-	  * @param location of user
-	  */
-	void setLocation(LatLong location);
-
+	@Override
+	public List<Recipe> favoriteRecipes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

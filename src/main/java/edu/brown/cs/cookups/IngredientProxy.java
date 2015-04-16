@@ -6,7 +6,7 @@ public interface IngredientProxy {
 	public String name();
 	public String id();
 	public List<Recipe> recipes();
-	private void fill();
+	public void fill();
 	public Ingredient value();
 	public Double ounces(); //amount in ounces
 	public Double teaspoons(); //amount in teaspoons
