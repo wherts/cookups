@@ -1,34 +1,58 @@
 package edu.brown.cs.cookups;
 
+import java.util.Date;
 import java.util.List;
 
 public class Ingredient {
   private double ounces;
   private String id, name;
-  private double expirationTime;
-  private
+  private Date dateCreated;
+  private DBLink querier;
+  private List<Recipe> recipes;
   
-  public class Ingredient(String n, String i, DBLink db) {
-    this.
+  public Ingredient(String i, double oz, DBLink db) {
+    id = i;
+    ounces = oz;
+    querier = db;
+    dateCreated = new Date();
   }
-	public double ounces(); //amount in ounces
-	public double teaspoons(); //amount in teaspoons
-	public double expiration(); //seconds until expiration
-	public String id();
-  public String name();
+  
+  public String id() {
+    return id;
+  }
+  
+  public String name() {
+    if (name == null) {
+      name = querier.ingredientNameCache(id);
+    }
+    return name;
+  }
+  
+	public double ounces() { //amount in ounces
+	  return ounces;
+	}
+	
+	public double teaspoons() { //amount in teaspoons
+	  return Converter.teaspoons(ounces);
+	}
+	
+  public double tablespoons() { //amount in tablespoons
+    return Converter.tablespoons(ounces);
+  }
+  
+  public double cups() { //amount in cups
+    return Converter.cups(ounces);
+  }
+  
+	public double elapsed() { //seconds until expiration
+	  Date curr = new Date();
+	  return curr.getTime() - dateCreated.getTime();
+	}
 
-
-  public String id();
-
-  public List<Recipe> recipes();
-
-  public void fill();
-
-  public Ingredient value();
-
-  public Double ounces(); // amount in ounces
-
-  public Double teaspoons(); // amount in teaspoons
-
-  public Double expiration(); // seconds until expiration
+  public List<Recipe> recipes() {
+    if (recipes == null) {
+      recipes = querier.getRecipesByIngredient(id);
+    }
+    return recipes;
+  }
 }
