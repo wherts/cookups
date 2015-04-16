@@ -1,6 +1,6 @@
 package edu.brown.cs.cookups;
 
-import java.util.List;
+
 
 public class User implements Person{
 	
@@ -46,5 +46,6 @@ public class User implements Person{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }
