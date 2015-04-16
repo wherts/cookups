@@ -1,9 +1,10 @@
 package edu.brown.cs.cookups;
 
 public interface Manager {
-	User getProfileById(String id);
-	Recipe getRecipeById(String id);
-	String getUserNameById(String id);
-	String getUserIdByName(String name);
-	
+
+	public UserOld getProfileById(String id);
+	public Recipe getRecipeById(String id);
+	public String getUserNameById(String id);
+	public String getUserIdByName(String name);
+
 }
