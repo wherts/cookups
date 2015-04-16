@@ -6,11 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DBLink {
 
   private Connection conn;
+  private static final Map<String, String> INGREDIENT_NAME_CACHE;
   public static final String USER = "user(id TEXT, name TEXT)";
   public static final String USER_INGREDIENT = "user_ingredient(user TEXT, id TEXT, qty FLOAT)";
   public static final String[] tables = {USER, USER_INGREDIENT};
@@ -25,6 +28,7 @@ public class DBLink {
     Class.forName("org.sqlite.JDBC");
     String urlToDb = "jdbc:sqlite:" + db;
     conn = DriverManager.getConnection(urlToDb);
+    this.INGREDIENT_NAME_CACHE = new HashMap<String, String>();
     init();
   }
 
@@ -38,7 +42,7 @@ public class DBLink {
 
   }
   
-  public void addUserIngredient(String id, IngredientProxy i) throws SQLException {
+  public void addUserIngredient(String id, Ingredient i) throws SQLException {
 	  String query = "INSERT OR IGNORE INTO user_ingredient VALUES (?, ?, ?)";
 	  PreparedStatement prep = conn.prepareStatement(query);
 	  prep = conn.prepareStatement(query);
@@ -64,7 +68,7 @@ public class DBLink {
 	 }
 	 rs.close();
 	 prep.close();
-	 List<IngredientProxy> ingredients = getUserIngredients(id);
+	 List<Ingredient> ingredients = getUserIngredients(id);
 	 return new User(name, id, ingredients);
   }
   
@@ -114,16 +118,16 @@ public class DBLink {
 		return toRet;
   }
   
-  public List<IngredientProxy> getUserIngredients(String id) throws SQLException {
+  public List<Ingredient> getUserIngredients(String id) throws SQLException {
 	  String query = "SELECT * FROM user_ingredient WHERE user = ?";
 		PreparedStatement prep = conn.prepareStatement(query);
 		 prep.setString(1, id);
 		 ResultSet rs = prep.executeQuery();
-		 List<IngredientProxy> toRet = new ArrayList<>();
+		 List<Ingredient> toRet = new ArrayList<>();
 		 while(rs.next()) {
 			 String ingredID = rs.getString(INGREDIENT_IDX);
 			 double qty = rs.getDouble(INGREDIENT_QTY_IDX);
-			 toRet.add(new BasicIngredient(ingredID, qty));
+			 toRet.add(new Ingredient(ingredID, qty, this));
 		 }
 		 
 		 return toRet;
@@ -139,7 +143,7 @@ public class DBLink {
 	  prep.close();
 	  
 	  
-	  for (IngredientProxy i: p.ingredients()) {
+	  for (Ingredient i: p.ingredients()) {
 	    addUserIngredient(p.id(), i);
 	  }
 	  

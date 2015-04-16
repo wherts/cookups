@@ -23,7 +23,7 @@ public class People {
 		return p;
 	}
 	
-	public void addPerson(String name, String id, List<IngredientProxy> ingredients) throws SQLException {
+	public void addPerson(String name, String id, List<Ingredient> ingredients) throws SQLException {
 		Person p = new User(name, id, ingredients);
 		db.addPerson(p);
 		users.put(id, p);

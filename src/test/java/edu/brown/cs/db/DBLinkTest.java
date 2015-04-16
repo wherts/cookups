@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import edu.brown.cs.cookups.BasicIngredient;
+import edu.brown.cs.cookups.Ingredient;
 import edu.brown.cs.cookups.DBLink;
 import edu.brown.cs.cookups.Person;
 import edu.brown.cs.cookups.User;
@@ -18,7 +18,7 @@ public class DBLinkTest {
 	public void addUserTest() {
 		try {
 			DBLink db = new DBLink("db.sqlite3");
-			BasicIngredient i = new BasicIngredient("i", 1.1);
+			Ingredient i = new Ingredient("i", 1.1, null);
 			Person p = new User("Jerry", "qyrt", Arrays.asList(i));
 			db.addPerson(p);
 			assertTrue(db.hasPerson("Jerry"));
@@ -33,7 +33,7 @@ public class DBLinkTest {
 	public void getUserByNameTest() {
 		try {
 			DBLink db = new DBLink("db.sqlite3");
-			BasicIngredient i = new BasicIngredient("i", 1.1);
+			Ingredient i = new Ingredient("i", 1.1, null);
 			Person p = new User("Jerry", "qyrt", Arrays.asList(i));
 			db.addPerson(p);
 			Person q = db.getPersonByName("Jerry");
@@ -51,7 +51,7 @@ public class DBLinkTest {
 	public void getUserByIDTest() {
 		try {
 			DBLink db = new DBLink("db.sqlite3");
-			BasicIngredient i = new BasicIngredient("i", 1.1);
+			Ingredient i = new Ingredient("i", 1.1, null);
 			Person p = new User("Jerry", "qyrt", Arrays.asList(i));
 			db.addPerson(p);
 			Person q = db.getPersonById("qyrt");

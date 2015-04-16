@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import edu.brown.cs.cookups.BasicIngredient;
+import edu.brown.cs.cookups.Ingredient;
 import edu.brown.cs.cookups.DBLink;
 import edu.brown.cs.cookups.Ingredient;
 import edu.brown.cs.cookups.People;
@@ -20,7 +20,7 @@ public class PeopleTest {
 	public void addPersonTest() throws ClassNotFoundException, SQLException {
 		DBLink db = new DBLink("db.sqlite3");
 		People people = new People(db);
-		BasicIngredient i = new BasicIngredient("i", 1.1);
+		Ingredient i = new Ingredient("i", 1.1, null);
 		people.addPerson("Ronald Reagan", "ronald@aol.com", Arrays.asList(i));
 		Person r = people.getPersonById("ronald@aol.com");
 		db.removePersonById("ronald@aol.com");
@@ -33,9 +33,9 @@ public class PeopleTest {
 	public void addPersonMultIngredTest() throws ClassNotFoundException, SQLException {
 		DBLink db = new DBLink("db.sqlite3");
 		People people = new People(db);
-		BasicIngredient i = new BasicIngredient("i", 1.1);
-		BasicIngredient j = new BasicIngredient("j", 1.1);
-		BasicIngredient k = new BasicIngredient("k", 1.1);
+		Ingredient i = new Ingredient("i", 1.1, null);
+		Ingredient j = new Ingredient("j", 1.1, null);
+		Ingredient k = new Ingredient("k", 1.1, null);
 		people.addPerson("Ronald Reagan", "ronald@aol.com", Arrays.asList(i, j, k));
 		Person r = people.getPersonById("ronald@aol.com");
 		//db.removePersonById("ronald@aol.com");
@@ -49,7 +49,7 @@ public class PeopleTest {
 	@Test
 	public void getPersonTest() throws ClassNotFoundException, SQLException {
 		DBLink db = new DBLink("db.sqlite3");
-		BasicIngredient i = new BasicIngredient("i", 1.1);
+		Ingredient i = new Ingredient("i", 1.1, null);
 		Person p = new User("Ronald Reagan", "ronald@aol.com", Arrays.asList(i));
 		db.addPerson(p);
 		People people = new People(db);
