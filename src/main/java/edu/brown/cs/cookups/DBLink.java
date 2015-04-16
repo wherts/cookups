@@ -38,13 +38,13 @@ public class DBLink {
 
   }
   
-  public void addUserIngredient(String id, Ingredient i) throws SQLException {
+  public void addUserIngredient(String id, IngredientProxy i) throws SQLException {
 	  String query = "INSERT OR IGNORE INTO user_ingredient VALUES (?, ?, ?)";
 	  PreparedStatement prep = conn.prepareStatement(query);
 	  prep = conn.prepareStatement(query);
 		  prep.setString(ID_IDX, id);
 		  prep.setString(INGREDIENT_IDX, i.id());
-		  prep.setFloat(INGREDIENT_QTY_IDX, (float) i.ounces());
+		  prep.setDouble(INGREDIENT_QTY_IDX, i.ounces());
 		  prep.addBatch();
 	  prep.executeBatch();
 	  prep.close();
@@ -64,7 +64,7 @@ public class DBLink {
 	 }
 	 rs.close();
 	 prep.close();
-	 List<Ingredient> ingredients = getUserIngredients(id);
+	 List<IngredientProxy> ingredients = getUserIngredients(id);
 	 return new User(name, id, ingredients);
   }
   
@@ -114,12 +114,12 @@ public class DBLink {
 		return toRet;
   }
   
-  public List<Ingredient> getUserIngredients(String id) throws SQLException {
+  public List<IngredientProxy> getUserIngredients(String id) throws SQLException {
 	  String query = "SELECT * FROM user_ingredient WHERE user = ?";
 		PreparedStatement prep = conn.prepareStatement(query);
 		 prep.setString(1, id);
 		 ResultSet rs = prep.executeQuery();
-		 List<Ingredient> toRet = new ArrayList<Ingredient>();
+		 List<IngredientProxy> toRet = new ArrayList<>();
 		 while(rs.next()) {
 			 String ingredID = rs.getString(INGREDIENT_IDX);
 			 double qty = rs.getDouble(INGREDIENT_QTY_IDX);
@@ -139,8 +139,8 @@ public class DBLink {
 	  prep.close();
 	  
 	  
-	  for (Ingredient i: p.ingredients()) {
-		addUserIngredient(p.id(), i);
+	  for (IngredientProxy i: p.ingredients()) {
+	    addUserIngredient(p.id(), i);
 	  }
 	  
   }
