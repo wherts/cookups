@@ -6,10 +6,12 @@ public class User implements Person {
 
   private String name;
   private String id;
-  private List<Ingredient> ingredients;
+  private List<IngredientProxy> ingredients;
 
   public User(String name, String id,
-      List<Ingredient> ingredients2) {
+
+  List<Ingredient> ingredients2) {
+
     this.name = name;
     this.id = id;
     this.ingredients = ingredients2;
@@ -26,7 +28,7 @@ public class User implements Person {
   }
 
   @Override
-  public List<Ingredient> ingredients() {
+  public List<IngredientProxy> ingredients() {
     return ingredients;
   }
 

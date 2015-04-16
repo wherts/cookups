@@ -40,6 +40,7 @@ public class DBLink {
   }
 
 
+
   public void addUserIngredient(String id, Ingredient i)
     throws SQLException {
     String query = "INSERT OR IGNORE INTO user_ingredient VALUES (?, ?, ?)";
@@ -97,6 +98,7 @@ public class DBLink {
     prep.close();
     List<Ingredient> ingredients = getUserIngredients(id);
     return new User(name, id, ingredients);
+
   }
 
   public void removePersonById(String id)
@@ -128,6 +130,7 @@ public class DBLink {
     return toRet;
   }
 
+
   public List<Ingredient> getUserIngredients(String id)
     throws SQLException {
     String query = "SELECT * FROM user_ingredient WHERE user = ?";
@@ -142,6 +145,7 @@ public class DBLink {
     }
 
     return toRet;
+
   }
 
 
@@ -207,6 +211,7 @@ public class DBLink {
 
   public void addPerson(Person p) throws SQLException {
 
+
     String query = "INSERT OR IGNORE INTO user VALUES (?, ?)";
     PreparedStatement prep = conn.prepareStatement(query);
     prep.setString(ID_IDX, p.id());
@@ -218,6 +223,7 @@ public class DBLink {
     for (Ingredient i : p.ingredients()) {
       addUserIngredient(p.id(), i);
     }
+
 
 
   }

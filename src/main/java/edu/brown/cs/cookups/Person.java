@@ -7,7 +7,7 @@ public interface Person {
 
   public String id();
 
-  public List<Ingredient> ingredients();
+  public List<IngredientProxy> ingredients();
 
   public Double latitude();
 
