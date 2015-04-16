@@ -36,10 +36,7 @@ public class DBLink {
       String schema = create + s;
       execute(schema);
     }
-
   }
-
-
 
   public void addUserIngredient(String id, Ingredient i)
     throws SQLException {
@@ -79,7 +76,7 @@ public class DBLink {
     rs.close();
     prep.close();
     return users;
-
+  }
 
   public Person getPersonById(String id)
     throws SQLException {
