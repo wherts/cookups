@@ -2,10 +2,6 @@ package edu.brown.cs.cookups;
 
 import java.util.List;
 
-import edu.brown.cs.cookups.Ingredient;
-import edu.brown.cs.cookups.Person;
-import edu.brown.cs.cookups.Recipe;
-
 public class User implements Person {
 
   private String name;
@@ -13,10 +9,10 @@ public class User implements Person {
   private List<Ingredient> ingredients;
 
   public User(String name, String id,
-      List<Ingredient> ingredients) {
+      List<Ingredient> ingredients2) {
     this.name = name;
     this.id = id;
-    this.ingredients = ingredients;
+    this.ingredients = ingredients2;
   }
 
   @Override

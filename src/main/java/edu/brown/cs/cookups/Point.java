@@ -1,4 +1,4 @@
-package edu.brown.cs.kwhan.stars;
+package edu.brown.cs.cookups;
 
 /**
  * Point in three dimensional space.

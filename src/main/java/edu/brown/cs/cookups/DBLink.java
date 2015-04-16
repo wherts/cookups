@@ -39,6 +39,7 @@ public class DBLink {
 
   }
 
+
   public void addUserIngredient(String id, Ingredient i)
     throws SQLException {
     String query = "INSERT OR IGNORE INTO user_ingredient VALUES (?, ?, ?)";
@@ -77,7 +78,7 @@ public class DBLink {
     rs.close();
     prep.close();
     return users;
-  }
+
 
   public Person getPersonById(String id)
     throws SQLException {
@@ -137,11 +138,12 @@ public class DBLink {
     while (rs.next()) {
       String ingredID = rs.getString(INGREDIENT_IDX);
       double qty = rs.getDouble(INGREDIENT_QTY_IDX);
-      toRet.add(new BasicIngredient(ingredID, qty));
+      toRet.add(new Ingredient(ingredID, qty));
     }
 
     return toRet;
   }
+
 
   public String getIngredientNameByID(String id)
     throws SQLException {
@@ -185,6 +187,7 @@ public class DBLink {
     rs.close();
     prep.close();
     return names;
+
   }
 
   public List<Recipe> getRecipesWithIngredient(String id)
@@ -203,6 +206,7 @@ public class DBLink {
   }
 
   public void addPerson(Person p) throws SQLException {
+
     String query = "INSERT OR IGNORE INTO user VALUES (?, ?)";
     PreparedStatement prep = conn.prepareStatement(query);
     prep.setString(ID_IDX, p.id());
@@ -214,6 +218,7 @@ public class DBLink {
     for (Ingredient i : p.ingredients()) {
       addUserIngredient(p.id(), i);
     }
+
 
   }
 

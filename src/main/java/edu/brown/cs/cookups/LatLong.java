@@ -1,4 +1,4 @@
-package edu.brown.cs.kwhan.stars;
+package edu.brown.cs.cookups;
 
 /**
  * The LatLong class, which holds a latitude and longitude
