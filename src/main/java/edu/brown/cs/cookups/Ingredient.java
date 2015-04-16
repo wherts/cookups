@@ -1,5 +1,6 @@
 package edu.brown.cs.cookups;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Ingredient {
     return id;
   }
   
-  public String name() {
+  public String name() throws SQLException {
     if (name == null) {
       name = querier.ingredientNameCache(id);
     }
@@ -49,9 +50,9 @@ public class Ingredient {
 	  return curr.getTime() - dateCreated.getTime();
 	}
 
-  public List<Recipe> recipes() {
+  public List<Recipe> recipes() throws SQLException {
     if (recipes == null) {
-      recipes = querier.getRecipesByIngredient(id);
+      recipes = querier.getRecipesWithIngredient(id);
     }
     return recipes;
   }

@@ -1,37 +1,42 @@
 package edu.brown.cs.cookups;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe {
   private String id;
   private String name;
-  private List<RecipeIngredientProxy> ingredients;
+  private DBLink querier;
+  private List<Ingredient> ingredients;
 
-  public Recipe(String id) {
-    this.id = id;
-
+  public Recipe(String i, DBLink q) {
+    id = i;
+    querier = q;
   }
 
   public String id() {
     return id;
   }
 
-  public String name() {
+  public String name() throws SQLException {
+    if (name == null) {
+      name = querier.getIngredientNameByID(id);
+    }
     return name;
   }
 
-  public List<RecipeIngredientProxy> ingredients() {
+  public List<Ingredient> ingredients() {
     return ingredients;
   }
 
-  public void addToShoppingList(RecipeIngredientProxy ing,
+  public void addToShoppingList(Ingredient ing,
       double oz) {
     // toBuy.add(e)
   }
 
   public void setIngredients(
-      List<RecipeIngredientProxy> ingredients) {
+      List<Ingredient> ingredients) {
     this.ingredients = ingredients;
   }
 
@@ -40,9 +45,9 @@ public class Recipe {
 
   public Recipe scale(int partySize) {
     Recipe toReturn = this;
-    List<RecipeIngredientProxy> ingreds = ingredients;
-    List<RecipeIngredientProxy> scaledIngredients = new ArrayList<>();
-    for (RecipeIngredientProxy ing : ingreds) {
+    List<Ingredient> ingreds = ingredients;
+    List<Ingredient> scaledIngredients = new ArrayList<>();
+    for (Ingredient ing : ingreds) {
       // scaledIngredients.add(new RecipeIngredientProxy(ing.ounces() *
       // partySize));
     }
