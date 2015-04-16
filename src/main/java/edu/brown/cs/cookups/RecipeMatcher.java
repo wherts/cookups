@@ -23,7 +23,7 @@ public class RecipeMatcher {
     return matchRecipes(currIngredients, chefs.size(), dbL);
   }
 
-  private static void compileIngredients(List<Person> chefs, Map<String, Double> map) {
+  public static void compileIngredients(List<Person> chefs, Map<String, Double> map) {
     for (Person p : chefs) {
       for (Ingredient ing : p.ingredients()) {
         if (map.containsKey(ing.id())) {
@@ -36,7 +36,7 @@ public class RecipeMatcher {
   }
 
   //helper method
-  private static Set<Recipe> matchRecipes(
+  public static Set<Recipe> matchRecipes(
                                   Map<String, Double> currIngredients,
                                   double partySize,
                                   DBLink dbL) throws SQLException {
@@ -52,8 +52,8 @@ public class RecipeMatcher {
     }
     return myRecipes;
   }
-  
-  private static void buildShoppingList(Map<String, Double> currIngredients,
+
+  public static void buildShoppingList(Map<String, Double> currIngredients,
       Recipe recipe) {
     for (Ingredient ing : recipe.ingredients()) {
       if (currIngredients.containsKey(ing.id())) {
