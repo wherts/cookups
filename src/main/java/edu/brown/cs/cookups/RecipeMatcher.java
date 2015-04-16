@@ -46,10 +46,13 @@ public class RecipeMatcher {
     for (String k : keys) {
       List<Recipe> recipesUsing = dbL.getRecipesThatUse(k);
       for (Recipe r : recipesUsing) {
+        if (r.ingredients().contains(k)) {
+
+        }
         for (RecipeIngredientProxy rp : r.ingredients()) {
           if (currIngredients.containsKey(rp.id())) {
             //have some of recipe amount
-            double 
+            if (currIngredients.get(k) <  )
           } else {
             //need all of recipe amount
             
