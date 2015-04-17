@@ -1,5 +1,6 @@
 package edu.brown.cs.cookups.food;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import edu.brown.cs.cookups.db.DBLink;
 public class Recipe {
   private String id;
   private String name;
+  private String instructions;
   private DBLink querier;
   private List<Ingredient> ingredients, toBuy;
 
@@ -36,6 +38,21 @@ public class Recipe {
     return ingredients;
   }
 
+  public String instructions() throws SQLException {
+    if (instructions == null) {
+      instructions = querier.getInstructionsByRecipe(id);
+    }
+    return instructions;
+  }
+
+  public List<Ingredient> shoppingList() {
+    List<Ingredient> ret = new ArrayList<>();
+    for (Ingredient i : toBuy) {
+      ret.add(i);
+    }
+    return ret;
+  }
+
   public void addToShoppingList(Ingredient ing,
       double oz) {
     toBuy.add(new Ingredient(ing.id(), oz, querier));
@@ -58,5 +75,20 @@ public class Recipe {
 
   private void setIngredients(List<Ingredient> scaledIngredients) {
     ingredients = scaledIngredients;
+  }
+
+  public int hashCode() {
+    return id.hashCode();
+  }
+
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    }
+    if (!(o instanceof Recipe)) {
+      return false;
+    }
+    Recipe r = (Recipe) o;
+    return id.equals(r.id());
   }
 }
