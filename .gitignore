@@ -1,4 +1,10 @@
 /target/
+=======
+
+target/
+*.sqlite3
+databases/
+/target/
 
 *.pydevproject
 .metadata
@@ -36,3 +42,4 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+

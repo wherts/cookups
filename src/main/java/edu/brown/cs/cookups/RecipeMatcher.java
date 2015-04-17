@@ -1,33 +1,37 @@
 package edu.brown.cs.cookups;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class RecipeMatcher {
-  private Manager dbM;
-  private int numPeople;
+import edu.brown.cs.cookups.db.DBLink;
+import edu.brown.cs.cookups.food.Ingredient;
+import edu.brown.cs.cookups.food.Recipe;
+import edu.brown.cs.cookups.person.Person;
 
-  public RecipeMatcher(Manager dbM) {
-    this.dbM = dbM;
+public class RecipeMatcher {
+
+  public RecipeMatcher() {
   }
 
-  public List<Recipe> findRecipes(List<Person> chefs) {
+  public static List<Recipe> matchRecipes(List<Person> chefs, DBLink dbL) throws SQLException {
     assert(chefs != null);
-    numPeople = chefs.size();
+    int size = chefs.size();
     //maps ingredient id to the amount in the group
     Map<String, Double> currIngredients = new HashMap<>();
     //1. compile ingredients
     compileIngredients(chefs, currIngredients);
     //2. search database for recipes
-    return new ArrayList<Recipe>();
+    return matchHelper(currIngredients, size, dbL);
   }
 
-  public void compileIngredients(List<Person> chefs, Map<String, Double> map) {
+  public static void compileIngredients(List<Person> chefs, Map<String, Double> map) {
     for (Person p : chefs) {
-      for (IngredientProxy ing : p.ingredients()) {
+      for (Ingredient ing : p.ingredients()) {
         if (map.containsKey(ing.id())) {
           map.replace(ing.id(), map.get(ing.id()) + ing.ounces());
         } else {
@@ -37,10 +41,29 @@ public class RecipeMatcher {
     }
   }
 
-  public List<Recipe> matchRecipes(Map<String, Double> currIngredients, List<Recipe> recipes, int partySize) {
+  private static List<Recipe> matchHelper(
+                                  Map<String, Double> currIngredients,
+                                  double partySize,
+                                  DBLink dbL) throws SQLException {
     List<Recipe> myRecipes = new ArrayList<>();
-    for (Recipe recipe : recipes) {
-      for (RecipeIngredientProxy ing : recipe.ingredients()) {
+    Set<String> keys = currIngredients.keySet();
+    for (String k : keys) {
+      Set<Recipe> recipesUsing = dbL.getRecipesWithIngredient(k);
+      //update the shopping list
+      for (Recipe recipe : recipesUsing) {
+        System.out.printf("Recipe: %s, scale: %d%n", recipe.id(), partySize);
+        recipe.scale(partySize);
+        buildShoppingList(currIngredients, recipe);
+
+      }
+    }
+    return myRecipes;
+  }
+
+  public static void buildShoppingList(Map<String, Double> currIngredients,
+      Recipe recipe) {
+    try {
+      for (Ingredient ing : recipe.ingredients()) {
         if (currIngredients.containsKey(ing.id())) {
           if (ing.ounces() > currIngredients.get(ing.id())) {
             recipe.addToShoppingList(ing, ing.ounces() - currIngredients.get(ing.id()));
@@ -48,9 +71,10 @@ public class RecipeMatcher {
         } else {
           recipe.addToShoppingList(ing, ing.ounces());
         }
-        myRecipes.add(recipe.scale(partySize));
       }
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
-    return myRecipes;
-  }
+  }  
 }
