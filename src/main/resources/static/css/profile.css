@@ -1,0 +1,36 @@
+.profile-pic {
+	height: 200px;
+	margin: 40px 0;
+	border: 1px #F1F5DF solid;
+}
+
+.about-me {
+	margin: 40px 20px;
+	display: inline-block;
+}
+
+.name {
+	font-size: 50px;
+	text-align: left;
+	color: #F1F5DF;
+}
+
+.title {
+	font-size: 50px;
+	text-align: center;
+	color: #676D51;
+	padding: 20px 0;
+}
+
+.subheader {
+	text-align: left;
+	padding: 10px 0;
+	color: #F1F5DF;
+}
+
+#fridge {
+	margin: 0 auto;
+	width: 200px;
+	height: 400px;
+	background-image: url(../assets/fridge.png);
+}
