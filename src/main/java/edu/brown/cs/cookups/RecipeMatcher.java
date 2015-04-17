@@ -18,7 +18,7 @@ public class RecipeMatcher {
   public RecipeMatcher() {
   }
 
-  public static Set<Recipe> matchRecipes(List<Person> chefs, DBLink dbL) throws SQLException {
+  public static List<Recipe> matchRecipes(List<Person> chefs, DBLink dbL) throws SQLException {
     assert(chefs != null);
     //maps ingredient id to the amount in the group
     Map<String, Double> currIngredients = new HashMap<>();
@@ -40,11 +40,11 @@ public class RecipeMatcher {
     }
   }
 
-  private static Set<Recipe> matchHelper(
+  private static List<Recipe> matchHelper(
                                   Map<String, Double> currIngredients,
                                   double partySize,
                                   DBLink dbL) throws SQLException {
-    Set<Recipe> myRecipes = new HashSet<>();
+    List<Recipe> myRecipes = new ArrayList<>();
     Set<String> keys = currIngredients.keySet();
     for (String k : keys) {
       List<Recipe> recipesUsing = dbL.getRecipesWithIngredient(k);
