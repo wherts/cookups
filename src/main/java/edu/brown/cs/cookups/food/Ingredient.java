@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import edu.brown.cs.cookups.db.DBLink;
-import edu.brown.cs.cookups.person.Conversion;
 
 public class Ingredient {
   private double ounces;
