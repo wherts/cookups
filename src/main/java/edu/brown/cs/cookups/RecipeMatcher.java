@@ -20,12 +20,13 @@ public class RecipeMatcher {
 
   public static List<Recipe> matchRecipes(List<Person> chefs, DBLink dbL) throws SQLException {
     assert(chefs != null);
+    int size = chefs.size();
     //maps ingredient id to the amount in the group
     Map<String, Double> currIngredients = new HashMap<>();
     //1. compile ingredients
     compileIngredients(chefs, currIngredients);
     //2. search database for recipes
-    return matchHelper(currIngredients, chefs.size(), dbL);
+    return matchHelper(currIngredients, size, dbL);
   }
 
   public static void compileIngredients(List<Person> chefs, Map<String, Double> map) {
@@ -47,11 +48,13 @@ public class RecipeMatcher {
     List<Recipe> myRecipes = new ArrayList<>();
     Set<String> keys = currIngredients.keySet();
     for (String k : keys) {
-      List<Recipe> recipesUsing = dbL.getRecipesWithIngredient(k);
+      Set<Recipe> recipesUsing = dbL.getRecipesWithIngredient(k);
       //update the shopping list
       for (Recipe recipe : recipesUsing) {
+        System.out.printf("Recipe: %s, scale: %d%n", recipe.id(), partySize);
         recipe.scale(partySize);
         buildShoppingList(currIngredients, recipe);
+
       }
     }
     return myRecipes;

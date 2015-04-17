@@ -20,7 +20,6 @@ import edu.brown.cs.cookups.person.PersonManager;
 import edu.brown.cs.cookups.person.User;
 
 public class DBLink implements DBManager {
-
   private Connection conn;
   private static final Map<String, String> INGREDIENT_NAME_CACHE = new HashMap<String, String>();
   private static final Map<String, Recipe> RECIPE_CACHE = new HashMap<String, Recipe>();
