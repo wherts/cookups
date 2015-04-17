@@ -18,14 +18,14 @@ public class RecipeMatcher {
   public RecipeMatcher() {
   }
 
-  public static Set<Recipe> findRecipes(List<Person> chefs, DBLink dbL) throws SQLException {
+  public static Set<Recipe> matchRecipes(List<Person> chefs, DBLink dbL) throws SQLException {
     assert(chefs != null);
     //maps ingredient id to the amount in the group
     Map<String, Double> currIngredients = new HashMap<>();
     //1. compile ingredients
     compileIngredients(chefs, currIngredients);
     //2. search database for recipes
-    return matchRecipes(currIngredients, chefs.size(), dbL);
+    return matchHelper(currIngredients, chefs.size(), dbL);
   }
 
   public static void compileIngredients(List<Person> chefs, Map<String, Double> map) {
@@ -40,8 +40,7 @@ public class RecipeMatcher {
     }
   }
 
-  //helper method
-  public static Set<Recipe> matchRecipes(
+  private static Set<Recipe> matchHelper(
                                   Map<String, Double> currIngredients,
                                   double partySize,
                                   DBLink dbL) throws SQLException {

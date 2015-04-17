@@ -14,10 +14,10 @@ public class Ingredient {
   private DBLink querier;
   private List<Recipe> recipes;
   
-  public Ingredient(String i, double oz, DBLink db) {
+  public Ingredient(String i, double oz, DBLink dbLink) {
     id = i;
     ounces = oz;
-    querier = db;
+    querier = dbLink;
     dateCreated = new Date();
   }
   
