@@ -86,7 +86,9 @@ public class DBLinkTest {
       // peanut butter
       recipes = db.getRecipesWithIngredient("/i/produce.6");
       assertTrue(recipes.size() == 1);
-      assertTrue(recipes.get(0).id().equals(("/r/1.5")));
+      for (Recipe r : recipes) {
+        assertTrue(r.id().equals("/r/1.5"));
+      }
       recipes = db.getRecipesWithIngredient("nonexistent");
       assertTrue(recipes.isEmpty());
     } catch (ClassNotFoundException | SQLException e) {
