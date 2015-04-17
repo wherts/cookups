@@ -8,8 +8,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.food.Recipe;
@@ -379,9 +381,9 @@ public class DBLink implements DBManager {
   }
 
   @Override
-  public List<Recipe> getRecipesWithIngredient(String id) {
+  public Set<Recipe> getRecipesWithIngredient(String id) {
     String query = "SELECT recipe FROM recipe_ingredient WHERE ingredient = ?";
-    List<Recipe> recipes = new ArrayList<>();
+    Set<Recipe> recipes = new HashSet<Recipe>();
     try (PreparedStatement prep = conn.prepareStatement(query)) {
       prep.setString(1, id);
       try (ResultSet rs = prep.executeQuery()) {

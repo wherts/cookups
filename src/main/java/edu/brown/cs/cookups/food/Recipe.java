@@ -1,7 +1,5 @@
 package edu.brown.cs.cookups.food;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,21 +22,21 @@ public class Recipe {
     return id;
   }
 
-  public String name() throws SQLException {
+  public String name() {
     if (name == null) {
       name = querier.getIngredientNameByID(id);
     }
     return name;
   }
 
-  public List<Ingredient> ingredients() throws SQLException {
+  public List<Ingredient> ingredients() {
     if (ingredients == null) {
       ingredients = querier.getIngredientsByRecipe(id);
     }
     return ingredients;
   }
 
-  public String instructions() throws SQLException {
+  public String instructions() {
     if (instructions == null) {
       instructions = querier.getInstructionsByRecipe(id);
     }
@@ -53,8 +51,7 @@ public class Recipe {
     return ret;
   }
 
-  public void addToShoppingList(Ingredient ing,
-      double oz) {
+  public void addToShoppingList(Ingredient ing, double oz) {
     toBuy.add(new Ingredient(ing.id(), oz, querier));
   }
 
@@ -66,14 +63,16 @@ public class Recipe {
     List<Ingredient> ingreds = this.ingredients();
     List<Ingredient> scaledIngredients = new ArrayList<>();
     for (Ingredient ing : ingreds) {
-     scaledIngredients.add(new Ingredient(ing.id(),
-         ing.ounces() * partySize, querier));
+      scaledIngredients.add(new Ingredient(ing.id(),
+          ing.ounces() * partySize,
+          querier));
     }
     toReturn.setIngredients(scaledIngredients);
     return toReturn;
   }
 
-  private void setIngredients(List<Ingredient> scaledIngredients) {
+  private void setIngredients(
+      List<Ingredient> scaledIngredients) {
     ingredients = scaledIngredients;
   }
 
