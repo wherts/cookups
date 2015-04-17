@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import edu.brown.cs.cookups.person.Person;
+import edu.brown.cs.cookups.person.Suitor;
+
 public class DateMatcher {
   public static List<Person> match(List<Suitor> suitors, Suitor toFind) {
     List<Person> toReturn = new ArrayList<>();

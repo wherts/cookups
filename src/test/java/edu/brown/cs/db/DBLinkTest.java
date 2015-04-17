@@ -10,11 +10,11 @@ import java.util.List;
 
 import org.junit.Test;
 
-import edu.brown.cs.cookups.DBLink;
-import edu.brown.cs.cookups.Ingredient;
-import edu.brown.cs.cookups.Person;
-import edu.brown.cs.cookups.Recipe;
-import edu.brown.cs.cookups.User;
+import edu.brown.cs.cookups.db.DBLink;
+import edu.brown.cs.cookups.food.Ingredient;
+import edu.brown.cs.cookups.food.Recipe;
+import edu.brown.cs.cookups.person.Person;
+import edu.brown.cs.cookups.person.User;
 
 public class DBLinkTest {
 

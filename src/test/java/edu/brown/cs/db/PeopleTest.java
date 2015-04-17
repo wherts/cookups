@@ -7,12 +7,11 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import edu.brown.cs.cookups.Ingredient;
-import edu.brown.cs.cookups.DBLink;
-import edu.brown.cs.cookups.Ingredient;
-import edu.brown.cs.cookups.PersonManager;
-import edu.brown.cs.cookups.Person;
-import edu.brown.cs.cookups.User;
+import edu.brown.cs.cookups.db.DBLink;
+import edu.brown.cs.cookups.food.Ingredient;
+import edu.brown.cs.cookups.person.Person;
+import edu.brown.cs.cookups.person.PersonManager;
+import edu.brown.cs.cookups.person.User;
 
 public class PeopleTest {
 	
