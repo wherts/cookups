@@ -44,11 +44,7 @@ public class Recipe {
   }
 
   public List<Ingredient> shoppingList() {
-    List<Ingredient> ret = new ArrayList<>();
-    for (Ingredient i : toBuy) {
-      ret.add(i);
-    }
-    return ret;
+    return new ArrayList<>(toBuy);
   }
 
   public void addToShoppingList(Ingredient ing, double oz) {
@@ -68,6 +64,7 @@ public class Recipe {
           querier));
     }
     toReturn.setIngredients(scaledIngredients);
+    
     return toReturn;
   }
 

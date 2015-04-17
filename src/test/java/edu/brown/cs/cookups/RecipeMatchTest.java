@@ -75,14 +75,13 @@ public class RecipeMatchTest {
   @Test
   public void recipeMatchingOnePerson() throws SQLException {
     List<Person> chefs = new ArrayList<>();
-    DBLink dbL = null;
+    dbL = null;
     try {
       dbL = new DBLink("databases/cookups.sqlite3");
     } catch (ClassNotFoundException | SQLException e) {
       System.err.println("TESTING ERROR");
       fail();
     }
-    addRecipes(dbL);
     List<Ingredient> ings1 = new ArrayList<>();
     ings1.add(new Ingredient("/i/pasta.1", 6, dbL));
     ings1.add(new Ingredient("/i/baking.1", 16, dbL));
@@ -91,6 +90,7 @@ public class RecipeMatchTest {
     assertTrue(recipes.size() == 1);
     Recipe r = recipes.get(0);
     assertTrue(recipes.get(0).id().equals("/r/1.5"));
+    //peanut butter sesame noodles
     List<Ingredient> toBuy = r.shoppingList();
     assertTrue(toBuy.size() == 7);
     Ingredient pasta = toBuy.get(0);
@@ -118,32 +118,35 @@ public class RecipeMatchTest {
 
   @Test
   public void recipeMatchingTwoPerson() throws SQLException {
+    dbL.clearCache();
     List<Person> chefs = new ArrayList<>();
-    DBLink dbL = null;
+    dbL = null;
     try {
       dbL = new DBLink("databases/cookups.sqlite3");
     } catch (ClassNotFoundException | SQLException e) {
       System.err.println("TESTING ERROR");
       fail();
     }
-    addRecipes(dbL);
     List<Ingredient> ings1 = new ArrayList<>();
     List<Ingredient> ings2 = new ArrayList<>();
     //wes ingredients
-    ings1.add(new Ingredient("/i/produce.3", 16, dbL)); //asparagus
-    ings1.add(new Ingredient("/i/produce.4", 16, dbL)); //corn
+    ings1.add(new Ingredient("/i/produce.3", 32, dbL)); //asparagus
+    ings1.add(new Ingredient("/i/produce.4", 32, dbL)); //corn
     ings1.add(new Ingredient("/i/herb.1", 2, dbL)); //dill
     //dylan ingredients
-    ings2.add(new Ingredient("/i/dairy.3.3", 8, dbL)); //goat cheese
+    ings2.add(new Ingredient("/i/dairy.3.3", 16, dbL)); //goat cheese
     ings2.add(new Ingredient("/i/poultry.1", 2, dbL)); //eggs
+
     chefs.add(new User("Wes", "/u/wh7", ings1));
     chefs.add(new User("Dylan", "/u/dgattey", ings2));
     List<Recipe> recipes = RecipeMatcher.matchRecipes(chefs, dbL);
     assertTrue(recipes.size() == 2);
+    //bread pudding
     Recipe r1 = recipes.get(0);
     assertTrue(r1.id().equals("/r/1.1"));
     List<Ingredient> toBuy = r1.shoppingList();
     assertTrue(toBuy.size() == 9);
+
     Ingredient cream = toBuy.get(0);
     assertTrue(cream.id().equals("/i/dairy.1"));
     assertTrue(cream.ounces() == 24);
@@ -179,18 +182,24 @@ public class RecipeMatchTest {
     Ingredient parm = toBuy.get(8);
     assertTrue(parm.id().equals("/i/dairy.3.2"));
     assertTrue(parm.ounces() == 8);
-    
+
+    //Frittata recipe
     Recipe r2 = recipes.get(1);
     assertTrue(r2.id().equals("/r/1.4"));
     toBuy = r2.shoppingList();
-    for (Ingredient i : toBuy) {
-//      System.out.println(i.id() + " " + i.ounces());
-    }
-  }
+    assertTrue(toBuy.size() == 3);
 
-  @Test
-  public void noNeedToBuy() {
-    assertTrue(true);
+    Ingredient butter = toBuy.get(0);
+    assertTrue(butter.id().equals("/i/dairy.5"));
+    assertTrue(butter.ounces() == 6);
+    
+    Ingredient scallions = toBuy.get(1);
+    assertTrue(scallions.id().equals("/i/produce.5"));
+    assertTrue(scallions.ounces() == 4);
+    
+    eggs = toBuy.get(2);
+    assertTrue(eggs.id().equals("/i/poultry.1"));
+    assertTrue(eggs.ounces() == 14);
   }
 
   private void addRecipes(DBLink dbL) {

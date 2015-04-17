@@ -506,4 +506,9 @@ public class DBLink implements DBManager {
     return new Recipe(id, this);
   }
 
+  public void clearCache() {
+    RECIPE_CACHE.clear();
+    INGREDIENT_NAME_CACHE.clear();
+  }
+
 }
