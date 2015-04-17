@@ -4,6 +4,5 @@ public interface Manager {
 	User getProfileById(String id);
 	Recipe getRecipeById(String id);
 	String getUserNameById(String id);
-	String getUserIdByName(String name);
-	
+	String getUserIdByName(String name);	
 }
