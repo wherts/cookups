@@ -202,30 +202,6 @@ public class RecipeMatchTest {
     assertTrue(eggs.ounces() == 14);
   }
 
-  @Test
-  public void noNeedToBuy() throws SQLException {
-    dbL.clearCache();
-    List<Person> chefs = new ArrayList<>();
-    dbL = null;
-    try {
-      dbL = new DBLink("databases/cookups.sqlite3");
-    } catch (ClassNotFoundException | SQLException e) {
-      System.err.println("TESTING ERROR");
-      fail();
-    }
-    List<Ingredient> ings = new ArrayList<>();
-    ings.add(new Ingredient("/i/produce.10", 24, dbL)); //potatoes
-    ings.add(new Ingredient("/i/dairy.5", 15, dbL)); //butter
-    ings.add(new Ingredient("/i/dairy.2.1", 8, dbL)); //whole milk
-
-    chefs.add(new User("Albie", "/u/ajb7", ings));
-    List<Recipe> recipes = RecipeMatcher.matchRecipes(chefs, dbL);
-//    assertTrue(recipes.size() == 4);
-//    Recipe r = recipes.get(1);
-//    assertTrue(r.id().equals("/r/1.2"));
-//    assertTrue(r.shoppingList().size() == 0);
-  }
-
   private void addRecipes(DBLink dbL) {
     String instr = "1. Cook pasta al dente "
         + "2. Mix all other ingredients. Add pasta while it is still warm. "
