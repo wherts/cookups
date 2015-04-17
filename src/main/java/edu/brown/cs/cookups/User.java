@@ -7,7 +7,6 @@ import edu.brown.cs.cookups.Person;
 import edu.brown.cs.cookups.Recipe;
 
 public class User implements Person {
-
   private String name;
   private String id;
   private List<Ingredient> ingredients;

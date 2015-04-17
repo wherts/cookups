@@ -9,10 +9,11 @@ public class Meal {
   public LatLong location;
   public double time, duration;
   public Recipe recipe;
-  public 
+  public List<Ingredient> shoppingList;
 
   public Meal() {
     this.attending = new ArrayList<Person>();
+    this.shoppingList = new ArrayList<Ingredient>();
   }
 
   public double setTime(double t) {

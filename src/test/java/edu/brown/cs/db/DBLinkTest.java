@@ -42,8 +42,7 @@ public class DBLinkTest {
 			assertTrue(q.name().equals("Jerry"));
 			assertTrue(q.ingredients().get(0).id().equals("i"));
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -60,8 +59,7 @@ public class DBLinkTest {
 			assertTrue(q.name().equals("Jerry"));
 			assertTrue(q.ingredients().get(0).id().equals("i"));
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 	}
 

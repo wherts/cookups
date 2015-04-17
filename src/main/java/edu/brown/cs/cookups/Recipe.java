@@ -42,7 +42,7 @@ public class Recipe {
   public void setName(String n) {
   }
 
-  public Recipe scale(int partySize) {
+  public Recipe scale(double partySize) {
     Recipe toReturn = this;
     List<Ingredient> ingreds = ingredients;
     List<Ingredient> scaledIngredients = new ArrayList<>();
