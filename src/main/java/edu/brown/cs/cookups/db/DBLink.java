@@ -467,4 +467,34 @@ public class DBLink implements DBManager {
       e.printStackTrace();
     }
   }
+
+  @Override
+  public Person getProfileById(String id) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Recipe getRecipeById(String id) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public List<Ingredient> getPersonIngredients(String id) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public List<Person> getPersonsByName(String name) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public String getIngredientIDbyName(String name) {
+    // TODO Auto-generated method stub
+    return null;
+  }
 }
