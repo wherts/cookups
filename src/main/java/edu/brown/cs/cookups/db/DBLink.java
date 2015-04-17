@@ -508,6 +508,7 @@ public class DBLink implements DBManager {
 
   public void clearCache() {
     RECIPE_CACHE.clear();
+    INGREDIENT_NAME_CACHE.clear();
   }
 
 }
