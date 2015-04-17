@@ -3,6 +3,7 @@ package edu.brown.cs.db;
 import static org.junit.Assert.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class DBLinkTest {
 			Ingredient i = new Ingredient("i", 1.1, null);
 			Person p = new User("Jerry", "qyrt", Arrays.asList(i));
 			db.addPerson(p);
-			assertTrue(db.hasPerson("Jerry"));
+			assertTrue(db.hasPersonByName("Jerry"));
 			db.removePersonById("qyrt");
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -48,6 +49,8 @@ public class DBLinkTest {
 //		}
 //	}
 	
+	
+	
 	@Test
 	public void getUserByIDTest() {
 		try {
@@ -71,14 +74,16 @@ public class DBLinkTest {
       DBLink db = new DBLink("cookups.sqlite3");
       //butter
       List<Recipe> recipes = db.getRecipesWithIngredient("/i/dairy.5");
-//      assertTrue(recipes.size() == 3);
       System.out.println(recipes.size());
+     assertTrue(recipes.size() == 3);
+     List<String> recipeIDs = new ArrayList<String>();
       for (Recipe r : recipes) {
         System.out.println(r.id());
+        recipeIDs.add(r.id());
       }
-//      assertTrue(recipes.contains("/r/1.2"));
-//      assertTrue(recipes.contains("/r/1.3"));
-//      assertTrue(recipes.contains("/r/1.4"));
+      assertTrue(recipeIDs.contains("/r/1.2"));
+      assertTrue(recipeIDs.contains("/r/1.3"));
+      assertTrue(recipeIDs.contains("/r/1.4"));
       //peanut butter
       recipes = db.getRecipesWithIngredient("/i/produce.6");
 //      assertTrue(recipes.size() == 1);

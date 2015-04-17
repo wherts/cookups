@@ -1,7 +1,7 @@
 package edu.brown.cs.cookups;
 
-public class BasicIngredient implements Ingredient {
-
+public class BasicIngredient  {
+/*
 	private String id;
 	private double ounces;
 	
@@ -31,5 +31,6 @@ public class BasicIngredient implements Ingredient {
 	public String id() {
 		return id;
 	}
+	*/
 
 }

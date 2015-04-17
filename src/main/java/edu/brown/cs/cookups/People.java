@@ -24,10 +24,7 @@ public class People {
     return p;
   }
 
-  public List<Person> getPersonsByName(String name)
-    throws SQLException {
-    return db.getPersonsByName(name, this);
-  }
+ 
 
   public Person cachePerson(String id, String name,
       List<Ingredient> ingredients) {

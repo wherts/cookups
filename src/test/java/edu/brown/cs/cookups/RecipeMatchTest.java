@@ -71,6 +71,7 @@ public class RecipeMatchTest {
     String instr = "1. Cook pasta al dente "
         + "2. Mix all other ingredients. Add pasta while it is still warm. "
         + "Garnish with shredded carrots, cucumber or scallions";
+    if (!dbL.hasRecipe("/r/1.5")) {
     dbL.addRecipe("Peanut Butter Sesame Noodles", "/r/1.5", instr);
     dbL.addRecipeIngredient("/r/1.5", "/i/pasta.1", 16);
     dbL.addRecipeIngredient("/r/1.5", "/i/produce.6", 8);
@@ -80,6 +81,7 @@ public class RecipeMatchTest {
     dbL.addRecipeIngredient("/r/1.5", "/i/liquid.2.3", 4);
     dbL.addRecipeIngredient("/r/1.5", "/i/baking.1", 4);
     dbL.addRecipeIngredient("/r/1.5", "/i/liquid.0", 4);
+    }
     instr = "1.Cube Bread and allow to sit over night "
         + "2. Carmelize onions."
         + "3. Set oven to 325F"
@@ -90,6 +92,7 @@ public class RecipeMatchTest {
         + "Sprinkle some cheese over bread and put down more bread and cheese "
         + "Top with Parm and pour cream over bread "
         + "Let it sit for at least an hour then bake until custard is set, about 1hr ";
+    if (!dbL.hasRecipe("/r/1.1")) {
     dbL.addRecipe("Savory Bread Pudding with Onions and Gruyere",
                   "/r/1.1", instr);
     dbL.addRecipeIngredient("/r/1.1", "/i/dairy.1", 12);
@@ -101,6 +104,7 @@ public class RecipeMatchTest {
     dbL.addRecipeIngredient("/r/1.1", "/i/produce.2", 32);
     dbL.addRecipeIngredient("/r/1.1", "/i/dairy.3.1", 24);
     dbL.addRecipeIngredient("/r/1.1", "/i/dairy.3.2", 4);
+    }
     instr = "1. Simmer potatoes in medium saucepan and "
         + "cook over medium heat until tender, about 20 minutes "
         + "2. Drain and let potatoes sit. Combine milk and salt in pan, "
@@ -109,10 +113,12 @@ public class RecipeMatchTest {
         + "solids are golden brownAdd half of the butter to the potatoes. "
         + "Serve topped with the rest."
         + "Season with salt and pepper to taste";
+    if (!dbL.hasRecipe("/r/1.2")) {
     dbL.addRecipe("Brown Butter Mashed Potatoes", "/r/1.2", instr);
     dbL.addRecipeIngredient("/r/1.2", "/i/produce.3", 16);
     dbL.addRecipeIngredient("/r/1.2", "/i/dairy.5", 4);
     dbL.addRecipeIngredient("/r/1.2", "/i/dairy.2.1", 8);
+    }
     instr = "Use a pot large enough to hold all the onions, "
         + "place over medium heat and melt butter. "
         + "Add onions, sprinkle with 2t salt, cover, and cook "
@@ -122,6 +128,7 @@ public class RecipeMatchTest {
         + "When onions are caramelized, add 6C of water, "
         + "raise heat to high and simmer the soup, then lower heat again. "
         + "Add sherry, add red wine and vinegar to balance sweetness and body";
+    if (!dbL.hasRecipe("/r/1.3")) {
     dbL.addRecipe("French Onion Soup", "/r/1.3", instr);
     dbL.addRecipeIngredient("/r/1.3", "/i/dairy.5", 1);
     dbL.addRecipeIngredient("/r/1.3", "/i/produce.1.1", 128);
@@ -130,6 +137,8 @@ public class RecipeMatchTest {
     dbL.addRecipeIngredient("/r/1.3", "/i/liquid.3.1", 2);
     dbL.addRecipeIngredient("/r/1.3", "/i/liquid.2.2", 2);
     dbL.addRecipeIngredient("/r/1.3", "/i/dairy.3.1", 12);
+    }
+    
     instr = "Set broiler to high "
         + "Trim asparagus and cut into 1-inch pieces "
         + "Heat 1/2 of the butter in a skillet, sauté asparagus, "
@@ -139,6 +148,7 @@ public class RecipeMatchTest {
         + "skillet and top with goat cheeseReduce heat on skillet and "
         + "allow sides to puff up and cookPut skillet under broiler for "
         + "1 min to set the topAllow frittata to cool and garnish with remaining dill";
+    if (!dbL.hasRecipe("/r/1.4")) {
     dbL.addRecipe("Asparagus and Goat Cheese Frittata", "/r/1.4", instr);
     dbL.addRecipeIngredient("/r/1.4", "/i/produce.3", 16);
     dbL.addRecipeIngredient("/r/1.4", "/i/produce.4", 12);
@@ -147,5 +157,6 @@ public class RecipeMatchTest {
     dbL.addRecipeIngredient("/r/1.4", "/i/herb.1", 1);
     dbL.addRecipeIngredient("/r/1.4", "/i/poultry.1", 8);
     dbL.addRecipeIngredient("/r/1.4", "/i/dairy.3.3", 7);
+    }
   }
 }
