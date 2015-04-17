@@ -97,6 +97,22 @@ public class DBLinkTest {
   }
 
   @Test
+  public void getInstructionsByRecipe() {
+    try {
+      DBLink db = new DBLink("databases/cookups.sqlite3");
+      String instr = "1. Cook pasta al dente "
+          + "2. Mix all other ingredients. Add pasta while it is still warm. "
+          + "Garnish with shredded carrots, cucumber or scallions";
+      // System.out.println(db.getInstructionsByRecipe("/r/1.5"));
+      assertTrue(db.getInstructionsByRecipe("/r/1.5")
+                   .equals(instr));
+
+    } catch (ClassNotFoundException | SQLException e) {
+      fail();
+    }
+  }
+
+  @Test
   public void getIngredientsByRecipe() {
     try {
       DBLink db = new DBLink("databases/cookups.sqlite3");
