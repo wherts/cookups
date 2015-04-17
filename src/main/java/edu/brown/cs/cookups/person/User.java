@@ -49,5 +49,18 @@ public class User implements Person {
     // TODO Auto-generated method stub
     return null;
   }
+  
+  @Override
+  public boolean equals(Object o) {
+	  if (this == o) {
+		  return true;
+	  }
+	  
+	  if (!(o instanceof User)) {
+		  return false;
+	  }
+	  
+	  return this.id.equals(((User) o).id());
+  }
 
 }

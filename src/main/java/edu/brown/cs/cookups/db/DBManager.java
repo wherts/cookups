@@ -1,14 +1,14 @@
 package edu.brown.cs.cookups.db;
 
 import java.util.List;
+import java.util.Set;
 
 import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.Person;
+import edu.brown.cs.cookups.person.PersonManager;
 
 public interface DBManager {
-
-  public Person getProfileById(String id);
 
   public void addRecipe(String name, String id, String text);
 
@@ -33,15 +33,20 @@ public interface DBManager {
 
   public boolean hasPersonByID(String id);
 
-  public List<Person> getPersonsByName(String name);
+  public boolean hasPersonByName(String name);
+
+  public List<Person> getPersonsByName(String name,
+      PersonManager people);
 
   public String getIngredientNameByID(String id);
 
-  public String getIngredientIDbyName(String name);
+  public String getIngredientIDByName(String name);
 
   public List<String> getAllIngredientNames();
 
-  public List<Recipe> getRecipesWithIngredient(String id);
+  public Set<Recipe> getRecipesWithIngredient(String id);
+
+  public String getInstructionsByRecipe(String id);
 
   public List<Ingredient> getIngredientsByRecipe(String id);
 
