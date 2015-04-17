@@ -29,22 +29,22 @@ public class DBLinkTest {
 		}
 	}
 	
-	@Test
-	public void getUserByNameTest() {
-		try {
-			DBLink db = new DBLink("db.sqlite3");
-			Ingredient i = new Ingredient("i", 1.1, null);
-			Person p = new User("Jerry", "qyrt", Arrays.asList(i));
-			db.addPerson(p);
-			Person q = db.getPersonByName("Jerry");
-			db.removePersonById("qyrt");
-			assertTrue(q.id().equals("qyrt"));
-			assertTrue(q.name().equals("Jerry"));
-			assertTrue(q.ingredients().get(0).id().equals("i"));
-		} catch (ClassNotFoundException | SQLException e) {
-			fail();
-		}
-	}
+//	@Test
+//	public void getUserByNameTest() {
+//		try {
+//			DBLink db = new DBLink("db.sqlite3");
+//			Ingredient i = new Ingredient("i", 1.1, null);
+//			Person p = new User("Jerry", "qyrt", Arrays.asList(i));
+//			db.addPerson(p);
+//			Person q = db.getsPersonByName("Jerry");
+//			db.removePersonById("qyrt");
+//			assertTrue(q.id().equals("qyrt"));
+//			assertTrue(q.name().equals("Jerry"));
+//			assertTrue(q.ingredients().get(0).id().equals("i"));
+//		} catch (ClassNotFoundException | SQLException e) {
+//			fail();
+//		}
+//	}
 	
 	@Test
 	public void getUserByIDTest() {

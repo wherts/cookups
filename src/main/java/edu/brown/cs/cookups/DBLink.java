@@ -21,12 +21,15 @@ public class DBLink {
   public static final String USER_INGREDIENT = "user_ingredient(user TEXT, id TEXT, qty FLOAT)";
   public static final String INGREDIENT_NAME = "ingredient_name(id TEXT, name TEXT)";
   public static final String RECIPE_INGREDIENT = "recipe_ingredient(recipe TEXT, ingredient TEXT, qty FLOAT)";
-  public static final String[] tables = { USER,
-      USER_INGREDIENT, INGREDIENT_NAME, RECIPE_INGREDIENT };
+  public static final String RECIPE = "recipe(id TEXT, name TEXT, instructions TEXT)";
+  public static final String[] tables = {USER,
+      USER_INGREDIENT, INGREDIENT_NAME, RECIPE_INGREDIENT, RECIPE};
   public static final int ID_IDX = 1;
   public static final int NAME_IDX = 2;
   public static final int INGREDIENT_IDX = 2;
   public static final int INGREDIENT_QTY_IDX = 3;
+  public static final int RECIPE_TEXT_IDX = 3;
+  public static final int QTY_IDX = 3;
 
   public DBLink(String db) throws ClassNotFoundException,
       SQLException {
@@ -57,8 +60,32 @@ public class DBLink {
     prep.close();
   }
 
+  public void addRecipe(String name, String id, String text)
+    throws SQLException {
+    String command = "INSERT OR IGNORE INTO recipe VALUE (?, ?, ?)";
+    try (PreparedStatement prep = conn.prepareStatement(command)) {
+      prep.setString(ID_IDX, id);
+      prep.setString(NAME_IDX, name);
+      prep.setString(RECIPE_TEXT_IDX, text);
+      prep.addBatch();
+      prep.executeBatch();
+    }
+  }
+
+  public void addRecipeIngredient(String recipe, String id, float qty)
+    throws SQLException {
+    String command = "INSERT OR IGNORE INTO recipe_ingredient VALUE (?, ?, ?)";
+    try (PreparedStatement prep = conn.prepareStatement(command)) {
+      prep.setString(ID_IDX, recipe);
+      prep.setString(INGREDIENT_IDX, id);
+      prep.setFloat(QTY_IDX, qty);
+      prep.addBatch();
+      prep.executeBatch();
+    }
+  }
+
   public List<Person> getPersonsByName(String name,
-      People people) throws SQLException {
+      PersonManager people) throws SQLException {
     String query = "SELECT * FROM user WHERE name = ?";
     PreparedStatement prep = conn.prepareStatement(query);
     prep.setString(1, name);
