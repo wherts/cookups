@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -72,7 +73,7 @@ public class DBLinkTest {
     try {
       DBLink db = new DBLink("databases/cookups.sqlite3");
       // butter
-      List<Recipe> recipes = db.getRecipesWithIngredient("/i/dairy.5");
+      Set<Recipe> recipes = db.getRecipesWithIngredient("/i/dairy.5");
       assertTrue(recipes.size() == 3);
       List<String> recipeIDs = new ArrayList<String>();
       for (Recipe r : recipes) {
@@ -85,7 +86,9 @@ public class DBLinkTest {
       // peanut butter
       recipes = db.getRecipesWithIngredient("/i/produce.6");
       assertTrue(recipes.size() == 1);
-      assertTrue(recipes.get(0).id().equals(("/r/1.5")));
+      for (Recipe r : recipes) {
+        assertTrue(r.id().equals("/r/1.5"));
+      }
       recipes = db.getRecipesWithIngredient("nonexistent");
       assertTrue(recipes.isEmpty());
     } catch (ClassNotFoundException | SQLException e) {
