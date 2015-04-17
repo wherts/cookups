@@ -71,13 +71,11 @@ public class RecipeMatchTest {
       fail();
     }
     addRecipes(dbL);
-    List<Person> people = new ArrayList<>();
     List<Ingredient> ings1 = new ArrayList<>();
     ings1.add(new Ingredient("/i/pasta.1", 6, dbL));
-    ings1.add(new Ingredient("/i/dairy.5", 32, dbL));
     ings1.add(new Ingredient("/i/baking.1", 16, dbL));
-    people.add(new User("Wes", "/u/wh7", ings1));
-    List<Recipe> recipes = RecipeMatcher.matchRecipes(people, dbL);
+    chefs.add(new User("Wes", "/u/wh7", ings1));
+    List<Recipe> recipes = RecipeMatcher.matchRecipes(chefs, dbL);
     assertTrue(recipes.size() == 1);
     Recipe r = recipes.get(0);
     assertTrue(recipes.get(0).id().equals("/r/1.5"));
@@ -85,12 +83,40 @@ public class RecipeMatchTest {
     for (Ingredient i : toBuy) {
       System.out.printf("ID: %s AMT: %f%n", i.id(), i.ounces());
     }
-
   }
 
   @Test
-  public void recipeMatchingTwoPerson() {
-    assertTrue(true);
+  public void recipeMatchingTwoPerson() throws SQLException {
+    List<Person> chefs = new ArrayList<>();
+    DBLink dbL = null;
+    try {
+      dbL = new DBLink("databases/cookups.sqlite3");
+    } catch (ClassNotFoundException | SQLException e) {
+      System.err.println("TESTING ERROR");
+      fail();
+    }
+    addRecipes(dbL);
+    List<Ingredient> ings1 = new ArrayList<>();
+    List<Ingredient> ings2 = new ArrayList<>();
+    //wes ingredients
+    ings1.add(new Ingredient("/i/produce.3", 16, dbL));
+    ings1.add(new Ingredient("/i/produce.4", 16, dbL));
+    ings1.add(new Ingredient("/i/herb.1", 2, dbL));
+    //dylan ingredients
+    ings2.add(new Ingredient("/i/dairy.3.3", 8, dbL));
+    ings2.add(new Ingredient("/i/poultry.1", 2, dbL));
+    chefs.add(new User("Wes", "/u/wh7", ings1));
+    chefs.add(new User("Dylan", "/u/dgattey", ings2));
+    List<Recipe> recipes = RecipeMatcher.matchRecipes(chefs, dbL);
+    System.out.println(recipes.size());
+    for (Recipe r : recipes) {
+      System.out.println(r.id());
+      List<Ingredient> toBuy = r.shoppingList();
+      for (Ingredient i : toBuy) {
+        System.out.printf("ID: %s AMT: %f%n", i.id(), i.ounces());
+      }
+    }
+    
   }
 
   private void addRecipes(DBLink dbL) throws SQLException {

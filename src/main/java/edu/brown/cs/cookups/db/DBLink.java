@@ -18,7 +18,6 @@ import edu.brown.cs.cookups.person.PersonManager;
 import edu.brown.cs.cookups.person.User;
 
 public class DBLink implements DBManager {
-
   private Connection conn;
   private static final Map<String, String> INGREDIENT_NAME_CACHE = new HashMap<String, String>();
   private static final Map<String, Recipe> RECIPE_CACHE = new HashMap<String, Recipe>();
@@ -385,7 +384,7 @@ public class DBLink implements DBManager {
   }
 
   public List<Ingredient> getIngredientsByRecipe(String id) {
-    String query = "SELECT ingredient FROM recipe_ingredient WHERE recipe = ?";
+    String query = "SELECT * FROM recipe_ingredient WHERE recipe = ?";
     List<Ingredient> ingredients = new ArrayList<>();
     try (PreparedStatement prep = conn.prepareStatement(query)) {
       prep.setString(1, id);
