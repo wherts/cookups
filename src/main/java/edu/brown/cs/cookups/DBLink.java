@@ -63,7 +63,7 @@ public class DBLink {
 
   public void addRecipe(String name, String id, String text)
     throws SQLException {
-    String command = "INSERT OR IGNORE INTO recipe VALUE (?, ?, ?)";
+    String command = "INSERT OR IGNORE INTO recipe VALUES (?, ?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(command)) {
       prep.setString(ID_IDX, id);
       prep.setString(NAME_IDX, name);
@@ -75,7 +75,7 @@ public class DBLink {
 
   public void addRecipeIngredient(String recipe, String id,
       float qty) throws SQLException {
-    String command = "INSERT OR IGNORE INTO recipe_ingredient VALUE (?, ?, ?)";
+    String command = "INSERT OR IGNORE INTO recipe_ingredient VALUES (?, ?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(command)) {
       prep.setString(ID_IDX, recipe);
       prep.setString(INGREDIENT_IDX, id);

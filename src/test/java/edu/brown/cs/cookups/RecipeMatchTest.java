@@ -60,9 +60,15 @@ public class RecipeMatchTest {
       fail();
     }
     addRecipes(dbL);
+    List<Person> people = new ArrayList<>();
+    List<Ingredient> ings1 = new ArrayList<>();
+    ings1.add(new Ingredient("/i/pasta.1", 6, dbL));
+    ings1.add(new Ingredient("/i/dairy.5", 32, dbL));
+    people.add(new User("Wes", "/u/wh7", ings1));
    }
 
   private void addRecipes(DBLink dbL) throws SQLException {
+    System.out.println("NEW RECIPES");
     String instr = "1. Cook pasta al dente "
         + "2. Mix all other ingredients. Add pasta while it is still warm. "
         + "Garnish with shredded carrots, cucumber or scallions";
