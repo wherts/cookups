@@ -66,18 +66,19 @@ public class RecipeMatchTest {
     String instr = "1. Cook pasta al dente "
         + "2. Mix all other ingredients. Add pasta while it is still warm. "
         + "Garnish with shredded carrots, cucumber or scallions";
-    dbL.addRecipe("Peanut Butter Sesame Noodles", "pbsr", instr);
-    dbL.addRecipeIngredient("pbsr", "angel hair pasta", 16);
-    dbL.addRecipeIngredient("pbsr", "peanut butter", 8);
-    dbL.addRecipeIngredient("pbsr", "sesame oil", (float) 0.5);
-    dbL.addRecipeIngredient("pbsr", "hot chili oil", 2);
-    dbL.addRecipeIngredient("pbsr", "soy sauce", 2);
-    dbL.addRecipeIngredient("pbsr", "red-wine vinegar", 4);
-    dbL.addRecipeIngredient("pbsr", "light brown sugar", 4);
-    dbL.addRecipeIngredient("pbsr", "hot water", 4);
+    dbL.addRecipe("Peanut Butter Sesame Noodles", "/r/1.5", instr);
+    dbL.addRecipeIngredient("/r/1.5", "/i/pasta.1", 16);
+    dbL.addRecipeIngredient("/r/1.5", "/i/produce.6", 8);
+    dbL.addRecipeIngredient("/r/1.5", "/i/liquid.5", (float) 0.5);
+    dbL.addRecipeIngredient("/r/1.5", "/i/liquid.6", 2);
+    dbL.addRecipeIngredient("/r/1.5", "/i/liquid.7", 2);
+    dbL.addRecipeIngredient("/r/1.5", "/i/liquid.2.3", 4);
+    dbL.addRecipeIngredient("/r/1.5", "/i/baking.1", 4);
+    dbL.addRecipeIngredient("/r/1.5", "/i/liquid.0", 4);
     instr = "1.Cube Bread and allow to sit over night "
-        + "2. Set oven to 325F"
-        + "2. Combine milk, cream, eggs, sherry, nutmeg, "
+        + "2. Carmelize onions."
+        + "3. Set oven to 325F"
+        + "4. Combine milk, cream, eggs, sherry, nutmeg, "
         + "salt, pepper, and half the onions in a blender."
         + "Process until combined."
         + "Toss remaining onions with bread and spread over bottom of 9x13 baking dish "
@@ -85,36 +86,61 @@ public class RecipeMatchTest {
         + "Top with Parm and pour cream over bread "
         + "Let it sit for at least an hour then bake until custard is set, about 1hr ";
     dbL.addRecipe("Savory Bread Pudding with Onions and Gruyere",
-                  "sbp", instr);
-    dbL.addRecipeIngredient("sbp", "Double Cream", 12);
-    dbL.addRecipeIngredient("sbp", "Milk", 12);
-    dbL.addRecipeIngredient("sbp", "Eggs", 6);
-    dbL.addRecipeIngredient("sbp", "Sherry", 4); 
-    dbL.addRecipeIngredient("sbp", "Nutmeg", (float) 0.05); 
-    dbL.addRecipeIngredient("sbp", "Large onions, caramelized", 32);
-    dbL.addRecipeIngredient("sbp", "Loaf sandwich bread", 32);
-    dbL.addRecipeIngredient("sbp", "Gruyere", 24);
-    dbL.addRecipeIngredient("sbp", "Parmensano-Reggiano", 4);
+                  "/r/1.1", instr);
+    dbL.addRecipeIngredient("/r/1.1", "/i/dairy.1", 12);
+    dbL.addRecipeIngredient("/r/1.1", "/i/dairy.2.1", 12);
+    dbL.addRecipeIngredient("/r/1.1", "/i/poultry.1", 6);
+    dbL.addRecipeIngredient("/r/1.1", "/i/liquid.1", 4); 
+    dbL.addRecipeIngredient("/r/1.1", "/i/spice.1", (float) 0.05); 
+    dbL.addRecipeIngredient("/r/1.1", "/i/produce.1", 32);
+    dbL.addRecipeIngredient("/r/1.1", "/i/produce.2", 32);
+    dbL.addRecipeIngredient("/r/1.1", "/i/dairy.3.1", 24);
+    dbL.addRecipeIngredient("/r/1.1", "/i/dairy.3.2", 4);
     instr = "1. Simmer potatoes in medium saucepan and "
         + "cook over medium heat until tender, about 20 minutes "
-        + "2. Drain and let potatoes sitCombine milk and salt in pan, "
+        + "2. Drain and let potatoes sit. Combine milk and salt in pan, "
         + "heat milk and mash potatoes into milk."
         + "3. Separately, melt butter and cook over low heat until "
         + "solids are golden brownAdd half of the butter to the potatoes. "
         + "Serve topped with the rest."
         + "Season with salt and pepper to taste";
-    dbL.addRecipe("Brown Butter Mashed Potatoes", "bbmp", instr);
-    dbL.addRecipeIngredient("bbmp", "potatoes", 16);
-    dbL.addRecipeIngredient("bbmp", "butter", 4);
-    dbL.addRecipeIngredient("bbmp", "whole milk", 8);
-    instr = "";
-    dbL.addRecipe("French Onion Soup", "fos", instr);
-    dbL.addRecipeIngredient("fos", "Butter", 1);
-    dbL.addRecipeIngredient("fos", "Onions, spanish", 128);
-    dbL.addRecipeIngredient("fos", "Baguette", 1);
-    dbL.addRecipeIngredient("fos", "Sherry Vinegar", 3);
-    dbL.addRecipeIngredient("fos"   );
-    dbL.addRecipeIngredient("fos"   );
-    dbL.addRecipeIngredient("fos"   );
+    dbL.addRecipe("Brown Butter Mashed Potatoes", "/r/1.2", instr);
+    dbL.addRecipeIngredient("/r/1.2", "/i/produce.3", 16);
+    dbL.addRecipeIngredient("/r/1.2", "/i/dairy.5", 4);
+    dbL.addRecipeIngredient("/r/1.2", "/i/dairy.2.1", 8);
+    instr = "Use a pot large enough to hold all the onions, "
+        + "place over medium heat and melt butter. "
+        + "Add onions, sprinkle with 2t salt, cover, and cook "
+        + "until unions are heated through and start to steam. "
+        + "Uncover, reduce heat to low and cook, stirring occasionally. "
+        + "Season with pepperPreheat oven to 200F, place bread in oven to dry."
+        + "When onions are caramelized, add 6C of water, "
+        + "raise heat to high and simmer the soup, then lower heat again. "
+        + "Add sherry, add red wine and vinegar to balance sweetness and body";
+    dbL.addRecipe("French Onion Soup", "/r/1.3", instr);
+    dbL.addRecipeIngredient("/r/1.3", "/i/dairy.5", 1);
+    dbL.addRecipeIngredient("/r/1.3", "/i/produce.1.1", 128);
+    dbL.addRecipeIngredient("/r/1.3", "/i/produce.2.1", 1);
+    dbL.addRecipeIngredient("/r/1.3", "/i/liquid.2.1", 3);
+    dbL.addRecipeIngredient("/r/1.3", "/i/liquid.3.1", 2);
+    dbL.addRecipeIngredient("/r/1.3", "/i/liquid.2.2", 2);
+    dbL.addRecipeIngredient("/r/1.3", "/i/dairy.3.1", 12);
+    instr = "Set broiler to high "
+        + "Trim asparagus and cut into 1-inch pieces "
+        + "Heat 1/2 of the butter in a skillet, sauté asparagus, "
+        + "corn and scallionsPut vegetables in a bowl with beaten eggs, "
+        + "fold in some of the dillWipe skillet clean, melt "
+        + "remaining butter in skillet. Pour eggs/veggies into the "
+        + "skillet and top with goat cheeseReduce heat on skillet and "
+        + "allow sides to puff up and cookPut skillet under broiler for "
+        + "1 min to set the topAllow frittata to cool and garnish with remaining dill";
+    dbL.addRecipe("Asparagus and Goat Cheese Frittata", "/r/1.4", instr);
+    dbL.addRecipeIngredient("/r/1.4", "/i/produce.3", 16);
+    dbL.addRecipeIngredient("/r/1.4", "/i/produce.4", 12);
+    dbL.addRecipeIngredient("/r/1.4", "/i/dairy.5", 3);
+    dbL.addRecipeIngredient("/r/1.4", "/i/produce.5", 2);
+    dbL.addRecipeIngredient("/r/1.4", "/i/herb.1", 1);
+    dbL.addRecipeIngredient("/r/1.4", "/i/poultry.1", 8);
+    dbL.addRecipeIngredient("/r/1.4", "/i/dairy.6", 7);
   }
 }

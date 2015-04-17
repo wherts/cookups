@@ -55,14 +55,19 @@ public class RecipeMatcher {
 
   public static void buildShoppingList(Map<String, Double> currIngredients,
       Recipe recipe) {
-    for (Ingredient ing : recipe.ingredients()) {
-      if (currIngredients.containsKey(ing.id())) {
-        if (ing.ounces() > currIngredients.get(ing.id())) {
-          recipe.addToShoppingList(ing, ing.ounces() - currIngredients.get(ing.id()));
+    try {
+      for (Ingredient ing : recipe.ingredients()) {
+        if (currIngredients.containsKey(ing.id())) {
+          if (ing.ounces() > currIngredients.get(ing.id())) {
+            recipe.addToShoppingList(ing, ing.ounces() - currIngredients.get(ing.id()));
+          }
+        } else {
+          recipe.addToShoppingList(ing, ing.ounces());
         }
-      } else {
-        recipe.addToShoppingList(ing, ing.ounces());
       }
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
   }  
 }
