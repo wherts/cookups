@@ -2,12 +2,12 @@ package edu.brown.cs.cookups.db;
 
 import java.util.List;
 
-import edu.brown.cs.cookups.Ingredient;
+import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.User;
 
-public interface Manager {
+public interface DBManager {
 
   public User getProfileById(String id);
 
