@@ -87,6 +87,7 @@ public class DBLink implements DBManager {
     }
   }
 
+  @Override
   public void addRecipe(String name, String id, String text) {
     if (hasRecipe(id)) {
       return;
@@ -103,6 +104,7 @@ public class DBLink implements DBManager {
     }
   }
 
+  @Override
   public boolean hasRecipe(String id) {
     boolean toRet = true;
     try {
@@ -120,6 +122,7 @@ public class DBLink implements DBManager {
     return toRet;
   }
 
+  @Override
   public void addRecipeIngredient(String recipe, String id,
       float qty) {
     String command = "INSERT OR IGNORE INTO recipe_ingredient VALUES (?, ?, ?)";
@@ -134,6 +137,7 @@ public class DBLink implements DBManager {
     }
   }
 
+  @Override
   public List<Person> getPersonsByName(String name,
       PersonManager people) {
     String query = "SELECT * FROM user WHERE name = ?";
@@ -150,7 +154,7 @@ public class DBLink implements DBManager {
           id = rs.getString(ID_IDX);
           Person person = people.getPersonIfCached(id);
           if (person == null) {
-            List<Ingredient> ingredients = getUserIngredients(id);
+            List<Ingredient> ingredients = getPersonIngredients(id);
             person = people.cachePerson(id,
                                         rs.getString(NAME_IDX),
                                         ingredients);
@@ -166,6 +170,7 @@ public class DBLink implements DBManager {
     return users;
   }
 
+  @Override
   public Person getPersonById(String id) {
     String query = "SELECT * FROM user WHERE id = ?";
     String name = "";
@@ -187,10 +192,11 @@ public class DBLink implements DBManager {
       e.printStackTrace();
       return null;
     }
-    List<Ingredient> ingredients = getUserIngredients(id);
+    List<Ingredient> ingredients = getPersonIngredients(id);
     return new User(name, id, ingredients);
   }
 
+  @Override
   public void removePersonById(String id) {
     String query = "DELETE FROM user WHERE id = ?";
     try (PreparedStatement prep = conn.prepareStatement(query)) {
@@ -217,6 +223,7 @@ public class DBLink implements DBManager {
     }
   }
 
+  @Override
   public boolean hasPersonByName(String name) {
     boolean toRet = false;
     String query = "SELECT * FROM user WHERE name = ?";
@@ -233,6 +240,7 @@ public class DBLink implements DBManager {
     return toRet;
   }
 
+  @Override
   public boolean hasPersonByID(String id) {
     String query = "SELECT * FROM user WHERE id = ?";
     boolean toRet = false;
@@ -249,7 +257,8 @@ public class DBLink implements DBManager {
     return toRet;
   }
 
-  public List<Ingredient> getUserIngredients(String id) {
+  @Override
+  public List<Ingredient> getPersonIngredients(String id) {
     String query = "SELECT * FROM user_ingredient WHERE user = ?";
     List<Ingredient> toRet = new ArrayList<>();
     try (PreparedStatement prep = conn.prepareStatement(query)) {
@@ -272,6 +281,7 @@ public class DBLink implements DBManager {
     return toRet;
   }
 
+  @Override
   public String getIngredientNameByID(String id) {
     String query = "SELECT name FROM ingredient WHERE id = ?";
     String name = null;
@@ -290,6 +300,7 @@ public class DBLink implements DBManager {
     return name;
   }
 
+  @Override
   public String getRecipeNameByID(String id) {
     String query = "SELECT name FROM recipe WHERE id = ?";
     String name = null;
@@ -310,6 +321,7 @@ public class DBLink implements DBManager {
     return name;
   }
 
+  @Override
   public String getIngredientIDByName(String name) {
     String query = "SELECT id FROM ingredient WHERE name = ?";
     String id = null;
@@ -329,6 +341,7 @@ public class DBLink implements DBManager {
     return id;
   }
 
+  @Override
   public List<String> getAllIngredientNames() {
     String query = "SELECT name FROM ingredient";
     List<String> names = new ArrayList<>();
@@ -347,6 +360,7 @@ public class DBLink implements DBManager {
     return names;
   }
 
+  @Override
   public String getInstructionsByRecipe(String id) {
     String query = "SELECT instructions FROM recipe WHERE id = ?";
     String toReturn = null;
@@ -365,6 +379,7 @@ public class DBLink implements DBManager {
     return toReturn;
   }
 
+  @Override
   public List<Recipe> getRecipesWithIngredient(String id) {
     String query = "SELECT recipe FROM recipe_ingredient WHERE ingredient = ?";
     List<Recipe> recipes = new ArrayList<>();
@@ -384,16 +399,19 @@ public class DBLink implements DBManager {
     return recipes;
   }
 
+  @Override
   public List<Ingredient> getIngredientsByRecipe(String id) {
-    String query = "SELECT ingredient FROM recipe_ingredient WHERE recipe = ?";
+    String query = "SELECT * FROM recipe_ingredient WHERE recipe = ?";
     List<Ingredient> ingredients = new ArrayList<>();
     try (PreparedStatement prep = conn.prepareStatement(query)) {
       prep.setString(1, id);
       try (ResultSet rs = prep.executeQuery()) {
 
         while (rs.next()) {
-          ingredients.add(new Ingredient(rs.getString(INGREDIENT_IDX),
-              rs.getDouble(INGREDIENT_QTY_IDX),
+          String ingredient = rs.getString(2);
+          double qty = rs.getDouble(3);
+          ingredients.add(new Ingredient(ingredient,
+              qty,
               this));
         }
       } catch (SQLException e) {
@@ -424,6 +442,7 @@ public class DBLink implements DBManager {
     return name;
   }
 
+  @Override
   public void removeRecipe(String id) {
 
     String query = "DELETE FROM recipe WHERE id = ?";
@@ -443,6 +462,7 @@ public class DBLink implements DBManager {
 
   }
 
+  @Override
   public void addPerson(Person p) {
     String query = "INSERT OR IGNORE INTO user VALUES (?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(query)) {
@@ -469,32 +489,8 @@ public class DBLink implements DBManager {
   }
 
   @Override
-  public Person getProfileById(String id) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
   public Recipe getRecipeById(String id) {
-    // TODO Auto-generated method stub
-    return null;
+    return new Recipe(id, this);
   }
 
-  @Override
-  public List<Ingredient> getPersonIngredients(String id) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public List<Person> getPersonsByName(String name) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public String getIngredientIDbyName(String name) {
-    // TODO Auto-generated method stub
-    return null;
-  }
 }

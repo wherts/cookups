@@ -93,4 +93,26 @@ public class DBLinkTest {
     }
   }
 
+  @Test
+  public void getIngredientsByRecipe() {
+    try {
+      DBLink db = new DBLink("databases/cookups.sqlite3");
+      List<Ingredient> ingredients = db.getIngredientsByRecipe("/r/1.2");
+      Ingredient i1 = new Ingredient("/i/produce.3",
+          16.0,
+          db);
+      Ingredient i2 = new Ingredient("/i/dairy.5", 4.0, db);
+      Ingredient i3 = new Ingredient("/i/dairy.2.1",
+          8.0,
+          db);
+
+      assertTrue(ingredients.size() == 3);
+      assertTrue(ingredients.contains(i1));
+      assertTrue(ingredients.contains(i2));
+      assertTrue(ingredients.contains(i3));
+    } catch (ClassNotFoundException | SQLException e) {
+      fail();
+    }
+  }
+
 }
