@@ -19,9 +19,9 @@ public class DBLink {
   private static final Map<String, Recipe> RECIPE_CACHE = new HashMap<String, Recipe>();
   public static final String USER = "user(id TEXT, name TEXT)";
   public static final String USER_INGREDIENT = "user_ingredient(user TEXT, id TEXT, qty FLOAT)";
-  public static final String INGREDIENT_NAME = "ingredient_name(id TEXT, name TEXT, PRIMARY KEY ('id'))";
+  public static final String INGREDIENT_NAME = "ingredient_name(id TEXT, name TEXT)";
   public static final String RECIPE_INGREDIENT = "recipe_ingredient(recipe TEXT, ingredient TEXT, qty FLOAT)";
-  public static final String RECIPE = "recipe(id TEXT, name TEXT, instructions TEXT, PRIMARY KEY ('id'))";
+  public static final String RECIPE = "recipe(id TEXT, name TEXT, instructions TEXT)";
   public static final String[] tables = { USER,
       USER_INGREDIENT, INGREDIENT_NAME, RECIPE_INGREDIENT,
       RECIPE };
