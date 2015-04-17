@@ -68,7 +68,6 @@ public class RecipeMatchTest {
    }
 
   private void addRecipes(DBLink dbL) throws SQLException {
-    System.out.println("NEW RECIPES");
     String instr = "1. Cook pasta al dente "
         + "2. Mix all other ingredients. Add pasta while it is still warm. "
         + "Garnish with shredded carrots, cucumber or scallions";
@@ -147,6 +146,6 @@ public class RecipeMatchTest {
     dbL.addRecipeIngredient("/r/1.4", "/i/produce.5", 2);
     dbL.addRecipeIngredient("/r/1.4", "/i/herb.1", 1);
     dbL.addRecipeIngredient("/r/1.4", "/i/poultry.1", 8);
-    dbL.addRecipeIngredient("/r/1.4", "/i/dairy.6", 7);
+    dbL.addRecipeIngredient("/r/1.4", "/i/dairy.3.3", 7);
   }
 }
