@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Random;
 
 import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.food.Recipe;
@@ -28,12 +26,18 @@ public class DBLink {
   public static final String INGREDIENT = "ingredient(id TEXT, name TEXT, PRIMARY KEY(id))";
   public static final String USER_INGREDIENT = "user_ingredient(user TEXT, ingredient TEXT, qty FLOAT)";
   public static final String RECIPE = "recipe(id TEXT, name TEXT, instructions TEXT, PRIMARY KEY(id))";
-  public static final String RECIPE_INGREDIENT = "recipe_ingredient(recipe TEXT, ingredient TEXT, qty FLOAT" +
-	  						", FOREIGN KEY(recipe) REFERENCES recipe(id) ON DELETE CASCADE ON UPDATE CASCADE)";
-	  						/*", FOREIGN KEY(ingredient) REFERENCES ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)"; */
+  public static final String RECIPE_INGREDIENT = "recipe_ingredient(recipe TEXT, ingredient TEXT, qty FLOAT"
+      + ", FOREIGN KEY(recipe) REFERENCES recipe(id) ON DELETE CASCADE ON UPDATE CASCADE)";
+  /*
+   * ", FOREIGN KEY(ingredient) REFERENCES ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)"
+   * ;
+   */
   public static final String[] TABLE_SCHEMA = { USER,
-       INGREDIENT, USER_INGREDIENT, RECIPE, RECIPE_INGREDIENT };
-  public static final String[] TABLES = {"user", "ingredient", "user_ingredient", "recipe", "recipe_ingredient"};
+      INGREDIENT, USER_INGREDIENT, RECIPE,
+      RECIPE_INGREDIENT };
+  public static final String[] TABLES = { "user",
+      "ingredient", "user_ingredient", "recipe",
+      "recipe_ingredient" };
   public static final int ID_IDX = 1;
   public static final int NAME_IDX = 2;
   public static final int INGREDIENT_IDX = 2;
@@ -50,20 +54,17 @@ public class DBLink {
   }
 
   public void init() throws SQLException {
-	  
-	  /*
-	  String drop = "DROP TABLE IF EXISTS "; 
-	  for (String s : TABLES) {
-		  execute(drop + s);
-	  }
-	  
-	  */
-	  
-	  Statement stat = conn.createStatement();
-	  stat.executeUpdate("PRAGMA foreign_keys = ON;");
-	  
+
+    /*
+     * String drop = "DROP TABLE IF EXISTS "; for (String s : TABLES) {
+     * execute(drop + s); }
+     */
+
+    Statement stat = conn.createStatement();
+    stat.executeUpdate("PRAGMA foreign_keys = ON;");
+
     String create = "CREATE TABLE IF NOT EXISTS ";
-	 
+
     for (String s : TABLE_SCHEMA) {
       String schema = create + s;
       execute(schema);
@@ -85,9 +86,9 @@ public class DBLink {
 
   public void addRecipe(String name, String id, String text)
     throws SQLException {
-	if (hasRecipe(id)) {
-		return;
-	}
+    if (hasRecipe(id)) {
+      return;
+    }
     String command = "INSERT OR IGNORE INTO recipe VALUES (?, ?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(command)) {
       prep.setString(ID_IDX, id);
@@ -97,24 +98,23 @@ public class DBLink {
       prep.executeBatch();
     }
   }
-  
+
   public boolean hasRecipe(String id) {
-	  boolean toRet = true;
-	  try {
-	  String query = "SELECT * FROM recipe WHERE id = ?";
-	    PreparedStatement prep = conn.prepareStatement(query);
-	    prep = conn.prepareStatement(query);
-	    prep.setString(1, id);
-	    ResultSet rs = prep.executeQuery();
-	    toRet = rs.next();
-	    prep.close();
-	    rs.close();
-	  } catch (SQLException e) {
-		  e.printStackTrace();
-	  }
-	    return toRet;
+    boolean toRet = true;
+    try {
+      String query = "SELECT * FROM recipe WHERE id = ?";
+      PreparedStatement prep = conn.prepareStatement(query);
+      prep = conn.prepareStatement(query);
+      prep.setString(1, id);
+      ResultSet rs = prep.executeQuery();
+      toRet = rs.next();
+      prep.close();
+      rs.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return toRet;
   }
-  
 
   public void addRecipeIngredient(String recipe, String id,
       float qty) throws SQLException {
@@ -193,7 +193,8 @@ public class DBLink {
     prep.close();
   }
 
-  public boolean hasPersonByName(String name) throws SQLException {
+  public boolean hasPersonByName(String name)
+    throws SQLException {
     String query = "SELECT * FROM user WHERE name = ?";
     PreparedStatement prep = conn.prepareStatement(query);
     prep.setString(1, name);
@@ -202,31 +203,31 @@ public class DBLink {
     rs.close();
     return toRet;
   }
-  
-  public boolean hasPersonByID(String id) throws SQLException {
-	    String query = "SELECT * FROM user WHERE id = ?";
-	    PreparedStatement prep = conn.prepareStatement(query);
-	    prep.setString(1, id);
-	    ResultSet rs = prep.executeQuery();
-	    boolean toRet = rs.next();
-	    rs.close();
-	    return toRet;
-	  }
-  
-  
 
-  public List<Ingredient> getUserIngredients(String id) throws SQLException {
+  public boolean hasPersonByID(String id)
+    throws SQLException {
+    String query = "SELECT * FROM user WHERE id = ?";
+    PreparedStatement prep = conn.prepareStatement(query);
+    prep.setString(1, id);
+    ResultSet rs = prep.executeQuery();
+    boolean toRet = rs.next();
+    rs.close();
+    return toRet;
+  }
+
+  public List<Ingredient> getUserIngredients(String id)
+    throws SQLException {
     String query = "SELECT * FROM user_ingredient WHERE user = ?";
     PreparedStatement prep = conn.prepareStatement(query);
-     prep.setString(1, id);
-     ResultSet rs = prep.executeQuery();
-     List<Ingredient> toRet = new ArrayList<>();
-     while(rs.next()) {
-       String ingredID = rs.getString(INGREDIENT_IDX);
-       double qty = rs.getDouble(INGREDIENT_QTY_IDX);
-       toRet.add(new Ingredient(ingredID, qty, this));
-     }
-     return toRet;
+    prep.setString(1, id);
+    ResultSet rs = prep.executeQuery();
+    List<Ingredient> toRet = new ArrayList<>();
+    while (rs.next()) {
+      String ingredID = rs.getString(INGREDIENT_IDX);
+      double qty = rs.getDouble(INGREDIENT_QTY_IDX);
+      toRet.add(new Ingredient(ingredID, qty, this));
+    }
+    return toRet;
   }
 
   public String getIngredientNameByID(String id)
@@ -339,59 +340,23 @@ public class DBLink {
     return name;
   }
 
-  public void addRecipe(String name, String instructions,
-      Map<String, Double> ingredientIDandQTYs)
-    throws SQLException {
-    Random rand = new Random();
-    int id = rand.nextInt(100000 - 10000) + 10000;
-    boolean notUnique = true;
-    while (notUnique) {
-      String query = "SELECT * FROM recipe WHERE id = ?";
-      PreparedStatement prep = conn.prepareStatement(query);
-      prep.setString(1, Integer.toString(id));
-      ResultSet rs = prep.executeQuery();
-      notUnique = rs.next();
-      rs.close();
-      prep.close();
-    }
-    String query = "INSERT OR IGNORE INTO recipe VALUES (?, ?, ?)";
-    PreparedStatement prep = conn.prepareStatement(query);
-    prep.setString(1, Integer.toString(id));
-    prep.setString(2, name);
-    prep.setString(3, instructions);
-    prep.addBatch();
-    prep.executeBatch();
-    prep.close();
-
-    query = "INSERT OR IGNORE INTO recipe_ingredient VALUES (?, ?, ?)";
-    prep = conn.prepareStatement(query);
-    prep.setString(1, Integer.toString(id));
-    for (Entry<String, Double> e : ingredientIDandQTYs.entrySet()) {
-      prep.setString(2, e.getKey());
-      prep.setString(3, e.getValue().toString());
-      prep.addBatch();
-    }
-    prep.executeBatch();
-    prep.close();
-  }
-  
   public void removeRecipe(String id) {
-	  try{
-	  String query = "DELETE FROM recipe WHERE id = ?";
-	    PreparedStatement prep = conn.prepareStatement(query);
-	    prep.setString(1, id);
-	    prep.executeUpdate();
-	   
-	   query = "DELETE FROM recipe_ingredient WHERE recipe = ?" ;
-	    prep = conn.prepareStatement(query);
-	   prep.setString(1, id);
-	   prep.executeUpdate();
-			prep.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	  
+    try {
+      String query = "DELETE FROM recipe WHERE id = ?";
+      PreparedStatement prep = conn.prepareStatement(query);
+      prep.setString(1, id);
+      prep.executeUpdate();
+
+      query = "DELETE FROM recipe_ingredient WHERE recipe = ?";
+      prep = conn.prepareStatement(query);
+      prep.setString(1, id);
+      prep.executeUpdate();
+      prep.close();
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
   }
 
   public void addPerson(Person p) throws SQLException {
@@ -403,12 +368,12 @@ public class DBLink {
     prep.executeBatch();
     prep.close();
 
-    for (Ingredient i: p.ingredients()) {
+    for (Ingredient i : p.ingredients()) {
       addUserIngredient(p.id(), i);
     }
   }
 
-  public void execute(String schema) throws SQLException {
+  private void execute(String schema) throws SQLException {
     PreparedStatement prep = conn.prepareStatement(schema);
     prep.execute();
     prep.close();
