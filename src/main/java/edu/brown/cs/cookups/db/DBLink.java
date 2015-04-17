@@ -17,7 +17,7 @@ import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.PersonManager;
 import edu.brown.cs.cookups.person.User;
 
-public class DBLink {
+public class DBLink implements DBManager {
 
   private Connection conn;
   private static final Map<String, String> INGREDIENT_NAME_CACHE = new HashMap<String, String>();
@@ -71,21 +71,23 @@ public class DBLink {
     }
   }
 
-  public void addUserIngredient(String id, Ingredient i)
-    throws SQLException {
+  @Override
+  public void addUserIngredient(String id, Ingredient i) {
     String query = "INSERT OR IGNORE INTO user_ingredient VALUES (?, ?, ?)";
-    PreparedStatement prep = conn.prepareStatement(query);
-    prep = conn.prepareStatement(query);
-    prep.setString(ID_IDX, id);
-    prep.setString(INGREDIENT_IDX, i.id());
-    prep.setFloat(INGREDIENT_QTY_IDX, (float) i.ounces());
-    prep.addBatch();
-    prep.executeBatch();
-    prep.close();
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+
+      prep.setString(ID_IDX, id);
+      prep.setString(INGREDIENT_IDX, i.id());
+      prep.setFloat(INGREDIENT_QTY_IDX, (float) i.ounces());
+      prep.addBatch();
+      prep.executeBatch();
+      prep.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
-  public void addRecipe(String name, String id, String text)
-    throws SQLException {
+  public void addRecipe(String name, String id, String text) {
     if (hasRecipe(id)) {
       return;
     }
@@ -96,6 +98,8 @@ public class DBLink {
       prep.setString(RECIPE_TEXT_IDX, text);
       prep.addBatch();
       prep.executeBatch();
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
   }
 
@@ -117,7 +121,7 @@ public class DBLink {
   }
 
   public void addRecipeIngredient(String recipe, String id,
-      float qty) throws SQLException {
+      float qty) {
     String command = "INSERT OR IGNORE INTO recipe_ingredient VALUES (?, ?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(command)) {
       prep.setString(ID_IDX, recipe);
@@ -125,199 +129,279 @@ public class DBLink {
       prep.setFloat(QTY_IDX, qty);
       prep.addBatch();
       prep.executeBatch();
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
   }
 
   public List<Person> getPersonsByName(String name,
-      PersonManager people) throws SQLException {
+      PersonManager people) {
     String query = "SELECT * FROM user WHERE name = ?";
-    PreparedStatement prep = conn.prepareStatement(query);
-    prep.setString(1, name);
     List<Person> users = new ArrayList<>();
-    ResultSet rs = prep.executeQuery();
-    if (rs == null) {
-      return null;
-    }
-    String id = "";
-    while (rs.next()) {
-      id = rs.getString(ID_IDX);
-      Person person = people.getPersonIfCached(id);
-      if (person == null) {
-        List<Ingredient> ingredients = getUserIngredients(id);
-        person = people.cachePerson(id,
-                                    rs.getString(NAME_IDX),
-                                    ingredients);
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, name);
+
+      try (ResultSet rs = prep.executeQuery()) {
+        if (rs == null) {
+          return null;
+        }
+        String id = "";
+        while (rs.next()) {
+          id = rs.getString(ID_IDX);
+          Person person = people.getPersonIfCached(id);
+          if (person == null) {
+            List<Ingredient> ingredients = getUserIngredients(id);
+            person = people.cachePerson(id,
+                                        rs.getString(NAME_IDX),
+                                        ingredients);
+          }
+          users.add(person);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
       }
-      users.add(person);
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-    rs.close();
-    prep.close();
     return users;
   }
 
-  public Person getPersonById(String id)
-    throws SQLException {
+  public Person getPersonById(String id) {
     String query = "SELECT * FROM user WHERE id = ?";
-    PreparedStatement prep = conn.prepareStatement(query);
-    prep.setString(1, id);
-    ResultSet rs = prep.executeQuery();
-    if (rs == null) {
+    String name = "";
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, id);
+      try (ResultSet rs = prep.executeQuery()) {
+        if (rs == null) {
+          return null;
+        }
+
+        while (rs.next()) {
+          name = rs.getString(NAME_IDX);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+        return null;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
-    String name = "";
-    while (rs.next()) {
-      name = rs.getString(NAME_IDX);
-    }
-    rs.close();
-    prep.close();
     List<Ingredient> ingredients = getUserIngredients(id);
     return new User(name, id, ingredients);
   }
 
-  public void removePersonById(String id)
-    throws SQLException {
+  public void removePersonById(String id) {
     String query = "DELETE FROM user WHERE id = ?";
-    PreparedStatement prep = conn.prepareStatement(query);
-    prep.setString(1, id);
-    prep.executeUpdate();
-    prep.close();
-    removePersonIngredients(id);
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, id);
+      prep.executeUpdate();
+      prep.close();
+      removePersonIngredients(id);
+    } catch (SQLException e) {
+      e.printStackTrace();
+
+    }
   }
 
   private void removePersonIngredients(String id)
     throws SQLException {
     String query = "DELETE FROM user_ingredient WHERE user = ?";
-    PreparedStatement prep = conn.prepareStatement(query);
-    prep.setString(1, id);
-    prep.executeUpdate();
-    prep.close();
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, id);
+      prep.executeUpdate();
+      prep.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+
+    }
   }
 
-  public boolean hasPersonByName(String name)
-    throws SQLException {
+  public boolean hasPersonByName(String name) {
+    boolean toRet = false;
     String query = "SELECT * FROM user WHERE name = ?";
-    PreparedStatement prep = conn.prepareStatement(query);
-    prep.setString(1, name);
-    ResultSet rs = prep.executeQuery();
-    boolean toRet = rs.next();
-    rs.close();
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, name);
+      try (ResultSet rs = prep.executeQuery()) {
+        toRet = rs.next();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
     return toRet;
   }
 
-  public boolean hasPersonByID(String id)
-    throws SQLException {
+  public boolean hasPersonByID(String id) {
     String query = "SELECT * FROM user WHERE id = ?";
-    PreparedStatement prep = conn.prepareStatement(query);
-    prep.setString(1, id);
-    ResultSet rs = prep.executeQuery();
-    boolean toRet = rs.next();
-    rs.close();
+    boolean toRet = false;
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, id);
+      try (ResultSet rs = prep.executeQuery()) {
+        toRet = rs.next();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
     return toRet;
   }
 
-  public List<Ingredient> getUserIngredients(String id)
-    throws SQLException {
+  public List<Ingredient> getUserIngredients(String id) {
     String query = "SELECT * FROM user_ingredient WHERE user = ?";
-    PreparedStatement prep = conn.prepareStatement(query);
-    prep.setString(1, id);
-    ResultSet rs = prep.executeQuery();
     List<Ingredient> toRet = new ArrayList<>();
-    while (rs.next()) {
-      String ingredID = rs.getString(INGREDIENT_IDX);
-      double qty = rs.getDouble(INGREDIENT_QTY_IDX);
-      toRet.add(new Ingredient(ingredID, qty, this));
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, id);
+      try (ResultSet rs = prep.executeQuery()) {
+
+        while (rs.next()) {
+          String ingredID = rs.getString(INGREDIENT_IDX);
+          double qty = rs.getDouble(INGREDIENT_QTY_IDX);
+          toRet.add(new Ingredient(ingredID, qty, this));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+        return null;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
     }
     return toRet;
   }
 
-  public String getIngredientNameByID(String id)
-    throws SQLException {
+  public String getIngredientNameByID(String id) {
     String query = "SELECT name FROM ingredient WHERE id = ?";
-    PreparedStatement prep = conn.prepareStatement(query);
-    prep.setString(1, id);
-    ResultSet rs = prep.executeQuery();
     String name = null;
-    while (rs.next()) {
-      name = rs.getString(1);
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, id);
+      try (ResultSet rs = prep.executeQuery()) {
+        while (rs.next()) {
+          name = rs.getString(1);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-    rs.close();
-    prep.close();
     return name;
   }
 
-  public String getRecipeNameByID(String id)
-    throws SQLException {
+  public String getRecipeNameByID(String id) {
     String query = "SELECT name FROM recipe WHERE id = ?";
-    PreparedStatement prep = conn.prepareStatement(query);
-    prep.setString(1, id);
-    ResultSet rs = prep.executeQuery();
     String name = null;
-    while (rs.next()) {
-      name = rs.getString(1);
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+
+      prep.setString(1, id);
+      try (ResultSet rs = prep.executeQuery()) {
+
+        while (rs.next()) {
+          name = rs.getString(1);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-    rs.close();
-    prep.close();
     return name;
   }
 
-  public String getIngredientIDByName(String name)
-    throws SQLException {
+  public String getIngredientIDByName(String name) {
     String query = "SELECT id FROM ingredient WHERE name = ?";
-    PreparedStatement prep = conn.prepareStatement(query);
-    prep.setString(1, name);
-    ResultSet rs = prep.executeQuery();
     String id = null;
-    while (rs.next()) {
-      id = rs.getString(1);
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, name);
+
+      try (ResultSet rs = prep.executeQuery()) {
+        while (rs.next()) {
+          id = rs.getString(1);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-    rs.close();
-    prep.close();
     return id;
   }
 
-  public List<String> getAllIngredientNames()
-    throws SQLException {
+  public List<String> getAllIngredientNames() {
     String query = "SELECT name FROM ingredient";
-    PreparedStatement prep = conn.prepareStatement(query);
-    ResultSet rs = prep.executeQuery();
     List<String> names = new ArrayList<>();
-    while (rs.next()) {
-      names.add(rs.getString(1));
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      try (ResultSet rs = prep.executeQuery()) {
+
+        while (rs.next()) {
+          names.add(rs.getString(1));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-    rs.close();
-    prep.close();
     return names;
   }
 
-  public List<Recipe> getRecipesWithIngredient(String id)
-    throws SQLException {
-    String query = "SELECT recipe FROM recipe_ingredient WHERE ingredient = ?";
-    PreparedStatement prep = conn.prepareStatement(query);
-    prep.setString(1, id);
-    ResultSet rs = prep.executeQuery();
-    List<Recipe> recipes = new ArrayList<>();
-    while (rs.next()) {
-      recipes.add(cacheRecipe(rs.getString(1)));
+  public String getInstructionsByRecipe(String id) {
+    String query = "SELECT instructions FROM recipe WHERE id = ?";
+    String toReturn = null;
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, id);
+      try (ResultSet rs = prep.executeQuery()) {
+        if (rs.next()) {
+          toReturn = rs.getString(1);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-    rs.close();
-    prep.close();
+    return toReturn;
+  }
+
+  public List<Recipe> getRecipesWithIngredient(String id) {
+    String query = "SELECT recipe FROM recipe_ingredient WHERE ingredient = ?";
+    List<Recipe> recipes = new ArrayList<>();
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, id);
+      try (ResultSet rs = prep.executeQuery()) {
+
+        while (rs.next()) {
+          recipes.add(cacheRecipe(rs.getString(1)));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
     return recipes;
   }
 
-  public List<Ingredient> getIngredientsByRecipe(String id)
-    throws SQLException {
+  public List<Ingredient> getIngredientsByRecipe(String id) {
     String query = "SELECT ingredient FROM recipe_ingredient WHERE recipe = ?";
-    PreparedStatement prep = conn.prepareStatement(query);
-    prep.setString(1, id);
-    ResultSet rs = prep.executeQuery();
     List<Ingredient> ingredients = new ArrayList<>();
-    while (rs.next()) {
-      ingredients.add(new Ingredient(rs.getString(INGREDIENT_IDX),
-          rs.getDouble(INGREDIENT_QTY_IDX),
-          this));
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, id);
+      try (ResultSet rs = prep.executeQuery()) {
+
+        while (rs.next()) {
+          ingredients.add(new Ingredient(rs.getString(INGREDIENT_IDX),
+              rs.getDouble(INGREDIENT_QTY_IDX),
+              this));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-    rs.close();
-    prep.close();
     return ingredients;
   }
 
@@ -341,41 +425,46 @@ public class DBLink {
   }
 
   public void removeRecipe(String id) {
-    try {
-      String query = "DELETE FROM recipe WHERE id = ?";
-      PreparedStatement prep = conn.prepareStatement(query);
-      prep.setString(1, id);
-      prep.executeUpdate();
 
-      query = "DELETE FROM recipe_ingredient WHERE recipe = ?";
-      prep = conn.prepareStatement(query);
+    String query = "DELETE FROM recipe WHERE id = ?";
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
       prep.setString(1, id);
       prep.executeUpdate();
-      prep.close();
     } catch (SQLException e) {
-      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    query = "DELETE FROM recipe_ingredient WHERE recipe = ?";
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, id);
+      prep.executeUpdate();
+    } catch (SQLException e) {
       e.printStackTrace();
     }
 
   }
 
-  public void addPerson(Person p) throws SQLException {
+  public void addPerson(Person p) {
     String query = "INSERT OR IGNORE INTO user VALUES (?, ?)";
-    PreparedStatement prep = conn.prepareStatement(query);
-    prep.setString(ID_IDX, p.id());
-    prep.setString(NAME_IDX, p.name());
-    prep.addBatch();
-    prep.executeBatch();
-    prep.close();
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(ID_IDX, p.id());
+      prep.setString(NAME_IDX, p.name());
+      prep.addBatch();
+      prep.executeBatch();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
 
     for (Ingredient i : p.ingredients()) {
       addUserIngredient(p.id(), i);
     }
   }
 
-  private void execute(String schema) throws SQLException {
-    PreparedStatement prep = conn.prepareStatement(schema);
-    prep.execute();
-    prep.close();
+  private void execute(String schema) {
+    try (PreparedStatement prep = conn.prepareStatement(schema)) {
+      prep.execute();
+      prep.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 }

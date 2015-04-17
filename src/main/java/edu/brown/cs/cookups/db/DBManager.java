@@ -5,11 +5,10 @@ import java.util.List;
 import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.Person;
-import edu.brown.cs.cookups.person.User;
 
 public interface DBManager {
 
-  public User getProfileById(String id);
+  public Person getProfileById(String id);
 
   public void addRecipe(String name, String id, String text);
 
