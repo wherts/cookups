@@ -13,42 +13,42 @@ public class Ingredient {
   private Date dateCreated;
   private DBLink querier;
   private List<Recipe> recipes;
-  
+
   public Ingredient(String i, double oz, DBLink dbLink) {
     id = i;
     ounces = oz;
     querier = dbLink;
     dateCreated = new Date();
   }
-  
+
   public String id() {
     return id;
   }
-  
+
   public String name() throws SQLException {
     if (name == null) {
       name = querier.ingredientNameCache(id);
     }
     return name;
   }
-  
-  public double ounces() { //amount in ounces
+
+  public double ounces() { // amount in ounces
     return ounces;
   }
-  
-  public double teaspoons() { //amount in teaspoons
+
+  public double teaspoons() { // amount in teaspoons
     return Conversion.teaspoons(ounces);
   }
-  
-  public double tablespoons() { //amount in tablespoons
+
+  public double tablespoons() { // amount in tablespoons
     return Conversion.tablespoons(ounces);
   }
-  
-  public double cups() { //amount in cups
+
+  public double cups() { // amount in cups
     return Conversion.cups(ounces);
   }
-  
-  public double elapsed() { //seconds until expiration
+
+  public double elapsed() { // seconds until expiration
     Date curr = new Date();
     return curr.getTime() - dateCreated.getTime();
   }
@@ -58,5 +58,20 @@ public class Ingredient {
       recipes = querier.getRecipesWithIngredient(id);
     }
     return recipes;
+  }
+
+  // MIGHT FAIL WITH Foating Point error from DB
+  @Override
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    }
+
+    if (!(o instanceof Ingredient)) {
+      return false;
+    }
+
+    Ingredient i = (Ingredient) o;
+    return (this.id.equals(i.id()) && this.ounces() == i.ounces);
   }
 }
