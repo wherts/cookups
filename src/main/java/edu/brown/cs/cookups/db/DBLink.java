@@ -282,6 +282,18 @@ public class DBLink implements DBManager {
     return toRet;
   }
 
+  public void defineIngredient(String id, String name) {
+	  String command = "INSERT OR IGNORE INTO ingredient VALUES (?, ?)";
+	    try (PreparedStatement prep = conn.prepareStatement(command)) {
+	      prep.setString(1, id);
+	      prep.setString(2, name);
+	      prep.addBatch();
+	      prep.executeBatch();
+	    } catch (SQLException e) {
+	      e.printStackTrace();
+	    }
+  }
+  
   @Override
   public String getIngredientNameByID(String id) {
     String query = "SELECT name FROM ingredient WHERE id = ?";
