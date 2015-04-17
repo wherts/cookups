@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import edu.brown.cs.cookups.db.DBLink;
+import edu.brown.cs.cookups.food.Ingredient;
+import edu.brown.cs.cookups.food.Recipe;
+import edu.brown.cs.cookups.person.Person;
+
 public class RecipeMatcher {
 
   public RecipeMatcher() {

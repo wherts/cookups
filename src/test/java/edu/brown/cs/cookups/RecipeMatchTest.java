@@ -11,6 +11,11 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import edu.brown.cs.cookups.db.DBLink;
+import edu.brown.cs.cookups.food.Ingredient;
+import edu.brown.cs.cookups.person.Person;
+import edu.brown.cs.cookups.person.User;
+
 public class RecipeMatchTest {
 
   @Test

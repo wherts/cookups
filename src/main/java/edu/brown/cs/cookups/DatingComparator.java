@@ -2,6 +2,8 @@ package edu.brown.cs.cookups;
 
 import java.util.Comparator;
 
+import edu.brown.cs.cookups.person.Suitor;
+
 public class DatingComparator implements Comparator<Suitor> {
   private Suitor toMatch;
   
