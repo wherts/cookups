@@ -59,30 +59,30 @@ public class RecipeMatchTest {
     assertTrue(map.get("five") == 1109889.0);
   }
 
-  @Test
-  public void recipeMatchingOnePerson() throws SQLException {
-    List<Person> chefs = new ArrayList<>();
-    DBLink dbL = null;
-    try {
-      dbL = new DBLink("databases/cookups.sqlite3");
-    } catch (ClassNotFoundException | SQLException e) {
-      System.err.println("TESTING ERROR");
-      fail();
-    }
-    addRecipes(dbL);
-    List<Ingredient> ings1 = new ArrayList<>();
-    ings1.add(new Ingredient("/i/pasta.1", 6, dbL));
-    ings1.add(new Ingredient("/i/baking.1", 16, dbL));
-    chefs.add(new User("Wes", "/u/wh7", ings1));
-    List<Recipe> recipes = RecipeMatcher.matchRecipes(chefs, dbL);
-    System.out.println(recipes.size());
-//    Recipe r = recipes.get(0);
-//    assertTrue(recipes.get(0).id().equals("/r/1.5"));
-//    List<Ingredient> toBuy = r.shoppingList();
-//    for (Ingredient i : toBuy) {
-//      System.out.printf("ID: %s AMT: %f%n", i.id(), i.ounces());
+//  @Test
+//  public void recipeMatchingOnePerson() throws SQLException {
+//    List<Person> chefs = new ArrayList<>();
+//    DBLink dbL = null;
+//    try {
+//      dbL = new DBLink("databases/cookups.sqlite3");
+//    } catch (ClassNotFoundException | SQLException e) {
+//      System.err.println("TESTING ERROR");
+//      fail();
 //    }
-  }
+//    addRecipes(dbL);
+//    List<Ingredient> ings1 = new ArrayList<>();
+//    ings1.add(new Ingredient("/i/pasta.1", 6, dbL));
+//    ings1.add(new Ingredient("/i/baking.1", 16, dbL));
+//    chefs.add(new User("Wes", "/u/wh7", ings1));
+//    List<Recipe> recipes = RecipeMatcher.matchRecipes(chefs, dbL);
+//    System.out.println(recipes.size());
+////    Recipe r = recipes.get(0);
+////    assertTrue(recipes.get(0).id().equals("/r/1.5"));
+////    List<Ingredient> toBuy = r.shoppingList();
+////    for (Ingredient i : toBuy) {
+////      System.out.printf("ID: %s AMT: %f%n", i.id(), i.ounces());
+////    }
+//  }
 
 //  @Test
 //  public void recipeMatchingTwoPerson() throws SQLException {

@@ -1,0 +1,20 @@
+#title {
+	background-image: url(../assets/cookup-background.png);
+	height: 250px;
+}
+
+#title-text {
+	line-height: 4;
+	font-size: 60px;
+	color: #FFFFFF;
+	text-shadow: 2px 2px #000;
+}
+
+.form-box {
+	padding: 50px 0;
+	color: #FFFFFF;
+}
+
+input {
+	margin: 5px auto;
+}
