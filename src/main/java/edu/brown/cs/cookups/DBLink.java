@@ -62,7 +62,7 @@ public class DBLink {
     String query = "SELECT * FROM user WHERE name = ?";
     PreparedStatement prep = conn.prepareStatement(query);
     prep.setString(1, name);
-    List<Person> users = new ArrayList<Person>();
+    List<Person> users = new ArrayList<>();
     ResultSet rs = prep.executeQuery();
     if (rs == null) {
       return null;
@@ -196,7 +196,7 @@ public class DBLink {
     String query = "SELECT name FROM ingredient_name";
     PreparedStatement prep = conn.prepareStatement(query);
     ResultSet rs = prep.executeQuery();
-    List<String> names = new ArrayList<String>();
+    List<String> names = new ArrayList<>();
     while (rs.next()) {
       names.add(rs.getString(1));
     }
@@ -211,13 +211,29 @@ public class DBLink {
     PreparedStatement prep = conn.prepareStatement(query);
     prep.setString(1, id);
     ResultSet rs = prep.executeQuery();
-    List<Recipe> recipes = new ArrayList<Recipe>();
+    List<Recipe> recipes = new ArrayList<>();
     while (rs.next()) {
       recipes.add(cacheRecipe(rs.getString(1)));
     }
     rs.close();
     prep.close();
     return recipes;
+  }
+  
+  public List<Ingredient> getIngredientsByRecipe(String id)
+      throws SQLException {
+    String query = "SELECT ingredient FROM recipe_ingredient WHERE recipe = ?";
+    PreparedStatement prep = conn.prepareStatement(query);
+    prep.setString(1, id);
+    ResultSet rs = prep.executeQuery();
+    List<Ingredient> ingredients = new ArrayList<>();
+    while (rs.next()) {
+      ingredients.add(new Ingredient(rs.getString(INGREDIENT_IDX),
+          rs.getDouble(INGREDIENT_QTY_IDX), this));
+    }
+    rs.close();
+    prep.close();
+    return ingredients;
   }
 
   public Recipe cacheRecipe(String id) {
