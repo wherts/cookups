@@ -43,7 +43,7 @@ public class RecipeMatcher {
 
   private static List<Recipe> matchHelper(
                                   Map<String, Double> currIngredients,
-                                  int partySize,
+                                  double partySize,
                                   DBLink dbL) throws SQLException {
     List<Recipe> myRecipes = new ArrayList<>();
     Set<String> keys = currIngredients.keySet();

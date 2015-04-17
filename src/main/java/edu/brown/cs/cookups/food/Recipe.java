@@ -58,7 +58,7 @@ public class Recipe {
   public void setName(String n) {
   }
 
-  public Recipe scale(double partySize) throws SQLException {
+  public Recipe scale(double partySize) {
     Recipe toReturn = this;
     List<Ingredient> ingreds = this.ingredients();
     List<Ingredient> scaledIngredients = new ArrayList<>();
