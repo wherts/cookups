@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.junit.Test;
 
@@ -77,13 +76,22 @@ public class RecipeMatchTest {
     ings1.add(new Ingredient("/i/dairy.5", 32, dbL));
     ings1.add(new Ingredient("/i/baking.1", 16, dbL));
     people.add(new User("Wes", "/u/wh7", ings1));
-    List<Recipe> recipes = RecipeMatcher.matchRecipes(people, dbL);
+    List<Recipe> recipes = RecipeMatcher.matchRecipes(people,
+                                                      dbL);
+    if (recipes.size() == 0) {
+      System.out.println("EMPTY");
+    }
+    for (Recipe r : recipes) {
+      System.out.println("Recipe: " + r.id());
+    }
     assertTrue(recipes.size() == 1);
     Recipe r = recipes.get(0);
     assertTrue(recipes.get(0).id().equals("/r/1.5"));
     List<Ingredient> toBuy = r.shoppingList();
     for (Ingredient i : toBuy) {
-      System.out.printf("ID: %s AMT: %f%n", i.id(), i.ounces());
+      System.out.printf("ID: %s AMT: %f%n",
+                        i.id(),
+                        i.ounces());
     }
 
   }

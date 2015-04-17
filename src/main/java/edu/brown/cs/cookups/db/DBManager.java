@@ -1,6 +1,7 @@
 package edu.brown.cs.cookups.db;
 
 import java.util.List;
+import java.util.Set;
 
 import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.food.Recipe;
@@ -43,7 +44,7 @@ public interface DBManager {
 
   public List<String> getAllIngredientNames();
 
-  public List<Recipe> getRecipesWithIngredient(String id);
+  public Set<Recipe> getRecipesWithIngredient(String id);
 
   public String getInstructionsByRecipe(String id);
 

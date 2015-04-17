@@ -2,7 +2,7 @@ package edu.brown.cs.cookups.food;
 
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import edu.brown.cs.cookups.db.DBLink;
 import edu.brown.cs.cookups.person.Conversion;
@@ -12,7 +12,7 @@ public class Ingredient {
   private String id, name;
   private Date dateCreated;
   private DBLink querier;
-  private List<Recipe> recipes;
+  private Set<Recipe> recipes;
 
   public Ingredient(String i, double oz, DBLink dbLink) {
     id = i;
@@ -53,7 +53,7 @@ public class Ingredient {
     return curr.getTime() - dateCreated.getTime();
   }
 
-  public List<Recipe> recipes() throws SQLException {
+  public Set<Recipe> recipes() throws SQLException {
     if (recipes == null) {
       recipes = querier.getRecipesWithIngredient(id);
     }
