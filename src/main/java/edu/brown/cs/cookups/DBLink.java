@@ -133,17 +133,17 @@ public class DBLink {
   }  
 
   public List<Ingredient> getUserIngredients(String id) throws SQLException {
-	  String query = "SELECT * FROM user_ingredient WHERE user = ?";
-		PreparedStatement prep = conn.prepareStatement(query);
-		 prep.setString(1, id);
-		 ResultSet rs = prep.executeQuery();
-		 List<Ingredient> toRet = new ArrayList<>();
-		 while(rs.next()) {
-			 String ingredID = rs.getString(INGREDIENT_IDX);
-			 double qty = rs.getDouble(INGREDIENT_QTY_IDX);
-			 toRet.add(new Ingredient(ingredID, qty, this));
-		 }
-		 return toRet;
+    String query = "SELECT * FROM user_ingredient WHERE user = ?";
+    PreparedStatement prep = conn.prepareStatement(query);
+     prep.setString(1, id);
+     ResultSet rs = prep.executeQuery();
+     List<Ingredient> toRet = new ArrayList<>();
+     while(rs.next()) {
+       String ingredID = rs.getString(INGREDIENT_IDX);
+       double qty = rs.getDouble(INGREDIENT_QTY_IDX);
+       toRet.add(new Ingredient(ingredID, qty, this));
+     }
+     return toRet;
   }
 
   public String getIngredientNameByID(String id)
@@ -255,17 +255,17 @@ public class DBLink {
   }
 
   public void addPerson(Person p) throws SQLException {
-	  String query = "INSERT OR IGNORE INTO user VALUES (?, ?)";
-	  PreparedStatement prep = conn.prepareStatement(query);
-	  prep.setString(ID_IDX, p.id());
-	  prep.setString(NAME_IDX, p.name());
-	  prep.addBatch();
-	  prep.executeBatch();
-	  prep.close();
+    String query = "INSERT OR IGNORE INTO user VALUES (?, ?)";
+    PreparedStatement prep = conn.prepareStatement(query);
+    prep.setString(ID_IDX, p.id());
+    prep.setString(NAME_IDX, p.name());
+    prep.addBatch();
+    prep.executeBatch();
+    prep.close();
 
     for (Ingredient i: p.ingredients()) {
-	    addUserIngredient(p.id(), i);
-	  }
+      addUserIngredient(p.id(), i);
+    }
   }
 
   public void execute(String schema) throws SQLException {

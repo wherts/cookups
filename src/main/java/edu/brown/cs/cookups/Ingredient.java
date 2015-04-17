@@ -29,14 +29,14 @@ public class Ingredient {
     return name;
   }
   
-	public double ounces() { //amount in ounces
-	  return ounces;
-	}
-	
-	public double teaspoons() { //amount in teaspoons
-	  return Converter.teaspoons(ounces);
-	}
-	
+  public double ounces() { //amount in ounces
+    return ounces;
+  }
+  
+  public double teaspoons() { //amount in teaspoons
+    return Converter.teaspoons(ounces);
+  }
+  
   public double tablespoons() { //amount in tablespoons
     return Converter.tablespoons(ounces);
   }
@@ -45,10 +45,10 @@ public class Ingredient {
     return Converter.cups(ounces);
   }
   
-	public double elapsed() { //seconds until expiration
-	  Date curr = new Date();
-	  return curr.getTime() - dateCreated.getTime();
-	}
+  public double elapsed() { //seconds until expiration
+    Date curr = new Date();
+    return curr.getTime() - dateCreated.getTime();
+  }
 
   public List<Recipe> recipes() throws SQLException {
     if (recipes == null) {
