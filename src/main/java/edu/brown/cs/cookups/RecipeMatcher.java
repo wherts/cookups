@@ -47,15 +47,15 @@ public class RecipeMatcher {
                                   DBLink dbL) throws SQLException {
     List<Recipe> myRecipes = new ArrayList<>();
     Set<String> keys = currIngredients.keySet();
+    Set<Recipe> recipesUsing =  new HashSet<>();
     for (String k : keys) {
-      Set<Recipe> recipesUsing = dbL.getRecipesWithIngredient(k);
+      recipesUsing.addAll(dbL.getRecipesWithIngredient(k));
       //update the shopping list
-      for (Recipe recipe : recipesUsing) {
-        System.out.printf("Recipe: %s, scale: %d%n", recipe.id(), partySize);
-        recipe.scale(partySize);
-        buildShoppingList(currIngredients, recipe);
-
-      }
+    }
+    for (Recipe recipe : recipesUsing) {
+      recipe.scale(partySize);
+      buildShoppingList(currIngredients, recipe);
+      myRecipes.add(recipe);
     }
     return myRecipes;
   }

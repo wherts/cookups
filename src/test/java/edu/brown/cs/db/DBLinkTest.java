@@ -240,7 +240,7 @@ public class DBLinkTest {
     try {
       DBLink db = new DBLink("databases/cookups.sqlite3");
       List<Ingredient> ingredients = db.getIngredientsByRecipe("/r/1.2");
-      Ingredient i1 = new Ingredient("/i/produce.3",
+      Ingredient i1 = new Ingredient("/i/produce.10",
           16.0,
           db);
       Ingredient i2 = new Ingredient("/i/dairy.5", 4.0, db);
