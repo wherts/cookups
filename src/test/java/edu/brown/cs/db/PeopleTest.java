@@ -18,9 +18,10 @@ public class PeopleTest {
   @Test
   public void addPersonTest()
     throws ClassNotFoundException, SQLException {
-    DBLink db = new DBLink("db.sqlite3");
+    DBLink db = new DBLink("databases/peopleTest.sqlite3");
     PersonManager people = new PersonManager(db);
     Ingredient i = new Ingredient("i", 1.1, null);
+    db.ingredients().defineIngredient("i", "iodine");
     people.addPerson("Ronald Reagan",
                      "ronald@aol.com",
                      Arrays.asList(i));
@@ -34,8 +35,11 @@ public class PeopleTest {
   @Test
   public void addPersonMultIngredTest()
     throws ClassNotFoundException, SQLException {
-    DBLink db = new DBLink("db.sqlite3");
+    DBLink db = new DBLink("databases/peopleTest.sqlite3");
     PersonManager people = new PersonManager(db);
+    db.ingredients().defineIngredient("i", "iodine");
+    db.ingredients().defineIngredient("j", "jorga");
+    db.ingredients().defineIngredient("k", "kilbasa");
     Ingredient i = new Ingredient("i", 1.1, null);
     Ingredient j = new Ingredient("j", 1.1, null);
     Ingredient k = new Ingredient("k", 1.1, null);
@@ -54,8 +58,9 @@ public class PeopleTest {
   @Test
   public void getPersonTest()
     throws ClassNotFoundException, SQLException {
-    DBLink db = new DBLink("db.sqlite3");
+    DBLink db = new DBLink("databases/peopleTest.sqlite3");
     Ingredient i = new Ingredient("i", 1.1, null);
+    db.ingredients().defineIngredient("i", "iodine");
     Person p = new User("Ronald Reagan",
         "ronald@aol.com",
         Arrays.asList(i));

@@ -10,10 +10,15 @@ public class DBLink implements DBManager {
   private Connection conn;
   public static final String USER = "user(id TEXT, name TEXT, PRIMARY KEY (id))";
   public static final String INGREDIENT = "ingredient(id TEXT, name TEXT, PRIMARY KEY(id))";
-  public static final String USER_INGREDIENT = "user_ingredient(user TEXT, ingredient TEXT, qty FLOAT)";
+  public static final String USER_INGREDIENT = "user_ingredient(user TEXT, ingredient TEXT, qty FLOAT"
+      + ", PRIMARY KEY(user, ingredient)"
+      + ", FOREIGN KEY(user) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE"
+      + ", FOREIGN KEY(ingredient) REFERENCES ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)";
   public static final String RECIPE = "recipe(id TEXT, name TEXT, instructions TEXT, PRIMARY KEY(id))";
   public static final String RECIPE_INGREDIENT = "recipe_ingredient(recipe TEXT, ingredient TEXT, qty FLOAT"
-      + ", FOREIGN KEY(recipe) REFERENCES recipe(id) ON DELETE CASCADE ON UPDATE CASCADE)";
+      + ", PRIMARY KEY(recipe, ingredient)"
+      + ", FOREIGN KEY(recipe) REFERENCES recipe(id) ON DELETE CASCADE ON UPDATE CASCADE"
+      + ", FOREIGN KEY(ingredient) REFERENCES ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)";
   /*
    * ", FOREIGN KEY(ingredient) REFERENCES ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)"
    * ;
@@ -47,10 +52,10 @@ public class DBLink implements DBManager {
 
   public void init() throws SQLException {
 
-    /*
-     * String drop = "DROP TABLE IF EXISTS "; for (String s : TABLES) {
-     * execute(drop + s); }
-     */
+    // String drop = "DROP TABLE IF EXISTS ";
+    // for (String s : TABLES) {
+    // execute(drop + s);
+    // }
 
     Statement stat = conn.createStatement();
     stat.executeUpdate("PRAGMA foreign_keys = ON;");
@@ -58,6 +63,7 @@ public class DBLink implements DBManager {
     String create = "CREATE TABLE IF NOT EXISTS ";
 
     for (String s : TABLE_SCHEMA) {
+      // System.out.println(s);
       String schema = create + s;
       execute(schema);
     }

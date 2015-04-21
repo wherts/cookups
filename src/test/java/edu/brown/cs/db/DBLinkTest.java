@@ -25,6 +25,7 @@ public class DBLinkTest {
     try {
       DBLink db = new DBLink("databases/testdb.sqlite3");
       Ingredient i = new Ingredient("i", 1.1, null);
+      db.ingredients().defineIngredient("i", "iodine");
       Person p = new User("Jerry", "qyrt", Arrays.asList(i));
       db.users().addPerson(p);
       assertTrue(db.users().hasPersonByName("Jerry"));
@@ -40,6 +41,7 @@ public class DBLinkTest {
     try {
       DBLink db = new DBLink("databases/testdb.sqlite3");
       Ingredient i = new Ingredient("i", 1.1, null);
+      db.ingredients().defineIngredient("i", "iodine");
       Person p = new User("Jerry", "qyrt", Arrays.asList(i));
       db.users().addPerson(p);
       Person q = db.users().getPersonById("qyrt");
@@ -58,10 +60,14 @@ public class DBLinkTest {
       DBLink db = new DBLink("databases/peopleTest.sqlite3");
       PersonManager people = new PersonManager(db);
       List<Ingredient> ingreds = new ArrayList<Ingredient>();
-      ingreds.add(new Ingredient("apples", 1.0, db));
-      ingreds.add(new Ingredient("oranges", 2.0, db));
-      ingreds.add(new Ingredient("carrots", 3.0, db));
-      ingreds.add(new Ingredient("cheese", 1.0, db));
+      db.ingredients().defineIngredient("a", "apples");
+      db.ingredients().defineIngredient("o", "oranges");
+      db.ingredients().defineIngredient("c", "carrots");
+      db.ingredients().defineIngredient("ch", "chees");
+      ingreds.add(new Ingredient("a", 1.0, db));
+      ingreds.add(new Ingredient("o", 2.0, db));
+      ingreds.add(new Ingredient("c", 3.0, db));
+      ingreds.add(new Ingredient("ch", 1.0, db));
 
       people.addPerson("Ronald Reagan", "freedom", ingreds);
 
@@ -198,6 +204,10 @@ public class DBLinkTest {
   public void recipeAddIngredientsTest() {
     try {
       DBLink db = new DBLink("databases/recipesTest.sqlite3");
+      db.ingredients().defineIngredient("/i/salt", "salt");
+      db.ingredients().defineIngredient("/i/pepper",
+                                        "pepper");
+      db.ingredients().defineIngredient("/i/pasta", "");
 
       db.recipes().addRecipe("Beef Stew",
                              "/r/stew",
@@ -234,6 +244,10 @@ public class DBLinkTest {
   public void getPersonsByName() {
     try {
       DBLink db = new DBLink("databases/peopleTest.sqlite3");
+      db.ingredients().defineIngredient("/i/freedom",
+                                        "freedom");
+      db.ingredients().defineIngredient("/i/liberty",
+                                        "liberty");
       PersonManager people = new PersonManager(db);
       Person ronald1 = new User("Ronald Reagan",
           "freedom",
