@@ -2,6 +2,10 @@ package edu.brown.cs.cookups;
 
 import java.util.List;
 
+import edu.brown.cs.cookups.food.Ingredient;
+import edu.brown.cs.cookups.schedule.LatLong;
+import edu.brown.cs.cookups.schedule.Schedule;
+
 public interface User {
 
 	/**
@@ -32,7 +36,7 @@ public interface User {
 	  * Gets a User's ingredients.
 	  * @return list of UserIngredients
 	  */
-	List<IngredientProxy> ingredients();
+	List<Ingredient> ingredients();
 
 	/**
 	  * Gets a user's schedule.

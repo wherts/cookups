@@ -1,6 +1,5 @@
-/gpfs/main/home/wh7/course/cs032/autocorrect/src/test/java/edu/brown/cs/wh7/autocorrect/LevTest.java
-/gpfs/main/home/wh7/course/cs032/autocorrect/src/test/java/edu/brown/cs/wh7/autocorrect/RankerTest.java
-/gpfs/main/home/wh7/course/cs032/autocorrect/src/test/java/edu/brown/cs/wh7/autocorrect/BasicTrieTest.java
-/gpfs/main/home/wh7/course/cs032/autocorrect/src/test/java/edu/brown/cs/wh7/autocorrect/EngineTest.java
-/gpfs/main/home/wh7/course/cs032/autocorrect/src/test/java/edu/brown/cs/wh7/autocorrect/WhitespaceTest.java
-/gpfs/main/home/wh7/course/cs032/autocorrect/src/test/java/edu/brown/cs/wh7/autocorrect/SmartRankerTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/cookups/RecipeMatchTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/db/DBLinkTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/db/PeopleTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/cookups/ConversionTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/cookups/DateMatcherTest.java
