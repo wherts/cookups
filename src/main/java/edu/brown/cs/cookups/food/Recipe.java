@@ -24,21 +24,24 @@ public class Recipe {
 
   public String name() {
     if (name == null) {
-      name = querier.getIngredientNameByID(id);
+      name = querier.ingredients()
+                    .getIngredientNameByID(id);
     }
     return name;
   }
 
   public List<Ingredient> ingredients() {
     if (ingredients == null) {
-      ingredients = querier.getIngredientsByRecipe(id);
+      ingredients = querier.ingredients()
+                           .getIngredientsByRecipe(id);
     }
     return ingredients;
   }
 
   public String instructions() {
     if (instructions == null) {
-      instructions = querier.getInstructionsByRecipe(id);
+      instructions = querier.recipes()
+                            .getInstructionsByRecipe(id);
     }
     return instructions;
   }
@@ -64,7 +67,7 @@ public class Recipe {
           querier));
     }
     toReturn.setIngredients(scaledIngredients);
-    
+
     return toReturn;
   }
 

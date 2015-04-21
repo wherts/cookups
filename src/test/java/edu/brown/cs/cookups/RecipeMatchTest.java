@@ -86,11 +86,12 @@ public class RecipeMatchTest {
     ings1.add(new Ingredient("/i/pasta.1", 6, dbL));
     ings1.add(new Ingredient("/i/baking.1", 16, dbL));
     chefs.add(new User("Wes", "/u/wh7", ings1));
-    List<Recipe> recipes = RecipeMatcher.matchRecipes(chefs, dbL);
+    List<Recipe> recipes = RecipeMatcher.matchRecipes(chefs,
+                                                      dbL);
     assertTrue(recipes.size() == 1);
     Recipe r = recipes.get(0);
     assertTrue(recipes.get(0).id().equals("/r/1.5"));
-    //peanut butter sesame noodles
+    // peanut butter sesame noodles
     List<Ingredient> toBuy = r.shoppingList();
     assertTrue(toBuy.size() == 7);
     Ingredient pasta = toBuy.get(0);
@@ -129,19 +130,20 @@ public class RecipeMatchTest {
     }
     List<Ingredient> ings1 = new ArrayList<>();
     List<Ingredient> ings2 = new ArrayList<>();
-    //wes ingredients
-    ings1.add(new Ingredient("/i/produce.3", 32, dbL)); //asparagus
-    ings1.add(new Ingredient("/i/produce.4", 32, dbL)); //corn
-    ings1.add(new Ingredient("/i/herb.1", 2, dbL)); //dill
-    //dylan ingredients
-    ings2.add(new Ingredient("/i/dairy.3.3", 16, dbL)); //goat cheese
-    ings2.add(new Ingredient("/i/poultry.1", 2, dbL)); //eggs
+    // wes ingredients
+    ings1.add(new Ingredient("/i/produce.3", 32, dbL)); // asparagus
+    ings1.add(new Ingredient("/i/produce.4", 32, dbL)); // corn
+    ings1.add(new Ingredient("/i/herb.1", 2, dbL)); // dill
+    // dylan ingredients
+    ings2.add(new Ingredient("/i/dairy.3.3", 16, dbL)); // goat cheese
+    ings2.add(new Ingredient("/i/poultry.1", 2, dbL)); // eggs
 
     chefs.add(new User("Wes", "/u/wh7", ings1));
     chefs.add(new User("Dylan", "/u/dgattey", ings2));
-    List<Recipe> recipes = RecipeMatcher.matchRecipes(chefs, dbL);
+    List<Recipe> recipes = RecipeMatcher.matchRecipes(chefs,
+                                                      dbL);
     assertTrue(recipes.size() == 2);
-    //bread pudding
+    // bread pudding
     Recipe r1 = recipes.get(0);
     assertTrue(r1.id().equals("/r/1.1"));
     List<Ingredient> toBuy = r1.shoppingList();
@@ -154,36 +156,36 @@ public class RecipeMatchTest {
     Ingredient milk = toBuy.get(1);
     assertTrue(milk.id().equals("/i/dairy.2.1"));
     assertTrue(milk.ounces() == 24);
-    
+
     Ingredient eggs = toBuy.get(2);
     assertTrue(eggs.id().equals("/i/poultry.1"));
     assertTrue(eggs.ounces() == 10);
-    
+
     Ingredient sherry = toBuy.get(3);
     assertTrue(sherry.id().equals("/i/liquid.1"));
     assertTrue(sherry.ounces() == 8);
-    
+
     Ingredient nutmeg = toBuy.get(4);
     assertTrue(nutmeg.id().equals("/i/spice.1"));
     assertTrue(Math.floor(nutmeg.ounces() * 100) / 100 == 0.1);
-    
+
     Ingredient onions = toBuy.get(5);
     assertTrue(onions.id().equals("/i/produce.1"));
     assertTrue(onions.ounces() == 64);
-    
+
     Ingredient bread = toBuy.get(6);
     assertTrue(bread.id().equals("/i/produce.2"));
     assertTrue(bread.ounces() == 64);
-    
+
     Ingredient gruyere = toBuy.get(7);
     assertTrue(gruyere.id().equals("/i/dairy.3.1"));
     assertTrue(gruyere.ounces() == 48);
-    
+
     Ingredient parm = toBuy.get(8);
     assertTrue(parm.id().equals("/i/dairy.3.2"));
     assertTrue(parm.ounces() == 8);
 
-    //Frittata recipe
+    // Frittata recipe
     Recipe r2 = recipes.get(1);
     assertTrue(r2.id().equals("/r/1.4"));
     toBuy = r2.shoppingList();
@@ -192,11 +194,11 @@ public class RecipeMatchTest {
     Ingredient butter = toBuy.get(0);
     assertTrue(butter.id().equals("/i/dairy.5"));
     assertTrue(butter.ounces() == 6);
-    
+
     Ingredient scallions = toBuy.get(1);
     assertTrue(scallions.id().equals("/i/produce.5"));
     assertTrue(scallions.ounces() == 4);
-    
+
     eggs = toBuy.get(2);
     assertTrue(eggs.id().equals("/i/poultry.1"));
     assertTrue(eggs.ounces() == 14);
@@ -206,20 +208,35 @@ public class RecipeMatchTest {
     String instr = "1. Cook pasta al dente "
         + "2. Mix all other ingredients. Add pasta while it is still warm. "
         + "Garnish with shredded carrots, cucumber or scallions";
-    if (!dbL.hasRecipe("/r/1.5")) {
-      dbL.addRecipe("Peanut Butter Sesame Noodles",
+    if (!dbL.recipes().hasRecipe("/r/1.5")) {
+      dbL.recipes()
+         .addRecipe("Peanut Butter Sesame Noodles",
                     "/r/1.5",
                     instr);
-      dbL.addRecipeIngredient("/r/1.5", "/i/pasta.1", 16);
-      dbL.addRecipeIngredient("/r/1.5", "/i/produce.6", 8);
-      dbL.addRecipeIngredient("/r/1.5",
-                              "/i/liquid.5",
-                              (float) 0.5);
-      dbL.addRecipeIngredient("/r/1.5", "/i/liquid.6", 2);
-      dbL.addRecipeIngredient("/r/1.5", "/i/liquid.7", 2);
-      dbL.addRecipeIngredient("/r/1.5", "/i/liquid.2.3", 4);
-      dbL.addRecipeIngredient("/r/1.5", "/i/baking.1", 4);
-      dbL.addRecipeIngredient("/r/1.5", "/i/liquid.0", 4);
+      dbL.recipes().addRecipeIngredient("/r/1.5",
+                                        "/i/pasta.1",
+                                        16);
+      dbL.recipes().addRecipeIngredient("/r/1.5",
+                                        "/i/produce.6",
+                                        8);
+      dbL.recipes().addRecipeIngredient("/r/1.5",
+                                        "/i/liquid.5",
+                                        (float) 0.5);
+      dbL.recipes().addRecipeIngredient("/r/1.5",
+                                        "/i/liquid.6",
+                                        2);
+      dbL.recipes().addRecipeIngredient("/r/1.5",
+                                        "/i/liquid.7",
+                                        2);
+      dbL.recipes().addRecipeIngredient("/r/1.5",
+                                        "/i/liquid.2.3",
+                                        4);
+      dbL.recipes().addRecipeIngredient("/r/1.5",
+                                        "/i/baking.1",
+                                        4);
+      dbL.recipes().addRecipeIngredient("/r/1.5",
+                                        "/i/liquid.0",
+                                        4);
     }
     instr = "1.Cube Bread and allow to sit over night "
         + "2. Carmelize onions."
@@ -231,21 +248,38 @@ public class RecipeMatchTest {
         + "Sprinkle some cheese over bread and put down more bread and cheese "
         + "Top with Parm and pour cream over bread "
         + "Let it sit for at least an hour then bake until custard is set, about 1hr ";
-    if (!dbL.hasRecipe("/r/1.1")) {
-      dbL.addRecipe("Savory Bread Pudding with Onions and Gruyere",
+    if (!dbL.recipes().hasRecipe("/r/1.1")) {
+      dbL.recipes()
+         .addRecipe("Savory Bread Pudding with Onions and Gruyere",
                     "/r/1.1",
                     instr);
-      dbL.addRecipeIngredient("/r/1.1", "/i/dairy.1", 12);
-      dbL.addRecipeIngredient("/r/1.1", "/i/dairy.2.1", 12);
-      dbL.addRecipeIngredient("/r/1.1", "/i/poultry.1", 6);
-      dbL.addRecipeIngredient("/r/1.1", "/i/liquid.1", 4);
-      dbL.addRecipeIngredient("/r/1.1",
-                              "/i/spice.1",
-                              (float) 0.05);
-      dbL.addRecipeIngredient("/r/1.1", "/i/produce.1", 32);
-      dbL.addRecipeIngredient("/r/1.1", "/i/produce.2", 32);
-      dbL.addRecipeIngredient("/r/1.1", "/i/dairy.3.1", 24);
-      dbL.addRecipeIngredient("/r/1.1", "/i/dairy.3.2", 4);
+      dbL.recipes().addRecipeIngredient("/r/1.1",
+                                        "/i/dairy.1",
+                                        12);
+      dbL.recipes().addRecipeIngredient("/r/1.1",
+                                        "/i/dairy.2.1",
+                                        12);
+      dbL.recipes().addRecipeIngredient("/r/1.1",
+                                        "/i/poultry.1",
+                                        6);
+      dbL.recipes().addRecipeIngredient("/r/1.1",
+                                        "/i/liquid.1",
+                                        4);
+      dbL.recipes().addRecipeIngredient("/r/1.1",
+                                        "/i/spice.1",
+                                        (float) 0.05);
+      dbL.recipes().addRecipeIngredient("/r/1.1",
+                                        "/i/produce.1",
+                                        32);
+      dbL.recipes().addRecipeIngredient("/r/1.1",
+                                        "/i/produce.2",
+                                        32);
+      dbL.recipes().addRecipeIngredient("/r/1.1",
+                                        "/i/dairy.3.1",
+                                        24);
+      dbL.recipes().addRecipeIngredient("/r/1.1",
+                                        "/i/dairy.3.2",
+                                        4);
     }
     instr = "1. Simmer potatoes in medium saucepan and "
         + "cook over medium heat until tender, about 20 minutes "
@@ -255,13 +289,20 @@ public class RecipeMatchTest {
         + "solids are golden brownAdd half of the butter to the potatoes. "
         + "Serve topped with the rest."
         + "Season with salt and pepper to taste";
-    if (!dbL.hasRecipe("/r/1.2")) {
-      dbL.addRecipe("Brown Butter Mashed Potatoes",
+    if (!dbL.recipes().hasRecipe("/r/1.2")) {
+      dbL.recipes()
+         .addRecipe("Brown Butter Mashed Potatoes",
                     "/r/1.2",
                     instr);
-      dbL.addRecipeIngredient("/r/1.2", "/i/produce.10", 16);
-      dbL.addRecipeIngredient("/r/1.2", "/i/dairy.5", 4);
-      dbL.addRecipeIngredient("/r/1.2", "/i/dairy.2.1", 8);
+      dbL.recipes().addRecipeIngredient("/r/1.2",
+                                        "/i/produce.10",
+                                        16);
+      dbL.recipes().addRecipeIngredient("/r/1.2",
+                                        "/i/dairy.5",
+                                        4);
+      dbL.recipes().addRecipeIngredient("/r/1.2",
+                                        "/i/dairy.2.1",
+                                        8);
     }
     instr = "Use a pot large enough to hold all the onions, "
         + "place over medium heat and melt butter. "
@@ -272,17 +313,31 @@ public class RecipeMatchTest {
         + "When onions are caramelized, add 6C of water, "
         + "raise heat to high and simmer the soup, then lower heat again. "
         + "Add sherry, add red wine and vinegar to balance sweetness and body";
-    if (!dbL.hasRecipe("/r/1.3")) {
-      dbL.addRecipe("French Onion Soup", "/r/1.3", instr);
-      dbL.addRecipeIngredient("/r/1.3", "/i/dairy.5", 1);
-      dbL.addRecipeIngredient("/r/1.3",
-                              "/i/produce.1.1",
-                              128);
-      dbL.addRecipeIngredient("/r/1.3", "/i/produce.2.1", 1);
-      dbL.addRecipeIngredient("/r/1.3", "/i/liquid.2.1", 3);
-      dbL.addRecipeIngredient("/r/1.3", "/i/liquid.3.1", 2);
-      dbL.addRecipeIngredient("/r/1.3", "/i/liquid.2.2", 2);
-      dbL.addRecipeIngredient("/r/1.3", "/i/dairy.3.1", 12);
+    if (!dbL.recipes().hasRecipe("/r/1.3")) {
+      dbL.recipes().addRecipe("French Onion Soup",
+                              "/r/1.3",
+                              instr);
+      dbL.recipes().addRecipeIngredient("/r/1.3",
+                                        "/i/dairy.5",
+                                        1);
+      dbL.recipes().addRecipeIngredient("/r/1.3",
+                                        "/i/produce.1.1",
+                                        128);
+      dbL.recipes().addRecipeIngredient("/r/1.3",
+                                        "/i/produce.2.1",
+                                        1);
+      dbL.recipes().addRecipeIngredient("/r/1.3",
+                                        "/i/liquid.2.1",
+                                        3);
+      dbL.recipes().addRecipeIngredient("/r/1.3",
+                                        "/i/liquid.3.1",
+                                        2);
+      dbL.recipes().addRecipeIngredient("/r/1.3",
+                                        "/i/liquid.2.2",
+                                        2);
+      dbL.recipes().addRecipeIngredient("/r/1.3",
+                                        "/i/dairy.3.1",
+                                        12);
     }
 
     instr = "Set broiler to high "
@@ -294,17 +349,32 @@ public class RecipeMatchTest {
         + "skillet and top with goat cheeseReduce heat on skillet and "
         + "allow sides to puff up and cookPut skillet under broiler for "
         + "1 min to set the topAllow frittata to cool and garnish with remaining dill";
-    if (!dbL.hasRecipe("/r/1.4")) {
-      dbL.addRecipe("Asparagus and Goat Cheese Frittata",
+    if (!dbL.recipes().hasRecipe("/r/1.4")) {
+      dbL.recipes()
+         .addRecipe("Asparagus and Goat Cheese Frittata",
                     "/r/1.4",
                     instr);
-      dbL.addRecipeIngredient("/r/1.4", "/i/produce.3", 16);
-      dbL.addRecipeIngredient("/r/1.4", "/i/produce.4", 12);
-      dbL.addRecipeIngredient("/r/1.4", "/i/dairy.5", 3);
-      dbL.addRecipeIngredient("/r/1.4", "/i/produce.5", 2);
-      dbL.addRecipeIngredient("/r/1.4", "/i/herb.1", 1);
-      dbL.addRecipeIngredient("/r/1.4", "/i/poultry.1", 8);
-      dbL.addRecipeIngredient("/r/1.4", "/i/dairy.3.3", 7);
+      dbL.recipes().addRecipeIngredient("/r/1.4",
+                                        "/i/produce.3",
+                                        16);
+      dbL.recipes().addRecipeIngredient("/r/1.4",
+                                        "/i/produce.4",
+                                        12);
+      dbL.recipes().addRecipeIngredient("/r/1.4",
+                                        "/i/dairy.5",
+                                        3);
+      dbL.recipes().addRecipeIngredient("/r/1.4",
+                                        "/i/produce.5",
+                                        2);
+      dbL.recipes().addRecipeIngredient("/r/1.4",
+                                        "/i/herb.1",
+                                        1);
+      dbL.recipes().addRecipeIngredient("/r/1.4",
+                                        "/i/poultry.1",
+                                        8);
+      dbL.recipes().addRecipeIngredient("/r/1.4",
+                                        "/i/dairy.3.3",
+                                        7);
     }
   }
 }

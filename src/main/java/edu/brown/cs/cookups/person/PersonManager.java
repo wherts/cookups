@@ -21,7 +21,7 @@ public class PersonManager {
     throws SQLException {
     Person p = users.get(id);
     if (p == null) {
-      p = db.getPersonById(id);
+      p = db.users().getPersonById(id);
       users.put(id, p);
     }
     return p;
@@ -29,7 +29,7 @@ public class PersonManager {
 
   public List<Person> getPersonsByName(String name)
     throws SQLException {
-    return db.getPersonsByName(name, this);
+    return db.users().getPersonsByName(name, this);
   }
 
   public Person cachePerson(String id, String name,
@@ -46,13 +46,13 @@ public class PersonManager {
   public void addPerson(String name, String id,
       List<Ingredient> ingredients) throws SQLException {
     Person p = new User(name, id, ingredients);
-    db.addPerson(p);
+    db.users().addPerson(p);
     users.put(id, p);
   }
 
   public void removePersonById(String id)
     throws SQLException {
-    db.removePersonById(id);
+    db.users().removePersonById(id);
     users.remove(id);
   }
 }

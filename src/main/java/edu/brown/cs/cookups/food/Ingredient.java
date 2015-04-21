@@ -26,7 +26,7 @@ public class Ingredient {
 
   public String name() throws SQLException {
     if (name == null) {
-      name = querier.ingredientNameCache(id);
+      name = querier.ingredients().ingredientNameCache(id);
     }
     return name;
   }
@@ -54,7 +54,8 @@ public class Ingredient {
 
   public Set<Recipe> recipes() throws SQLException {
     if (recipes == null) {
-      recipes = querier.getRecipesWithIngredient(id);
+      recipes = querier.recipes()
+                       .getRecipesWithIngredient(id);
     }
     return recipes;
   }

@@ -26,15 +26,14 @@ public class DBLinkTest {
       DBLink db = new DBLink("databases/testdb.sqlite3");
       Ingredient i = new Ingredient("i", 1.1, null);
       Person p = new User("Jerry", "qyrt", Arrays.asList(i));
-      db.addPerson(p);
-      assertTrue(db.hasPersonByName("Jerry"));
-      db.removePersonById("qyrt");
+      db.users().addPerson(p);
+      assertTrue(db.users().hasPersonByName("Jerry"));
+      db.users().removePersonById("qyrt");
     } catch (ClassNotFoundException | SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
-
 
   @Test
   public void getUserByIDTest() {
@@ -42,9 +41,9 @@ public class DBLinkTest {
       DBLink db = new DBLink("databases/testdb.sqlite3");
       Ingredient i = new Ingredient("i", 1.1, null);
       Person p = new User("Jerry", "qyrt", Arrays.asList(i));
-      db.addPerson(p);
-      Person q = db.getPersonById("qyrt");
-      db.removePersonById("qyrt");
+      db.users().addPerson(p);
+      Person q = db.users().getPersonById("qyrt");
+      db.users().removePersonById("qyrt");
       assertTrue(q.id().equals("qyrt"));
       assertTrue(q.name().equals("Jerry"));
       assertTrue(q.ingredients().get(0).id().equals("i"));
@@ -52,86 +51,101 @@ public class DBLinkTest {
       fail();
     }
   }
-  
+
   @Test
   public void getUserIngredientstest() {
-	  try {
-	      DBLink db = new DBLink("databases/peopleTest.sqlite3");
-	      PersonManager people = new PersonManager(db);
-	      List<Ingredient> ingreds = new ArrayList<Ingredient>();
-	      ingreds.add(new Ingredient("apples", 1.0, db));
-	      ingreds.add(new Ingredient("oranges", 2.0, db));
-	      ingreds.add(new Ingredient("carrots", 3.0, db));
-	      ingreds.add(new Ingredient("cheese", 1.0, db));
+    try {
+      DBLink db = new DBLink("databases/peopleTest.sqlite3");
+      PersonManager people = new PersonManager(db);
+      List<Ingredient> ingreds = new ArrayList<Ingredient>();
+      ingreds.add(new Ingredient("apples", 1.0, db));
+      ingreds.add(new Ingredient("oranges", 2.0, db));
+      ingreds.add(new Ingredient("carrots", 3.0, db));
+      ingreds.add(new Ingredient("cheese", 1.0, db));
 
-	      people.addPerson("Ronald Reagan", "freedom", ingreds);
-	     
-	      for (Ingredient i : db.getPersonIngredients("freedom")) {
-	    	  assertTrue(ingreds.contains(i));
-	      }
-	     
-	     db.removePersonById("freedom");
-	      
-	    } catch (ClassNotFoundException | SQLException e) {
-	      fail();
-	    }
+      people.addPerson("Ronald Reagan", "freedom", ingreds);
+
+      for (Ingredient i : db.users()
+                            .getPersonIngredients("freedom")) {
+        assertTrue(ingreds.contains(i));
+      }
+
+      db.users().removePersonById("freedom");
+
+    } catch (ClassNotFoundException | SQLException e) {
+      fail();
+    }
   }
-  
+
   @Test
   public void getIngredientIDByName() {
-	  try {
-	      DBLink db = new DBLink("databases/ingredientTest.sqlite3");
-	     db.defineIngredient("/i/dairy.1", "Milk");
+    try {
+      DBLink db = new DBLink("databases/ingredientTest.sqlite3");
+      db.ingredients().defineIngredient("/i/dairy.1",
+                                        "Milk");
 
-	     assertTrue(db.getIngredientIDByName("Milk").equals("/i/dairy.1"));
-	      
-	    } catch (ClassNotFoundException | SQLException e) {
-	      fail();
-	    }
+      assertTrue(db.ingredients()
+                   .getIngredientIDByName("Milk")
+                   .equals("/i/dairy.1"));
+
+    } catch (ClassNotFoundException | SQLException e) {
+      fail();
+    }
   }
-  
+
   @Test
   public void getIngredientNamebyID() {
-	  try {
-	      DBLink db = new DBLink("databases/ingredientTest.sqlite3");
-	     db.defineIngredient("/i/dairy.1", "Milk");
+    try {
+      DBLink db = new DBLink("databases/ingredientTest.sqlite3");
+      db.ingredients().defineIngredient("/i/dairy.1",
+                                        "Milk");
 
-	     assertTrue(db.getIngredientNameByID("/i/dairy.1").equals("Milk"));
-	      
-	    } catch (ClassNotFoundException | SQLException e) {
-	      fail();
-	    }
+      assertTrue(db.ingredients()
+                   .getIngredientNameByID("/i/dairy.1")
+                   .equals("Milk"));
+
+    } catch (ClassNotFoundException | SQLException e) {
+      fail();
+    }
   }
-  
+
   @Test
   public void getRecipeName() {
-	  try {
-	      DBLink db = new DBLink("databases/cookups.sqlite3");
+    try {
+      DBLink db = new DBLink("databases/cookups.sqlite3");
 
-	     assertTrue(db.getRecipeNameByID("/r/1.5").equals("Peanut Butter Sesame Noodles"));
-	      
-	    } catch (ClassNotFoundException | SQLException e) {
-	      fail();
-	    }
+      assertTrue(db.recipes()
+                   .getRecipeNameByID("/r/1.5")
+                   .equals("Peanut Butter Sesame Noodles"));
+
+    } catch (ClassNotFoundException | SQLException e) {
+      fail();
+    }
   }
-  
+
   @Test
   public void getIngredientNames() {
-	  try {
-	      DBLink db = new DBLink("databases/ingredientTest.sqlite3");
-	      db.defineIngredient("/i/dairy.1", "Milk");
-	      db.defineIngredient("/i/dairy.2", "Cream");
-	      db.defineIngredient("/i/dairy.3", "Yogurt");
-	      List<String> names = Arrays.asList("Milk", "Cream", "Yogurt");
+    try {
+      DBLink db = new DBLink("databases/ingredientTest.sqlite3");
+      db.ingredients().defineIngredient("/i/dairy.1",
+                                        "Milk");
+      db.ingredients().defineIngredient("/i/dairy.2",
+                                        "Cream");
+      db.ingredients().defineIngredient("/i/dairy.3",
+                                        "Yogurt");
+      List<String> names = Arrays.asList("Milk",
+                                         "Cream",
+                                         "Yogurt");
 
-	     List<String> results = db.getAllIngredientNames();
-	     for (String str : names) {
-	    	 assertTrue(results.contains(str));
-	     }
-	      
-	    } catch (ClassNotFoundException | SQLException e) {
-	      fail();
-	    }
+      List<String> results = db.ingredients()
+                               .getAllIngredientNames();
+      for (String str : names) {
+        assertTrue(results.contains(str));
+      }
+
+    } catch (ClassNotFoundException | SQLException e) {
+      fail();
+    }
   }
 
   @Test
@@ -139,7 +153,8 @@ public class DBLinkTest {
     try {
       DBLink db = new DBLink("databases/cookups.sqlite3");
       // butter
-      Set<Recipe> recipes = db.getRecipesWithIngredient("/i/dairy.5");
+      Set<Recipe> recipes = db.recipes()
+                              .getRecipesWithIngredient("/i/dairy.5");
       assertTrue(recipes.size() == 3);
       List<String> recipeIDs = new ArrayList<String>();
       for (Recipe r : recipes) {
@@ -150,74 +165,105 @@ public class DBLinkTest {
       assertTrue(recipeIDs.contains("/r/1.3"));
       assertTrue(recipeIDs.contains("/r/1.4"));
       // peanut butter
-      recipes = db.getRecipesWithIngredient("/i/produce.6");
+      recipes = db.recipes()
+                  .getRecipesWithIngredient("/i/produce.6");
       assertTrue(recipes.size() == 1);
       for (Recipe r : recipes) {
         assertTrue(r.id().equals("/r/1.5"));
       }
-      recipes = db.getRecipesWithIngredient("nonexistent");
+      recipes = db.recipes()
+                  .getRecipesWithIngredient("nonexistent");
       assertTrue(recipes.isEmpty());
     } catch (ClassNotFoundException | SQLException e) {
       fail();
     }
   }
-  
+
   @Test
   public void addRecipeTest() {
-	  try {
-	      DBLink db = new DBLink("databases/recipesTest.sqlite3");
-	      // butter
-	     db.addRecipe("Beef Stew", "/r/stew", "Put in Bowl and Shake");
-	     assertTrue(db.hasRecipe("/r/stew"));
-	     db.removeRecipe("/r/stew");
-	    } catch (ClassNotFoundException | SQLException e) {
-	      fail();
-	    }
+    try {
+      DBLink db = new DBLink("databases/recipesTest.sqlite3");
+      // butter
+      db.recipes().addRecipe("Beef Stew",
+                             "/r/stew",
+                             "Put in Bowl and Shake");
+      assertTrue(db.recipes().hasRecipe("/r/stew"));
+      db.recipes().removeRecipe("/r/stew");
+    } catch (ClassNotFoundException | SQLException e) {
+      fail();
+    }
   }
-  
+
   @Test
   public void recipeAddIngredientsTest() {
-	  try {
-	      DBLink db = new DBLink("databases/recipesTest.sqlite3");
-	    
-	     db.addRecipe("Beef Stew", "/r/stew", "Put in Bowl and Shake");
-	     db.addRecipeIngredient("/r/stew", "/i/salt", 1);
-	     db.addRecipeIngredient("/r/stew", "/i/pepper", 4);
-	     db.addRecipeIngredient("/r/stew", "/i/pasta", 7);
-	     
-	     List<Ingredient> results = db.getIngredientsByRecipe("/r/stew");
-	     assertTrue(results.contains(new Ingredient("/i/salt", 1, db)));
-	     assertTrue(results.contains(new Ingredient("/i/pepper", 4, db)));
-	     assertTrue(results.contains(new Ingredient("/i/pasta", 7, db)));
-	     assertTrue(db.hasRecipe("/r/stew"));
-	     db.removeRecipe("/r/stew");
-	    } catch (ClassNotFoundException | SQLException e) {
-	      fail();
-	    }
+    try {
+      DBLink db = new DBLink("databases/recipesTest.sqlite3");
+
+      db.recipes().addRecipe("Beef Stew",
+                             "/r/stew",
+                             "Put in Bowl and Shake");
+      db.recipes().addRecipeIngredient("/r/stew",
+                                       "/i/salt",
+                                       1);
+      db.recipes().addRecipeIngredient("/r/stew",
+                                       "/i/pepper",
+                                       4);
+      db.recipes().addRecipeIngredient("/r/stew",
+                                       "/i/pasta",
+                                       7);
+
+      List<Ingredient> results = db.ingredients()
+                                   .getIngredientsByRecipe("/r/stew");
+      assertTrue(results.contains(new Ingredient("/i/salt",
+          1,
+          db)));
+      assertTrue(results.contains(new Ingredient("/i/pepper",
+          4,
+          db)));
+      assertTrue(results.contains(new Ingredient("/i/pasta",
+          7,
+          db)));
+      assertTrue(db.recipes().hasRecipe("/r/stew"));
+      db.recipes().removeRecipe("/r/stew");
+    } catch (ClassNotFoundException | SQLException e) {
+      fail();
+    }
   }
-  
+
   @Test
   public void getPersonsByName() {
-	  try {
-	      DBLink db = new DBLink("databases/peopleTest.sqlite3");
-	      PersonManager people = new PersonManager(db);
-	      Person ronald1 = new User("Ronald Reagan", "freedom", Arrays.asList(new Ingredient("/i/freedom", 42, db)));
-	      Person ronald2 = new User("Ronald Reagan", "liberty", Arrays.asList(new Ingredient("/i/liberty", 42, db)));
-	      people.addPerson("Ronald Reagan", "freedom", Arrays.asList(new Ingredient("/i/freedom", 42, db)));
-	      people.addPerson("Ronald Reagan", "liberty", Arrays.asList(new Ingredient("/i/liberty", 42, db)));
-	      
-	     List<Person> results = db.getPersonsByName("Ronald Reagan", people);
-	     assertTrue(results.contains(ronald1));
-	     assertTrue(results.contains(ronald2));
-	     db.removePersonById("freedom");
-	     db.removePersonById("liberty");
-	      
-	    } catch (ClassNotFoundException | SQLException e) {
-	      fail();
-	    }
+    try {
+      DBLink db = new DBLink("databases/peopleTest.sqlite3");
+      PersonManager people = new PersonManager(db);
+      Person ronald1 = new User("Ronald Reagan",
+          "freedom",
+          Arrays.asList(new Ingredient("/i/freedom", 42, db)));
+      Person ronald2 = new User("Ronald Reagan",
+          "liberty",
+          Arrays.asList(new Ingredient("/i/liberty", 42, db)));
+      people.addPerson("Ronald Reagan",
+                       "freedom",
+                       Arrays.asList(new Ingredient("/i/freedom",
+                           42,
+                           db)));
+      people.addPerson("Ronald Reagan",
+                       "liberty",
+                       Arrays.asList(new Ingredient("/i/liberty",
+                           42,
+                           db)));
+
+      List<Person> results = db.users()
+                               .getPersonsByName("Ronald Reagan",
+                                                 people);
+      assertTrue(results.contains(ronald1));
+      assertTrue(results.contains(ronald2));
+      db.users().removePersonById("freedom");
+      db.users().removePersonById("liberty");
+
+    } catch (ClassNotFoundException | SQLException e) {
+      fail();
+    }
   }
-  
-  
 
   @Test
   public void getInstructionsByRecipe() {
@@ -227,7 +273,8 @@ public class DBLinkTest {
           + "2. Mix all other ingredients. Add pasta while it is still warm. "
           + "Garnish with shredded carrots, cucumber or scallions";
       // System.out.println(db.getInstructionsByRecipe("/r/1.5"));
-      assertTrue(db.getInstructionsByRecipe("/r/1.5")
+      assertTrue(db.recipes()
+                   .getInstructionsByRecipe("/r/1.5")
                    .equals(instr));
 
     } catch (ClassNotFoundException | SQLException e) {
@@ -239,7 +286,8 @@ public class DBLinkTest {
   public void getIngredientsByRecipe() {
     try {
       DBLink db = new DBLink("databases/cookups.sqlite3");
-      List<Ingredient> ingredients = db.getIngredientsByRecipe("/r/1.2");
+      List<Ingredient> ingredients = db.ingredients()
+                                       .getIngredientsByRecipe("/r/1.2");
       Ingredient i1 = new Ingredient("/i/produce.10",
           16.0,
           db);
