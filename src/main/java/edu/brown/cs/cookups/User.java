@@ -32,7 +32,7 @@ public interface User {
 	  * Gets a User's ingredients.
 	  * @return list of UserIngredients
 	  */
-	List<Ingredient> ingredients();
+	List<IngredientProxy> ingredients();
 
 	/**
 	  * Gets a user's schedule.
