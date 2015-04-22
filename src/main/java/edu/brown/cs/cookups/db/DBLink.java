@@ -1,10 +1,15 @@
 package edu.brown.cs.cookups.db;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import org.junit.BeforeClass;
 
 public class DBLink implements DBManager {
   private Connection conn;
@@ -50,30 +55,146 @@ public class DBLink implements DBManager {
     this.recipes = new RecipeDBLink(conn, this);
   }
 
-  public void init() throws SQLException {
+  public void init() {
 
     // String drop = "DROP TABLE IF EXISTS ";
     // for (String s : TABLES) {
     // execute(drop + s);
     // }
 
-    Statement stat = conn.createStatement();
-    stat.executeUpdate("PRAGMA foreign_keys = ON;");
-
+    try (Statement stat = conn.createStatement()) {
+      stat.executeUpdate("PRAGMA foreign_keys = ON;");
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     String create = "CREATE TABLE IF NOT EXISTS ";
-
     for (String s : TABLE_SCHEMA) {
       // System.out.println(s);
       String schema = create + s;
       execute(schema);
     }
+
+    // String drop = "DROP TABLE IF EXISTS ";
+    // try (Statement prep = conn.createStatement()) {
+    // prep.executeUpdate(drop + TABLES[0]);
+    // // prep.executeUpdate(drop + TABLES[1]);
+    // // for (String s : TABLES) {
+    // // System.out.println(drop + s);
+    // // prep.executeUpdate(drop + s);
+    // // }
+    // } catch (SQLException e) {
+    // e.printStackTrace();
+    // }
+
   }
 
-  private void execute(String schema) {
-    try (PreparedStatement prep = conn.prepareStatement(schema)) {
-      prep.execute();
-      prep.close();
+  public void clearDataBase() {
+    String drop = "DROP TABLE IF EXISTS user";
+    try (Statement stat = conn.createStatement()) {
+      stat.executeUpdate(drop);
+      // for (String s : TABLES) {
+      // System.out.println(drop + s);
+      // stat.executeUpdate(drop + s);
+      // }
+    }
+    // init();
+    catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  private void execute(String sql) {
+    try (Statement stat = conn.createStatement()) {
+      stat.executeUpdate(sql);
     } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void importIngredients(File file) {
+    try (CSVReader reader = new CSVReader(file)) {
+      String[] line;
+      String query = "INSERT INTO ingredient VALUES (?,?)";
+      try (PreparedStatement prep = conn.prepareStatement(query)) {
+        while ((line = reader.readLine()) != null) {
+          if (line.length < 2) {
+            System.out.println("ERROR: Bad CSV format");
+          }
+          prep.setString(ID_IDX, line[ID_IDX - 1]);
+          prep.setString(NAME_IDX, line[NAME_IDX - 1]);
+          prep.addBatch();
+        }
+        prep.executeBatch();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    } catch (FileNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void importRecipeIngredients(File file) {
+    try (CSVReader reader = new CSVReader(file)) {
+      String[] line;
+      String query = "INSERT INTO recipe_ingredient VALUES (?,?)";
+      try (PreparedStatement prep = conn.prepareStatement(query)) {
+        while ((line = reader.readLine()) != null) {
+          if (line.length < 2) {
+            System.out.println("ERROR: Bad CSV format");
+          }
+          prep.setString(ID_IDX, line[ID_IDX - 1]);
+          prep.setString(NAME_IDX, line[NAME_IDX - 1]);
+          prep.addBatch();
+        }
+        prep.executeBatch();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    } catch (FileNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void importRecipes(File file) {
+    try (CSVReader reader = new CSVReader(file)) {
+      String[] line;
+      String query = "INSERT INTO recipe VALUES (?,?,?)";
+      try (PreparedStatement prep = conn.prepareStatement(query)) {
+        while ((line = reader.readLine()) != null) {
+          if (line.length < 3) {
+            System.out.println("ERROR: Bad CSV format");
+          }
+          prep.setString(ID_IDX, line[ID_IDX - 1]);
+          prep.setString(NAME_IDX, line[NAME_IDX - 1]);
+          prep.setString(RECIPE_TEXT_IDX,
+                         line[RECIPE_TEXT_IDX]);
+          prep.addBatch();
+        }
+        prep.executeBatch();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    } catch (FileNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
@@ -84,6 +205,7 @@ public class DBLink implements DBManager {
     this.recipes.clearCache();
   }
 
+  @BeforeClass
   @Override
   public UserDB users() {
     return this.users;

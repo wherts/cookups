@@ -16,6 +16,7 @@
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/main/java/edu/brown/cs/cookups/db/UserDBLink.java
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/main/java/edu/brown/cs/cookups/schedule/Point.java
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/main/java/edu/brown/cs/cookups/food/Meal.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/main/java/edu/brown/cs/cookups/db/CSVReader.java
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/main/java/edu/brown/cs/cookups/person/Person.java
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/main/java/edu/brown/cs/cookups/GuiHandler.java
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/main/java/edu/brown/cs/cookups/api/package-info.java
