@@ -3,6 +3,7 @@ package edu.brown.cs.food;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
 
@@ -33,6 +34,11 @@ public class MealTest {
     m1.changeRecipe(r1);
     m2.changeRecipe(r2);
     m3.changeRecipe(r1);
+    LocalTime t1 = LocalTime.of(12, 15);
+    LocalTime t2 = LocalTime.of(1, 30);
+    m1.setTime(t1);
+    m2.setTime(t2);
+    m3.setTime(t1);
     assertTrue(m1.equals(m1));
     assertFalse(m1.equals(m2));
     assertTrue(m1.equals(m3));

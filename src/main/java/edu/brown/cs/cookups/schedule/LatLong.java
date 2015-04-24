@@ -34,5 +34,4 @@ public class LatLong extends Point {
   public double getLong() {
     return super.getCoordinate(1);
   }
-
 }
