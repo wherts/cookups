@@ -26,8 +26,6 @@ public class RecipeTest {
   public void testName() {
     Recipe r = new Recipe("/r/1.1", null);
     assert(r.name() == null);
-    r.setName("recipe one");
-    assertTrue(r.name().equals("recipe one"));
   }
 
   @Test

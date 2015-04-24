@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.brown.cs.cookups.db.DBLink;
-
+/**
+ * This class represents a Recipe
+ * object that we use in Cookups.
+ * @author wh7
+ *
+ */
 public class Recipe {
   private String id;
   private String name;
@@ -14,16 +19,32 @@ public class Recipe {
   private double percentHave = 1;
   private double shoppingPrice = 0;
 
+  /**
+   * Constructor for the Recipe object.
+   * @param i all recipes must be instatiated.
+   * with an id.
+   * @param q all recipes must be given a way
+   * to query the database for information about
+   * itself
+   */
   public Recipe(String i, DBLink q) {
     id = i;
     querier = q;
     toBuy = new ArrayList<>();
   }
 
+  /**
+   * Accessor for recipe id.
+   * @return id string
+   */
   public String id() {
     return id;
   }
 
+  /**
+   * Accessor for recipe's name.
+   * @return name string
+   */
   public String name() {
     if (name == null) {
       name = querier.ingredients()
@@ -32,14 +53,22 @@ public class Recipe {
     return name;
   }
 
+  /**
+   * Accessor for recipe's ingredients.
+   * @return list of ingredients
+   */
   public List<Ingredient> ingredients() {
     if (ingredients == null) {
       ingredients = querier.ingredients()
                            .getIngredientsByRecipe(id);
     }
-    return ingredients;
+    return new ArrayList<>(ingredients);
   }
 
+  /**
+   * Accessor for recipe's instructions.
+   * @return string of instructions.
+   */
   public String instructions() {
     if (instructions == null) {
       instructions = querier.recipes()
@@ -48,10 +77,20 @@ public class Recipe {
     return instructions;
   }
 
+  /**
+   * Accessor for ingredients needed
+   * to complete the recipe.
+   * @return list of ingredients.
+   */
   public List<Ingredient> shoppingList() {
     return new ArrayList<>(toBuy);
   }
 
+  /**
+   * Accessor for what total percentage (in weight)
+   * of the ingredients the recipe has.
+   * @return double of percentage
+   */
   public double percentHave() {
     if (toBuy.size() == 0) {
       return 1;
@@ -71,6 +110,11 @@ public class Recipe {
     return percentHave;
   }
 
+  /**
+   * Accessor for how much money it costs
+   * to complete the recipe.
+   * @return double of price
+   */
   public double shoppingPrice() {
 //    if (toBuy.size() == 0) {
 //      return 0;
@@ -84,15 +128,21 @@ public class Recipe {
     return shoppingPrice;
   }
 
+  /**
+   * Method to add an item to the recipe's shoppinglist.
+   * @param ing new ingredient
+   * @param oz amount needed
+   */
   public void addToShoppingList(Ingredient ing, double oz) {
     toBuy.add(new Ingredient(ing.id(), oz, querier));
   }
 
-  public void setName(String n) {
-    assert (n != null);
-    this.name = n;
-  }
-
+  /**
+   * Method for scaling the ingredients of a recipe
+   * based on the number of people it will cook for.
+   * @param partySize number of people eating the recipe
+   * @return new recipe with new ingredient amounts
+   */
   public Recipe scale(double partySize) {
     Recipe toReturn = new Recipe(this.id, this.querier);
     List<Ingredient> ingreds = this.ingredients();
@@ -107,19 +157,37 @@ public class Recipe {
     return toReturn;
   }
 
+  /**
+   * Setter for a recipe's ingredients.
+   * @param scaledIngredients new ingredients
+   */
   public void setIngredients(
       List<Ingredient> scaledIngredients) {
     ingredients = scaledIngredients;
   }
 
+  /**
+   * Accessor for Recipe's hashcode.
+   * @return int hashcode
+   */
+  @Override
   public int hashCode() {
     return id.hashCode();
   }
 
+  /**
+   * Accessor for Recipe to string.
+   * @return string of recipe
+   */
   public String toString() {
     return id;
   }
 
+  /**
+   * Equality comparison for a recipe.
+   * @return true of if the recipes
+   * have the same id
+   */
   public boolean equals(Object o) {
     if (o == this) {
       return true;
