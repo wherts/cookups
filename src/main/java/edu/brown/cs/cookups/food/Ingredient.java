@@ -66,12 +66,15 @@ public class Ingredient {
     if (o == this) {
       return true;
     }
-
     if (!(o instanceof Ingredient)) {
       return false;
     }
-
     Ingredient i = (Ingredient) o;
     return (this.id.equals(i.id()) && this.ounces() == i.ounces);
+  }
+
+  @Override
+  public int hashCode() {
+    return id.hashCode() + name.hashCode();
   }
 }

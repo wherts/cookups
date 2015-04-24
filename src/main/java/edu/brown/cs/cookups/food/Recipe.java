@@ -11,6 +11,8 @@ public class Recipe {
   private String instructions;
   private DBLink querier;
   private List<Ingredient> ingredients, toBuy;
+  private double percentHave = 1;
+  private double shoppingPrice = 0;
 
   public Recipe(String i, DBLink q) {
     id = i;
@@ -50,15 +52,49 @@ public class Recipe {
     return new ArrayList<>(toBuy);
   }
 
+  public double percentHave() {
+    if (toBuy.size() == 0) {
+      return 1;
+    } else if (percentHave == 1) {
+      //only calculate percenthave once
+      //if it's 1, then it hasn't been set yet
+      double need = 0;
+      double total = 0;
+      for (Ingredient ing : toBuy) {
+        need += ing.ounces();
+      }
+      for (Ingredient i : ingredients) {
+        total += i.ounces();
+      }
+      percentHave = (need / total);
+    }
+    return percentHave;
+  }
+
+  public double shoppingPrice() {
+//    if (toBuy.size() == 0) {
+//      return 0;
+//    }else if (shoppingPrice == 0) {
+//      //only want to calculate the price once from the db
+//      //if it's zero then we haven't calculated it yet
+//      for (Ingredient ing : toBuy) {
+//        shoppingPrice += querier.getPriceById(ing.id());
+//      }
+//    }
+    return shoppingPrice;
+  }
+
   public void addToShoppingList(Ingredient ing, double oz) {
     toBuy.add(new Ingredient(ing.id(), oz, querier));
   }
 
   public void setName(String n) {
+    assert (n != null);
+    this.name = n;
   }
 
   public Recipe scale(double partySize) {
-    Recipe toReturn = this;
+    Recipe toReturn = new Recipe(this.id, this.querier);
     List<Ingredient> ingreds = this.ingredients();
     List<Ingredient> scaledIngredients = new ArrayList<>();
     for (Ingredient ing : ingreds) {
@@ -71,13 +107,17 @@ public class Recipe {
     return toReturn;
   }
 
-  private void setIngredients(
+  public void setIngredients(
       List<Ingredient> scaledIngredients) {
     ingredients = scaledIngredients;
   }
 
   public int hashCode() {
     return id.hashCode();
+  }
+
+  public String toString() {
+    return id;
   }
 
   public boolean equals(Object o) {
