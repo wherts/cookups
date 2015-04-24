@@ -1,6 +1,7 @@
 package edu.brown.cs.cookups.food;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,60 +21,78 @@ public class Meal {
   private List<Person> attending;
   private LatLong location;
   private Schedule schedule;
-  private LocalDate date;
-  private LocalTime time;
-  private double duration;
   private Recipe recipe;
 
   /**
    * Constructor for a meal.
    * @param p The host of the meal
    */
-  public Meal(Person p) {
-    assert (p != null);
+  public Meal(Person p, Schedule s) {
+    assert (p != null && s != null);
     this.host = p;
+    this.schedule = s;
     this.attending = new ArrayList<Person>();
   }
 
   /**
-   * Setter for the time of day
-   * that the meal is.
-   * @param t new LocalTime object
-   * @return Old LocalTime object
+   * Accessor for date of meal.
+   * @return localdate
    */
-  public LocalTime setTime(LocalTime lT) {
-    LocalTime ret = this.time;
-    this.time = lT;
-    return ret;
+  public LocalDate date() {
+    LocalDate d = schedule.date();
+    return LocalDate.of(d.getYear(), d.getMonthValue(), d.getDayOfMonth());
   }
 
   /**
-   * Accessor for the time of a meal.
-   * @return LocalTime object
+   * Accessor for time of meal.
+   * @return localtime
    */
-	public LocalTime time() {
-	  return LocalTime.of(time.getHour(), time.getMinute());
-	}
+  public LocalTime time() {
+    LocalTime t = schedule.time();
+    return LocalTime.of(t.getHour(), t.getMinute());
+  }
 
-	/**
-	 * Setter for the duration of a meal,
-	 * in minutes.
-	 * @param d minutes
-	 * @return old meal duration
-	 */
-	public double setDuration(double d) {
-	  double ret = this.duration;
-	  this.duration = d;
-	  return ret;
-	}
+  /**
+   * Setter for date of meal.
+   * @param lD new date.
+   * @return old date
+   */
+  public LocalDate setDate(LocalDate lD) {
+    return schedule.changeDate(lD);
+  }
 
-	/**
-	 * Accessor for a meal's duration.
-	 * @return double minutes
-	 */
-	public double duration() {
-	  return duration;
-	}
+  /**
+   * Setter for time of meal.
+   * @param lT new time.
+   * @return old time
+   */
+  public LocalTime setTime(LocalTime lT) {
+    return schedule.changeTime(lT);
+  }
+
+  /**
+   * Accessor for end date.
+   * @return null if no end set
+   */
+  public LocalDate endDate() {
+    return schedule.endDate();
+  }
+
+  /**
+   * Accessor for end time.
+   * @return null if no end set
+   */
+  public LocalTime endTime() {
+    return schedule.endTime();
+  }
+
+  /**
+   * Setter for end date and time.
+   * @param lDT ending datetime object
+   */
+  public void setEnd(LocalDateTime lDT) {
+    schedule.setEnd(lDT);
+  }
 
 	/**
 	 * Accessor for meal's location.
@@ -81,16 +100,6 @@ public class Meal {
 	 */
 	public LatLong location() {
 	  return location;
-	}
-
-	/**
-	 * Accessor for a meal's date.
-	 * @return a LocalDate object
-	 */
-	public LocalDate date() {
-	  return LocalDate.of(date.getYear(),
-	                      date.getMonthValue(),
-	                      date.getDayOfMonth());
 	}
 
 	/**
@@ -145,17 +154,6 @@ public class Meal {
 	}
 
 	/**
-	 * Setter for a Meal's date.
-	 * @param d new LocalDate
-	 * @return old date object
-	 */
-	public LocalDate setDate(LocalDate d) {
-	  LocalDate ret = this.date;
-	  this.date = d;
-	  return ret;
-	}
-
-	/**
 	 * Setter for a Meal's recipe.
 	 * @param r new recipe
 	 */
@@ -171,14 +169,17 @@ public class Meal {
 	  return recipe;
 	}
 
-	/**
-	 * Accessor for object's hashcode.
-	 * @return int hashcode
-	 */
 	@Override
-	public int hashCode() {
-	  return host.hashCode() + recipe.hashCode();
-	}
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((attending == null) ? 0 : attending.hashCode());
+    result = prime * result + ((host == null) ? 0 : host.hashCode());
+    result = prime * result + ((location == null) ? 0 : location.hashCode());
+    result = prime * result + ((recipe == null) ? 0 : recipe.hashCode());
+    result = prime * result + ((schedule == null) ? 0 : schedule.hashCode());
+    return result;
+  }
 
 	/**
 	 * Accessor for object's string.
@@ -192,24 +193,24 @@ public class Meal {
 	}
 
 	/**
-	 * Equality method for an object.
-	 * @return true of Meal has same
-	 * host, recipe, guest list, and
-	 * date, and time
-	 */
-	@Override
-	public boolean equals(Object o) {
-	  if (o == this) {
-	    return true;
-	  }
-	  if (!(o instanceof Meal)) {
-	    return false;
-	  }
-	  Meal m = (Meal) o;
-	  return this.host.equals(m.host())
-	         && this.recipe.equals(m.recipe())
-	         && this.attending.equals(m.attending())
-	         && this.date.equals(m.date())
-	         && this.time.equals(m.time());
-	}
+   * Equality method for an object.
+   * @return true of Meal has same
+   * host, recipe, guest list, and
+   * date, and time
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    }
+    if (!(o instanceof Meal)) {
+      return false;
+    }
+    Meal m = (Meal) o;
+    return this.host.equals(m.host())
+           && this.recipe.equals(m.recipe())
+           && this.attending.equals(m.attending())
+           && this.schedule.date().equals(m.date())
+           && this.schedule.time().equals(m.time());
+  }
 }

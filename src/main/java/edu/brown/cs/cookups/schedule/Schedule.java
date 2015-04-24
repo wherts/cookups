@@ -65,7 +65,7 @@ public class Schedule {
    * Accessor for start time.
    * @return time object
    */
-  public LocalTime start() {
+  public LocalTime time() {
     return LocalTime.of(start.getHour(), start.getMinute());
   }
 
@@ -73,7 +73,7 @@ public class Schedule {
    * Setter for an end time.
    * @param lT end time
    */
-  public void setEndTime(LocalDateTime lT) {
+  public void setEnd(LocalDateTime lT) {
     assert (lT != null);
     Period dayDifference = Period.between(start.toLocalDate(), lT.toLocalDate());
     if (dayDifference.getYears() < 0
@@ -141,12 +141,18 @@ public class Schedule {
   }
 
   /**
-   * Accessor for hashing schedule.
-   * @return int for hashing
+   * Accessor for string representation
+   * of a schedule.
+   * @return string
    */
   @Override
   public int hashCode() {
-    return start.hashCode();
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((end == null) ? 0 : end.hashCode());
+    result = prime * result + ((location == null) ? 0 : location.hashCode());
+    result = prime * result + ((start == null) ? 0 : start.hashCode());
+    return result;
   }
 
   /**
@@ -159,12 +165,6 @@ public class Schedule {
     return start.toString() + ", " + location.toString();
   }
 
-  /**
-   * Accessor for Schedule equality.
-   * @return true if object is equal
-   * to the schedule's date, time,
-   * and location.
-   */
   @Override
   public boolean equals(Object o) {
     if (o == this) {
@@ -175,7 +175,7 @@ public class Schedule {
     }
     Schedule s = (Schedule) o;
     return this.date().equals(s.date())
-           && this.start().equals(s.start())
+           && this.time().equals(s.time())
            && location.equals(s.location());
   }
 }

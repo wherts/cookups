@@ -3,6 +3,7 @@ package edu.brown.cs.food;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
@@ -13,14 +14,17 @@ import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.food.Meal;
 import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.User;
+import edu.brown.cs.cookups.schedule.LatLong;
+import edu.brown.cs.cookups.schedule.Schedule;
 
 public class MealTest {
 
   @Test
   public void testEquals() {
-    Meal m1 = new Meal(new User("Wes", "wh7", new ArrayList<Ingredient>()));
-    Meal m2 = new Meal(new User("Taylor", "tderosa", new ArrayList<Ingredient>()));
-    Meal m3 = new Meal(new User("Wes", "wh7", new ArrayList<Ingredient>()));
+    Schedule sched = new Schedule(LocalDateTime.now(), new LatLong(10, 10));
+    Meal m1 = new Meal(new User("Wes", "wh7", new ArrayList<Ingredient>()), sched);
+    Meal m2 = new Meal(new User("Taylor", "tderosa", new ArrayList<Ingredient>()), sched);
+    Meal m3 = new Meal(new User("Wes", "wh7", new ArrayList<Ingredient>()), sched);
     m1.addAttending(new User("Grant", "ggustafs", new ArrayList<Ingredient>()));
     m2.addAttending(new User("Albie", "ajb7", new ArrayList<Ingredient>()));
     m3.addAttending(new User("Grant", "ggustafs", new ArrayList<Ingredient>()));
