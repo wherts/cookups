@@ -1,5 +1,6 @@
 package edu.brown.cs.cookups.food;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +11,14 @@ public class Meal {
   public Person host;
   public List<Person> attending;
   public LatLong location;
+  public LocalDate date;
   public double time, duration;
   public Recipe recipe;
   public List<Ingredient> shoppingList;
 
-  public Meal() {
+  public Meal(Person p) {
+    assert (p != null);
+    this.host = p;
     this.attending = new ArrayList<Person>();
     this.shoppingList = new ArrayList<Ingredient>();
   }
@@ -41,6 +45,10 @@ public class Meal {
 
 	public LatLong location() {
 	  return location;
+	}
+
+	public LocalDate date() {
+	  return date;
 	}
 
 	public LatLong setLocation(LatLong l) {
@@ -72,11 +80,44 @@ public class Meal {
 	  return ret;
 	}
 
+	public LocalDate setDate(LocalDate d) {
+	  LocalDate ret = this.date;
+	  this.date = d;
+	  return ret;
+	}
+
 	public void changeRecipe(Recipe r) {
 	  this.recipe = r;
 	}
 
 	public Recipe recipe() {
 	  return recipe;
+	}
+
+	@Override
+	public int hashCode() {
+	  return host.hashCode() + recipe.hashCode();
+	}
+
+	@Override
+	public String toString() {
+	  return host.toString() + ", " 
+	         + recipe.toString() + ", " 
+	         + location.toString();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+	  if (o == this) {
+	    return true;
+	  }
+	  if (!(o instanceof Meal)) {
+	    return false;
+	  }
+	  Meal m = (Meal) o;
+	  return this.host.equals(m.host())
+	         && this.recipe.equals(m.recipe())
+	         && this.attending.equals(m.attending())
+	         && this.date.equals(m.date());
 	}
 }

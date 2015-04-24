@@ -20,27 +20,19 @@ import edu.brown.cs.cookups.person.User;
 public class RecipeMatchTest {
   private DBLink dbL;
 
-//  @Before
-//  public void initialize() {
-//    try {
-//      dbL = new DBLink("databases/cookups.sqlite3");
-//    } catch (ClassNotFoundException | SQLException e) {
-//      System.err.println("TESTING ERROR");
-//      fail();
-//    }
-//    addRecipes(dbL);
-//  }
-
-  @Test
-  public void recipeCompilation() {
-    List<Person> chefs = new ArrayList<>();
-    dbL = null;
+  @Before
+  public void initialize() {
     try {
       dbL = new DBLink("databases/cookups.sqlite3");
     } catch (ClassNotFoundException | SQLException e) {
       System.err.println("TESTING ERROR");
       fail();
     }
+  }
+
+  @Test
+  public void recipeCompilation() {
+    List<Person> chefs = new ArrayList<>();
     double[] weights = { 5.0, 9.0, 80.0, 100.0, 999.0 };
     String[] ids = { "one", "two", "three", "four", "five" };
     List<Ingredient> ings1 = new ArrayList<>();
@@ -74,13 +66,6 @@ public class RecipeMatchTest {
   @Test
   public void recipeMatchingOnePerson() throws SQLException {
     List<Person> chefs = new ArrayList<>();
-    dbL = null;
-    try {
-      dbL = new DBLink("databases/cookups.sqlite3");
-    } catch (ClassNotFoundException | SQLException e) {
-      System.err.println("TESTING ERROR");
-      fail();
-    }
     List<Ingredient> ings1 = new ArrayList<>();
     ings1.add(new Ingredient("/i/pasta.1", 6, dbL));
     ings1.add(new Ingredient("/i/baking.1", 16, dbL));
@@ -117,16 +102,16 @@ public class RecipeMatchTest {
   }
 
   @Test
+  public void onePersonNoMatches() throws SQLException {
+    List<Person> chefs = new ArrayList<>();
+    List<Recipe> recipes = RecipeMatcher.matchRecipes(chefs, dbL);
+    assertTrue(recipes.size() == 0);
+  }
+
+  @Test
   public void recipeMatchingTwoPerson() throws SQLException {
     dbL.clearCache();
     List<Person> chefs = new ArrayList<>();
-    dbL = null;
-    try {
-      dbL = new DBLink("databases/cookups.sqlite3");
-    } catch (ClassNotFoundException | SQLException e) {
-      System.err.println("TESTING ERROR");
-      fail();
-    }
     List<Ingredient> ings1 = new ArrayList<>();
     List<Ingredient> ings2 = new ArrayList<>();
     // wes ingredients
