@@ -29,7 +29,7 @@ public class DBImportTest {
     File file = new File("databases/csv/ingredientTest.csv");
     try {
       DBLink db = new DBLink(DB_PATH);
-      // db.clearDataBase();
+      db.clearDataBase();
       // db.importIngredients(file);
     } catch (ClassNotFoundException | SQLException e) {
       // TODO Auto-generated catch block

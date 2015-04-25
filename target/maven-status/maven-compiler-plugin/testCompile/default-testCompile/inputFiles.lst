@@ -2,5 +2,9 @@
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/db/DBLinkTest.java
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/db/PeopleTest.java
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/cookups/ConversionTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/cookups/PercentRankTest.java
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/cookups/DateMatcherTest.java
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/db/DBImportTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/food/MealTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/food/RecipeTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/food/ScheduleTest.java

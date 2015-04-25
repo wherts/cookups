@@ -90,18 +90,22 @@ public class DBLink implements DBManager {
   }
 
   public void clearDataBase() {
-    String drop = "DROP TABLE IF EXISTS user";
-    try (Statement stat = conn.createStatement()) {
-      stat.executeUpdate(drop);
-      // for (String s : TABLES) {
-      // System.out.println(drop + s);
-      // stat.executeUpdate(drop + s);
-      // }
-    }
-    // init();
-    catch (SQLException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+    String sql = "DROP TABLE IF EXISTS ";
+    for (String table : TABLES) {
+      try (Statement stat = conn.createStatement()) {
+        String drop = sql + "table";
+        stat.executeUpdate(drop);
+        break;
+        // for (String s : TABLES) {
+        // System.out.println(drop + s);
+        // stat.executeUpdate(drop + s);
+        // }
+      }
+      // init();
+      catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
     }
   }
 
