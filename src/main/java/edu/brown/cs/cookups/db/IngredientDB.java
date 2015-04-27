@@ -9,6 +9,8 @@ public interface IngredientDB {
   public List<Ingredient> getIngredientsByRecipe(String id);
 
   public List<String> getAllIngredientNames();
+  
+  public Boolean hasIngredient(String id);
 
   public String getIngredientNameByID(String id);
 
