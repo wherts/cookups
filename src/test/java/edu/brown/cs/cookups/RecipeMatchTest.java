@@ -162,7 +162,7 @@ public class RecipeMatchTest {
     assertTrue(eggs.ounces() == 10);
 
     Ingredient sherry = toBuy.get(3);
-    assertTrue(sherry.id().equals("/i/liquid.1"));
+    assertTrue(sherry.id().equals("/i/liquid.2.1"));
     assertTrue(sherry.ounces() == 8);
 
     Ingredient nutmeg = toBuy.get(4);
@@ -263,7 +263,7 @@ public class RecipeMatchTest {
                                         "/i/poultry.1",
                                         6);
       dbL.recipes().addRecipeIngredient("/r/1.1",
-                                        "/i/liquid.1",
+                                        "/i/liquid.2.1",
                                         4);
       dbL.recipes().addRecipeIngredient("/r/1.1",
                                         "/i/spice.1",
@@ -330,10 +330,10 @@ public class RecipeMatchTest {
                                         "/i/liquid.2.1",
                                         3);
       dbL.recipes().addRecipeIngredient("/r/1.3",
-                                        "/i/liquid.3.1",
+                                        "/i/	",
                                         2);
       dbL.recipes().addRecipeIngredient("/r/1.3",
-                                        "/i/liquid.2.2",
+                                        "/i/liquid.3.2",
                                         2);
       dbL.recipes().addRecipeIngredient("/r/1.3",
                                         "/i/dairy.3.1",
