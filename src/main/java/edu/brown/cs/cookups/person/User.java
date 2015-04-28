@@ -59,8 +59,8 @@ public class User implements Person {
 	  if (!(o instanceof User)) {
 		  return false;
 	  }
-	  
-	  return this.id.equals(((User) o).id());
+	  User u = (User) o;
+	  return this.id.equals(u.id());
   }
 
 }

@@ -15,7 +15,7 @@ import edu.brown.cs.cookups.person.Person;
 
 public class RecipeMatcher {
 
-  public RecipeMatcher() {
+  private RecipeMatcher() {
   }
 
   public static List<Recipe> matchRecipes(

@@ -3,7 +3,6 @@
 
 target/
 *.sqlite3
-databases/
 /target/
 
 *.pydevproject
