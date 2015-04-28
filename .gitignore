@@ -2,7 +2,6 @@
 =======
 
 target/
-*.sqlite3
 /target/
 
 *.pydevproject
