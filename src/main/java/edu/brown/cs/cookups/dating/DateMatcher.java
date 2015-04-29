@@ -15,13 +15,13 @@ public class DateMatcher {
         if (suitor.equals(toFind)) { //don't match toFind with themself
           continue;
         }
-        int compatability = toFind.compatability(suitor);
-        if (compatability > 0) {
+        boolean compatable = toFind.compatability(suitor);
+        if (compatable) {
           matches.add(suitor);
         }
       }
-      for (Suitor suitor : matches) {
-        toReturn.add(suitor.person());
+      while (!matches.isEmpty()) {
+        toReturn.add(matches.poll().person());
       }
     } else { //platonic
       for (Suitor suitor : suitors) {

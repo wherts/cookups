@@ -11,8 +11,8 @@ public class DatingComparator implements Comparator<Suitor> {
   
   @Override
   public int compare(Suitor suitor1, Suitor suitor2) {
-    int compatability1 = toMatch.compatability(suitor1);
-    int compatability2 = toMatch.compatability(suitor2);
-    return Integer.compare(compatability1, compatability2);
+    int compatability1 = toMatch.sexAppeal(suitor1) + suitor1.sexAppeal(toMatch);
+    int compatability2 = toMatch.sexAppeal(suitor2) + suitor2.sexAppeal(toMatch);
+    return Integer.compare(compatability2, compatability1);
   }
 }

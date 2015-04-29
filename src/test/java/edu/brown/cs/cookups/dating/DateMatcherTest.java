@@ -1,4 +1,4 @@
-package edu.brown.cs.cookups;
+package edu.brown.cs.cookups.dating;
 
 import static org.junit.Assert.*;
 
@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import edu.brown.cs.cookups.dating.DateMatcher;
 import edu.brown.cs.cookups.dating.Suitor;
-import edu.brown.cs.cookups.dating.Suitor.Builder;
 import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.User;
 
@@ -58,24 +57,24 @@ public class DateMatcherTest {
   public void builderTest() {
     Suitor s1 = new Suitor.Builder(new User("All", "all", null)).
         setBi().setGay().setStraight().setGender(100).setPlatonic().build();
-    assertTrue(s1.getBi());
-    assertTrue(s1.getGay());
-    assertTrue(s1.getStraight());
+    assertTrue(s1.isBi());
+    assertTrue(s1.isGay());
+    assertTrue(s1.isStraight());
     assertTrue(s1.isFemale());
     assertTrue(s1.isPlatonic());
-    assertFalse(s1.getQueer());
+    assertFalse(s1.isQueer());
     assertFalse(s1.isRomantic());
     assertFalse(s1.isMale());
     
     Suitor s2 = new Suitor.Builder(new User("Nothing", "nothing", null)).build();
-    assertFalse(s2.getBi());
-    assertFalse(s2.getGay());
-    assertFalse(s2.getStraight());
+    assertFalse(s2.isBi());
+    assertFalse(s2.isGay());
+    assertFalse(s2.isStraight());
 
     assertTrue(s2.isFemale());
     assertTrue(s2.isMale());
     assertFalse(s2.isPlatonic());
-    assertTrue(s2.getQueer());
+    assertTrue(s2.isQueer());
     assertTrue(s2.isRomantic());
   }
 
@@ -107,7 +106,7 @@ public class DateMatcherTest {
     suitors.add(straightWoman2);
     suitors.add(biWoman1);
     suitors.add(biWoman2);
-    
+  
     //TO NOT MATCH WITH
     suitors.add(straightMan2);
     suitors.add(gayMan1);

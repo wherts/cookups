@@ -1,87 +1,68 @@
 package edu.brown.cs.db;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.SQLException;
 
 import org.junit.Test;
 
-import edu.brown.cs.cookups.db.CSVReader;
 import edu.brown.cs.cookups.db.DBLink;
+import edu.brown.cs.cookups.food.Ingredient;
+import edu.brown.cs.cookups.food.Recipe;
 
 public class DBImportTest {
 
-  public static final String DB_PATH = "databases/importTest.sqlite3";
+  public static final String DB_PATH = "databases/tests/importTest.sqlite3";
+  public static final String INGREDIENT_PATH = "databases/csv/ingredients/ingredient.csv";
+  public static final String RECIPE_PATH = "databases/csv/recipes/gazpacho.csv";
 
   // @BeforeClass
   public static void setUpClass() throws Exception {
 
     try {
       DBLink db = new DBLink(DB_PATH);
-      // db.clearDataBase();
+      db.clearDataBase();
     } catch (ClassNotFoundException | SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
   }
-  
- @Test
-  public void csvTest() {
-	  String dir = "databases/csv/recipes";
-	  try {
-	      DBLink db = new DBLink(DB_PATH);
-	      db.importAllRecipes(dir);
-	    } catch (ClassNotFoundException | SQLException e) {
-	      // TODO Auto-generated catch block
-	      e.printStackTrace();
-	    }
-  }
-  
- @Test
-  public void importIngredientsTest() {
-	  File file = new File("databases/csv/ingredients.csv");
-	    try {
-	      DBLink db = new DBLink(DB_PATH);
-	      db.importIngredients(file);
-	    } catch (ClassNotFoundException | SQLException e) {
-	      // TODO Auto-generated catch block
-	      e.printStackTrace();
-	    }
-  }
-  
-// @Test
- public void hasIngredientTest() {
-	  
-	    try {
-	      DBLink db = new DBLink(DB_PATH);
-	      System.out.println(db.ingredients().hasIngredient("/i/produce.2"));
-	    } catch (ClassNotFoundException | SQLException e) {
-	      // TODO Auto-generated catch block
-	      e.printStackTrace();
-	    }
- }
- 
-  //@Test
-  public void importRecipeTest() {
-	  File file = new File("databases/csv/recipes/frittata.csv");
-	    try {
-	      DBLink db = new DBLink(DB_PATH);
-	      db.importRecipe(file);
-	    } catch (ClassNotFoundException | SQLException e) {
-	      // TODO Auto-generated catch block
-	      e.printStackTrace();
-	    }
-  }
 
-  //@Test
+  @Test
   public void importIngredients() {
-    File file = new File("databases/csv/ingredientTest.csv");
     try {
       DBLink db = new DBLink(DB_PATH);
-      //db.clearDataBase();
-      // db.importIngredients(file);
+      db.clearDataBase();
+      db.importIngredients(new File(INGREDIENT_PATH));
+      assertTrue(db.ingredients()
+                   .getIngredientIDByName("Nutmeg")
+                   .equals("/i/spice.1"));
+      assertTrue(db.ingredients()
+                   .getIngredientIDByName("Bacon")
+                   .equals("/i/pork.1"));
+      assertTrue("Bacon".equals(db.ingredients()
+                                  .getIngredientNameByID("/i/pork.1")));
+    } catch (ClassNotFoundException | SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  @Test
+  public void importRecipeTest() {
+    try {
+      DBLink db = new DBLink(DB_PATH);
+      db.clearDataBase();
+      db.importIngredients(new File(INGREDIENT_PATH));
+      db.importRecipe(new File(RECIPE_PATH));
+      Recipe r = db.recipes().getRecipeById("/r/1.6");
+      assertTrue(r.name().equals("Gazpacho"));
+      assertTrue(r.ingredients()
+                  .contains(new Ingredient("/i/liquid.8",
+                      4.0,
+                      db)));
     } catch (ClassNotFoundException | SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
