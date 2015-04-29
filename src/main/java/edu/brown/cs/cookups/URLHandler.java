@@ -3,6 +3,7 @@ package edu.brown.cs.cookups;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import spark.Spark;
 import spark.template.freemarker.FreeMarkerEngine;
@@ -11,7 +12,7 @@ import com.google.gson.Gson;
 
 import edu.brown.cs.autocorrect.Engine;
 import edu.brown.cs.autocorrect.Trie;
-import edu.brown.cs.cookups.api.AutocorrectHandler;
+import edu.brown.cs.cookups.api.AutocompleteHandler;
 import edu.brown.cs.cookups.api.BasicView;
 import edu.brown.cs.cookups.api.CookFriendsHandler;
 import edu.brown.cs.cookups.api.CookupHandler;
@@ -25,7 +26,7 @@ import freemarker.template.Configuration;
 public class URLHandler {
   private DBLink db;
   private PersonManager people;
-  private Engine names, indredients;
+  private List<String> names, ingredients;
 
   private final static Gson GSON = new Gson();
 
@@ -34,7 +35,8 @@ public class URLHandler {
       SQLException {
     this.db = db;
     people = new PersonManager(this.db);
-    names = new Engine(new Trie(db.users().getAllNames()));
+    names = db.users().getAllNames();
+    ingredients = db.ingredients().getAllIngredientNames();
   }
 
   public void runSparkServer() {
@@ -55,7 +57,8 @@ public class URLHandler {
     Spark.post("/cookup", new CookupHandler(people));
     Spark.post("/login", new LoginHandler());
     Spark.post("/signup", new SignupHandler());
-    Spark.post("/autoPeople?search=:input", new AutocorrectHandler(names));
+    Spark.get("/allUsers", new AutocompleteHandler(names));
+    Spark.get("/allIngredients", new AutocompleteHandler(ingredients));
   }
 
   private static FreeMarkerEngine createEngine() {

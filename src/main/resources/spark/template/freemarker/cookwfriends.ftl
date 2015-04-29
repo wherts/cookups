@@ -49,7 +49,7 @@
 	      <div class="right half">
 	          Add chefs:
 	          <select id="add-chefs" multiple="multiple" class="tokenize-sample">
-			</select>
+			  </select>
 			<br>
 	      </div>
           <div class="btn-container"><input class="btn" type="submit" value="Create Meal"></div>
