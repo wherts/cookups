@@ -46,9 +46,32 @@ public class RecipeMatchTest {
     chefs.add(new User("wh7", "Wes", ing));
     List<Recipe> matched = RecipeMatcher.matchRecipes(chefs, dbM);
     assertTrue(matched.size() == 3);
-    Recipe fireChicken = matched.get(0);
-    System.out.println(fireChicken.name() + ", " + fireChicken.id());
-    assertTrue(true);
+    Recipe stirFry = matched.get(0);
+    assertTrue(stirFry.name().equals("Chicken Stir Fry with Snap Peas"));
+    assertTrue(stirFry.id().equals("/r/1.9"));
+    for (Ingredient i : stirFry.shoppingList()) {
+      System.out.printf("Need %f of %s, %s%n", i.ounces(), i.name(), i.id());
+    }
+    assertTrue(stirFry.shoppingList().size() == 7);
+    Ingredient bSoda = stirFry.shoppingList().get(0);
+    assertTrue(bSoda.name().equals("Baking Soda"));
+    assertTrue(bSoda.ounces() == 0.025000);
+    
+    Ingredient cornstarch = stirFry.shoppingList().get(1);
+    assertTrue(cornstarch.name().equals("Cornstarch"));
+    assertTrue(cornstarch.ounces() == 0.05F);
+
+    Ingredient rice = stirFry.shoppingList().get(2);
+
+    Ingredient peanutOil = stirFry.shoppingList().get(3);
+
+    Ingredient oysterSauce = stirFry.shoppingList().get(4);
+
+    Ingredient soySauce = stirFry.shoppingList().get(5);
+
+    Ingredient snapPeas = stirFry.shoppingList().get(6);
+
+
   }
 
 //  @Test
@@ -163,7 +186,7 @@ public class RecipeMatchTest {
 //    assertTrue(milk.ounces() == 24);
 //
 //    Ingredient eggs = toBuy.get(2);
-//    assertTrue(eggs.id().equals("/i/poultry.1"));
+//    assertTrue(eggs.id().equals("/i/poultry.1")););
 //    assertTrue(eggs.ounces() == 10);
 //
 //    Ingredient sherry = toBuy.get(3);
