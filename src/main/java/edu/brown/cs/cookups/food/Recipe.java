@@ -154,7 +154,6 @@ public class Recipe {
           querier));
     }
     toReturn.setIngredients(scaledIngredients);
-
     return toReturn;
   }
 

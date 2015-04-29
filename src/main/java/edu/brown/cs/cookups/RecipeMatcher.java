@@ -54,12 +54,13 @@ public class RecipeMatcher {
     for (String k : keys) {
       recipesUsing.addAll(dbL.recipes()
                              .getRecipesWithIngredient(k));
-      // update the shopping list
     }
     for (Recipe recipe : recipesUsing) {
-      recipe.scale(partySize);
-      buildShoppingList(currIngredients, recipe);
-      myRecipes.add(recipe);
+      Recipe scaled = recipe.scale(partySize);
+//      System.out.printf("Scaled recipe %s to %f%n", recipe.name(), partySize);
+      // update the shopping list
+      buildShoppingList(currIngredients, scaled);
+      myRecipes.add(scaled);
     }
     return myRecipes;
   }
