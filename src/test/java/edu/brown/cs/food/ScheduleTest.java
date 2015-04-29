@@ -30,7 +30,7 @@ public class ScheduleTest {
   
   @Test
   public void testEndTime() {
-    Schedule sched = new Schedule(LocalDateTime.of(2015, 4, 23, 20, 15), null);
+    Schedule sched = new Schedule(LocalDateTime.of(2015, 4, 23, 20, 15), new LatLong(0, 0));
     //set end hour later
     LocalDateTime time = LocalDateTime.of(2015, 4, 23, 21, 15);
     sched.setEnd(time);
