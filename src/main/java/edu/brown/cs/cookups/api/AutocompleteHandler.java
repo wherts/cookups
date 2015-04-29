@@ -8,13 +8,13 @@ import spark.Route;
 
 import com.google.gson.Gson;
 
-import edu.brown.cs.autocorrect.Engine;
+import edu.brown.cs.autocomplete.Engine;
 
-public class AutocorrectHandler implements Route {
+public class AutocompleteHandler implements Route {
   private Engine autocomplete;
   private static final Gson GSON = new Gson();
 
-  public AutocorrectHandler(Engine e) {
+  public AutocompleteHandler(Engine e) {
     autocomplete = e;
   }
 

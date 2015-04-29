@@ -9,14 +9,16 @@ import spark.template.freemarker.FreeMarkerEngine;
 
 import com.google.gson.Gson;
 
-import edu.brown.cs.autocorrect.Engine;
-import edu.brown.cs.autocorrect.Trie;
-import edu.brown.cs.cookups.api.AutocorrectHandler;
+import edu.brown.cs.autocomplete.Engine;
+import edu.brown.cs.autocomplete.Trie;
+import edu.brown.cs.cookups.api.AutocompleteHandler;
 import edu.brown.cs.cookups.api.BasicView;
 import edu.brown.cs.cookups.api.CookFriendsHandler;
 import edu.brown.cs.cookups.api.CookupHandler;
 import edu.brown.cs.cookups.api.LoginHandler;
 import edu.brown.cs.cookups.api.ProfileView;
+import edu.brown.cs.cookups.api.RecipeView;
+import edu.brown.cs.cookups.api.SearchHandler;
 import edu.brown.cs.cookups.api.SignupHandler;
 import edu.brown.cs.cookups.db.DBLink;
 import edu.brown.cs.cookups.person.PersonManager;
@@ -25,7 +27,7 @@ import freemarker.template.Configuration;
 public class URLHandler {
   private DBLink db;
   private PersonManager people;
-  private Engine names, indredients;
+  private Engine names, ingredients;
 
   private final static Gson GSON = new Gson();
 
@@ -48,14 +50,16 @@ public class URLHandler {
     Spark.get("/cook", new BasicView("cook.ftl"), freeMarker);
     Spark.get("/cookwfriends", new BasicView("cookwfriends.ftl"), freeMarker);
     Spark.get("/cookup", new BasicView("cookup.ftl"), freeMarker);
+    Spark.get("/search/:term", new SearchHandler(), freeMarker);
 
-    Spark.get("/profile", new ProfileView(), freeMarker);
+    Spark.get("/profile/:id", new ProfileView(people), freeMarker);
+    Spark.get("/recipe/:id", new RecipeView(), freeMarker);
 
     Spark.post("/cookwfriends", new CookFriendsHandler(people));
     Spark.post("/cookup", new CookupHandler(people));
     Spark.post("/login", new LoginHandler());
     Spark.post("/signup", new SignupHandler());
-    Spark.post("/autoPeople?search=:input", new AutocorrectHandler(names));
+    Spark.post("/autoPeople", new AutocompleteHandler(names));
   }
 
   private static FreeMarkerEngine createEngine() {

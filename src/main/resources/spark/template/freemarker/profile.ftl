@@ -1,7 +1,7 @@
 <!DOCTYPE html>
   <head>
     <meta charset="utf-8">
-    <title>${title}</title>
+    <title>Brown Cookups</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/html5bp.css">
@@ -32,15 +32,15 @@
     <div class="container">
       <img class="profile-pic left" src="assets/sample-pic.png">
       <div class="about-me">
-        <p class="name h-text">Ananya Bhatia-Lin</p>
-        <p class="subheader h-text">Favorite Foods: Berries, Eggs, Thai, Avocado</p>
-        <p class="subheader h-text">Favorite Recipts: Kale & Brussel Sprouts Pasta, Cheesy Baked Cauliflower, Kale & Cumin Potatoes</p>
+        <p class="name h-text">${name}</p>
+        <!-- <p class="subheader h-text">Favorite Ingredients: </p> -->
+        <!-- <p class="subheader h-text">Favorite Recipts: ${favRecipes}</p> -->
       </div>
     </div>
   </div>
     <div class="block a">
     <div class="container">
-      <p class="title h-text">Ananya's Ingredients</p>
+      <p class="title h-text">${name}'s Ingredients</p>
       <div id="fridge"><div id="ingredients"></div></div>
     </div>
   </div>
