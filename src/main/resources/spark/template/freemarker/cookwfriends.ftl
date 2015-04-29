@@ -36,22 +36,13 @@
       <div class="container">
       <div class="form-box inset">
          <form id="friends-form" method="POST">
-         <div class="left half">
-	          Meal Name: <input type="text" name="name">
-	          <br>
-	          Date:   
-	          <input type="date" name="date">
-	          <br>
-	          Time:   
-	          <input type="time" name="time_start"> to <input type="time" name="time_end">
-	          <br>
-	      </div>
-	      <div class="right half">
-	          Add chefs:
-	          <select id="add-chefs" multiple="multiple" class="tokenize-sample">
-			  </select>
-			<br>
-	      </div>
+		  <p class="subheader-text">Make a Meal</p>	
+		  <div class="form-entry">Meal Name<br><input type="text" name="name"></div>
+		  <div class="form-entry">Date<br>   <input type="date" name="date"></div>
+          <div class="form-entry">Time<br>   
+          		<input type="time" name="time_start"> to <input type="time" name="time_end">
+          </div>
+          <div class="form-entry">Add chefs<br><select id="add-chefs" multiple="multiple" class="tokenize-sample"></select></div>
           <div class="btn-container"><input class="btn" type="submit" value="Create Meal"></div>
          </form>
       </div>

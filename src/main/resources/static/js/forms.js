@@ -24,22 +24,17 @@ $('#friends-form').submit(function(e) {
 });
 
 $(document).ready(function() {
-	$.get("/allUsers", function(users) {
+	$.get("/allUsers", function(JSONresponse) {
+		var users = JSON.parse(JSONresponse);
 		var options = "";
+		console.log(users);
+		
 		for (var i=1; i<=users.length; i++) {
-			options += "<option value='"+i+"'>"+users[i]+"</option>";
+			options += "<option value='"+i+"'>"+users[i-1]+"</option>";
 		}
 		$("#add-chefs").html(options);
-		$("#add-chefs").tokenize();
+		$("#add-chefs").tokenize({
+				newElements: false,
+		});
 	});
 });
-
-//$("#add-chefs").bind('keyup', function(event) {
-//	var words = $(this).val();
-//	var postParameters = {input: words};
-//	$.post("/autoPeople", postParameters, function(responseJSON){
-//		
-//		
-//	})
-//	$("#add-chefs").tokenize();
-//}

@@ -46,6 +46,8 @@ public class Main {
     }
     String db = parsedArgs.get(0);
 
+
+
     URLHandler gui = new URLHandler(new DBLink(db));
     gui.runSparkServer();
   }
