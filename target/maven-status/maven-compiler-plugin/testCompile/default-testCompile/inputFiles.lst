@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /gpfs/main/home/ajb7/course/cs032/cookups/src/test/java/edu/brown/cs/cookups/RecipeMatchTest.java
 /gpfs/main/home/ajb7/course/cs032/cookups/src/test/java/edu/brown/cs/food/ScheduleTest.java
 /gpfs/main/home/ajb7/course/cs032/cookups/src/test/java/edu/brown/cs/cookups/ConversionTest.java
@@ -9,3 +10,17 @@
 /gpfs/main/home/ajb7/course/cs032/cookups/src/test/java/edu/brown/cs/cookups/dating/DateRankingTest.java
 /gpfs/main/home/ajb7/course/cs032/cookups/src/test/java/edu/brown/cs/cookups/dating/DateMatcherTest.java
 /gpfs/main/home/ajb7/course/cs032/cookups/src/test/java/edu/brown/cs/db/DBLinkTest.java
+=======
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/cookups/RecipeMatchTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/db/DBLinkTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/db/PeopleTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/cookups/ConversionTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/cookups/PercentRankTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/cookups/dating/DateMatcherTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/db/DBImportTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/food/MealTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/food/RecipeTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/db/DBIngredientTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/cookups/dating/DateRankingTest.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/test/java/edu/brown/cs/food/ScheduleTest.java
+>>>>>>> 311eac8496a3db67c55cdf237668da827d2f9c99

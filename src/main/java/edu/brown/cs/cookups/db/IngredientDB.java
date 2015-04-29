@@ -9,14 +9,19 @@ public interface IngredientDB {
   public List<Ingredient> getIngredientsByRecipe(String id);
 
   public List<String> getAllIngredientNames();
-  
+
   public Boolean hasIngredient(String id);
 
   public String getIngredientNameByID(String id);
 
   public String getIngredientIDByName(String name);
 
-  public void defineIngredient(String id, String name);
+  public double priceByID(String id);
+
+  public String storageByID(String id);
+
+  public void defineIngredient(String id, String name,
+      double price, String storage);
 
   public String ingredientNameCache(String id);
 
