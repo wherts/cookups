@@ -131,4 +131,21 @@ public class IngredientsDBLink implements IngredientDB {
     INGREDIENT_NAME_CACHE.clear();
   }
 
+@Override
+public Boolean hasIngredient(String id) {
+    String query = "SELECT id FROM ingredient WHERE id = ?";
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+    prep.setString(1, id);
+      try (ResultSet rs = prep.executeQuery()) {
+
+        return rs.next();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+	return false;
+}
+
 }

@@ -33,16 +33,16 @@ public class ScheduleTest {
     Schedule sched = new Schedule(LocalDateTime.of(2015, 4, 23, 20, 15), null);
     //set end hour later
     LocalDateTime time = LocalDateTime.of(2015, 4, 23, 21, 15);
-    sched.setEndTime(time);
+    sched.setEnd(time);
     //set end at start
     time = LocalDateTime.of(2015, 4, 23, 20, 15);
-    sched.setEndTime(time);
+    sched.setEnd(time);
     
     //set year before
     boolean caught = false;
     try {
       time = LocalDateTime.of(2014, 4, 23, 20, 15);
-      sched.setEndTime(time);
+      sched.setEnd(time);
     } catch (IllegalArgumentException ie) {
       caught = true;
     }
@@ -51,7 +51,7 @@ public class ScheduleTest {
     caught = false;
     try {
       time = LocalDateTime.of(2015, 3, 23, 20, 15);
-      sched.setEndTime(time);
+      sched.setEnd(time);
     } catch (IllegalArgumentException ie) {
       caught = true;
     }
@@ -60,7 +60,7 @@ public class ScheduleTest {
     caught = false;
     try {
       time = LocalDateTime.of(2015, 4, 22, 20, 15);
-      sched.setEndTime(time);
+      sched.setEnd(time);
     } catch (IllegalArgumentException ie) {
       caught = true;
     }
@@ -69,7 +69,7 @@ public class ScheduleTest {
     caught = false;
     try {
       time = LocalDateTime.of(2015, 4, 23, 19, 15);
-      sched.setEndTime(time);
+      sched.setEnd(time);
     } catch (IllegalArgumentException ie) {
       caught = true;
     }
@@ -78,7 +78,7 @@ public class ScheduleTest {
     caught = false;
     try {
       time = LocalDateTime.of(2015, 3, 24, 20, 14);
-      sched.setEndTime(time);
+      sched.setEnd(time);
     } catch (IllegalArgumentException ie) {
       caught = true;
     }
