@@ -9,8 +9,12 @@ import spark.template.freemarker.FreeMarkerEngine;
 
 import com.google.gson.Gson;
 
+import edu.brown.cs.autocorrect.Engine;
+import edu.brown.cs.autocorrect.Trie;
+import edu.brown.cs.cookups.api.AutocorrectHandler;
 import edu.brown.cs.cookups.api.BasicView;
 import edu.brown.cs.cookups.api.CookFriendsHandler;
+import edu.brown.cs.cookups.api.CookupHandler;
 import edu.brown.cs.cookups.api.LoginHandler;
 import edu.brown.cs.cookups.api.ProfileView;
 import edu.brown.cs.cookups.api.SignupHandler;
@@ -21,6 +25,8 @@ import freemarker.template.Configuration;
 public class URLHandler {
   private DBLink db;
   private PersonManager people;
+  private Engine names, indredients;
+
   private final static Gson GSON = new Gson();
 
   public URLHandler(DBLink db)
@@ -28,6 +34,7 @@ public class URLHandler {
       SQLException {
     this.db = db;
     people = new PersonManager(this.db);
+    names = new Engine(new Trie(db.users().getAllNames()));
   }
 
   public void runSparkServer() {
@@ -45,8 +52,10 @@ public class URLHandler {
     Spark.get("/profile", new ProfileView(), freeMarker);
 
     Spark.post("/cookwfriends", new CookFriendsHandler(people));
+    Spark.post("/cookup", new CookupHandler(people));
     Spark.post("/login", new LoginHandler());
-    Spark.post("signup", new SignupHandler());
+    Spark.post("/signup", new SignupHandler());
+    Spark.post("/autoPeople?search=:input", new AutocorrectHandler(names));
   }
 
   private static FreeMarkerEngine createEngine() {

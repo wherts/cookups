@@ -25,4 +25,5 @@ public interface UserDB {
   public List<Person> getPersonsByName(String name,
       PersonManager people);
 
+  public List<String> getAllNames();
 }

@@ -3,7 +3,7 @@
 
 target/
 /target/
-
+databases/tests
 *.pydevproject
 .metadata
 .gradle

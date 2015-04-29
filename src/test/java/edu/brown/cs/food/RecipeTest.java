@@ -1,6 +1,7 @@
 package edu.brown.cs.food;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class RecipeTest {
   @Test
   public void testName() {
     Recipe r = new Recipe("/r/1.1", null);
-    assert(r.name() == null);
+    assert (r.name() == null);
   }
 
   @Test
@@ -33,7 +34,7 @@ public class RecipeTest {
     Recipe rec = new Recipe("test recipe", null);
     List<Ingredient> toBuy = new ArrayList<>();
     List<Ingredient> ingredients = new ArrayList<>();
-    //simple numbers
+    // simple numbers
     double[] totals = {15.0, 8.0, 7.0, 2.0, 3.0};
     double[] shop = {10.0, 4.0, 4.0, 2.0, 1.0};
     String[] ids = {"eggs", "butter", "cheese", "onions", "bacon"};
@@ -43,7 +44,7 @@ public class RecipeTest {
     }
     rec.setIngredients(ingredients);
     assertTrue(rec.percentHave() == 0.6);
-    //more complex numbers
+    // more complex numbers
     double[] t = {15.0, 12.6, 7.5, 0.55, 3.27};
     double[] h = {4.4, 12, 4.8, 0.17, 3.2};
     rec = new Recipe("more complex test", null);

@@ -38,7 +38,7 @@
           <input type="radio" name="type" value="true" checked>Yes
           <input type="radio" name="type" value="false">No
         </div>
-         <form action="/cookup" method="POST">
+         <form id="cookup-form" method="POST">
           Gender: Male <input type="range" name="gender"> Female
           <br>
           Orientation:   

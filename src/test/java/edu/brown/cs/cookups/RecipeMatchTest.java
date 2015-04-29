@@ -1,6 +1,6 @@
 package edu.brown.cs.cookups;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -37,7 +37,7 @@ public class RecipeMatchTest {
       e.printStackTrace();
     }
   }
-  
+
   @Test
   public void onePerson() throws SQLException {
     List<Ingredient> ing = new ArrayList<>();
@@ -47,7 +47,7 @@ public class RecipeMatchTest {
     chefs.add(new User("wh7", "Wes", ing));
     List<Recipe> matched = RecipeMatcher.matchRecipes(chefs, dbM);
     assertTrue(matched.size() == 3);
-    
+
     Recipe stirFry = matched.get(0);
     assertTrue(stirFry.name().equals("Chicken Stir Fry with Snap Peas"));
     assertTrue(stirFry.id().equals("/r/1.9"));
@@ -55,14 +55,14 @@ public class RecipeMatchTest {
     Ingredient bSoda = stirFry.shoppingList().get(0);
     assertTrue(bSoda.name().equals("Baking Soda"));
     assertTrue(bSoda.ounces() == 0.025000);
-    
+
     Ingredient cornstarch = stirFry.shoppingList().get(1);
     assertTrue(cornstarch.name().equals("Cornstarch"));
     assertTrue(cornstarch.ounces() == 0.050000);
 
     Ingredient rice = stirFry.shoppingList().get(2);
     assertTrue(rice.name().equals("Rice"));
-    assertTrue(rice.ounces()== 4.000000);
+    assertTrue(rice.ounces() == 4.000000);
 
     Ingredient peanutOil = stirFry.shoppingList().get(3);
     assertTrue(peanutOil.name().equals("Peanut Oil"));
@@ -75,7 +75,7 @@ public class RecipeMatchTest {
     Ingredient soySauce = stirFry.shoppingList().get(5);
     assertTrue(soySauce.name().equals("Soy Sauce"));
     assertTrue(soySauce.ounces() == 1.500000);
-    
+
     Ingredient snapPeas = stirFry.shoppingList().get(6);
     assertTrue(snapPeas.name().equals("Snap Peas"));
     assertTrue(snapPeas.ounces() == 2.000000);
@@ -83,66 +83,66 @@ public class RecipeMatchTest {
     Recipe fire = matched.get(1);
     assertTrue(fire.name().equals("Firecracker Chicken"));
     assertTrue(fire.id().equals("/r/1.10"));
-    
+
     assertTrue(fire.shoppingList().size() == 7);
     cornstarch = fire.shoppingList().get(0);
     assertTrue(cornstarch.name().equals("Cornstarch"));
     assertTrue(cornstarch.ounces() == 4.000000);
-    
+
     rice = fire.shoppingList().get(1);
     assertTrue(rice.name().equals("Rice"));
-    assertTrue(rice.ounces()== 4.000000);
-    
+    assertTrue(rice.ounces() == 4.000000);
+
     Ingredient water = fire.shoppingList().get(2);
     assertTrue(water.name().equals("Water"));
     assertTrue(water.ounces() == 0.250000);
-    
+
     Ingredient sriracha = fire.shoppingList().get(3);
     assertTrue(sriracha.name().equals("Sriracha"));
     assertTrue(sriracha.ounces() == 2.000000);
-    
+
     Ingredient cider = fire.shoppingList().get(4);
     assertTrue(cider.name().equals("Apple Cider Vinegar"));
     assertTrue(cider.ounces() == 0.025000);
-    
+
     Ingredient xvoo = fire.shoppingList().get(5);
     assertTrue(xvoo.name().equals("XVOO"));
     assertTrue(xvoo.ounces() == 1.000000);
-    
+
     Ingredient eggs = fire.shoppingList().get(6);
     assertTrue(eggs.name().equals("Eggs"));
     assertTrue(eggs.ounces() == 1.000000);
-    
+
     Recipe noodles = matched.get(2);
     assertTrue(noodles.name().equals("Peanut Butter Sesame Noodles"));
     assertTrue(noodles.id().equals("/r/1.5"));
-    
+
     assertTrue(noodles.shoppingList().size() == 7);
-    
+
     water = noodles.shoppingList().get(0);
     assertTrue(water.name().equals("Water"));
     assertTrue(water.ounces() == 1.000000);
-    
+
     Ingredient vinegar = noodles.shoppingList().get(1);
     assertTrue(vinegar.name().equals("Red Wine Vinegar"));
     assertTrue(vinegar.ounces() == 1.000000);
-    
+
     Ingredient sesame = noodles.shoppingList().get(2);
     assertTrue(sesame.name().equals("Sesame Oil"));
     assertTrue(sesame.ounces() == 0.500000);
-    
+
     Ingredient chili = noodles.shoppingList().get(3);
     assertTrue(chili.name().equals("Hot Chili Oil"));
     assertTrue(chili.ounces() == 0.250000);
-    
+
     soySauce = noodles.shoppingList().get(4);
     assertTrue(soySauce.name().equals("Soy Sauce"));
     assertTrue(soySauce.ounces() == 1.000000);
-    
+
     Ingredient pasta = noodles.shoppingList().get(5);
     assertTrue(pasta.name().equals("Angel Hair Pasta"));
     assertTrue(pasta.ounces() == 8.000000);
-    
+
     Ingredient pB = noodles.shoppingList().get(6);
     assertTrue(pB.name().equals("Peanut Butter"));
     assertTrue(pB.ounces() == 2);
@@ -151,8 +151,8 @@ public class RecipeMatchTest {
   @Test
   public void recipeCompilation() {
     List<Person> chefs = new ArrayList<>();
-    double[] weights = { 5.0, 9.0, 80.0, 100.0, 999.0 };
-    String[] ids = { "one", "two", "three", "four", "five" };
+    double[] weights = {5.0, 9.0, 80.0, 100.0, 999.0};
+    String[] ids = {"one", "two", "three", "four", "five"};
     List<Ingredient> ings1 = new ArrayList<>();
     List<Ingredient> ings2 = new ArrayList<>();
     List<Ingredient> ings3 = new ArrayList<>();
@@ -187,7 +187,7 @@ public class RecipeMatchTest {
     List<Person> chefs = new ArrayList<>();
     List<Recipe> recipes = RecipeMatcher.matchRecipes(chefs, dbM);
     assertTrue(recipes.size() == 0);
-    
+
     chefs.add(new User("Wes", "wh7", new ArrayList<Ingredient>()));
     chefs.add(new User("Albie", "ajb7", new ArrayList<Ingredient>()));
     chefs.add(new User("Taylor", "tderosa", new ArrayList<Ingredient>()));
@@ -268,12 +268,12 @@ public class RecipeMatchTest {
     Ingredient eggs = toBuy.get(1);
     assertTrue(eggs.name().equals("Eggs"));
     assertTrue(eggs.ounces() == 2);
-    
+
     Ingredient scallions = toBuy.get(2);
     assertTrue(scallions.name().equals("Scallions"));
     assertTrue(scallions.ounces() == 4);
 
-    //pizza bianco
+    // pizza bianco
     Recipe pizza = recipes.get(4);
     assertTrue(pizza.name().equals("Pizza Bianco with Bacon and Eggs"));
     assertTrue(pizza.id().equals("/r/1.7"));
@@ -283,23 +283,23 @@ public class RecipeMatchTest {
     Ingredient dough = toBuy.get(0);
     assertTrue(dough.name().equals("Pizza Dough"));
     assertTrue(dough.ounces() == 32);
-    
+
     parm = toBuy.get(1);
     assertTrue(parm.name().equals("Parmesan"));
     assertTrue(parm.ounces() == 4);
-    
+
     Ingredient mozz = toBuy.get(2);
     assertTrue(mozz.name().equals("Mozzarella"));
     assertTrue(mozz.ounces() == 16);
-    
+
     Ingredient xvoo = toBuy.get(3);
     assertTrue(xvoo.name().equals("XVOO"));
     assertTrue(xvoo.ounces() == 8);
-    
+
     Ingredient bacon = toBuy.get(4);
     assertTrue(bacon.name().equals("Bacon"));
     assertTrue(bacon.ounces() == 16);
-    
+
     Ingredient arugula = toBuy.get(5);
     assertTrue(arugula.name().equals("Arugula"));
     assertTrue(arugula.ounces() == 8);
