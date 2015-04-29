@@ -1,39 +1,32 @@
 package edu.brown.cs.cookups;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import edu.brown.cs.cookups.db.DBLink;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
+import edu.brown.cs.cookups.db.DBLink;
 
 public class Main {
-	private String[] args;
+  private String[] args;
 
-  /**
-   * The main constructor.
+  /** The main constructor.
    * @param args - the command line arguments
    * @throws SQLException
-   * @throws ClassNotFoundException
-   */
+   * @throws ClassNotFoundException */
   public static void main(String[] args) throws ClassNotFoundException,
       SQLException {
     new Main(args).run();
   }
 
-  /**
-   * @param args
-   */
+  /** @param args */
   private Main(String[] args) {
     this.args = args;
   }
 
-  /**
-   * @throws SQLException
-   * @throws ClassNotFoundException
-   */
+  /** @throws SQLException
+   * @throws ClassNotFoundException */
   private void run() throws ClassNotFoundException, SQLException {
     OptionParser parser = new OptionParser();
     OptionSpec<String> argv = parser.nonOptions();
@@ -53,7 +46,7 @@ public class Main {
     }
     String db = parsedArgs.get(0);
 
-    GuiHandler gui = new GuiHandler(new DBLink(db));
+    URLHandler gui = new URLHandler(new DBLink(db));
     gui.runSparkServer();
   }
 }

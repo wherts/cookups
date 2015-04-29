@@ -73,6 +73,13 @@
 	float: right;
 }
 
+.half {
+	width: 50%;
+}
+
+.floating-div {
+}
+
 .h-text {
 	font-family: 'gobold_thinregular', sans-serif;
 	text-align: center;
@@ -126,4 +133,48 @@
 	box-shadow: 3px 3px 4px 0px rgba(0,0,0,.5);
 	padding: 5px 15px;
 	margin-top: 15px;
+}
+
+.btn-container {
+	clear: both;
+}
+
+form{
+	font-family: 'abeezeeregular', sans-serif;
+}
+
+.inset input[type="text"] {
+  border-radius: 3px;
+  padding: 5px;
+  border: solid 1px #fff;
+  box-shadow: inset 1px 1px 2px 0 #707070;
+  transition: box-shadow 0.3s;
+}
+.inset input[type="text"]:focus,
+.inset input[type="text"].focus {
+  box-shadow: inset 1px 1px 2px 0 #c9c9c9;
+}
+input[type="date"] {
+  color: #414346;
+  border-radius: 3px;
+  padding: 5px;
+  border: solid 1px #fff;
+  box-shadow: inset 1px 1px 2px 0 #707070;
+  transition: box-shadow 0.3s;
+}
+input[type="date"]:focus,
+input[type="date"].focus {
+  box-shadow: inset 1px 1px 2px 0 #c9c9c9;
+}
+input[type="time"] {
+  color: #414346;
+  border-radius: 3px;
+  padding: 5px;
+  border: solid 1px #fff;
+  box-shadow: inset 1px 1px 2px 0 #707070;
+  transition: box-shadow 0.3s;
+}
+input[type="time"]:focus,
+input[type="time"].focus {
+  box-shadow: inset 1px 1px 2px 0 #c9c9c9;
 }

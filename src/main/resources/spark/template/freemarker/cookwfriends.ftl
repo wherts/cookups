@@ -33,20 +33,26 @@
      </div>
       <div class="block c">
       <div class="container">
-      <div class="form-box">
-         <form action="/cookup" method="POST">
-          Meal Name: <input type="text" name="name">
-          <br>
-          Date:   
-          <input type="date" name="date">
-          <br>
-          Time:   
-          <input type="time" name="time_start"> to <input type="time" name="time_end">
-          <br>
-          Add chefs:
-          <input type="text" name="chefs">
-          <br>
-          <input class="btn" type="submit" value="Create Meal">
+      <div class="form-box inset">
+         <form name="friends-form" action="" method="POST">
+         <div class="left half">
+         	  Host (Your Name): <input type="text" name="host">
+	          <br>
+	          Meal Name: <input type="text" name="name">
+	          <br>
+	          Date:   
+	          <input type="date" name="date">
+	          <br>
+	          Time:   
+	          <input type="time" name="time_start"> to <input type="time" name="time_end">
+	          <br>
+	      </div>
+	      <div class="right half">
+	          Add chefs:
+	          <input type="text" class="inset" name="chefs">
+	          <br>
+	      </div>
+          <div class="btn-container"><input class="btn" type="submit" value="Create Meal"></div>
          </form>
       </div>
     </div>
