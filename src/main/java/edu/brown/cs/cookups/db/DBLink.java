@@ -171,8 +171,8 @@ public class DBLink implements DBManager {
 	            prep.setString(NAME_IDX, line[NAME_IDX - 1]);
 	            prep.setString(QTY_IDX, line[QTY_IDX - 1]);
 	            prep.addBatch();
+	            prep.executeBatch();
 	          }
-	          prep.executeBatch();
 	        } catch (SQLException e) {
 	          // TODO Auto-generated catch block
 	          e.printStackTrace();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.brown.cs.cookups.db.DBLink;
+import edu.brown.cs.cookups.db.DBManager;
 /**
  * This class represents a Recipe
  * object that we use in Cookups.
@@ -14,7 +15,7 @@ public class Recipe {
   private String id;
   private String name;
   private String instructions;
-  private DBLink querier;
+  private DBManager querier;
   private List<Ingredient> ingredients, toBuy;
   private double percentHave = 1;
   private double shoppingPrice = 0;
@@ -27,7 +28,7 @@ public class Recipe {
    * to query the database for information about
    * itself
    */
-  public Recipe(String i, DBLink q) {
+  public Recipe(String i, DBManager q) {
     id = i;
     querier = q;
     toBuy = new ArrayList<>();
@@ -47,8 +48,9 @@ public class Recipe {
    */
   public String name() {
     if (name == null) {
+      System.out.println("querying for id: " + id);
       name = querier.ingredients()
-                    .getIngredientNameByID(id);
+                    .getRecipeNameByID(id);
     }
     return name;
   }
@@ -204,6 +206,6 @@ public class Recipe {
    * @return new recipe with same id, querier
    */
   public Recipe copy() {
-    return new Recipe(this.id, this.querier);
+    return new Recipe(id, querier);
   }
 }

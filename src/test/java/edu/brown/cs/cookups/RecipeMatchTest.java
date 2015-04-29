@@ -13,33 +13,42 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.brown.cs.cookups.db.DBLink;
+import edu.brown.cs.cookups.db.DBManager;
 import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.User;
 
 public class RecipeMatchTest {
-  private DBLink dbL;
-  private static final String DB_PATH = "databases/.sqlite3";
+  private DBManager dbM;
+  private static final String DB_PATH = "databases/cookups.sqlite3";
 
   @Before
   public void initialize() {
     File file = new File("databases/ingredients/ingredient.csv");
-    try {
-      DBLink db = new DBLink(DB_PATH);
-      db.importIngredients(file);
-    } catch (ClassNotFoundException | SQLException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
     String dir = "databases/recipes";
     try {
-      DBLink db = new DBLink(DB_PATH);
-      db.importAllRecipes(dir);
+      dbM = new DBLink(DB_PATH);
+      dbM.importIngredients(file);
+      dbM.importAllRecipes(dir);
     } catch (ClassNotFoundException | SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+  }
+  
+  @Test
+  public void onePerson() throws SQLException {
+    List<Ingredient> ing = new ArrayList<>();
+    ing.add(new Ingredient("/i/poultry.2", 8, dbM));
+    ing.add(new Ingredient("/i/baking.1", 16, dbM));
+    List<Person> chefs = new ArrayList<>();
+    chefs.add(new User("wh7", "Wes", ing));
+    List<Recipe> matched = RecipeMatcher.matchRecipes(chefs, dbM);
+    assertTrue(matched.size() == 3);
+    Recipe fireChicken = matched.get(0);
+    System.out.println(fireChicken.name() + ", " + fireChicken.id());
+    assertTrue(true);
   }
 
 //  @Test

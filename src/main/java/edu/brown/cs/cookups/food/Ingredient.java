@@ -7,6 +7,7 @@ import java.time.Period;
 import java.util.Set;
 
 import edu.brown.cs.cookups.db.DBLink;
+import edu.brown.cs.cookups.db.DBManager;
 /**
  * This class represents an ingredient.
  * @author wh7
@@ -16,20 +17,20 @@ public class Ingredient {
   private double ounces;
   private String id, name;
   private LocalDate dateCreated;
-  private DBLink querier;
+  private DBManager querier;
   private Set<Recipe> recipes;
 
   /**
    * Public constructor for an ingredient.
    * @param i id
    * @param oz weight
-   * @param dbLink way to query database for
+   * @param dbM way to query database for
    * more information about the ingredient
    */
-  public Ingredient(String i, double oz, DBLink dbLink) {
+  public Ingredient(String i, double oz, DBManager dbM) {
     id = i;
     ounces = oz;
-    querier = dbLink;
+    querier = dbM;
     dateCreated = LocalDateTime.now().toLocalDate();
   }
 
@@ -149,5 +150,13 @@ public class Ingredient {
     sb.append(", ");
     sb.append(id);
     return sb.toString();
+  }
+
+  /**
+   * Method to create a copy of the recipe.
+   * @return new recipe with same id, querier
+   */
+  public Ingredient copy() {
+    return new Ingredient(id, ounces, querier);
   }
 }

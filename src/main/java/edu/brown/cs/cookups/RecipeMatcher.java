@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.brown.cs.cookups.db.DBLink;
+import edu.brown.cs.cookups.db.DBManager;
 import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.Person;
@@ -19,7 +20,7 @@ public class RecipeMatcher {
   }
 
   public static List<Recipe> matchRecipes(
-      List<Person> chefs, DBLink dbL) throws SQLException {
+      List<Person> chefs, DBManager dbM) throws SQLException {
     assert (chefs != null);
     int size = chefs.size();
     // maps ingredient id to the amount in the group
@@ -27,7 +28,7 @@ public class RecipeMatcher {
     // 1. compile ingredients
     compileIngredients(chefs, currIngredients);
     // 2. search database for recipes
-    return matchHelper(currIngredients, size, dbL);
+    return matchHelper(currIngredients, size, dbM);
   }
 
   public static void compileIngredients(List<Person> chefs,
@@ -46,7 +47,7 @@ public class RecipeMatcher {
 
   private static List<Recipe> matchHelper(
       Map<String, Double> currIngredients,
-      double partySize, DBLink dbL) throws SQLException {
+      double partySize, DBManager dbL) throws SQLException {
     List<Recipe> myRecipes = new ArrayList<>();
     Set<String> keys = currIngredients.keySet();
     Set<Recipe> recipesUsing = new HashSet<>();
