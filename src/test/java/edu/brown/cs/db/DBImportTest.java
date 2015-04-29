@@ -42,6 +42,8 @@ public class DBImportTest {
       assertTrue(db.ingredients()
                    .getIngredientIDByName("Bacon")
                    .equals("/i/pork.1"));
+      assertTrue("Bacon".equals(db.ingredients()
+                                  .getIngredientNameByID("/i/pork.1")));
     } catch (ClassNotFoundException | SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

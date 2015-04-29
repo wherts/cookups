@@ -198,6 +198,7 @@ public class DBLinkTest {
   public void addRecipeTest() {
     try {
       DBLink db = new DBLink(TEST_DB);
+      db.clearDataBase();
       // butter
       db.recipes().addRecipe("Beef Stew",
                              "/r/stew",
@@ -212,7 +213,8 @@ public class DBLinkTest {
   @Test
   public void recipeAddIngredientsTest() {
     try {
-      DBLink db = new DBLink("databases/recipesTest.sqlite3");
+      DBLink db = new DBLink(TEST_DB);
+      db.clearDataBase();
       db.ingredients().defineIngredient("/i/salt", "salt");
       db.ingredients().defineIngredient("/i/pepper",
                                         "pepper");
@@ -252,7 +254,8 @@ public class DBLinkTest {
   @Test
   public void getPersonsByName() {
     try {
-      DBLink db = new DBLink("databases/peopleTest.sqlite3");
+      DBLink db = new DBLink(TEST_DB);
+      db.clearDataBase();
       db.ingredients().defineIngredient("/i/freedom",
                                         "freedom");
       db.ingredients().defineIngredient("/i/liberty",
