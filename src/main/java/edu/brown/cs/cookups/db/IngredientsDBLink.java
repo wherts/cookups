@@ -24,7 +24,7 @@ public class IngredientsDBLink implements IngredientDB {
   @Override
   public String getIngredientIDByName(String name) {
     String query = "SELECT id FROM ingredient WHERE name = ?";
-    String id = null;
+    String id = "";
     try (PreparedStatement prep = conn.prepareStatement(query)) {
       prep.setString(1, name);
 
@@ -44,7 +44,7 @@ public class IngredientsDBLink implements IngredientDB {
   @Override
   public String getIngredientNameByID(String id) {
     String query = "SELECT name FROM ingredient WHERE id = ?";
-    String name = null;
+    String name = "";
     try (PreparedStatement prep = conn.prepareStatement(query)) {
       prep.setString(1, id);
       try (ResultSet rs = prep.executeQuery()) {
@@ -105,11 +105,14 @@ public class IngredientsDBLink implements IngredientDB {
   }
 
   @Override
-  public void defineIngredient(String id, String name) {
-    String command = "INSERT OR IGNORE INTO ingredient VALUES (?, ?)";
+  public void defineIngredient(String id, String name,
+      double price, String storage) {
+    String command = "INSERT OR IGNORE INTO ingredient VALUES (?, ?, ?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(command)) {
       prep.setString(1, id);
       prep.setString(2, name.trim());
+      prep.setDouble(3, price);
+      prep.setString(4, storage);
       prep.addBatch();
       prep.executeBatch();
     } catch (SQLException e) {
@@ -147,6 +150,44 @@ public class IngredientsDBLink implements IngredientDB {
       e.printStackTrace();
     }
     return false;
+  }
+
+  @Override
+  public double priceByID(String id) {
+    String query = "SELECT price FROM ingredient WHERE id = ?";
+    double price = 0;
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, id);
+      try (ResultSet rs = prep.executeQuery()) {
+        while (rs.next()) {
+          price = Double.parseDouble(rs.getString(1));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return price;
+  }
+
+  @Override
+  public String storageByID(String id) {
+    String query = "SELECT storage FROM ingredient WHERE id = ?";
+    String storage = "";
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, id);
+      try (ResultSet rs = prep.executeQuery()) {
+        while (rs.next()) {
+          storage = rs.getString(1);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return storage;
   }
 
 }

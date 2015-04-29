@@ -22,7 +22,7 @@ import edu.brown.cs.cookups.person.User;
 public class DBLinkTest {
 
   public static final String TEST_DB = "databases/tests/DBLinkTest.sqlite3";
-  public static final String INGREDIENT_PATH = "databases/csv/ingredients/ingredient.csv";
+  public static final String INGREDIENT_PATH = "databases/csv/ingredients/ingredientPrice.csv";
   public static final String RECIPE_PATH = "databases/csv/recipes/gazpacho.csv";
   public static final String RECIPE_DIR = "databases/csv/recipes/";
 
@@ -32,7 +32,10 @@ public class DBLinkTest {
       DBLink db = new DBLink(TEST_DB);
       db.clearDataBase();
       Ingredient i = new Ingredient("i", 1.1, null);
-      db.ingredients().defineIngredient("i", "iodine");
+      db.ingredients().defineIngredient("i",
+                                        "iodine",
+                                        1.0,
+                                        "Pantry");
       Person p = new User("Jerry", "qyrt", Arrays.asList(i));
       db.users().addPerson(p);
       assertTrue(db.users().hasPersonByName("Jerry"));
@@ -47,7 +50,10 @@ public class DBLinkTest {
     try {
       DBLink db = new DBLink(TEST_DB);
       Ingredient i = new Ingredient("i", 1.1, null);
-      db.ingredients().defineIngredient("i", "iodine");
+      db.ingredients().defineIngredient("i",
+                                        "iodine",
+                                        1.0,
+                                        "Pantry");
       Person p = new User("Jerry", "qyrt", Arrays.asList(i));
       db.users().addPerson(p);
       Person q = db.users().getPersonById("qyrt");
@@ -66,10 +72,22 @@ public class DBLinkTest {
       db.clearDataBase();
       PersonManager people = new PersonManager(db);
       List<Ingredient> ingreds = new ArrayList<Ingredient>();
-      db.ingredients().defineIngredient("a", "apples");
-      db.ingredients().defineIngredient("o", "oranges");
-      db.ingredients().defineIngredient("c", "carrots");
-      db.ingredients().defineIngredient("ch", "chees");
+      db.ingredients().defineIngredient("a",
+                                        "apples",
+                                        1.0,
+                                        "Pantry");
+      db.ingredients().defineIngredient("o",
+                                        "oranges",
+                                        1.0,
+                                        "Pantry");
+      db.ingredients().defineIngredient("c",
+                                        "carrots",
+                                        1.0,
+                                        "Pantry");
+      db.ingredients().defineIngredient("ch",
+                                        "chees",
+                                        1.0,
+                                        "Pantry");
       ingreds.add(new Ingredient("a", 1.0, db));
       ingreds.add(new Ingredient("o", 2.0, db));
       ingreds.add(new Ingredient("c", 3.0, db));
@@ -95,7 +113,9 @@ public class DBLinkTest {
       DBLink db = new DBLink(TEST_DB);
       db.clearDataBase();
       db.ingredients().defineIngredient("/i/dairy.1",
-                                        "Milk");
+                                        "Milk",
+                                        1.0,
+                                        "Fridge");
 
       assertTrue(db.ingredients()
                    .getIngredientIDByName("Milk")
@@ -112,7 +132,9 @@ public class DBLinkTest {
       DBLink db = new DBLink(TEST_DB);
       db.clearDataBase();
       db.ingredients().defineIngredient("/i/dairy.1",
-                                        "Milk");
+                                        "Milk",
+                                        1.0,
+                                        "Fridge");
 
       assertTrue(db.ingredients()
                    .getIngredientNameByID("/i/dairy.1")
@@ -142,11 +164,17 @@ public class DBLinkTest {
     try {
       DBLink db = new DBLink(TEST_DB);
       db.ingredients().defineIngredient("/i/dairy.1",
-                                        "Milk");
+                                        "Milk",
+                                        1.0,
+                                        "Fridge");
       db.ingredients().defineIngredient("/i/dairy.2",
-                                        "Cream");
+                                        "Cream",
+                                        1.0,
+                                        "Fridge");
       db.ingredients().defineIngredient("/i/dairy.3",
-                                        "Yogurt");
+                                        "Yogurt",
+                                        1.0,
+                                        "Fridge");
       List<String> names = Arrays.asList("Milk",
                                          "Cream",
                                          "Yogurt");
@@ -215,10 +243,18 @@ public class DBLinkTest {
     try {
       DBLink db = new DBLink(TEST_DB);
       db.clearDataBase();
-      db.ingredients().defineIngredient("/i/salt", "salt");
+      db.ingredients().defineIngredient("/i/salt",
+                                        "salt",
+                                        1.0,
+                                        "Pantry");
       db.ingredients().defineIngredient("/i/pepper",
-                                        "pepper");
-      db.ingredients().defineIngredient("/i/pasta", "");
+                                        "pepper",
+                                        1.0,
+                                        "Pantry");
+      db.ingredients().defineIngredient("/i/pasta",
+                                        "pasta",
+                                        1.0,
+                                        "Pantry");
 
       db.recipes().addRecipe("Beef Stew",
                              "/r/stew",
@@ -257,9 +293,13 @@ public class DBLinkTest {
       DBLink db = new DBLink(TEST_DB);
       db.clearDataBase();
       db.ingredients().defineIngredient("/i/freedom",
-                                        "freedom");
+                                        "freedom",
+                                        1776.0,
+                                        "USA");
       db.ingredients().defineIngredient("/i/liberty",
-                                        "liberty");
+                                        "liberty",
+                                        1776.0,
+                                        "USA");
       PersonManager people = new PersonManager(db);
       Person ronald1 = new User("Ronald Reagan",
           "freedom",
