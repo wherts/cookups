@@ -4,12 +4,14 @@ import edu.brown.cs.cookups.person.Person;
 
 
 public class Suitor {
-  private boolean queer, gay, straight, bi, isFemale, isPlatonic;
+  private boolean queer, gay, straight, bi, isPlatonic;
   private Person person;
+  private int gender;
   
   public static class Builder {
     private Person person;
-    private boolean gay, straight, bi, queer, isFemale, isPlatonic;
+    private boolean gay, straight, bi, queer, isPlatonic;
+    private int gender;
     
     public Builder(Person p) {
       this.person = p;
@@ -18,6 +20,7 @@ public class Suitor {
       this.bi = false;
       this.isPlatonic = false;
       this.queer = false;
+      this.gender = 0;
     }
     
     public Builder setGay() {
@@ -35,13 +38,9 @@ public class Suitor {
       return this;
     }
     
-    public Builder setFemale() {
-      this.isFemale = true;
-      return this;
-    }
-    
-    public Builder setMale() {
-      this.isFemale = false;
+    public Builder setGender(int gender) {
+      assert((gender <= 100) && (gender >= -100));
+      this.gender = gender;
       return this;
     }
     
@@ -61,7 +60,7 @@ public class Suitor {
     this.straight = b.straight;
     this.bi = b.bi;
     this.isPlatonic = b.isPlatonic;
-    this.isFemale = b.isFemale;
+    this.gender = b.gender;
     this.queer = b.queer;
     person = b.person;
   }
@@ -79,11 +78,11 @@ public class Suitor {
   }
   
   public boolean isMale() {
-    return !isFemale;
+    return (gender <= 0);
   }
   
   public boolean isFemale() {
-    return isFemale;
+    return (gender >= 0);
   }
   
   public boolean getGay() {
@@ -102,32 +101,87 @@ public class Suitor {
     return queer;
   }
   
-  public int compatability(Suitor suitor) {
-    return oneWayCompatability(suitor, this) + oneWayCompatability(this, suitor);
+  public int calculateGay(Suitor suitor) {
+    if (!this.getGay() || !suitor.getGay()) {
+      return 0;
+    } else if (this.getGay() && suitor.getGay()
+        || (this.getGay() && suitor.getBi())
+        || (suitor.getGay() && this.getBi())) {
+      if (this.isFemale() != suitor.isFemale()) {
+        return 0;
+      } else if (this.getGender() - suitor.getGender() == 0) {
+        return 200;
+      } else {
+        return 200 - (this.getGender() - suitor.getGender());  
+      }
+    }
+    return 0;
   }
   
-  public int oneWayCompatability(Suitor suitor1, Suitor suitor2) {
-    int compatability = 0;
+  public int calculateBi(Suitor suitor) {
+    if (!(this.getBi() && suitor.getBi())) {
+      return 0;
+    } else {
+      return 200;
+    }
+  }
+   
+  public int calculateStraight(Suitor suitor) {
+    if (!this.getStraight() || !suitor.getStraight()) {
+      return 0;
+    } else if (this.getStraight() && suitor.getStraight()
+        || (this.getStraight() && suitor.getBi())
+        || (suitor.getStraight() && this.getBi())) {
+      if (this.isFemale() == suitor.isFemale()) {
+        return 0;
+      } else {
+        return Math.abs(suitor.getGender() - this.getGender());
+      }
+    }
+    return 0;
+  }
+  
+  public int calculateQueer(Suitor suitor) {
+    if (this.getQueer() && suitor.getQueer()) {
+      return 200;
+    }
+    return 0;
+  }
+  
+  public int getGender() {
+    return gender;
+  }
+  
+  public boolean compatability(Suitor suitor) {
+    return oneWayCompatability(suitor, this) || oneWayCompatability(this, suitor);
+  }
+  
+  public boolean oneWayCompatability(Suitor suitor1, Suitor suitor2) {
     if ((suitor1.isFemale() == suitor2.isFemale())) { //SAME GENDER
       if (suitor1.getGay() && (suitor2.getBi() || suitor2.getGay() || suitor2.getQueer())) {
-        compatability++;
+        return true;
       }
-      if (suitor1.getBi() && (suitor2.getBi() || suitor2.getGay() || suitor2.getQueer())) {//BOTH BI
-        compatability++;
+      if (suitor1.getBi() && (suitor2.getBi() || suitor2.getGay() || suitor2.getQueer())) {//BOTH getBi()
+        return true;
       }
-      if (suitor1.getQueer() && (suitor2.getBi() || suitor2.getGay() || suitor2.getQueer())) {//suitor1 QUEER
-        compatability++;
+      if (suitor1.getQueer() && (suitor2.getBi() || suitor2.getGay() || suitor2.getQueer())) {//suitor1 getQueer()
+        return true;
       }
     }
     if (suitor1.isFemale() != suitor2.isFemale()) {//DIFFERENT GENDERS
-      if ((suitor1.getStraight() || suitor1.getBi()) && (suitor2.getBi() || suitor2.getStraight())) {//BOTH STRAIGHT OR ONE BI OR BOTH BI
-        compatability++;
+      if ((suitor1.getStraight() || suitor1.getBi()) && (suitor2.getBi() || suitor2.getStraight())) {//BOTH getStraight() OR ONE getBi() OR BOTH getBi()
+        return true;
       }
-      if (suitor1.getQueer() && (suitor2.getBi() || suitor2.getStraight() || suitor2.getQueer())) {//suitor1 QUEER
-        compatability++;
+      if (suitor1.getQueer() && (suitor2.getBi() || suitor2.getStraight() || suitor2.getQueer())) {//suitor1 getQueer()
+        return true;
       }
     }
-    return compatability;
+    return false;
+  }
+  
+  public int sexAppeal(Suitor suitor) {
+    return calculateGay(suitor) + calculateStraight(suitor) + calculateBi(suitor)
+        + calculateQueer(suitor);
   }
 
   @Override
