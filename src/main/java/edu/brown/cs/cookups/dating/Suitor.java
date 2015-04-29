@@ -7,12 +7,12 @@ public class Suitor {
   private boolean queer, gay, straight, bi, isPlatonic;
   private Person person;
   private int gender;
-  
+
   public static class Builder {
     private Person person;
     private boolean gay, straight, bi, queer, isPlatonic;
     private int gender;
-    
+
     public Builder(Person p) {
       this.person = p;
       this.gay = false;
@@ -22,33 +22,33 @@ public class Suitor {
       this.queer = false;
       this.gender = 0;
     }
-    
+
     public Builder setGay() {
       this.gay = true;
       return this;
     }
-    
+
     public Builder setStraight() {
       this.straight = true;
       return this;
     }
-    
+
     public Builder setBi() {
       this.bi = true;
       return this;
     }
-    
+
     public Builder setGender(int gender) {
       assert((gender <= 100) && (gender >= -100));
       this.gender = gender;
       return this;
     }
-    
+
     public Builder setPlatonic() {
       this.isPlatonic = true;
       return this;
     }
-    
+
     public Suitor build() {
       this.queer = !(this.gay || this.straight || this.bi);
       return new Suitor(this);
@@ -72,80 +72,89 @@ public class Suitor {
   public boolean isPlatonic() {
     return isPlatonic;
   }
-  
+
   public boolean isRomantic() {
     return !isPlatonic;
   }
-  
+
   public boolean isMale() {
     return (gender <= 0);
   }
-  
+
   public boolean isFemale() {
     return (gender >= 0);
   }
-  
-  public boolean getGay() {
+
+  public boolean isGay() {
     return gay;
   }
-  
-  public boolean getBi() {
+
+  public boolean isBi() {
     return bi;
   }
-   
-  public boolean getStraight() {
+
+  public boolean isStraight() {
     return straight;
   }
-  
-  public boolean getQueer() {
+
+  public boolean isQueer() {
     return queer;
   }
-  
+
   public int calculateGay(Suitor suitor) {
-    if (!this.getGay() || !suitor.getGay()) {
+    int toReturn = 0;
+    if (!(this.isGay() || suitor.isGay()) || !sameSex(this, suitor)) {
       return 0;
-    } else if (this.getGay() && suitor.getGay()
-        || (this.getGay() && suitor.getBi())
-        || (suitor.getGay() && this.getBi())) {
-      if (this.isFemale() != suitor.isFemale()) {
-        return 0;
-      } else if (this.getGender() - suitor.getGender() == 0) {
+    } else if ((this.isGay() && (suitor.isGay() || suitor.isBi()))
+        && sameSex(this, suitor)) {
+      if (this.getGender() - suitor.getGender() == 0) {
         return 200;
       } else {
-        return 200 - (this.getGender() - suitor.getGender());  
+        return (200 - Math.abs(this.getGender() - suitor.getGender()));  
+      }
+    }
+    return toReturn;
+  }
+  
+  public int calculateBi(Suitor suitor) {
+    if (!(this.isBi() || suitor.isBi())) {
+      return 0;
+    } else if (this.isBi()) {
+      if (suitor.isBi()) {
+        return 200;
       }
     }
     return 0;
   }
-  
-  public int calculateBi(Suitor suitor) {
-    if (!(this.getBi() && suitor.getBi())) {
-      return 0;
-    } else {
-      return 200;
-    }
-  }
    
   public int calculateStraight(Suitor suitor) {
-    if (!this.getStraight() || !suitor.getStraight()) {
+    if (!this.isStraight() || !suitor.isStraight()) {
       return 0;
-    } else if (this.getStraight() && suitor.getStraight()
-        || (this.getStraight() && suitor.getBi())
-        || (suitor.getStraight() && this.getBi())) {
-      if (this.isFemale() == suitor.isFemale()) {
-        return 0;
-      } else {
-        return Math.abs(suitor.getGender() - this.getGender());
-      }
+    } else if ((this.isStraight() && (suitor.isStraight()
+        || suitor.isBi()))
+        && !sameSex(this, suitor)) {
+      return Math.abs(suitor.getGender() - this.getGender());
     }
     return 0;
   }
   
   public int calculateQueer(Suitor suitor) {
-    if (this.getQueer() && suitor.getQueer()) {
-      return 200;
+    int toReturn = 0;
+    if (this.isQueer()) {
+      if (suitor.isQueer()) {
+        toReturn += 200;
+      }
+      if (suitor.isBi()) {
+        toReturn += 100;
+      }
+      if (suitor.isGay() && sameSex(this, suitor)) {
+        toReturn += .3 * (200 - Math.abs((this.getGender() - suitor.getGender())));
+      }
+      if (suitor.isStraight() && !sameSex(this, suitor)) {
+        toReturn += .3 * Math.abs((this.getGender() - suitor.getGender()));
+      }
     }
-    return 0;
+    return toReturn;
   }
   
   public int getGender() {
@@ -157,26 +166,31 @@ public class Suitor {
   }
   
   public boolean oneWayCompatability(Suitor suitor1, Suitor suitor2) {
-    if ((suitor1.isFemale() == suitor2.isFemale())) { //SAME GENDER
-      if (suitor1.getGay() && (suitor2.getBi() || suitor2.getGay() || suitor2.getQueer())) {
+    if (sameSex(suitor1, suitor2)) { //SAME GENDER
+      if (suitor1.isGay() && (suitor2.isBi() || suitor2.isGay() || suitor2.isQueer())) {
         return true;
       }
-      if (suitor1.getBi() && (suitor2.getBi() || suitor2.getGay() || suitor2.getQueer())) {//BOTH getBi()
+      if (suitor1.isBi() && (suitor2.isBi() || suitor2.isGay() || suitor2.isQueer())) {//BOTH getBi()
         return true;
       }
-      if (suitor1.getQueer() && (suitor2.getBi() || suitor2.getGay() || suitor2.getQueer())) {//suitor1 getQueer()
+      if (suitor1.isQueer() && (suitor2.isBi() || suitor2.isGay() || suitor2.isQueer())) {//suitor1 getQueer()
         return true;
       }
     }
-    if (suitor1.isFemale() != suitor2.isFemale()) {//DIFFERENT GENDERS
-      if ((suitor1.getStraight() || suitor1.getBi()) && (suitor2.getBi() || suitor2.getStraight())) {//BOTH getStraight() OR ONE getBi() OR BOTH getBi()
+    if (!sameSex(suitor1, suitor2)) {//DIFFERENT GENDERS
+      if ((suitor1.isStraight() || suitor1.isBi()) && (suitor2.isBi() || suitor2.isStraight())) {//BOTH getStraight() OR ONE getBi() OR BOTH getBi()
         return true;
       }
-      if (suitor1.getQueer() && (suitor2.getBi() || suitor2.getStraight() || suitor2.getQueer())) {//suitor1 getQueer()
+      if (suitor1.isQueer() && (suitor2.isBi() || suitor2.isStraight() || suitor2.isQueer())) {//suitor1 getQueer()
         return true;
       }
     }
     return false;
+  }
+  
+  public boolean sameSex(Suitor suitor1, Suitor suitor2) {
+    return (suitor1.isFemale() == suitor2.isFemale() 
+        || suitor1.isMale() == suitor2.isMale());
   }
   
   public int sexAppeal(Suitor suitor) {

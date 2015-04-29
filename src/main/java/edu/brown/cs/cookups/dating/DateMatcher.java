@@ -20,8 +20,8 @@ public class DateMatcher {
           matches.add(suitor);
         }
       }
-      for (Suitor suitor : matches) {
-        toReturn.add(suitor.person());
+      while (!matches.isEmpty()) {
+        toReturn.add(matches.poll().person());
       }
     } else { //platonic
       for (Suitor suitor : suitors) {
