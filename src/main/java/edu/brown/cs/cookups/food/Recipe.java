@@ -48,8 +48,7 @@ public class Recipe {
    */
   public String name() {
     if (name == null) {
-      System.out.println("querying for id: " + id);
-      name = querier.ingredients()
+      name = querier.recipes()
                     .getRecipeNameByID(id);
     }
     return name;
