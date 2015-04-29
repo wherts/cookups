@@ -168,7 +168,7 @@ public class RecipeDBLink implements RecipeDB {
       recipe = new Recipe(id, (DBLink) this.db);
       RECIPE_CACHE.put(id, recipe);
     }
-    return recipe;
+    return recipe.copy();
   }
 
   public void clearCache() {
