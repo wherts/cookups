@@ -198,4 +198,12 @@ public class Recipe {
     Recipe r = (Recipe) o;
     return id.equals(r.id());
   }
+
+  /**
+   * Method to create a copy of the recipe.
+   * @return new recipe with same id, querier
+   */
+  public Recipe copy() {
+    return new Recipe(this.id, this.querier);
+  }
 }

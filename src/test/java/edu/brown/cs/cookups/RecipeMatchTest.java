@@ -20,28 +20,22 @@ import edu.brown.cs.cookups.person.User;
 
 public class RecipeMatchTest {
   private DBLink dbL;
-  private static final String DB_PATH = "databases/importTest.sqlite3";
+  private static final String DB_PATH = "databases/.sqlite3";
 
   @Before
   public void initialize() {
-    try {
-      dbL = new DBLink("databases/cookups.sqlite3");
-    } catch (ClassNotFoundException | SQLException e) {
-      System.err.println("TESTING ERROR");
-      fail();
-    }
-    String dir = "databases/csv/recipes";
+    File file = new File("databases/ingredients/ingredient.csv");
     try {
       DBLink db = new DBLink(DB_PATH);
-      db.importAllRecipes(dir);
+      db.importIngredients(file);
     } catch (ClassNotFoundException | SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    File file = new File("databases/csv/ingredients.csv");
+    String dir = "databases/recipes";
     try {
       DBLink db = new DBLink(DB_PATH);
-      db.importIngredients(file);
+      db.importAllRecipes(dir);
     } catch (ClassNotFoundException | SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
