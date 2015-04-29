@@ -178,3 +178,7 @@ input[type="time"]:focus,
 input[type="time"].focus {
   box-shadow: inset 1px 1px 2px 0 #c9c9c9;
 }
+
+.TokensContainer {
+	width: 200px;
+}

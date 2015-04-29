@@ -16,7 +16,7 @@ import org.junit.BeforeClass;
 public class DBLink implements DBManager {
   private Connection conn;
   public static final String USER = "user(id TEXT, name TEXT, PRIMARY KEY (id))";
-  public static final String INGREDIENT = "ingredient(id TEXT, name TEXT, PRIMARY KEY(id))";
+  public static final String INGREDIENT = "ingredient(id TEXT, name TEXT, price INTEGER, storage TEXT, PRIMARY KEY(id))";
   public static final String USER_INGREDIENT = "user_ingredient(user TEXT, ingredient TEXT, qty FLOAT"
       + ", PRIMARY KEY(user, ingredient)"
       + ", FOREIGN KEY(user) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE"
@@ -40,6 +40,8 @@ public class DBLink implements DBManager {
   public static final int NAME_IDX = 2;
   public static final int INGREDIENT_IDX = 2;
   public static final int INGREDIENT_QTY_IDX = 3;
+  public static final int PRICE_IDX = 3;
+  public static final int STORAGE_IDX = 4;
   public static final int RECIPE_TEXT_IDX = 3;
   public static final int QTY_IDX = 3;
   private final UserDB users;
@@ -176,10 +178,10 @@ public class DBLink implements DBManager {
   public void importIngredients(File file) {
     try (CSVReader reader = new CSVReader(file)) {
       String[] line;
-      String query = "INSERT OR IGNORE INTO ingredient VALUES (?,?)";
+      String query = "INSERT OR IGNORE INTO ingredient VALUES (?,?,?,?)";
       try (PreparedStatement prep = conn.prepareStatement(query)) {
         while ((line = reader.readLine()) != null) {
-          if (line.length != 2) {
+          if (line.length != 4) {
             for (String s : line) {
               System.out.println(s);
             }
@@ -189,6 +191,10 @@ public class DBLink implements DBManager {
           prep.setString(ID_IDX, line[ID_IDX - 1].trim());
           prep.setString(NAME_IDX,
                          line[NAME_IDX - 1].trim());
+          prep.setString(PRICE_IDX,
+                         line[PRICE_IDX - 1].trim());
+          prep.setString(STORAGE_IDX,
+                         line[STORAGE_IDX - 1].trim());
           prep.addBatch();
         }
         prep.executeBatch();

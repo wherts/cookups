@@ -23,11 +23,11 @@ public class RecipeTest {
     assertTrue(r1.equals(r3));
   }
 
-  @Test
-  public void testName() {
-    Recipe r = new Recipe("/r/1.1", null);
-    assert (r.name() == null);
-  }
+//  @Test
+//  public void testName() {
+//    Recipe r = new Recipe("/r/1.1", null);
+//    assert (r.name() == null);
+//  }
 
   @Test
   public void testPercentage() {

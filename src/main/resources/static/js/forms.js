@@ -23,13 +23,23 @@ $('#friends-form').submit(function(e) {
 	
 });
 
+$(document).ready(function() {
+	$.get("/allUsers", function(users) {
+		var options = "";
+		for (var i=1; i<=users.length; i++) {
+			options += "<option value='"+i+"'>"+users[i]+"</option>";
+		}
+		$("#add-chefs").html(options);
+		$("#add-chefs").tokenize();
+	});
+});
 
-$("#add-chefs").bind('keyup', function(event) {
-	var words = $(this).val();
-	var postParameters = {input: words};
-	$.post("/autoPeople", postParameters, function(responseJSON){
-		
-		
-	})
-	$("#add-chefs").tokenize();
-}
+//$("#add-chefs").bind('keyup', function(event) {
+//	var words = $(this).val();
+//	var postParameters = {input: words};
+//	$.post("/autoPeople", postParameters, function(responseJSON){
+//		
+//		
+//	})
+//	$("#add-chefs").tokenize();
+//}

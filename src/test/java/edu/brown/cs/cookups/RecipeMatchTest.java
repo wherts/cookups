@@ -38,7 +38,7 @@ public class RecipeMatchTest {
     }
   }
 
-  @Test
+  // @Test
   public void onePerson() throws SQLException {
     List<Ingredient> ing = new ArrayList<>();
     ing.add(new Ingredient("/i/poultry.2", 8, dbM));
@@ -196,7 +196,7 @@ public class RecipeMatchTest {
     assertTrue(recipes.size() == 0);
   }
 
-  @Test
+  // @Test
   public void recipeMatchingTwoPerson() throws SQLException {
     List<Person> chefs = new ArrayList<>();
     List<Ingredient> ings1 = new ArrayList<>();
