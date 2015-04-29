@@ -14,8 +14,8 @@ public interface DBManager {
 
   public void importIngredients(File file);
 
-  public void importRecipeIngredients(File file);
+  public void importAllRecipes(String path);
 
-  public void importRecipes(File file);
+  public void importRecipeIngredients(File file);
 
 }
