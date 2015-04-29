@@ -3,6 +3,7 @@ package edu.brown.cs.db;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,16 +21,21 @@ import edu.brown.cs.cookups.person.User;
 
 public class DBLinkTest {
 
+  public static final String TEST_DB = "databases/tests/DBLinkTest.sqlite3";
+  public static final String INGREDIENT_PATH = "databases/csv/ingredients/ingredient.csv";
+  public static final String RECIPE_PATH = "databases/csv/recipes/gazpacho.csv";
+  public static final String RECIPE_DIR = "databases/csv/recipes/";
+
   @Test
   public void addUserTest() {
     try {
-      DBLink db = new DBLink("databases/testdb.sqlite3");
+      DBLink db = new DBLink(TEST_DB);
+      db.clearDataBase();
       Ingredient i = new Ingredient("i", 1.1, null);
       db.ingredients().defineIngredient("i", "iodine");
       Person p = new User("Jerry", "qyrt", Arrays.asList(i));
       db.users().addPerson(p);
       assertTrue(db.users().hasPersonByName("Jerry"));
-      db.users().removePersonById("qyrt");
     } catch (ClassNotFoundException | SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -39,13 +45,12 @@ public class DBLinkTest {
   @Test
   public void getUserByIDTest() {
     try {
-      DBLink db = new DBLink("databases/testdb.sqlite3");
+      DBLink db = new DBLink(TEST_DB);
       Ingredient i = new Ingredient("i", 1.1, null);
       db.ingredients().defineIngredient("i", "iodine");
       Person p = new User("Jerry", "qyrt", Arrays.asList(i));
       db.users().addPerson(p);
       Person q = db.users().getPersonById("qyrt");
-      db.users().removePersonById("qyrt");
       assertTrue(q.id().equals("qyrt"));
       assertTrue(q.name().equals("Jerry"));
       assertTrue(q.ingredients().get(0).id().equals("i"));
@@ -57,7 +62,8 @@ public class DBLinkTest {
   @Test
   public void getUserIngredientstest() {
     try {
-      DBLink db = new DBLink("databases/peopleTest.sqlite3");
+      DBLink db = new DBLink(TEST_DB);
+      db.clearDataBase();
       PersonManager people = new PersonManager(db);
       List<Ingredient> ingreds = new ArrayList<Ingredient>();
       db.ingredients().defineIngredient("a", "apples");
@@ -86,7 +92,8 @@ public class DBLinkTest {
   @Test
   public void getIngredientIDByName() {
     try {
-      DBLink db = new DBLink("databases/ingredientTest.sqlite3");
+      DBLink db = new DBLink(TEST_DB);
+      db.clearDataBase();
       db.ingredients().defineIngredient("/i/dairy.1",
                                         "Milk");
 
@@ -102,7 +109,8 @@ public class DBLinkTest {
   @Test
   public void getIngredientNamebyID() {
     try {
-      DBLink db = new DBLink("databases/ingredientTest.sqlite3");
+      DBLink db = new DBLink(TEST_DB);
+      db.clearDataBase();
       db.ingredients().defineIngredient("/i/dairy.1",
                                         "Milk");
 
@@ -118,12 +126,12 @@ public class DBLinkTest {
   @Test
   public void getRecipeName() {
     try {
-      DBLink db = new DBLink("databases/cookups.sqlite3");
-
-      assertTrue(db.recipes()
-                   .getRecipeNameByID("/r/1.5")
-                   .equals("Peanut Butter Sesame Noodles"));
-
+      DBLink db = new DBLink(TEST_DB);
+      db.clearDataBase();
+      db.importIngredients(new File(INGREDIENT_PATH));
+      db.importRecipe(new File(RECIPE_PATH));
+      Recipe r = db.recipes().getRecipeById("/r/1.6");
+      assertTrue("Gazpacho".equals(r.name()));
     } catch (ClassNotFoundException | SQLException e) {
       fail();
     }
@@ -132,7 +140,7 @@ public class DBLinkTest {
   @Test
   public void getIngredientNames() {
     try {
-      DBLink db = new DBLink("databases/ingredientTest.sqlite3");
+      DBLink db = new DBLink(TEST_DB);
       db.ingredients().defineIngredient("/i/dairy.1",
                                         "Milk");
       db.ingredients().defineIngredient("/i/dairy.2",
@@ -157,11 +165,19 @@ public class DBLinkTest {
   @Test
   public void getRecipesWithIngredient() {
     try {
-      DBLink db = new DBLink("databases/cookups.sqlite3");
-      // butter
+      DBLink db = new DBLink(TEST_DB);
+      db.clearDataBase();
+      String dir = "databases/csv/recipes/";
+      String r1 = dir + "mashedPotatoes.csv";
+      String r2 = dir + "frenchOnionSoup.csv";
+      String r3 = dir + "frittata.csv";
+      db.importIngredients(new File(INGREDIENT_PATH));
+      db.importRecipe(new File(r1));
+      db.importRecipe(new File(r2));
+      db.importRecipe(new File(r3));
       Set<Recipe> recipes = db.recipes()
                               .getRecipesWithIngredient("/i/dairy.5");
-      assertTrue(recipes.size() == 3);
+
       List<String> recipeIDs = new ArrayList<String>();
       for (Recipe r : recipes) {
         // System.out.println(r.id());
@@ -170,13 +186,6 @@ public class DBLinkTest {
       assertTrue(recipeIDs.contains("/r/1.2"));
       assertTrue(recipeIDs.contains("/r/1.3"));
       assertTrue(recipeIDs.contains("/r/1.4"));
-      // peanut butter
-      recipes = db.recipes()
-                  .getRecipesWithIngredient("/i/produce.6");
-      assertTrue(recipes.size() == 1);
-      for (Recipe r : recipes) {
-        assertTrue(r.id().equals("/r/1.5"));
-      }
       recipes = db.recipes()
                   .getRecipesWithIngredient("nonexistent");
       assertTrue(recipes.isEmpty());
@@ -188,7 +197,7 @@ public class DBLinkTest {
   @Test
   public void addRecipeTest() {
     try {
-      DBLink db = new DBLink("databases/recipesTest.sqlite3");
+      DBLink db = new DBLink(TEST_DB);
       // butter
       db.recipes().addRecipe("Beef Stew",
                              "/r/stew",

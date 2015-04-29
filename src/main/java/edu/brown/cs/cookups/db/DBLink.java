@@ -59,11 +59,6 @@ public class DBLink implements DBManager {
 
   public void init() {
 
-    // String drop = "DROP TABLE IF EXISTS ";
-    // for (String s : TABLES) {
-    // execute(drop + s);
-    // }
-
     try (Statement stat = conn.createStatement()) {
       stat.executeUpdate("PRAGMA foreign_keys = ON;");
     } catch (SQLException e) {
@@ -77,24 +72,13 @@ public class DBLink implements DBManager {
       execute(schema);
     }
 
-    // String drop = "DROP TABLE IF EXISTS ";
-    // try (Statement prep = conn.createStatement()) {
-    // prep.executeUpdate(drop + TABLES[0]);
-    // // prep.executeUpdate(drop + TABLES[1]);
-    // // for (String s : TABLES) {
-    // // System.out.println(drop + s);
-    // // prep.executeUpdate(drop + s);
-    // // }
-    // } catch (SQLException e) {
-    // e.printStackTrace();
-    // }
-
   }
 
   public void clearDataBase() {
     for (int i = TABLES.length - 1; i >= 0; i--) {
       removeTable(TABLES[i]);
     }
+    init();
   }
 
   private void removeTable(String name) {
@@ -202,8 +186,9 @@ public class DBLink implements DBManager {
             System.out.println("ERROR: Bad CSV format");
             return;
           }
-          prep.setString(ID_IDX, line[ID_IDX - 1]);
-          prep.setString(NAME_IDX, line[NAME_IDX - 1]);
+          prep.setString(ID_IDX, line[ID_IDX - 1].trim());
+          prep.setString(NAME_IDX,
+                         line[NAME_IDX - 1].trim());
           prep.addBatch();
         }
         prep.executeBatch();

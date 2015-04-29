@@ -109,7 +109,7 @@ public class IngredientsDBLink implements IngredientDB {
     String command = "INSERT OR IGNORE INTO ingredient VALUES (?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(command)) {
       prep.setString(1, id);
-      prep.setString(2, name);
+      prep.setString(2, name.trim());
       prep.addBatch();
       prep.executeBatch();
     } catch (SQLException e) {
