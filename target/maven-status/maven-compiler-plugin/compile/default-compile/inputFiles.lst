@@ -43,6 +43,7 @@
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/main/java/edu/brown/cs/cookups/api/LoginHandler.java
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/main/java/edu/brown/cs/cookups/schedule/Schedule.java
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/main/java/edu/brown/cs/autocorrect/Trie.java
+/gpfs/main/home/ggustafs/course/cs032/cookups/src/main/java/edu/brown/cs/cookups/api/Authentication.java
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/main/java/edu/brown/cs/cookups/api/SignupHandler.java
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/main/java/edu/brown/cs/cookups/person/Suitor.java
 /gpfs/main/home/ggustafs/course/cs032/cookups/src/main/java/edu/brown/cs/cookups/person/User.java
