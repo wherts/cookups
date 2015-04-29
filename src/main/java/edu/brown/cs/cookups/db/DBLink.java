@@ -26,16 +26,14 @@ public class DBLink implements DBManager {
       + ", PRIMARY KEY(recipe, ingredient)"
       + ", FOREIGN KEY(recipe) REFERENCES recipe(id) ON DELETE CASCADE ON UPDATE CASCADE"
       + ", FOREIGN KEY(ingredient) REFERENCES ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)";
-  /*
-   * ", FOREIGN KEY(ingredient) REFERENCES ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)"
-   * ;
-   */
+  public static final String AUTHENTICATION = "authentication(id TEXT, password TEXT, FOREIGN KEY(id) REFERENCES user(id)"
+      + "ON DELETE CASCADE ON UPDATE CASCADE)";
   public static final String[] TABLE_SCHEMA = { USER,
       INGREDIENT, USER_INGREDIENT, RECIPE,
-      RECIPE_INGREDIENT };
+      RECIPE_INGREDIENT, AUTHENTICATION };
   public static final String[] TABLES = { "user",
       "ingredient", "user_ingredient", "recipe",
-      "recipe_ingredient" };
+      "recipe_ingredient", "authentication" };
   public static final int ID_IDX = 1;
   public static final int NAME_IDX = 2;
   public static final int INGREDIENT_IDX = 2;

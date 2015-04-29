@@ -14,7 +14,7 @@ import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.PersonManager;
 import edu.brown.cs.cookups.person.User;
 
-public class PeopleTest {
+public class DBPeopleTest {
 
   public static final String DB_PATH = "databases/tests/testDB.sqlite3";
 
@@ -101,6 +101,32 @@ public class PeopleTest {
     assertTrue(r.id().equals("ronald@aol.com"));
     assertTrue(r.name().equals("Ronald Reagan"));
     assertTrue(r.ingredients().get(0).id().equals("i"));
+  }
+
+  @Test
+  public void authenticationTest() {
+    try {
+      DBLink db = new DBLink(DB_PATH);
+      db.clearDataBase();
+      db.ingredients().defineIngredient("/i/pasta",
+                                        "pasta",
+                                        1.0,
+                                        "pantry");
+      db.users()
+        .addPerson(new User("Ronald",
+            "ronald@aol.com",
+            Arrays.asList(new Ingredient("/i/pasta",
+                1.0,
+                db))));
+      db.users().setPersonPassword("ronald@aol.com",
+                                   "freedom");
+
+      assertTrue("freedom".equals(db.users()
+                                    .getPersonPassword("ronald@aol.com")));
+    } catch (ClassNotFoundException | SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
 }

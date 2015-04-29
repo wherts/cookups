@@ -64,8 +64,8 @@ public class UserDBLink implements UserDB {
           if (person == null) {
             List<Ingredient> ingredients = getPersonIngredients(id);
             person = people.cachePerson(id,
-                rs.getString(NAME_IDX),
-                ingredients);
+                                        rs.getString(NAME_IDX),
+                                        ingredients);
           }
           users.add(person);
         }
@@ -191,7 +191,7 @@ public class UserDBLink implements UserDB {
 
   @Override
   public void addPerson(Person p) {
-    String query = "INSERT OR IGNORE INTO user VALUES (?, ?)";
+    String query = "INSERT INTO user VALUES (?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(query)) {
       prep.setString(ID_IDX, p.id());
       prep.setString(NAME_IDX, p.name());
@@ -222,5 +222,42 @@ public class UserDBLink implements UserDB {
       e.printStackTrace();
     }
     return names;
+  }
+
+  @Override
+  public boolean setPersonPassword(String id,
+      String password) {
+    if (!this.hasPersonByID(id)) {
+      return false;
+    }
+    String update = "INSERT OR REPLACE INTO authentication VALUES(?,?)";
+    try (PreparedStatement prep = conn.prepareStatement(update)) {
+      prep.setString(1, id);
+      prep.setString(2, password);
+      prep.executeUpdate();
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return true;
+  }
+
+  @Override
+  public String getPersonPassword(String id) {
+    String query = "SELECT password FROM authentication WHERE id = ?";
+    String password = "";
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, id);
+      try (ResultSet rs = prep.executeQuery()) {
+        while (rs.next()) {
+          password = rs.getString(1);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return password;
   }
 }
