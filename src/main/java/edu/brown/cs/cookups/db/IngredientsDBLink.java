@@ -90,9 +90,10 @@ public class IngredientsDBLink implements IngredientDB {
         while (rs.next()) {
           String ingredient = rs.getString(2);
           double qty = rs.getDouble(3);
-          ingredients.add(new Ingredient(ingredient,
+          Ingredient i = new Ingredient(ingredient,
               qty,
-              (DBLink) this.db));
+              (DBLink) this.db);
+          ingredients.add(i.copy());
         }
       } catch (SQLException e) {
         e.printStackTrace();
@@ -131,11 +132,11 @@ public class IngredientsDBLink implements IngredientDB {
     INGREDIENT_NAME_CACHE.clear();
   }
 
-@Override
-public Boolean hasIngredient(String id) {
+  @Override
+  public Boolean hasIngredient(String id) {
     String query = "SELECT id FROM ingredient WHERE id = ?";
     try (PreparedStatement prep = conn.prepareStatement(query)) {
-    prep.setString(1, id);
+      prep.setString(1, id);
       try (ResultSet rs = prep.executeQuery()) {
 
         return rs.next();
@@ -145,7 +146,7 @@ public Boolean hasIngredient(String id) {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-	return false;
-}
+    return false;
+  }
 
 }
