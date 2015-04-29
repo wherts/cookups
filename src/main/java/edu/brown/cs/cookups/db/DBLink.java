@@ -110,17 +110,19 @@ public class DBLink implements DBManager {
       }
     }
   }
-  
+
+  @Override
   public void importAllRecipes(String dir) {
-	  try {
-		Files.walk(Paths.get(dir)).forEach(filePath -> {
-			    if (Files.isRegularFile(filePath)) {
-			       importRecipe(new File(filePath.toString()));
-			    }});
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+    try {
+      Files.walk(Paths.get(dir)).forEach(filePath -> {
+        if (Files.isRegularFile(filePath)) {
+          importRecipe(new File(filePath.toString()));
+        }
+      });
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
   private void execute(String sql) {
@@ -191,24 +193,52 @@ public class DBLink implements DBManager {
   public void importIngredients(File file) {
     try (CSVReader reader = new CSVReader(file)) {
       String[] line;
-      String query = "INSERT OR IGNORE INTO ingredient VALUES (?,?)";
-      try (PreparedStatement prep = conn.prepareStatement(query)) {
+      String recipeName = "INSERT OR IGNORE INTO recipe VALUES (?,?,?)";
+      line = reader.readLine();
+      if (line.length < 3) {
+        System.out.println("ERROR: Bad CSV format");
+        return;
+      }
+      StringBuilder instructions = new StringBuilder();
+      instructions.append(line[RECIPE_TEXT_IDX - 1]);
+      for (int i = RECIPE_TEXT_IDX; i < line.length; i++) {
+        instructions.append("," + line[i]);
+      }
+      String recipe = line[NAME_IDX - 1];
+      try (PreparedStatement prep = conn.prepareStatement(recipeName)) {
+        prep.setString(ID_IDX, line[ID_IDX - 1]);
+        prep.setString(NAME_IDX, recipe);
+        prep.setString(RECIPE_TEXT_IDX,
+                       instructions.toString());
+        prep.addBatch();
+        prep.executeBatch();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      String sql = "INSERT OR IGNORE INTO recipe_ingredient VALUES (?,?, ?)";
+      try (PreparedStatement prep = conn.prepareStatement(sql)) {
         while ((line = reader.readLine()) != null) {
-          if (line.length != 2) {
-        	for (String s : line) {
-        		System.out.println(s);
-        	}
+          if (line.length != 3) {
             System.out.println("ERROR: Bad CSV format");
+            return;
+          }
+          if (!this.ingredients.hasIngredient(line[INGREDIENT_IDX - 1])) {
+            System.out.println("Warning: ingredient "
+                + line[INGREDIENT_IDX - 1]
+                + " does not exist. Aborting " + recipe);
             return;
           }
           prep.setString(ID_IDX, line[ID_IDX - 1]);
           prep.setString(NAME_IDX, line[NAME_IDX - 1]);
+          prep.setString(QTY_IDX, line[QTY_IDX - 1]);
           prep.addBatch();
         }
         prep.executeBatch();
       } catch (SQLException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
+        System.out.println(e.getMessage());
       }
     } catch (FileNotFoundException e) {
       // TODO Auto-generated catch block
@@ -231,36 +261,6 @@ public class DBLink implements DBManager {
           }
           prep.setString(ID_IDX, line[ID_IDX - 1]);
           prep.setString(NAME_IDX, line[NAME_IDX - 1]);
-          prep.addBatch();
-        }
-        prep.executeBatch();
-      } catch (SQLException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    } catch (FileNotFoundException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-  }
-
-  @Override
-  public void importRecipes(File file) {
-    try (CSVReader reader = new CSVReader(file)) {
-      String[] line;
-      String query = "INSERT INTO recipe VALUES (?,?,?)";
-      try (PreparedStatement prep = conn.prepareStatement(query)) {
-        while ((line = reader.readLine()) != null) {
-          if (line.length < 3) {
-            System.out.println("ERROR: Bad CSV format");
-          }
-          prep.setString(ID_IDX, line[ID_IDX - 1]);
-          prep.setString(INGREDIENT_IDX, line[INGREDIENT_IDX - 1]);
-          prep.setString(RECIPE_TEXT_IDX,
-                         line[RECIPE_TEXT_IDX]);
           prep.addBatch();
         }
         prep.executeBatch();
