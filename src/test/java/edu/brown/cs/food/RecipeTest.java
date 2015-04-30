@@ -11,10 +11,13 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.brown.cs.cookups.RecipeMatcher;
 import edu.brown.cs.cookups.db.DBLink;
 import edu.brown.cs.cookups.db.DBManager;
 import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.food.Recipe;
+import edu.brown.cs.cookups.person.Person;
+import edu.brown.cs.cookups.person.User;
 
 public class RecipeTest {
 	private DBManager dbM;
@@ -76,11 +79,112 @@ public class RecipeTest {
   }
   
   @Test
-  public void testPrice() {
-  	Recipe gaz = new Recipe("/r/1.6", dbM);
+  public void testPriceOnePerson() throws SQLException {
   	//test half of every item
+  	double[] half = {0.25, 0.5, 2, 0.5, 0.5, 2, 2, 2};
+  	String[] ids = {"/i/liquid.10", "/i/liquid.3.2", "/i/liquid.8", "/i/liquid.9", "/i/produce.1.3",
+  	                "/i/produce.10", "/i/produce.8", "/i/produce.9"};
+  	List<Ingredient> ings = new ArrayList<>();
+  	for (int i = 0; i < 8; i++) {
+  	  ings.add(new Ingredient(ids[i], half[i], dbM));
+  	}
+  	List<Person> chef = new ArrayList<>();
+  	chef.add(new User("Wes", "wh7", ings));
+  	List<Recipe> recipes = RecipeMatcher.matchRecipes(chef, dbM);
+  	assertTrue(recipes.size() == 9);
+  	//just looking at one recipe here
+  	Recipe gaz = recipes.get(7);
+  	assertTrue(gaz.name().equals("Gazpacho"));
+  	assertTrue(gaz.id().equals("/r/1.6"));
+  	assertTrue(gaz.shoppingPrice() == 1.64);
+  	//half the items
+  	chef = new ArrayList<>();
+  	ings = new ArrayList<>();
+  	double[] amt = {0.5, 1, 4, 1};
+  	for (int i = 0; i < 4; i++) {
+  	  ings.add(new Ingredient(ids[i], amt[i], dbM));
+  	}
+  	chef.add(new User("Wes", "wh7", ings));
+  	recipes = RecipeMatcher.matchRecipes(chef, dbM);
+  	assertTrue(recipes.size() == 9);
+  	gaz = recipes.get(7);
+    assertTrue(gaz.name().equals("Gazpacho"));
+    assertTrue(gaz.id().equals("/r/1.6"));
+    assertTrue(gaz.shoppingPrice() == 1.87);
   	//test all of every item
-  	assertTrue(true); 
+  	chef = new ArrayList<>();
+    ings = new ArrayList<>();
+  	double[] all = {0.5, 1, 4, 1, 1, 4, 4, 4};
+  	for (int i = 0; i < 8; i++) {
+      ings.add(new Ingredient(ids[i], all[i], dbM));
+    }
+    chef.add(new User("Wes", "wh7", ings));
+    recipes = RecipeMatcher.matchRecipes(chef, dbM);
+    assertTrue(recipes.size() == 9);
+    gaz = recipes.get(7);
+    assertTrue(gaz.name().equals("Gazpacho"));
+    assertTrue(gaz.id().equals("/r/1.6"));
+    assertTrue(gaz.shoppingPrice() == 0);
+  }
+  
+  @Test
+  public void testPriceTwoPeople() throws SQLException {
+    //half of each item
+    double[] half = {0.5, 1, 4, 1, 1, 4, 4, 4};
+    String[] ids = {"/i/liquid.10", "/i/liquid.3.2", "/i/liquid.8", "/i/liquid.9", "/i/produce.1.3",
+                    "/i/produce.10", "/i/produce.8", "/i/produce.9"};
+    List<Ingredient> ings1 = new ArrayList<>();
+    List<Ingredient> ings2 = new ArrayList<>();
+    for (int i = 0; i < 4; i++) {
+      ings1.add(new Ingredient(ids[i], half[i], dbM));
+      ings2.add(new Ingredient(ids[i + 4], half[i + 4], dbM));
+    }
+    List<Person> chefs = new ArrayList<>();
+    chefs.add(new User("Wes", "wh7", ings1));
+    chefs.add(new User("Grant", "ggustafs", ings2));
+    List<Recipe> recipes = RecipeMatcher.matchRecipes(chefs, dbM);
+    assertTrue(recipes.size() == 9);
+    //just looking at one recipe here
+    Recipe gaz = recipes.get(7);
+    assertTrue(gaz.name().equals("Gazpacho"));
+    assertTrue(gaz.id().equals("/r/1.6"));
+    assertTrue(gaz.shoppingPrice() == 3.31);
+    
+    //half the items
+    chefs = new ArrayList<>();
+    ings1 = new ArrayList<>();
+    ings2 = new ArrayList<>();
+    double[] amt = {1, 2, 8, 2};
+    for (int i = 0; i < 2; i++) {
+      ings1.add(new Ingredient(ids[i], amt[i], dbM));
+      ings2.add(new Ingredient(ids[i + 2], amt[i + 2], dbM));
+    }
+    chefs.add(new User("Wes", "wh7", ings1));
+    chefs.add(new User("Grant", "ggustafs", ings2));
+    recipes = RecipeMatcher.matchRecipes(chefs, dbM);
+    assertTrue(recipes.size() == 9);
+    gaz = recipes.get(7);
+    assertTrue(gaz.name().equals("Gazpacho"));
+    assertTrue(gaz.id().equals("/r/1.6"));
+    assertTrue(gaz.shoppingPrice() == 3.74);
+    
+    //test all of every item
+    chefs = new ArrayList<>();
+    ings1 = new ArrayList<>();
+    ings2 = new ArrayList<>();
+    double[] all = {1, 2, 8, 2, 2, 8, 8, 8};
+    for (int i = 0; i < 4; i++) {
+      ings1.add(new Ingredient(ids[i], all[i], dbM));
+      ings2.add(new Ingredient(ids[i + 4], all[i + 4], dbM));
+    }
+    chefs.add(new User("Wes", "wh7", ings1));
+    chefs.add(new User("Grant", "ggustafs", ings2));
+    recipes = RecipeMatcher.matchRecipes(chefs, dbM);
+    assertTrue(recipes.size() == 9);
+    gaz = recipes.get(7);
+    assertTrue(gaz.name().equals("Gazpacho"));
+    assertTrue(gaz.id().equals("/r/1.6"));
+    assertTrue(gaz.shoppingPrice() == 0);
   }
 
   @Test

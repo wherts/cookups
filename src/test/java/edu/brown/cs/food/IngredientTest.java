@@ -66,12 +66,12 @@ public class IngredientTest {
 		//per ounce prices
 		Ingredient soy = new Ingredient("/i/liquid.7", 1, dbM); //soy sauce
 		Ingredient pB = new Ingredient("/i/produce.6", 1, dbM); //jar of peanut butter
-		assertTrue(soy.price() == 0.23);
-		assertTrue(pB.price() == 0.3);
+		assertTrue(soy.price() == 23);
+		assertTrue(pB.price() == 30);
 		//non unit weights
 		soy = new Ingredient("/i/liquid.7", 12, dbM);
 		pB = new Ingredient("/i/produce.6", 16, dbM);
-		assertTrue(soy.price() == 2.76);
-		assertTrue(pB.price() == 4.80);
+		assertTrue(soy.price() == 276);
+		assertTrue(pB.price() == 480);
 	}
 }

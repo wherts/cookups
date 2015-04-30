@@ -20,6 +20,7 @@ public class Recipe {
   private List<Ingredient> ingredients, toBuy;
   private double percentHave = 1;
   private double shoppingPrice = 0;
+  private static final double CENTS = 100;
 
   /**
    * Constructor for the Recipe object.
@@ -133,7 +134,7 @@ public class Recipe {
       	}
       }
     }
-    return shoppingPrice;
+    return shoppingPrice / CENTS;
   }
 
   /**

@@ -123,12 +123,12 @@ public class Ingredient {
    * @throws SQLException if ingredient does not
    * appear in ingredients table
    */
-  public double price() throws SQLException {
+  public int price() throws SQLException {
   	if (price == 0) { //hasn't been set yet
   		price = querier.ingredients()
   								   .priceByID(id);
   	}
-  	return price * ounces / 100; //price values are stored in cents
+  	return (int) (price * ounces); //price values are stored in cents
   }
 
   /**
