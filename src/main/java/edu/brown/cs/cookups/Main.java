@@ -13,8 +13,10 @@ public class Main {
 
   /** The main constructor.
    * @param args - the command line arguments
-   * @throws SQLException
-   * @throws ClassNotFoundException */
+   * @throws SQLException throws SQLException on database
+   * errors
+   * @throws ClassNotFoundException throws
+   * class not found exception on compilation error */
   public static void main(String[] args) throws ClassNotFoundException,
       SQLException {
     new Main(args).run();

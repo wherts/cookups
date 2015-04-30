@@ -117,8 +117,6 @@ public class Recipe {
    * Accessor for how much money it costs
    * to complete the recipe.
    * @return double of price
-   * @throws SQLException if price does
-   * not exist in the database
    */
   public double shoppingPrice() {
     if (toBuy.size() == 0) {
