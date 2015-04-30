@@ -13,22 +13,6 @@ $.get("/allUsers", function(JSONresponse) {
 	});
 });
 
-$('#friends-form').submit(function(e) {
-	console.log("cook with friends form submitted");
-	
-	var params = {
-		name: $('#friends-form input[name=name]').val(),
-		date: $('#friends-form input[name=date]').val(),
-		timeStart:  $('#friends-form input[name=time_start]').val(),
-		timeEnd:  $('#friends-form input[name=time_end]').val(),
-		timeStart:  $('#friends-form input[name=time_start]').val(),
-		chefs:  $('#friends-form input[name=chefs]').val(),
-	}
-	$.post("/cookwfriends", params, function(responseJSON) {
-
-	})
-});
-
 function validateSignup() {
 	var email = document.forms["signup-form"]["email"].value;
 	
@@ -37,6 +21,27 @@ function validateSignup() {
 		console.log("bad email domain");
 		return false;
 	}
+}
+
+function submitCookFriends() {
+	var chefs="";
+    $( "select option:selected" ).each(function() {
+        chefs += ($(this).text())+",";
+      });
+	var params = {
+		name: $('#friends-form input[name=name]').val(),
+		date: $('#friends-form input[name=date]').val(),
+		timeStart:  $('#friends-form input[name=time_start]').val(),
+		timeEnd:  $('#friends-form input[name=time_end]').val(),
+		timeStart:  $('#friends-form input[name=time_start]').val(),
+		chefs: chefs
+	}
+	
+	console.log(params);
+	
+	$.post("/cookwfriends", params, function(responseJSON) {
+		console.log("made meal");
+	})
 }
 
 $('input:radio').on('change', function(){

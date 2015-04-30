@@ -3,7 +3,6 @@ package edu.brown.cs.cookups;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import spark.Spark;
@@ -35,7 +34,7 @@ public class URLHandler {
   private PersonManager people;
   private List<String> names, ingredients, recipes;
   private Authentication auth;
-  private Engine searchEngine;
+  private Engine recipeSearch, peopleSearch;
 
   private final static Gson GSON = new Gson();
 
@@ -49,10 +48,8 @@ public class URLHandler {
     recipes = db.recipes().getAllRecipeNames();
     auth = new Authentication(this.db);
 
-    List<String> validSearchTerms = new ArrayList<String>();
-    validSearchTerms.addAll(names);
-    validSearchTerms.addAll(recipes);
-    searchEngine = new Engine(new Trie(validSearchTerms));
+    recipeSearch = new Engine(new Trie(recipes));
+    peopleSearch = new Engine(new Trie(names));
   }
 
   public void runSparkServer() {
@@ -85,8 +82,8 @@ public class URLHandler {
     Spark.post("/cookup", new CookupHandler(people));
     Spark.post("/login", new LoginHandler(auth));
     Spark.post("/signup", new SignupHandler(auth, people), freeMarker);
-    Spark.get("/search", new SearchEngine(searchEngine), freeMarker);
-
+    Spark.post("/search", new SearchEngine(recipeSearch, peopleSearch),
+        freeMarker);
     // JSON data routes
     Spark.get("/allUsers", new AutocompleteHandler(names));
     Spark.get("/allRecipes", new AutocompleteHandler(recipes));
