@@ -35,9 +35,9 @@ public class MealTest {
     m3.setDate(d1);
     Recipe r1 = new Recipe("r1", null);
     Recipe r2 = new Recipe("r2", null);
-    m1.changeRecipe(r1);
-    m2.changeRecipe(r2);
-    m3.changeRecipe(r1);
+    m1.addRecipe(r1);
+    m2.addRecipe(r2);
+    m3.addRecipe(r1);
     LocalTime t1 = LocalTime.of(12, 15);
     LocalTime t2 = LocalTime.of(1, 30);
     m1.setTime(t1);

@@ -78,7 +78,7 @@ public class URLHandler {
     Spark.get("/profile/:id", new ProfileView(people), freeMarker);
 
     // Form handling routes
-    Spark.post("/cookwfriends", new CookFriendsHandler(people));
+    Spark.post("/cookwfriends", new CookFriendsHandler(people, db));
     Spark.post("/cookup", new CookupHandler(people));
     Spark.post("/login", new LoginHandler(auth));
     Spark.post("/signup", new SignupHandler(auth, people), freeMarker);
