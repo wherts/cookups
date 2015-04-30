@@ -16,7 +16,7 @@ public class Schedule {
 
   /** Constructor for a Schedule.
    * @param datetime of event
-   * @param location of event */
+   * @param loc location of event */
   public Schedule(LocalDateTime datetime, LatLong loc) {
     this.start = datetime;
     this.location = loc;

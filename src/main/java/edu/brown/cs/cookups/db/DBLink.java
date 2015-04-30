@@ -28,6 +28,7 @@ public class DBLink implements DBManager {
       + ", FOREIGN KEY(ingredient) REFERENCES ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)";
   public static final String AUTHENTICATION = "authentication(id TEXT, password TEXT, FOREIGN KEY(id) REFERENCES user(id)"
       + "ON DELETE CASCADE ON UPDATE CASCADE)";
+  public static final String MEAL = "meal(id TEXT, json TEXT, PRIMARY KEY(id))";
   public static final String[] TABLE_SCHEMA = { USER,
       INGREDIENT, USER_INGREDIENT, RECIPE,
       RECIPE_INGREDIENT, AUTHENTICATION };

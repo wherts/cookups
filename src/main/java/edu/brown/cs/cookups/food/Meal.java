@@ -23,7 +23,8 @@ public class Meal {
   private String name;
 
   /** Constructor for a meal.
-   * @param p The host of the meal */
+   * @param p The host of the meal
+   * @param s the schedule of the meal */
   public Meal(Person p, Schedule s) {
     assert (p != null && s != null);
     this.host = p;

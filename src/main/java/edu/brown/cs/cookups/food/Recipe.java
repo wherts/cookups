@@ -20,6 +20,7 @@ public class Recipe {
   private List<Ingredient> ingredients, toBuy;
   private double percentHave = 1;
   private double shoppingPrice = 0;
+  private static final double CENTS = 100;
 
   /**
    * Constructor for the Recipe object.
@@ -116,8 +117,6 @@ public class Recipe {
    * Accessor for how much money it costs
    * to complete the recipe.
    * @return double of price
-   * @throws SQLException if price does
-   * not exist in the database
    */
   public double shoppingPrice() {
     if (toBuy.size() == 0) {
@@ -133,7 +132,7 @@ public class Recipe {
       	}
       }
     }
-    return shoppingPrice;
+    return shoppingPrice / CENTS;
   }
 
   /**
