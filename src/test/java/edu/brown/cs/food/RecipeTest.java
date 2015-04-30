@@ -78,7 +78,7 @@ public class RecipeTest {
   @Test
   public void testPrice() {
   	Recipe gaz = new Recipe("/r/1.6", dbM);
-  	assertTrue(true);
+  	assertTrue(true); 
   }
 
   @Test
