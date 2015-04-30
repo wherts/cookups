@@ -3,15 +3,37 @@ package edu.brown.cs.food;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import edu.brown.cs.cookups.db.DBLink;
+import edu.brown.cs.cookups.db.DBManager;
 import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.food.Recipe;
 
 public class RecipeTest {
+	private DBManager dbM;
+  private static final String DB_PATH = "databases/cookups.sqlite3";
+
+  @Before
+  public void initialize() {
+    File file = new File("databases/csv/ingredients/ingredientPrice.csv");
+    String dir = "databases/csv/recipes";
+    try {
+      dbM = new DBLink(DB_PATH);
+      ((DBLink) dbM).clearDataBase();
+      dbM.importIngredients(file);
+      dbM.importAllRecipes(dir);
+    } catch (ClassNotFoundException | SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
 
   @Test
   public void testEquals() {
@@ -22,12 +44,6 @@ public class RecipeTest {
     assertFalse(r1.equals(r2));
     assertTrue(r1.equals(r3));
   }
-
-//  @Test
-//  public void testName() {
-//    Recipe r = new Recipe("/r/1.1", null);
-//    assert (r.name() == null);
-//  }
 
   @Test
   public void testPercentage() {
@@ -57,6 +73,12 @@ public class RecipeTest {
     double percent = rec.percentHave();
     double rounded = Math.floor(percent * 1000) / 1000;
     assertTrue(rounded == 0.631);
+  }
+  
+  @Test
+  public void testPrice() {
+  	Recipe gaz = new Recipe("/r/1.6", dbM);
+  	assertTrue(true); 
   }
 
   @Test

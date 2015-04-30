@@ -1,5 +1,6 @@
 package edu.brown.cs.cookups.food;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,17 +116,23 @@ public class Recipe {
    * Accessor for how much money it costs
    * to complete the recipe.
    * @return double of price
+   * @throws SQLException if price does
+   * not exist in the database
    */
   public double shoppingPrice() {
-//    if (toBuy.size() == 0) {
-//      return 0;
-//    }else if (shoppingPrice == 0) {
-//      //only want to calculate the price once from the db
-//      //if it's zero then we haven't calculated it yet
-//      for (Ingredient ing : toBuy) {
-//        shoppingPrice += querier.getPriceById(ing.id());
-//      }
-//    }
+    if (toBuy.size() == 0) {
+      return 0;
+    } else if (shoppingPrice == 0) {
+      //only want to calculate the price once from the db
+      //if it's zero then we haven't calculated it yet
+      for (Ingredient ing : toBuy) {
+      	try {      		
+      		shoppingPrice += ing.price();
+      	} catch (SQLException se) {
+      		System.err.printf("Couldn't find pricing for %s%n", ing.id());
+      	}
+      }
+    }
     return shoppingPrice;
   }
 
