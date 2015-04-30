@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 import edu.brown.cs.cookups.person.Person;
 
 public class DateMatcher {
-  public static List<Person> match(List<Suitor> suitors, Suitor toFind) {
+  public List<Person> match(List<Suitor> suitors, Suitor toFind) {
     List<Person> toReturn = new ArrayList<>();
     PriorityQueue<Suitor> matches = new PriorityQueue<>(new DatingComparator(toFind));
     if (toFind.isRomantic()) { //romantic

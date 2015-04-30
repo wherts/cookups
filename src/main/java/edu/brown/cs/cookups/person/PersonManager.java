@@ -1,20 +1,26 @@
 package edu.brown.cs.cookups.person;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
+import edu.brown.cs.cookups.dating.Suitor;
 import edu.brown.cs.cookups.db.DBLink;
 import edu.brown.cs.cookups.food.Ingredient;
 
 public class PersonManager {
   private DBLink db;
-  private Map<String, Person> users;
+  private ConcurrentMap<String, Person> users;
+  private ConcurrentMap<String, Suitor> suitors;
 
   public PersonManager(DBLink db) {
     this.db = db;
-    users = new HashMap<String, Person>();
+    users = new ConcurrentHashMap<String, Person>();
+    suitors = new ConcurrentHashMap<String, Suitor>();
   }
 
   public Person getPersonById(String id)
@@ -38,6 +44,11 @@ public class PersonManager {
     this.users.put(id, person);
     return person;
   }
+  
+  public Suitor cacheSuitor(Suitor suitor) {
+    this.suitors.put(suitor.person().id(), suitor);
+    return suitor;
+  }
 
   public Person getPersonIfCached(String id) {
     return this.users.get(id);
@@ -54,5 +65,9 @@ public class PersonManager {
     throws SQLException {
     db.users().removePersonById(id);
     users.remove(id);
+  }
+
+  public List<Suitor> getAllSuitors() {
+    return new ArrayList<>(suitors.values());
   }
 }
