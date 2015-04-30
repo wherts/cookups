@@ -15,10 +15,11 @@ import edu.brown.cs.cookups.db.DBManager;
  */
 public class Ingredient {
   private double ounces;
-  private String id, name;
+  private String id, name, storage;
   private LocalDate dateCreated;
   private DBManager querier;
   private Set<Recipe> recipes;
+  private double price = 0;
 
   /**
    * Public constructor for an ingredient.
@@ -113,6 +114,35 @@ public class Ingredient {
                        .getRecipesWithIngredient(id);
     }
     return recipes;
+  }
+
+  /**
+   * Accessor for the price of this amount of
+   * this ingredient.
+   * @return double of ingredient's cost
+   * @throws SQLException if ingredient does not
+   * appear in ingredients table
+   */
+  public double price() throws SQLException {
+  	if (price == 0) { //hasn't been set yet
+  		price = querier.ingredients()
+  								   .priceByID(id);
+  	}
+  	return price * ounces / 100; //price values are stored in cents
+  }
+
+  /**
+   * Accessor for the storage type of this ingredient.
+   * @return string of storage location.
+   * @throws SQLException of ingredient does
+   * not appear in database.
+   */
+  public String storage() throws SQLException {
+  	if (storage == null) {
+  		storage = querier.ingredients()
+  										 .storageByID(id);
+  	}
+  	return storage;
   }
 
   /**

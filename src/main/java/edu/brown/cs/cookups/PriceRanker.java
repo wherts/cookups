@@ -1,5 +1,6 @@
 package edu.brown.cs.cookups;
 
+import java.sql.SQLException;
 import java.util.Comparator;
 
 import edu.brown.cs.cookups.food.Recipe;
