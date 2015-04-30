@@ -109,8 +109,7 @@ public class Meal {
   }
 
   /** Accessor for guest list of a Meal.
-   * @return list of Person attending 
-   */
+   * @return list of Person attending */
   public List<Person> attending() {
     List<Person> copy = new ArrayList<>();
     for (Person p : attending) {
@@ -120,24 +119,21 @@ public class Meal {
   }
 
   /** Method to add a guest to the Meal.
-   * @param p new person coming to Meal 
-   */
+   * @param p new person coming to Meal */
   public void addAttending(Person p) {
     assert (p != null);
     attending.add(p);
   }
 
   /** Accessor for a Meal's host.
-   * @return person object
-   */
+   * @return person object */
   public Person host() {
     return host;
   }
 
   /** Setter for a Meal's host.
    * @param h new host of meal
-   * @return old host 
-   */
+   * @return old host */
   public Person setHost(Person h) {
     Person ret = this.host;
     this.host = h;
@@ -145,15 +141,13 @@ public class Meal {
   }
 
   /** Add a recipe to a Meal.
-   * @param r new recipe
-   */
+   * @param r new recipe */
   public void addRecipe(Recipe r) {
     this.recipes.add(r);
   }
 
   /** Accessor for a Meal's recipes.
-   * @return list of Recipes
-   */
+   * @return list of Recipes */
   public List<Recipe> recipes() {
     ArrayList<Recipe> ret = new ArrayList<>();
     for (Recipe r : recipes) {
@@ -162,10 +156,8 @@ public class Meal {
     return ret;
   }
 
-  /**
-   * Method for hashing meal object
-   * @return int for hasing
-   */
+  /** Method for hashing meal object
+   * @return int for hasing */
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -182,9 +174,17 @@ public class Meal {
    * @return string */
   @Override
   public String toString() {
-    return host.toString() + ", "
-        + recipes.toString() + ", "
-        + location.toString();
+    StringBuilder sB = new StringBuilder();
+    sB.append(host.toString());
+    sB.append(", ");
+    sB.append(recipes.toString());
+    sB.append(", ");
+    if (location != null) {
+      sB.append(location.toString());
+    } else {
+      sB.append("No location selected");
+    }
+    return sB.toString();
   }
 
   /** Equality method for an object.

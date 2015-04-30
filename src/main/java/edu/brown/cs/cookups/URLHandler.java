@@ -24,6 +24,7 @@ import edu.brown.cs.cookups.api.ProfileDataHandler;
 import edu.brown.cs.cookups.api.ProfileView;
 import edu.brown.cs.cookups.api.RecipeView;
 import edu.brown.cs.cookups.api.SearchEngine;
+import edu.brown.cs.cookups.api.SendUsersHandler;
 import edu.brown.cs.cookups.api.SignupHandler;
 import edu.brown.cs.cookups.db.DBLink;
 import edu.brown.cs.cookups.person.PersonManager;
@@ -32,7 +33,7 @@ import freemarker.template.Configuration;
 public class URLHandler {
   private DBLink db;
   private PersonManager people;
-  private List<String> names, ingredients, recipes;
+  private List<String> ids, names, ingredients, recipes;
   private Authentication auth;
   private Engine recipeSearch, peopleSearch;
 
@@ -43,7 +44,9 @@ public class URLHandler {
       SQLException {
     this.db = db;
     people = new PersonManager(this.db);
-    names = db.users().getAllNames();
+    List<List<String>> userData = db.users().getNamesAndIDs();
+    ids = userData.get(0);
+    names = userData.get(1);
     ingredients = db.ingredients().getAllIngredientNames();
     recipes = db.recipes().getAllRecipeNames();
     auth = new Authentication(this.db);
@@ -75,18 +78,19 @@ public class URLHandler {
     Spark.get("/cookup", new BasicView("cookup.ftl"), freeMarker);
     Spark.get("/", new LoginView(auth), freeMarker);
     Spark.get("/recipe/:id", new RecipeView(), freeMarker);
-    Spark.get("/profile/:id", new ProfileView(people), freeMarker);
+    Spark.get("/profile/:name", new ProfileView(people), freeMarker);
 
     // Form handling routes
     Spark.post("/cookwfriends", new CookFriendsHandler(people, db));
     Spark.post("/cookup", new CookupHandler(people));
     Spark.post("/login", new LoginHandler(auth));
-    Spark.post("/signup", new SignupHandler(auth, people), freeMarker);
+    Spark.post("/signup", new SignupHandler(auth, people));
     Spark.post("/search", new SearchEngine(recipeSearch, peopleSearch),
         freeMarker);
     // JSON data routes
-    Spark.get("/allUsers", new AutocompleteHandler(names));
     Spark.get("/allRecipes", new AutocompleteHandler(recipes));
+    Spark.get("/allUsers", new SendUsersHandler(names, ids));
+
     Spark.get("/allIngredients", new AutocompleteHandler(ingredients));
     Spark.get("/profileData", new ProfileDataHandler(recipes, ingredients,
         people));

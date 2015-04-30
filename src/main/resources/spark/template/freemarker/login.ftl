@@ -12,7 +12,7 @@
   <body>
       <script src="js/jquery-2.1.1.js"></script>
 	  <script src="js/jquery.tokenize.js"></script>
-      <script src="js/forms.js"></script>
+      <script src="js/login.js"></script>
      <div class="block a">
   	   <div class="containter" id="head"><img id="logo" src="assets/logo.png" /></div>
      </div><div class="block" id="main-login">

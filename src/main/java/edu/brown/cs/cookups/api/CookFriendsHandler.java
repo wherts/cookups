@@ -48,8 +48,6 @@ public class CookFriendsHandler implements Route {
     LocalDateTime dateTimeEnd = null;
     if (timeEnd != null) { // if they scheduled an end time
       String end = date + " " + timeEnd;
-      System.out.println("name " + name + " timestart " + start + " timeEnd "
-          + end);
       dateTimeEnd = LocalDateTime.parse(end, formatter);
     }
     Schedule sched = new Schedule(dateTimeStart, null);
@@ -68,6 +66,15 @@ public class CookFriendsHandler implements Route {
     // add recipes to meal
     List<Person> attending = new ArrayList<>();
     // need to figure out how to parse out selected names
+    String[] ids = splitNames(chefs);
+    for (String s : ids) {
+      try {
+        Person person = people.getPersonById(s);
+        attending.add(person);
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
 
     for (Person a : attending) {
       newMeal.addAttending(a);
@@ -82,15 +89,14 @@ public class CookFriendsHandler implements Route {
       newMeal.addRecipe(r);
     }
     // TODO add recipe to DB here???
+
+    System.out.println(newMeal.toString());
+    System.out.println(newMeal.attending().size());
     return newMeal;
   }
 
   private String[] splitNames(String n) {
     String[] names = n.trim().split(",");
-    for (String s : names) {
-      System.out.println("Name: " + s);
-    }
-
-    return null;
+    return names;
   }
 }

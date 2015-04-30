@@ -13,7 +13,7 @@
   <body>
     <script src="js/jquery-2.1.1.js"></script>
 	<script src="js/jquery.tokenize.js"></script>
-    <script src="js/forms.js"></script>
+    <script src="js/cookwfriends.js"></script>
     <script src="js/main.js"></script>
      <!-- HEADER -->
      <div class="block a">
