@@ -10,6 +10,8 @@ import spark.template.freemarker.FreeMarkerEngine;
 
 import com.google.gson.Gson;
 
+import edu.brown.cs.autocomplete.Engine;
+import edu.brown.cs.autocomplete.Trie;
 import edu.brown.cs.cookups.api.AuthFilter;
 import edu.brown.cs.cookups.api.Authentication;
 import edu.brown.cs.cookups.api.AutocompleteHandler;
@@ -21,7 +23,7 @@ import edu.brown.cs.cookups.api.LoginView;
 import edu.brown.cs.cookups.api.ProfileDataHandler;
 import edu.brown.cs.cookups.api.ProfileView;
 import edu.brown.cs.cookups.api.RecipeView;
-import edu.brown.cs.cookups.api.SearchHandler;
+import edu.brown.cs.cookups.api.SearchEngine;
 import edu.brown.cs.cookups.api.SignupHandler;
 import edu.brown.cs.cookups.db.DBLink;
 import edu.brown.cs.cookups.person.PersonManager;
@@ -32,6 +34,7 @@ public class URLHandler {
   private PersonManager people;
   private List<String> names, ingredients, recipes;
   private Authentication auth;
+  private Engine recipeSearch, peopleSearch;
 
   private final static Gson GSON = new Gson();
 
@@ -44,6 +47,9 @@ public class URLHandler {
     ingredients = db.ingredients().getAllIngredientNames();
     recipes = db.recipes().getAllRecipeNames();
     auth = new Authentication(this.db);
+
+    recipeSearch = new Engine(new Trie(recipes));
+    peopleSearch = new Engine(new Trie(names));
   }
 
   public void runSparkServer() {
@@ -76,7 +82,8 @@ public class URLHandler {
     Spark.post("/cookup", new CookupHandler(people));
     Spark.post("/login", new LoginHandler(auth));
     Spark.post("/signup", new SignupHandler(auth, people), freeMarker);
-    Spark.get("/search/:term", new SearchHandler(), freeMarker);
+    Spark.post("/search", new SearchEngine(recipeSearch, peopleSearch),
+        freeMarker);
 
     // JSON data routes
     Spark.get("/allUsers", new AutocompleteHandler(names));

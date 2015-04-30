@@ -16,9 +16,10 @@
         <img class="left" src="../assets/logosmall.png" />
         <div id="nav">
           <a class="header-text" id="logout" href="/logout">logout</a>
-          <div id="search-bar">
-            <input id="search-input" type="text" placeholder="Search" name="search"><img src="../assets/search.png" id="search-icon" class="right" />
-          </div>
+		  <form id="search-bar" action="/search" method="POST">
+            <input id="search-input" type="text" placeholder="Search" name="term">
+            <button type="submit" id="search-btn"><img src="../assets/search.png" id="search-icon" class="right" /></button>
+          </form>
           <ul id="links">
             <li><a id="cook-link" class="page-link header-text hoverli" href="/cook">Cook</a></li>        
 			<li><a class="page-link header-text" href="/meals">Meals</a></li>

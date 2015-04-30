@@ -3,18 +3,17 @@
     <meta charset="utf-8">
     <title>Brown Cookups</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/html5bp.css">
-    <link rel="stylesheet" href="../css/stylesheet.css">
-    <link rel="stylesheet" type="text/css" href="../css/jquery.tokenize.css" />
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/html5bp.css">
+        <link rel="stylesheet" href="css/stylesheet.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/cookup.css">
   </head>
   <body>
      <!-- HEADER -->
      <div class="block a">
         <div class="header container">
-        <img class="left" src="../assets/logosmall.png" />
+        <img class="left" src="assets/logosmall.png" />
         <div id="nav">
           <a class="header-text" id="logout" href="/logout">logout</a>
 		  <form id="search-bar" action="/search" method="POST">
@@ -34,27 +33,14 @@
         </div> 
        </div>
      </div>
-  <div class="block b">
-      <p class="large-header">MealName</p>
-      <div id="meal-details">
-        <div class="left large-text">Date<br>Time<br>Host<br></div>
-        <div class="right large-text alt">Date<br>Time<br>Host<br></div>
-      </div>
-      <div id="meal-attendees">
-        <p class="large-text">Who's Attending</p>
-        List <br>
-        of <br>
-        attendees <br>
-      </div>
-      <div id="recipe-suggestions">
-        <p class="large-text">Recipe Suggestions</p>
-      </div>
-
-  </div>
-     <script src="../js/jquery-2.1.1.js"></script>
-	<script src="../js/jquery.tokenize.js"></script>
-    <script src="../js/forms.js"></script>
-    <script src="../js/profile.js"></script>
-    <script src="../js/main.js"></script>
+		<#list recipeRes as x>
+		${x}<br>
+		</#list>
+		<#list peopleRes as x>
+		${x}<br>
+		</#list>
+     <script src="js/jquery-2.1.1.js"></script>
+	<script src="js/jquery.tokenize.js"></script>
+    <script src="js/forms.js"></script>
   </body>
 </html>

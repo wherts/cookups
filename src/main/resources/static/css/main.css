@@ -30,8 +30,8 @@
 }
 
 #search-btn {
-	background: #3D475C;
-	border-radius: 8px;
+	background: none;
+	border: none;
 	font-family: 'abeezeeregular', sans-serif;
 	color: #FFFFFF;
 	line-height: 38px;
