@@ -20,8 +20,7 @@ public class RecipeDBLink implements RecipeDB {
   public static final int INGREDIENT_QTY_IDX = 3;
   public static final int RECIPE_TEXT_IDX = 3;
   public static final int QTY_IDX = 3;
-  private static final Map<String, Recipe> RECIPE_CACHE =
-      new HashMap<String, Recipe>();
+  private static final Map<String, Recipe> RECIPE_CACHE = new HashMap<String, Recipe>();
   private final Connection conn;
   private final DBManager db;
 
@@ -195,6 +194,26 @@ public class RecipeDBLink implements RecipeDB {
 
   public void clearCache() {
     RECIPE_CACHE.clear();
+  }
+
+  @Override
+  public Recipe getRecipeByName(String name) {
+    String query = "SELECT id FROM recipe WHERE name = ?";
+    String toReturn = null;
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, name);
+      try (ResultSet rs = prep.executeQuery()) {
+        if (rs.next()) {
+          return new Recipe(rs.getString(1),
+              (DBLink) this.db);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
 }

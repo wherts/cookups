@@ -15,6 +15,8 @@ public interface RecipeDB {
 
   public Recipe getRecipeById(String id);
 
+  public Recipe getRecipeByName(String name);
+
   public void removeRecipe(String id);
 
   public Set<Recipe> getRecipesWithIngredient(String id);
