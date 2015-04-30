@@ -10,14 +10,20 @@ import spark.template.freemarker.FreeMarkerEngine;
 
 import com.google.gson.Gson;
 
-import edu.brown.cs.autocorrect.Engine;
-import edu.brown.cs.autocorrect.Trie;
+import edu.brown.cs.autocomplete.Engine;
+import edu.brown.cs.autocomplete.Trie;
+import edu.brown.cs.cookups.api.AuthFilter;
+import edu.brown.cs.cookups.api.Authentication;
 import edu.brown.cs.cookups.api.AutocompleteHandler;
 import edu.brown.cs.cookups.api.BasicView;
 import edu.brown.cs.cookups.api.CookFriendsHandler;
 import edu.brown.cs.cookups.api.CookupHandler;
 import edu.brown.cs.cookups.api.LoginHandler;
+import edu.brown.cs.cookups.api.LoginView;
+import edu.brown.cs.cookups.api.ProfileDataHandler;
 import edu.brown.cs.cookups.api.ProfileView;
+import edu.brown.cs.cookups.api.RecipeView;
+import edu.brown.cs.cookups.api.SearchEngine;
 import edu.brown.cs.cookups.api.SignupHandler;
 import edu.brown.cs.cookups.db.DBLink;
 import edu.brown.cs.cookups.person.PersonManager;
@@ -26,7 +32,9 @@ import freemarker.template.Configuration;
 public class URLHandler {
   private DBLink db;
   private PersonManager people;
-  private List<String> names, ingredients;
+  private List<String> names, ingredients, recipes;
+  private Authentication auth;
+  private Engine recipeSearch, peopleSearch;
 
   private final static Gson GSON = new Gson();
 
@@ -37,6 +45,11 @@ public class URLHandler {
     people = new PersonManager(this.db);
     names = db.users().getAllNames();
     ingredients = db.ingredients().getAllIngredientNames();
+    recipes = db.recipes().getAllRecipeNames();
+    auth = new Authentication(this.db);
+
+    recipeSearch = new Engine(new Trie(recipes));
+    peopleSearch = new Engine(new Trie(names));
   }
 
   public void runSparkServer() {
@@ -45,20 +58,38 @@ public class URLHandler {
 
     FreeMarkerEngine freeMarker = createEngine();
     Spark.setPort(3456);
-    // Setup Spark Routes
-    Spark.get("/", new BasicView("login.ftl"), freeMarker);
+
+    // Set up authentication filters
+    Spark.before("/cookwfriends", new AuthFilter(auth));
+    Spark.before("/cook", new AuthFilter(auth));
+    Spark.before("/cookup", new AuthFilter(auth));
+    Spark.before("/recipe/:id", new AuthFilter(auth));
+    Spark.before("/profile/:id", new AuthFilter(auth));
+    Spark.before("/allUsers", new AuthFilter(auth));
+    Spark.before("/profileData", new AuthFilter(auth));
+
+    // Basic template rendering routes
+    Spark.get("/cookwfriends",
+        new BasicView("cookwfriends.ftl"), freeMarker);
     Spark.get("/cook", new BasicView("cook.ftl"), freeMarker);
-    Spark.get("/cookwfriends", new BasicView("cookwfriends.ftl"), freeMarker);
     Spark.get("/cookup", new BasicView("cookup.ftl"), freeMarker);
+    Spark.get("/", new LoginView(auth), freeMarker);
+    Spark.get("/recipe/:id", new RecipeView(), freeMarker);
+    Spark.get("/profile/:id", new ProfileView(people), freeMarker);
 
-    Spark.get("/profile", new ProfileView(), freeMarker);
-
-    Spark.post("/cookwfriends", new CookFriendsHandler(people));
+    // Form handling routes
+    Spark.post("/cookwfriends", new CookFriendsHandler(people, db));
     Spark.post("/cookup", new CookupHandler(people));
-    Spark.post("/login", new LoginHandler());
-    Spark.post("/signup", new SignupHandler());
+    Spark.post("/login", new LoginHandler(auth));
+    Spark.post("/signup", new SignupHandler(auth, people), freeMarker);
+    Spark.post("/search", new SearchEngine(recipeSearch, peopleSearch),
+        freeMarker);
+    // JSON data routes
     Spark.get("/allUsers", new AutocompleteHandler(names));
+    Spark.get("/allRecipes", new AutocompleteHandler(recipes));
     Spark.get("/allIngredients", new AutocompleteHandler(ingredients));
+    Spark.get("/profileData", new ProfileDataHandler(recipes, ingredients,
+        people));
   }
 
   private static FreeMarkerEngine createEngine() {

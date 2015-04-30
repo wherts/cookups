@@ -1,4 +1,4 @@
-package edu.brown.cs.autocorrect;
+package edu.brown.cs.autocomplete;
 
 import java.util.HashMap;
 import java.util.List;

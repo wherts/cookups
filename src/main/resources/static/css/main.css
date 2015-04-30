@@ -30,8 +30,8 @@
 }
 
 #search-btn {
-	background: #3D475C;
-	border-radius: 8px;
+	background: none;
+	border: none;
 	font-family: 'abeezeeregular', sans-serif;
 	color: #FFFFFF;
 	line-height: 38px;
@@ -86,6 +86,15 @@
 	margin: 0;
 }
 
+.subheader-text {
+	font-family: 'gobold_thinregular', sans-serif;
+	margin: 0;
+	font-size: 30px;
+	padding-bottom: 30px;
+	text-decoration: underline;
+	text-align: center;	
+}
+
 .p-text {
 	font-family: 'abeezeeregular', sans-serif;
 	font-size: 12px;
@@ -103,7 +112,50 @@
 #nav {
 	display: inline-block;
 	margin-left:50px;
-	position: relative;
+	position: absolute;
+}
+
+#links {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#links li {
+	display: inline-block;
+}
+
+#links li a {
+	font-family: 'gobold_thinregular', sans-serif;
+	font-size: 20px;
+	text-align: left;
+	display: inline-block;
+	margin: 0;
+	text-decoration: none;
+	padding: 12px 140px 0 3px;
+}
+
+.dropdown-menu {
+	background-color: #414346;
+	list-style-type: none;
+	padding:5px 0;
+	margin: 10px 0 0;
+	position: fixed;
+	width: 100%;
+	display:none;
+}
+
+.dropdown-menu li {
+	display: inline-block;
+}
+
+.dropdown-menu li a {
+    color:#FFFFFF; 
+    text-decoration:none; 
+    font-family: 'gobold_thinregular', sans-serif;
+  	font-size: 15px;
+    padding:10px; 
+    display:block;
 }
 
 #logout {
@@ -115,17 +167,6 @@
 	padding-bottom: 5px;
 	position: relative;	
 	top: -15px ;
-}
-
-.page-link {
-	font-family: 'gobold_thinregular', sans-serif;
-	font-size: 20px;
-	text-align: left;
-	display: inline-block;
-	margin: 0;
-	text-decoration: none;
-	padding: 12px 150px 0 3px;
-	
 }
 
 .btn {
@@ -179,6 +220,14 @@ input[type="time"].focus {
   box-shadow: inset 1px 1px 2px 0 #c9c9c9;
 }
 
-.TokensContainer {
-	width: 200px;
+
+
+.form-box {
+	width: 500px;
+	margin: 0 auto;
 }
+
+.form-entry {
+	padding-bottom: 20px;
+}
+

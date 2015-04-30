@@ -1,5 +1,27 @@
+#title {
+	background-image: url(../assets/cook.png);
+	height: 250px;
+}
+
 .link {
 	color: white;
 	text-decoration: none;
 	display: block;
+}
+
+#title-text {
+	line-height: 4;
+	font-size: 60px;
+	color: #FFFFFF;
+	text-shadow: 2px 2px #000;
+}
+
+#cookfriends-link {
+	width: 50%;
+	height: 300px;
+}
+
+#cookup-link {
+	width: 50%;
+	height: 300px;
 }

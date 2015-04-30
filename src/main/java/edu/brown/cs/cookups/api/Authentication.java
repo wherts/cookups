@@ -7,7 +7,8 @@ import java.util.Random;
 import edu.brown.cs.cookups.db.DBManager;
 
 public class Authentication {
-  private static final String CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+  private static final String CHARS =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
   private static final int TOKEN_LENGTH = 9;
   private DBManager db;
   private Map<String, String> tokens;
@@ -33,7 +34,6 @@ public class Authentication {
     String token = getRandomString();
     this.tokens.put(id, token);
     return token;
-
   }
 
   public boolean setPassword(String id, String password) {
@@ -45,8 +45,11 @@ public class Authentication {
   }
 
   public boolean authenticate(String id, String token) {
+    if (id == null || token == null) {
+      return false;
+    }
     String realToken = this.tokens.get(id);
-    if (token == null) {
+    if (realToken == null) {
       return false;
     }
     if (realToken.equals(token)) {

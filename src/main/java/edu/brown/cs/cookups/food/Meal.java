@@ -19,7 +19,7 @@ public class Meal {
   private List<Person> attending;
   private LatLong location;
   private Schedule schedule;
-  private Recipe recipe;
+  private List<Recipe> recipes;
   private String name;
 
   /** Constructor for a meal.
@@ -29,6 +29,7 @@ public class Meal {
     this.host = p;
     this.schedule = s;
     this.attending = new ArrayList<Person>();
+    this.recipes = new ArrayList<Recipe>();
   }
 
   /** Accessor for meal name.
@@ -108,7 +109,8 @@ public class Meal {
   }
 
   /** Accessor for guest list of a Meal.
-   * @return list of Person attending */
+   * @return list of Person attending 
+   */
   public List<Person> attending() {
     List<Person> copy = new ArrayList<>();
     for (Person p : attending) {
@@ -118,39 +120,52 @@ public class Meal {
   }
 
   /** Method to add a guest to the Meal.
-   * @param p new person coming to Meal */
+   * @param p new person coming to Meal 
+   */
   public void addAttending(Person p) {
     assert (p != null);
     attending.add(p);
   }
 
   /** Accessor for a Meal's host.
-   * @return person object */
+   * @return person object
+   */
   public Person host() {
     return host;
   }
 
   /** Setter for a Meal's host.
    * @param h new host of meal
-   * @return old host */
+   * @return old host 
+   */
   public Person setHost(Person h) {
     Person ret = this.host;
     this.host = h;
     return ret;
   }
 
-  /** Setter for a Meal's recipe.
-   * @param r new recipe */
-  public void changeRecipe(Recipe r) {
-    this.recipe = r;
+  /** Add a recipe to a Meal.
+   * @param r new recipe
+   */
+  public void addRecipe(Recipe r) {
+    this.recipes.add(r);
   }
 
-  /** Accessor for a Meal's recipe.
-   * @return Recipe object */
-  public Recipe recipe() {
-    return recipe;
+  /** Accessor for a Meal's recipes.
+   * @return list of Recipes
+   */
+  public List<Recipe> recipes() {
+    ArrayList<Recipe> ret = new ArrayList<>();
+    for (Recipe r : recipes) {
+      ret.add(r.copy());
+    }
+    return ret;
   }
 
+  /**
+   * Method for hashing meal object
+   * @return int for hasing
+   */
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -158,7 +173,7 @@ public class Meal {
     result = prime * result + ((attending == null) ? 0 : attending.hashCode());
     result = prime * result + ((host == null) ? 0 : host.hashCode());
     result = prime * result + ((location == null) ? 0 : location.hashCode());
-    result = prime * result + ((recipe == null) ? 0 : recipe.hashCode());
+    result = prime * result + ((recipes == null) ? 0 : recipes.hashCode());
     result = prime * result + ((schedule == null) ? 0 : schedule.hashCode());
     return result;
   }
@@ -168,7 +183,7 @@ public class Meal {
   @Override
   public String toString() {
     return host.toString() + ", "
-        + recipe.toString() + ", "
+        + recipes.toString() + ", "
         + location.toString();
   }
 
@@ -186,7 +201,7 @@ public class Meal {
     }
     Meal m = (Meal) o;
     return this.host.equals(m.host())
-        && this.recipe.equals(m.recipe())
+        && this.recipes.equals(m.recipes())
         && this.attending.equals(m.attending())
         && this.schedule.date().equals(m.date())
         && this.schedule.time().equals(m.time());

@@ -13,19 +13,24 @@
      <!-- HEADER -->
      <div class="block a">
         <div class="header container">
-        <img class="left" src="assets/logosmall.png" />
+        <img class="left" src="../assets/logosmall.png" />
         <div id="nav">
           <a class="header-text" id="logout" href="/logout">logout</a>
-          <div id="search-bar">
-            <input id="search-input" type="text" placeholder="Search" name="search"><img src="assets/search.png" id="search-icon" class="right" />
-          </div>
-          <div id="links">
-            <a class="page-link header-text" href="/cook">Cookup</a>
-            <a class="page-link header-text" href="/meals">Meals</a>
-            <a class="page-link header-text" href="/browse">Browse</a>
-            <a class="page-link header-text" href="/profile">Profile</a>
-          </div>
-        </div>
+		  <form id="search-bar" action="/search" method="POST">
+            <input id="search-input" type="text" placeholder="Search" name="term">
+            <button type="submit" id="search-btn"><img src="../assets/search.png" id="search-icon" class="right" /></button>
+          </form>
+          <ul id="links">
+            <li><a id="cook-link" class="page-link header-text hoverli" href="/cook">Cook</a></li>        
+			<li><a class="page-link header-text" href="/meals">Meals</a></li>
+            <li><a class="page-link header-text" href="/browse">Browse</a></li>
+            <li><a class="page-link header-text" href=${profLink}>Profile</a></li> 
+          </ul>
+          <ul class="dropdown-menu hoverli">
+	        <li><a href="/cookwfriends">Cook with Friends</a></li>
+	        <li><a href="/cookup">CookUp</a></li>
+		  </ul>
+        </div> 
        </div>
      </div>
      <div class="block" id="title">
@@ -34,24 +39,38 @@
       <div class="block c">
       <div class="container">
       <div class="form-box">
-        <div class="p-text">Romantic?
+         <form id="cookup-form" method="POST">
+          <p class="subheader-text">Make a Meal</p>	
+          Romantic? <br>
           <input type="radio" name="type" value="true" checked>Yes
           <input type="radio" name="type" value="false">No
-        </div>
-         <form id="cookup-form" method="POST">
-          Gender: Male <input type="range" name="gender"> Female
-          <br>
-          Orientation:   
-          Heterosexual<input type="checkbox" name="orientation" value="Heterosexual">
-          Homosexual<input type="checkbox" name="orientation" value="homosexual">
-          Bisexual<input type="checkbox" name="orientation" value="bisexual">
-          <br>
+          <br><br>
+          <div id="romantic-opts">
+	          Gender<br>
+	          Male <input type="range" name="gender"> Female
+	          <br><br>
+	          Orientation (select none for queer)<br>  
+<<<<<<< HEAD
+	          Heterosexual<input type="radio" name="orientation" value="heterosexual">
+	          Homosexual<input type="radio" name="orientation" value="homosexual">
+	          Bisexual<input type="radio" name="orientation" value="bisexual">
+=======
+
+	          Heterosexual<input type="checkbox" name="orientation" value="Heterosexual">
+	          Homosexual<input type="checkbox" name="orientation" value="homosexual">
+	          Bisexual<input type="checkbox" name="orientation" value="bisexual">
+>>>>>>> eac4054ebccde86cf848687f83e3e9ed62c4d25c
+	          <br>
+	      </div>
           <input class="btn" type="submit" value="Cook Up">
          </form>
       </div>
     </div>
    </div>
      <script src="js/jquery-2.1.1.js"></script>
-     <script src="js/main.js"></script>
+	<script src="js/jquery.tokenize.js"></script>
+    <script src="js/forms.js"></script>
+    <script src="js/main.js"></script>
+
   </body>
 </html>

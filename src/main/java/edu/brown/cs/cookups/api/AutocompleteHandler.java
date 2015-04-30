@@ -8,8 +8,6 @@ import spark.Route;
 
 import com.google.gson.Gson;
 
-import edu.brown.cs.autocorrect.Engine;
-
 public class AutocompleteHandler implements Route {
   private List<String> options;
   private static final Gson GSON = new Gson();
@@ -23,6 +21,6 @@ public class AutocompleteHandler implements Route {
    * Handles the view for ranking suggestions from the text input in the gui.
    */
   public Object handle(final Request req, final Response res) {
-    return GSON.toJson(options);
+    return GSON.toJson(options.toArray());
   }
 }
