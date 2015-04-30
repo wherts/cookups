@@ -13,13 +13,26 @@ import edu.brown.cs.cookups.db.DBManager;
 import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.Person;
+/**
+ * Interface for recipe matching
+ * functionality.
+ * @author wh7
+ *
+ */
+public interface RecipeMatcher {
 
-public class RecipeMatcher {
-
-  private RecipeMatcher() {
-  }
-
-  public static List<Recipe> matchRecipes(
+  /**
+   * Method for matching recipes to a
+   * group of people
+   * @param chefs people to match for
+   * @param dbM database query class
+   * @return list of recipes that
+   * these people can cook based
+   * on what they have
+   * @throws SQLException if ingredient
+   * is not the database
+   */
+  static List<Recipe> matchRecipes(
       List<Person> chefs, DBManager dbM) throws SQLException {
     assert (chefs != null);
     int size = chefs.size();
@@ -31,7 +44,13 @@ public class RecipeMatcher {
     return matchHelper(currIngredients, size, dbM);
   }
 
-  public static void compileIngredients(List<Person> chefs,
+  /**
+   * Method for compiling the ingredients
+   * a list of people have into a map.
+   * @param chefs people
+   * @param map to aggregate ingredients to
+   */
+  static void compileIngredients(List<Person> chefs,
       Map<String, Double> map) {
     for (Person p : chefs) {
       for (Ingredient ing : p.ingredients()) {
@@ -45,7 +64,18 @@ public class RecipeMatcher {
     }
   }
 
-  private static List<Recipe> matchHelper(
+  /**
+   * Private method helps match recipes
+   * based on ingredients had.
+   * @param currIngredients ingredients had
+   * @param partySize number of people cooking
+   * @param dbL connection to database for queries
+   * @return list of recipes that can be made
+   * from existing ingredients
+   * @throws SQLException if ingredient is not
+   * in the database
+   */
+  static List<Recipe> matchHelper(
       Map<String, Double> currIngredients,
       double partySize, DBManager dbL) throws SQLException {
     List<Recipe> myRecipes = new ArrayList<>();
@@ -65,7 +95,13 @@ public class RecipeMatcher {
     return myRecipes;
   }
 
-  public static void buildShoppingList(
+  /**
+   * Method for building a shopping list
+   * based on ingredients had.
+   * @param currIngredients that you have
+   * @param recipe you are shopping for
+   */
+  static void buildShoppingList(
       Map<String, Double> currIngredients, Recipe recipe) {
     try {
       for (Ingredient ing : recipe.ingredients()) {
@@ -79,7 +115,6 @@ public class RecipeMatcher {
         }
       }
     } catch (Exception e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
