@@ -13,19 +13,23 @@
      <!-- HEADER -->
      <div class="block a">
         <div class="header container">
-        <img class="left" src="assets/logosmall.png" />
+        <img class="left" src="../assets/logosmall.png" />
         <div id="nav">
           <a class="header-text" id="logout" href="/logout">logout</a>
           <div id="search-bar">
-            <input id="search-input" type="text" placeholder="Search" name="search"><img src="assets/search.png" id="search-icon" class="right" />
+            <input id="search-input" type="text" placeholder="Search" name="search"><img src="../assets/search.png" id="search-icon" class="right" />
           </div>
-          <div id="links">
-            <a class="page-link header-text" href="/cook">Cookup</a>
-            <a class="page-link header-text" href="/meals">Meals</a>
-            <a class="page-link header-text" href="/browse">Browse</a>
-            <a class="page-link header-text" href=${profLink}>Profile</a>
-          </div>
-        </div>
+          <ul id="links">
+            <li><a id="cook-link" class="page-link header-text hoverli" href="/cook">Cook</a></li>        
+			<li><a class="page-link header-text" href="/meals">Meals</a></li>
+            <li><a class="page-link header-text" href="/browse">Browse</a></li>
+            <li><a class="page-link header-text" href=${profLink}>Profile</a></li> 
+          </ul>
+          <ul class="dropdown-menu hoverli">
+	        <li><a href="/cookwfriends">Cook with Friends</a></li>
+	        <li><a href="/cookup">CookUp</a></li>
+		  </ul>
+        </div> 
        </div>
      </div>
      <div class="block" id="title">
@@ -58,5 +62,7 @@
      <script src="js/jquery-2.1.1.js"></script>
 	<script src="js/jquery.tokenize.js"></script>
     <script src="js/forms.js"></script>
+    <script src="js/main.js"></script>
+
   </body>
 </html>
