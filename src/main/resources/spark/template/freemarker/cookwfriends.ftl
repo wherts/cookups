@@ -11,6 +11,10 @@
     <link rel="stylesheet" type="text/css" href="css/jquery.tokenize.css" />
   </head>
   <body>
+    <script src="js/jquery-2.1.1.js"></script>
+	<script src="js/jquery.tokenize.js"></script>
+    <script src="js/forms.js"></script>
+    <script src="js/main.js"></script>
      <!-- HEADER -->
      <div class="block a">
         <div class="header container">
@@ -40,7 +44,7 @@
       <div class="block c">
       <div class="container">
       <div class="form-box inset">
-         <form id="friends-form" method="POST">
+         <div id="friends-form" method="POST">
 		  <p class="subheader-text">Make a Meal</p>	
 		  <div class="form-entry">Meal Name<br><input type="text" name="name"></div>
 		  <div class="form-entry">Date<br>   <input type="date" name="date"></div>
@@ -48,14 +52,10 @@
           		<input type="time" name="time_start"> to <input type="time" name="time_end">
           </div>
           <div class="form-entry">Add chefs<br><select name="chefs" id="add-chefs" multiple="multiple" class="tokenize-sample"></select></div>
-          <div class="btn-container"><input class="btn" type="submit" value="Create Meal"></div>
-         </form>
+          <div class="btn-container"><input class="btn" onClick=submitCookFriends() value="Create Meal"></div>
+         </div>
       </div>
     </div>
    </div>
-    <script src="js/jquery-2.1.1.js"></script>
-	<script src="js/jquery.tokenize.js"></script>
-    <script src="js/forms.js"></script>
-    <script src="js/main.js"></script>
   </body>
 </html>

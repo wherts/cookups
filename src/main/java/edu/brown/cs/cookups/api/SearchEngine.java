@@ -24,9 +24,9 @@ public class SearchEngine implements TemplateViewRoute {
   @Override
   public ModelAndView handle(Request request, Response response) {
     String profileLink = request.cookie("id").split("@")[1];
-    
+
     QueryParamsMap qm = request.queryMap();
-    
+
     String term = qm.value("term");
 
     List<String> recipeRes = recipes.generate(term);
@@ -34,9 +34,9 @@ public class SearchEngine implements TemplateViewRoute {
     System.out.println(recipeRes);
     System.out.println(peopleRes);
     Map<String, Object> variables =
-        ImmutableMap.of("recipeRes", recipeRes, "peopleRes", peopleRes, "profLink", profileLink);
+        ImmutableMap.of("recipeRes", recipeRes, "peopleRes", peopleRes,
+            "profLink", profileLink);
     return new ModelAndView(variables, "searchResults.ftl");
   }
 
 }
-

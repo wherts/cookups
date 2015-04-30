@@ -13,6 +13,7 @@ public class Engine {
 
   public List<String> generate(String word) {
     List<String> suggestions = new ArrayList<String>();
+    spaceMatch(suggestions, word);
     prefixMatch(suggestions, word);
     if (trie.dict().containsKey(word) && !suggestions.contains(word)) {
       suggestions.add(word);
@@ -56,6 +57,23 @@ public class Engine {
     }
 
     return suggestions;
+  }
+
+  /** Finds all pairs of words that are subwords of the passed in word.
+   * @param matches An arraylist of suggested words to modify
+   * @param word The word to split */
+  public void spaceMatch(List<String> matches, String word) {
+    for (int i = 0; i < word.length(); i++) {
+      String s1 = word.substring(0, i);
+      String s2 = word.substring(i, word.length());
+      if (trie.dict().containsKey(s1) && trie.dict().containsKey(s2)) {
+        String newString = s1 + " " + s2;
+        if (!matches.contains(newString)) {
+          matches.add(newString);
+        }
+      }
+    }
+
   }
 
   /** Alphabetical Sort
