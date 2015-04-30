@@ -78,6 +78,8 @@ public class RecipeTest {
   @Test
   public void testPrice() {
   	Recipe gaz = new Recipe("/r/1.6", dbM);
+  	//test half of every item
+  	//test all of every item
   	assertTrue(true); 
   }
 

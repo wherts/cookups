@@ -50,10 +50,16 @@
 	          Male <input type="range" name="gender"> Female
 	          <br><br>
 	          Orientation (select none for queer)<br>  
+<<<<<<< HEAD
+	          Heterosexual<input type="radio" name="orientation" value="heterosexual">
+	          Homosexual<input type="radio" name="orientation" value="homosexual">
+	          Bisexual<input type="radio" name="orientation" value="bisexual">
+=======
 
 	          Heterosexual<input type="checkbox" name="orientation" value="Heterosexual">
 	          Homosexual<input type="checkbox" name="orientation" value="homosexual">
 	          Bisexual<input type="checkbox" name="orientation" value="bisexual">
+>>>>>>> eac4054ebccde86cf848687f83e3e9ed62c4d25c
 	          <br>
 	      </div>
           <input class="btn" type="submit" value="Cook Up">

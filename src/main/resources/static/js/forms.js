@@ -44,7 +44,7 @@ function submitCookFriends() {
 	})
 }
 
-$('input:radio').on('change', function(){
+$("input[name='type']").on('change', function(){
 	console.log("why");
     $('#romantic-opts').toggle();
 });
