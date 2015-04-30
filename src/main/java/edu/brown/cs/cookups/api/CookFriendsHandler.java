@@ -10,6 +10,9 @@ import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+
+import com.google.gson.Gson;
+
 import edu.brown.cs.cookups.RecipeMatcher;
 import edu.brown.cs.cookups.db.DBManager;
 import edu.brown.cs.cookups.food.Meal;
@@ -22,6 +25,7 @@ public class CookFriendsHandler implements Route {
   private PersonManager people;
   private DateTimeFormatter formatter;
   private DBManager dbM;
+  private static final Gson GSON = new Gson();
 
   public CookFriendsHandler(PersonManager p, DBManager d) {
     people = p;
@@ -90,9 +94,7 @@ public class CookFriendsHandler implements Route {
     }
     // TODO add recipe to DB here???
 
-    System.out.println(newMeal.toString());
-    System.out.println(newMeal.attending().size());
-    return newMeal;
+    return GSON.toJson(newMeal);
   }
 
   private String[] splitNames(String n) {

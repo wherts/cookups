@@ -9,10 +9,11 @@ import edu.brown.cs.cookups.person.Person;
 public class DateMatcher {
   public static List<Person> match(List<Suitor> suitors, Suitor toFind) {
     List<Person> toReturn = new ArrayList<>();
-    PriorityQueue<Suitor> matches = new PriorityQueue<>(new DatingComparator(toFind));
-    if (toFind.isRomantic()) { //romantic
+    PriorityQueue<Suitor> matches =
+        new PriorityQueue<>(new DatingComparator(toFind));
+    if (toFind.isRomantic()) { // romantic
       for (Suitor suitor : suitors) {
-        if (suitor.equals(toFind)) { //don't match toFind with themself
+        if (suitor.equals(toFind)) { // don't match toFind with themself
           continue;
         }
         boolean compatable = toFind.compatability(suitor);
@@ -23,9 +24,9 @@ public class DateMatcher {
       while (!matches.isEmpty()) {
         toReturn.add(matches.poll().person());
       }
-    } else { //platonic
+    } else { // platonic
       for (Suitor suitor : suitors) {
-        if (suitor.equals(toFind)) { //don't match toFind with themself
+        if (suitor.equals(toFind)) { // don't match toFind with themself
           continue;
         }
         toReturn.add(suitor.person());
@@ -33,5 +34,5 @@ public class DateMatcher {
     }
     return toReturn;
   }
-  
+
 }
