@@ -1,9 +1,16 @@
-$('#cookup-form').submit(function(e) {
-	console.log("cookup form submitted");
 
-	$.post("/cookup", params, function(responseJSON) {
-
-	})
+$.get("/allUsers", function(JSONresponse) {
+	var users = JSON.parse(JSONresponse);
+	var options = "";
+	console.log(users);
+	
+	for (var i=1; i<=users.length; i++) {
+		options += "<option value='"+i+"'>"+users[i-1]+"</option>";
+	}
+	$("#add-chefs").html(options);
+	$("#add-chefs").tokenize({
+			newElements: false,
+	});
 });
 
 $('#friends-form').submit(function(e) {
@@ -20,21 +27,19 @@ $('#friends-form').submit(function(e) {
 	$.post("/cookwfriends", params, function(responseJSON) {
 
 	})
-	
 });
 
-$(document).ready(function() {
-	$.get("/allUsers", function(JSONresponse) {
-		var users = JSON.parse(JSONresponse);
-		var options = "";
-		console.log(users);
-		
-		for (var i=1; i<=users.length; i++) {
-			options += "<option value='"+i+"'>"+users[i-1]+"</option>";
-		}
-		$("#add-chefs").html(options);
-		$("#add-chefs").tokenize({
-				newElements: false,
-		});
-	});
+function validateSignup() {
+	var email = document.forms["signup-form"]["email"].value;
+	
+	var domain = email.split("@")[1];
+	if (domain !== "brown.edu") {
+		console.log("bad email domain");
+		return false;
+	}
+}
+
+$('input:radio').on('change', function(){
+	console.log("why");
+    $('#romantic-opts').toggle();
 });

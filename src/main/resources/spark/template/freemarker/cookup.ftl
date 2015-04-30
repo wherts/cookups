@@ -23,7 +23,7 @@
             <a class="page-link header-text" href="/cook">Cookup</a>
             <a class="page-link header-text" href="/meals">Meals</a>
             <a class="page-link header-text" href="/browse">Browse</a>
-            <a class="page-link header-text" href="/profile">Profile</a>
+            <a class="page-link header-text" href=${profLink}>Profile</a>
           </div>
         </div>
        </div>
@@ -34,24 +34,29 @@
       <div class="block c">
       <div class="container">
       <div class="form-box">
-        <div class="p-text">Romantic?
+         <form id="cookup-form" method="POST">
+          <p class="subheader-text">Make a Meal</p>	
+          Romantic? <br>
           <input type="radio" name="type" value="true" checked>Yes
           <input type="radio" name="type" value="false">No
-        </div>
-         <form id="cookup-form" method="POST">
-          Gender: Male <input type="range" name="gender"> Female
-          <br>
-          Orientation:   
-          Heterosexual<input type="checkbox" name="orientation" value="Heterosexual">
-          Homosexual<input type="checkbox" name="orientation" value="homosexual">
-          Bisexual<input type="checkbox" name="orientation" value="bisexual">
-          <br>
+          <br><br>
+          <div id="romantic-opts">
+	          Gender<br>
+	          Male <input type="range" name="gender"> Female
+	          <br><br>
+	          Orientation (select none for queer)<br>  
+	          Heterosexual<input type="checkbox" name="orientation" value="Heterosexual">
+	          Homosexual<input type="checkbox" name="orientation" value="homosexual">
+	          Bisexual<input type="checkbox" name="orientation" value="bisexual">
+	          <br>
+	      </div>
           <input class="btn" type="submit" value="Cook Up">
          </form>
       </div>
     </div>
    </div>
      <script src="js/jquery-2.1.1.js"></script>
-     <script src="js/main.js"></script>
+	<script src="js/jquery.tokenize.js"></script>
+    <script src="js/forms.js"></script>
   </body>
 </html>

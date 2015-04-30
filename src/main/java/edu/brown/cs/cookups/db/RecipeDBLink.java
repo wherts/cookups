@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,7 +20,8 @@ public class RecipeDBLink implements RecipeDB {
   public static final int INGREDIENT_QTY_IDX = 3;
   public static final int RECIPE_TEXT_IDX = 3;
   public static final int QTY_IDX = 3;
-  private static final Map<String, Recipe> RECIPE_CACHE = new HashMap<String, Recipe>();
+  private static final Map<String, Recipe> RECIPE_CACHE =
+      new HashMap<String, Recipe>();
   private final Connection conn;
   private final DBManager db;
 
@@ -91,6 +94,25 @@ public class RecipeDBLink implements RecipeDB {
       e.printStackTrace();
     }
     return name;
+  }
+
+  @Override
+  public List<String> getAllRecipeNames() {
+    String query = "SELECT name FROM recipe";
+    List<String> names = new ArrayList<>();
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      try (ResultSet rs = prep.executeQuery()) {
+
+        while (rs.next()) {
+          names.add(rs.getString(1));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return names;
   }
 
   @Override

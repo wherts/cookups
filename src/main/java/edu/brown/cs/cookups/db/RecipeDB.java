@@ -1,5 +1,6 @@
 package edu.brown.cs.cookups.db;
 
+import java.util.List;
 import java.util.Set;
 
 import edu.brown.cs.cookups.food.Recipe;
@@ -21,6 +22,8 @@ public interface RecipeDB {
   public String getInstructionsByRecipe(String id);
 
   public String getRecipeNameByID(String id);
+
+  public List<String> getAllRecipeNames();
 
   public Recipe cacheRecipe(String id);
 

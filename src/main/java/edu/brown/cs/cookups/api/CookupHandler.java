@@ -21,7 +21,12 @@ public class CookupHandler implements Route {
   public Object handle(Request request, Response response) {
     QueryParamsMap qm = request.queryMap();
 
+    String gender = qm.value("gender");
+    String heterosexual = qm.value("heterosexual");
 
+
+    System.out.println(" gender: " + gender
+        + " orientation  " + heterosexual);
     return null;
   }
 

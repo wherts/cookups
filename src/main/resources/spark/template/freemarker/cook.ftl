@@ -23,7 +23,7 @@
             <a class="page-link header-text" href="/cook">Cookup</a>
             <a class="page-link header-text" href="/meals">Meals</a>
             <a class="page-link header-text" href="/browse">Browse</a>
-            <a class="page-link header-text" href="/profile">Profile</a>
+            <a class="page-link header-text" href=${profLink}>Profile</a>
           </div>
         </div>
        </div>
@@ -38,6 +38,7 @@
       </div>
      </div>
      <script src="js/jquery-2.1.1.js"></script>
-     <script src="js/main.js"></script>
+	<script src="js/jquery.tokenize.js"></script>
+    <script src="js/forms.js"></script>
   </body>
 </html>

@@ -22,11 +22,12 @@ public class ProfileView implements TemplateViewRoute {
 
   @Override
   public ModelAndView handle(Request request, Response response) {
-    String id = request.params(":id") + "@brown.edu";
+    String name = request.params(":id");
+    String profileID = name + "@brown.edu";
 
     Person person = null;
     try {
-      person = people.getPersonById(id);
+      person = people.getPersonById(profileID);
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -35,10 +36,17 @@ public class ProfileView implements TemplateViewRoute {
       response.status(404);
     }
 
+    boolean editable = false;
+    if (profileID.equals(request.cookie("id"))) {
+      editable = true;
+    }
 
+    String profLink = "/profile/" + name;
     Map<String, Object> variables =
         ImmutableMap.of("name", person.name(), "favRecipes",
-            person.favoriteRecipes());
+            person.favoriteRecipes(),
+            "profLink", profLink, "personIngredients", person.ingredients(),
+            "editable", editable);
     return new ModelAndView(variables, "profile.ftl");
   }
 
