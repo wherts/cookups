@@ -1,6 +1,7 @@
 package edu.brown.cs.cookups.food;
 
 import java.sql.SQLException;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -17,6 +18,7 @@ public class Ingredient {
   private Set<Recipe> recipes;
   private double price = 0;
   private LocalDateTime dateCreated;
+  private int expTime = -1;
 
   /** Public constructor for an ingredient.
    * @param i id
@@ -82,30 +84,58 @@ public class Ingredient {
   }
 
   /**
-   * Method to tell if an ingredient is past
-   * its expiration date.
-   * @return true if this ingredient is expired.
-   * @throws SQLException if ingredient is not
-   * in the database
+   * Method for setting an ingredient's creation date.
+   * @param lDT new LocalDateTime object
+   * @return old LocalDateTime or null if new datetime
+   * is in the future
    */
-  public boolean isExpired() throws SQLException {
-    //get expiration time in minutes, if 0 return false
-    //get date created
-    //get period, if minutes of period > expiration time
-    return false;
-  }
-
   public LocalDateTime setDateCreated(LocalDateTime lDT) {
-    assert (lDT != null);
+    assert (lDT != null && notFuture(lDT));
     LocalDateTime ret = dateCreated;
     dateCreated = lDT;
     return ret;
   }
 
-  public LocalDateTime getDateCreated() {
+  private boolean notFuture(LocalDateTime lDT) {
+    Duration duration
+      = Duration.between(lDT, LocalDateTime.now());
+    return !duration.isNegative();
+  }
+
+  /**
+   * Method for accessing an ingredient's creation date.
+   * @return LocalDateTime object
+   */
+  public LocalDateTime getDateCreated() { //database call
     LocalDateTime ret = LocalDateTime.of(dateCreated.toLocalDate(),
                                          dateCreated.toLocalTime());
     return ret;
+  }
+
+  /**
+   * Method for getting the time it
+   * takes for an ingredient to expire.
+   * @return expiration time in minutes
+   */
+  public int expirationTime() {
+    if (expTime == -1) { //hasn't been set
+      expTime = querier.ingredients()
+                       .expirationByID(id);
+    }
+    return expTime;
+  }
+  
+  public boolean isExpired() {
+    this.expirationTime(); //ensure expTime is set
+    if (dateCreated == null) {
+      return false;
+    }
+    LocalDateTime now = LocalDateTime.now();
+    Duration duration = Duration.between(this.getDateCreated(), now);
+    if (expTime == 0) { //doesn't expire
+      return false;
+    }
+    return duration.toMinutes() > expTime;
   }
 
   /** Accessor for all the recipes this ingredient.
@@ -187,4 +217,5 @@ public class Ingredient {
   public Ingredient copy() {
     return new Ingredient(id, ounces, querier);
   }
+
 }

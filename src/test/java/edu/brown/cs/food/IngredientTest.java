@@ -1,9 +1,11 @@
 package edu.brown.cs.food;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import org.junit.Before;
@@ -20,7 +22,7 @@ public class IngredientTest {
 
   @Before
   public void initialize() {
-    File file = new File("databases/csv/ingredients/ingredientPrice.csv");
+    File file = new File("databases/csv/ingredients/ingredientExpiration.csv");
     String dir = "databases/csv/recipes";
     try {
       dbM = new DBLink(DB_PATH);
@@ -67,7 +69,6 @@ public class IngredientTest {
     // per ounce prices
     Ingredient soy = new Ingredient("/i/liquid.7", 1, dbM); // soy sauce
     Ingredient pB = new Ingredient("/i/produce.6", 1, dbM); // jar of peanut
-                                                            // butter
     assertTrue(soy.price() == 23);
     assertTrue(pB.price() == 30);
     // non unit weights
@@ -75,5 +76,38 @@ public class IngredientTest {
     pB = new Ingredient("/i/produce.6", 16, dbM);
     assertTrue(soy.price() == 276);
     assertTrue(pB.price() == 480);
+  }
+
+  @Test
+  public void testExpiration() throws SQLException {
+    Ingredient soy = new Ingredient("/i/liquid.7", 1, dbM);
+    assertTrue(soy.expirationTime() == 129600);
+    LocalDateTime lastYear = LocalDateTime.of(2014, 5, 1, 4, 00);
+    soy.setDateCreated(lastYear);
+    assertTrue(soy.isExpired());
+    soy.setDateCreated(LocalDateTime.now());
+    assertFalse(soy.isExpired());
+    
+    Ingredient pB = new Ingredient("/i/produce.6", 16, dbM);
+    assertTrue(pB.expirationTime() == 0);
+    pB.setDateCreated(lastYear);
+    assertFalse(pB.isExpired());
+    pB.setDateCreated(LocalDateTime.now());
+    assertFalse(pB.isExpired()); 
+  }
+
+  @Test
+  public void testDateSetting() {
+    Ingredient rice = new Ingredient("/i/grain.1", 100, dbM);
+    LocalDateTime today = LocalDateTime.now();
+    LocalDateTime tomorrow = today.plusDays(1);
+    rice.setDateCreated(today);
+    boolean caught = false;
+    try {
+      rice.setDateCreated(tomorrow);
+    } catch (AssertionError e) {
+      caught = true;
+    }
+    assert(caught);
   }
 }
