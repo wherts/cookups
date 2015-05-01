@@ -33,12 +33,19 @@
         </div> 
        </div>
      </div>
-		<#list recipeRes as x>
-		${x}<br>
-		</#list>
-		<#list peopleRes as x>
-		${x}<br>
-		</#list>
+     <div class="block b">
+     	<div class="container">
+     	<h1 class="title">Search Results:</h1>
+     	<ul class="search-results">
+	     	<#list people?keys as x>
+				<li class="search-results"><a href="${people[x]}">${x}</a></li>
+			</#list>
+			<#list recipes?keys as x>
+				<li class="search-results"><a href="${recipes[x]}">${x}</a></li>
+			</#list>
+		</ul>
+		</div>
+	 </div>
      <script src="js/jquery-2.1.1.js"></script>
 	<script src="js/jquery.tokenize.js"></script>
   </body>
