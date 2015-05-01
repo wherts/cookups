@@ -21,15 +21,15 @@ function submitCookup() {
 		for (var i = 0; i < length; i++) {
 //			var link = "../assets/people/" + matches[i][0].split("@")[0];
 			var link = "../assets/people/sample-pic.png";
-			people += "<td class='person-option'><div class='match' style='background-image:url("+link+")'></div>"+matches[i][1]+"<td>";
+			people += "<td class='person-option'><div class='match' style='background-image:url("+link+")'></div>"+matches[i][1]+" ("+matches[i][0]+") "+"<td>";
 		}
 		
 		people += "</tr></table><div id='cookup-meal-form'>"
-			+ "<div class='form-entry'>Meal Name<br><input type='text' name='name'></div>"
+			+ "<div class='form-entry'>Meal Name<br><input class='inset' type='text' name='name'></div>"
 			+ "<div class='form-entry'>Date<br><input type='date' name='date'></div>"
 			+ "<div class='form-entry'>Time<br><input type='time' name='time_start'>"
 			+ "to <input type='time' name='time_end'></div>" 
-			+ "<div class='btn-container'><input class='btn' onClick=makeCookupMeal() value='Make Cookup!'></div>" 
+			+ "<div class='btn-container'><input type='button' class='btn' onClick=makeCookupMeal() value='Make Cookup!'></div>" 
 			+ "</div>";
 		$("#matches").html(people);
 		
@@ -53,7 +53,10 @@ function makeCookupMeal() {
 		alert("Please choose a name for the meal.");
 	}
 	else {
-		var chef = document.getElementsByClassName("border")[0].textContent;
+		var text = document.getElementsByClassName("border")[0].textContent;
+    	var regex = /\(([^)]+)\)/;
+    	var chef = regex.exec(text)[1];
+    	console.log(chef);
 		if (timeEnd === "") {timeEnd = null};
 		var params = {
 				name: name,

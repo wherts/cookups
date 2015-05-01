@@ -79,7 +79,21 @@
 	width: 50%;
 }
 
-.floating-div {
+.title {
+	font-family: 'gobold_thinregular', sans-serif;
+	font-size: 36px;
+	color: #FFF;
+}
+
+ul.search-results {
+	list-style: none;
+	height: auto;
+}
+
+ul.search-results a{
+	color: #FFF;
+	font-family: 'abeezeeregular', sans-serif;
+	font-size: 20px;
 }
 
 .h-text {
