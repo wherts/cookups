@@ -45,7 +45,7 @@ public class SearchEngine implements TemplateViewRoute {
     List<String> recipeResults = recipes.generate(term);
     Map<String, String> recipeMap = new LinkedHashMap<String, String>();
     for (String r : recipeResults) {
-      String recipeID = db.recipes().getRecipeByName(r).name();
+      String recipeID = db.recipes().getRecipeByName(r).id();
       try {
         recipeMap.put(r, "/recipe/" + URLEncoder.encode(recipeID, "UTF-8"));
       } catch (UnsupportedEncodingException e) {

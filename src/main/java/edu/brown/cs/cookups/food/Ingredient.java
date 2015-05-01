@@ -6,13 +6,10 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.Set;
 
-import edu.brown.cs.cookups.db.DBLink;
 import edu.brown.cs.cookups.db.DBManager;
-/**
- * This class represents an ingredient.
- * @author wh7
- *
- */
+
+/** This class represents an ingredient.
+ * @author wh7 */
 public class Ingredient {
   private double ounces;
   private String id, name, storage;
@@ -21,13 +18,11 @@ public class Ingredient {
   private Set<Recipe> recipes;
   private double price = 0;
 
-  /**
-   * Public constructor for an ingredient.
+  /** Public constructor for an ingredient.
    * @param i id
    * @param oz weight
    * @param dbM way to query database for
-   * more information about the ingredient
-   */
+   *        more information about the ingredient */
   public Ingredient(String i, double oz, DBManager dbM) {
     id = i;
     ounces = oz;
@@ -35,20 +30,16 @@ public class Ingredient {
     dateCreated = LocalDateTime.now().toLocalDate();
   }
 
-  /**
-   * Accessor for ingredient id.
-   * @return string id
-   */
+  /** Accessor for ingredient id.
+   * @return string id */
   public String id() {
     return id;
   }
 
-  /**
-   * Accessor for ingredient name.
+  /** Accessor for ingredient name.
    * @return string name
    * @throws SQLException if ingredient
-   * id is not in database
-   */
+   *         id is not in database */
   public String name() throws SQLException {
     if (name == null) {
       name = querier.ingredients().ingredientNameCache(id);
@@ -56,99 +47,81 @@ public class Ingredient {
     return name;
   }
 
-  /**
-   * Accessor for amount in ounces.
-   * @return double ounces
-   */
+  /** Accessor for amount in ounces.
+   * @return double ounces */
   public double ounces() { // amount in ounces
     return ounces;
   }
 
-  /**
-   * Accessor for amount in teaspoons.
-   * @return double teaspoons
-   */
+  /** Accessor for amount in teaspoons.
+   * @return double teaspoons */
   public double teaspoons() { // amount in teaspoons
     return Conversion.teaspoons(ounces);
   }
 
-  /**
-   * Accessor for amount in tablespoons.
-   * @return double tablespoons
-   */
+  /** Accessor for amount in tablespoons.
+   * @return double tablespoons */
   public double tablespoons() { // amount in tablespoons
     return Conversion.tablespoons(ounces);
   }
 
-  /**
-   * Accessor for amount in cups.
-   * @return double cups
-   */
+  /** Accessor for amount in cups.
+   * @return double cups */
   public double cups() { // amount in cups
     return Conversion.cups(ounces);
   }
 
-  /**
-   * Accessor for time elapsed since the ingredient
+  /** Accessor for time elapsed since the ingredient
    * was added.
-   * @return double elapsed
-   */
+   * @return double elapsed */
   public double elapsed() { // seconds until expiration
     LocalDate curr = LocalDateTime.now().toLocalDate();
     Period time = Period.between(curr, dateCreated);
-    return (time.getYears() * 365) 
-            + (time.getMonths() * 30) 
-            + (time.getDays());
+    return (time.getYears() * 365)
+        + (time.getMonths() * 30)
+        + (time.getDays());
   }
 
-  /**
-   * Accessor for all the recipes this ingredient.
+  /** Accessor for all the recipes this ingredient.
    * is used in.
    * @return set of recipes
    * @throws SQLException if ingredient does not
-   * appear in recipe_ingredient table
-   */
+   *         appear in recipe_ingredient table */
   public Set<Recipe> recipes() throws SQLException {
     if (recipes == null) {
       recipes = querier.recipes()
-                       .getRecipesWithIngredient(id);
+          .getRecipesWithIngredient(id);
     }
     return recipes;
   }
 
-  /**
-   * Accessor for the price of this amount of
+  /** Accessor for the price of this amount of
    * this ingredient.
    * @return double of ingredient's cost
    * @throws SQLException if ingredient does not
-   * appear in ingredients table
-   */
+   *         appear in ingredients table */
   public int price() throws SQLException {
-  	if (price == 0) { //hasn't been set yet
-  		price = querier.ingredients()
-  								   .priceByID(id);
-  	}
-  	return (int) (price * ounces); //price values are stored in cents
+    if (price == 0) { // hasn't been set yet
+      price = querier.ingredients()
+          .priceByID(id);
+    }
+    return (int) (price * ounces); // price values are stored in cents
   }
 
-  /**
-   * Accessor for the storage type of this ingredient.
+  /** Accessor for the storage type of this ingredient.
    * @return string of storage location.
    * @throws SQLException of ingredient does
-   * not appear in database.
-   */
+   *         not appear in database. */
   public String storage() throws SQLException {
-  	if (storage == null) {
-  		storage = querier.ingredients()
-  										 .storageByID(id);
-  	}
-  	return storage;
+    if (storage == null) {
+      storage = querier.ingredients()
+          .storageByID(id);
+    }
+    return storage;
   }
 
-  /**
-   * Equality accessor for an object.
-   * @return true if the ingredients are the same
-   */
+  /** Equality accessor for an object.
+   * @return true if the ingredients are the same */
   @Override
   public boolean equals(Object o) {
     if (o == this) {
@@ -161,31 +134,30 @@ public class Ingredient {
     return (this.id.equals(i.id()) && this.ounces() == i.ounces);
   }
 
-  /**
-   * Accessor for ingredient's hashcode.
-   * @return int hashcode
-   */
+  /** Accessor for ingredient's hashcode.
+   * @return int hashcode */
   @Override
   public int hashCode() {
     return id.hashCode() + name.hashCode();
   }
 
-  /**
-   * Accessor for ingredient's string representation.
-   * @return string
-   */
+  /** Accessor for ingredient's string representation.
+   * @return string */
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder(name);
+    StringBuilder sb = null;
+    try {
+      sb = new StringBuilder(this.name());
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
     sb.append(", ");
     sb.append(id);
     return sb.toString();
   }
 
-  /**
-   * Method to create a copy of the recipe.
-   * @return new recipe with same id, querier
-   */
+  /** Method to create a copy of the recipe.
+   * @return new recipe with same id, querier */
   public Ingredient copy() {
     return new Ingredient(id, ounces, querier);
   }
