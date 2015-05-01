@@ -120,7 +120,6 @@ public class DBPeopleTest {
     Ingredient result = r.ingredients().get(0);
     assertTrue(result.id().equals(i.id()));
     assertTrue(result.getDateCreated().equals(date));
-
   }
 
   @Test

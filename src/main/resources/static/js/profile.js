@@ -13,6 +13,7 @@ $(document).ready(function () {
 		fridge = response.fridge;
 		pantry = response.pantry;
 		ingredients = fridge.concat(pantry);
+		ingredients = ingredients.sort();
 		favCuisines = response.favCuisines;
 		personIngredients = response.personIngredients;
 		console.log(ingredients);

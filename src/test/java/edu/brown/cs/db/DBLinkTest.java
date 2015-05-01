@@ -196,10 +196,10 @@ public class DBLinkTest {
                                          "Cream",
                                          "Yogurt");
 
-      List<String> results = db.ingredients()
-                               .getAllIngredientNames();
+      List<String> fridge = db.ingredients()
+                               .getAllIngredientNames("Fridge");
       for (String str : names) {
-        assertTrue(results.contains(str));
+        assertTrue(fridge.contains(str));
       }
 
     } catch (ClassNotFoundException | SQLException e) {
