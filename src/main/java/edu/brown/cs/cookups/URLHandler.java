@@ -74,6 +74,8 @@ public class URLHandler {
     Spark.before("/profile/:id", new AuthFilter(auth));
     Spark.before("/allUsers", new AuthFilter(auth));
     Spark.before("/profileData", new AuthFilter(auth));
+    Spark.before("/recipe/:id", new AuthFilter(auth));
+    Spark.before("/meal/:id", new AuthFilter(auth));
 
     // Basic template rendering routes
     Spark.get("/", new LoginView(auth), freeMarker);
@@ -82,7 +84,7 @@ public class URLHandler {
     Spark.get("/cook", new BasicView("cook.ftl"), freeMarker);
     Spark.get("/cookup", new BasicView("cookup.ftl"), freeMarker);
     Spark.get("/browse", new BrowseView(recipeIDs, recipeNames), freeMarker);
-    Spark.get("/recipe/:id", new RecipeView(), freeMarker);
+    Spark.get("/recipe/:id", new RecipeView(db, people), freeMarker);
     Spark.get("/meal/:id", new MealView(), freeMarker);
     Spark.get("/profile/:name", new ProfileView(people), freeMarker);
 
@@ -93,6 +95,7 @@ public class URLHandler {
     Spark.post("/signup", new SignupHandler(auth, people), freeMarker);
     Spark.post("/search", new SearchEngine(recipeSearch, peopleSearch),
         freeMarker);
+
     // JSON data routes
     Spark.get("/allRecipes", new AutocompleteHandler(recipeNames));
     Spark.get("/allUsers", new SendUsersHandler(userNames, userIDs));
