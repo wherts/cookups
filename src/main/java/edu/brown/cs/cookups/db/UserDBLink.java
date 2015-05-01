@@ -33,12 +33,13 @@ public class UserDBLink implements UserDB {
 
   @Override
   public void addUserIngredient(String id, Ingredient i) {
-    String query = "INSERT OR IGNORE INTO user_ingredient VALUES (?, ?, ?, ?)";
+    String query = "INSERT OR IGNORE INTO user_ingredient VALUES (?, ?, ?, ?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(query)) {
 
       prep.setString(ID_IDX, id);
       prep.setString(INGREDIENT_IDX, i.id());
       prep.setFloat(INGREDIENT_QTY_IDX, (float) i.ounces());
+      prep.setString(EXP_IDX, i.getDateCreated().toString());
       prep.addBatch();
       prep.executeBatch();
       prep.close();
@@ -135,6 +136,20 @@ public class UserDBLink implements UserDB {
     String query = "DELETE FROM user_ingredient WHERE user = ?";
     try (PreparedStatement prep = conn.prepareStatement(query)) {
       prep.setString(1, id);
+      prep.executeUpdate();
+      prep.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+
+    }
+  }
+
+  @Override
+  public void removePersonIngredient(String uid, String iid) {
+    String query = "DELETE FROM user_ingredient WHERE user = ? AND ingredient = ?";
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, uid);
+      prep.setString(2, iid);
       prep.executeUpdate();
       prep.close();
     } catch (SQLException e) {

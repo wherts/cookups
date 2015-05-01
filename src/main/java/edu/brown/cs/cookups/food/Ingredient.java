@@ -83,20 +83,6 @@ public class Ingredient {
   }
 
   /**
-   * Method to tell if an ingredient is past
-   * its expiration date.
-   * @return true if this ingredient is expired.
-   * @throws SQLException if ingredient is not
-   * in the database
-   */
-  public boolean isExpired() throws SQLException {
-    //get expiration time in minutes, if 0 return false
-    //get date created
-    //get period, if minutes of period > expiration time
-    return false;
-  }
-
-  /**
    * Method for setting an ingredient's creation date.
    * @param lDT new LocalDateTime object
    * @return old LocalDateTime

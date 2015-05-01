@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.brown.cs.cookups.db.DBLink;
@@ -24,18 +23,19 @@ import edu.brown.cs.cookups.schedule.Schedule;
 public class DBPeopleTest {
 
   public static final String DB_PATH = "databases/tests/testDB.sqlite3";
+  private static DBLink db;
 
-  @BeforeClass
-  public static void setup() {
-    try {
-      DBLink db = new DBLink(DB_PATH);
-      db.clearDataBase();
-
-    } catch (ClassNotFoundException | SQLException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-  }
+  // @BeforeClass
+  // public static void setup() {
+  // try {
+  // db = new DBLink(DB_PATH);
+  // db.clearDataBase();
+  //
+  // } catch (ClassNotFoundException | SQLException e) {
+  // // TODO Auto-generated catch block
+  // e.printStackTrace();
+  // }
+  // }
 
   @Test
   public void addPersonTest()

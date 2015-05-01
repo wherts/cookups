@@ -38,7 +38,11 @@ public class PersonManager {
     List<Ingredient> dbIngs = db.users()
                                 .getPersonIngredients(id);
     for (Ingredient i : dbIngs) {
-      if (!i.isExpired(i.getDateCreated()))
+      if (!i.isExpired(i.getDateCreated())) {
+        toReturn.add(i);
+      } else {
+        
+      }
     }
     return toReturn;
   }
