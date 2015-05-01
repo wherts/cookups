@@ -43,6 +43,7 @@ public class DBPeopleTest {
     DBLink db = new DBLink(DB_PATH);
     PersonManager people = new PersonManager(db);
     Ingredient i = new Ingredient("i", 1.1, null);
+    i.setDateCreated(LocalDateTime.now());
     db.ingredients().defineIngredient("i",
                                       "iodine",
                                       1.0,
@@ -79,8 +80,11 @@ public class DBPeopleTest {
                                       "Pantry",
                                       1);
     Ingredient i = new Ingredient("i", 1.1, null);
+    i.setDateCreated(LocalDateTime.now());
     Ingredient j = new Ingredient("j", 1.1, null);
+    j.setDateCreated(LocalDateTime.now());
     Ingredient k = new Ingredient("k", 1.1, null);
+    k.setDateCreated(LocalDateTime.now());
     people.addPerson("Ronald Reagan",
                      "ronald@aol.com",
                      Arrays.asList(i, j, k));
@@ -97,7 +101,9 @@ public class DBPeopleTest {
   public void getPersonTest()
     throws ClassNotFoundException, SQLException {
     DBLink db = new DBLink(DB_PATH);
-    Ingredient i = new Ingredient("i", 1.1, null);
+    Ingredient i = new Ingredient("i", 1.1, db);
+    LocalDateTime date = LocalDateTime.now();
+    i.setDateCreated(date);
     db.ingredients().defineIngredient("i",
                                       "iodine",
                                       1.0,
@@ -109,10 +115,12 @@ public class DBPeopleTest {
     db.users().addPerson(p);
     PersonManager people = new PersonManager(db);
     Person r = people.getPersonById("ronald@aol.com");
-    db.users().removePersonById("ronald@aol.com");
     assertTrue(r.id().equals("ronald@aol.com"));
     assertTrue(r.name().equals("Ronald Reagan"));
-    assertTrue(r.ingredients().get(0).id().equals("i"));
+    Ingredient result = r.ingredients().get(0);
+    assertTrue(result.id().equals(i.id()));
+    assertTrue(result.getDateCreated().equals(date));
+
   }
 
   @Test
@@ -125,12 +133,11 @@ public class DBPeopleTest {
                                         1.0,
                                         "pantry",
                                         1);
-      db.users()
-        .addPerson(new User("Ronald",
-            "ronald@aol.com",
-            Arrays.asList(new Ingredient("/i/pasta",
-                1.0,
-                db))));
+      Ingredient i = new Ingredient("/i/pasta", 1.0, db);
+      i.setDateCreated(LocalDateTime.now());
+      db.users().addPerson(new User("Ronald",
+          "ronald@aol.com",
+          Arrays.asList(i)));
       db.users().setPersonPassword("ronald@aol.com",
                                    "freedom");
 
