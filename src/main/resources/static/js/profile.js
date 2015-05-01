@@ -1,12 +1,20 @@
 var numberIngredients = 0;
-	
+var fridge;
+var pantry;
+var ingredients;
+var favCuisines;
+var personIngredients;
+var updatedIngredients = {};
+
 $(document).ready(function () {
 	$.get("/profileData", function(JSONresponse) {
 		console.log(JSONresponse);
 		var response = JSON.parse(JSONresponse);
-		var ingredients = response.ingredients;
-		var favCuisines = response.favCuisines;
-		var personIngredients = response.personIngredients;
+		fridge = response.fridge;
+		pantry = response.pantry;
+		ingredients = fridge.concat(pantry);
+		favCuisines = response.favCuisines;
+		personIngredients = response.personIngredients;
 		console.log(ingredients);
 		console.log(favCuisines);
 		console.log(personIngredients);
@@ -30,22 +38,31 @@ $(document).ready(function () {
 		$("#curr-ingredients").tokenize({
 				newElements: false,
 		});
-		$(".TokensContainer").bind("DOMSubtreeModified", function() {
-			if ($(".Token").html() == null) {
-				console.log("empty");
-			}
-			else if (numberIngredients != $(".Token").length) {
-				var length = $(".Token").length;
-				var token = $(".Token:nth-child("+length+")");
-				if ($(".Token:nth-child("+length+") .counter").length == 0) {
-					console.log(token);
-					console.log(length);
-					var curr = token[length - 1];
-					console.log(curr);
+		$("#ingredientInput .TokensContainer").bind("DOMSubtreeModified", function() {
+			
+			if ($("#ingredientInput .Token").html() != null && numberIngredients != $("#ingredientInput .Token").length) {
+				$("#ingredientInput .Class").bind("click", function () {
+					console.log("HI");
+					var dataVal = this.parent().attr("data-value");
+					console.log(dataVal);
+					
+					
+				});
+				var length = $("#ingredientInput .Token").length;
+				var token = $("#ingredientInput .Token:nth-child("+length+")");
+				var span = $("#ingredientInput .Token:nth-child("+length+") span");
+				var ingred = span.html();
+				if ($("#ingredientInput .Token:nth-child("+length+") .counter").length == 0) {
+					if ($.inArray(ingred, fridge) != -1) {
+						$("#fridge").append("<p class='ingredientName' id='"+ingred+"'>"+ingred+"</p>");
+					}
+					else if ($.inArray(ingred, pantry) != -1) {
+						$("#pantry").append("<p class='ingredientName' id='"+ingred+"'>"+ingred+"</p>");
+					}
 					token.append(" <input type='number' class='counter' min='0.1' value='0.1' step='0.1'>oz");
-					$(".TokensContainer").click();
+					$("#ingredientInput .TokensContainer").click();
 				}
-				numberIngredients = $(".Token").length;
+				numberIngredients = $("#ingredientInput .Token").length;
 			}
 		});
 	});

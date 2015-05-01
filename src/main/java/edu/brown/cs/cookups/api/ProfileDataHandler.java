@@ -1,5 +1,6 @@
 package edu.brown.cs.cookups.api;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -14,14 +15,14 @@ import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.PersonManager;
 
 public class ProfileDataHandler implements Route {
-  private List<String> ingredients;
+  private List<String> fridgeIngredients, pantryIngredients;
   private PersonManager people;
   private static final Gson GSON = new Gson();
 
-  public ProfileDataHandler(List<String> favoriteCuisines,
-      List<String> ingredients,
+  public ProfileDataHandler(List<String> favoriteCuisines, List<String> fridge, List<String> pantry,
       PersonManager people) {
-    this.ingredients = ingredients;
+    this.fridgeIngredients = fridge;
+    this.pantryIngredients = pantry;
     this.people = people;
   }
 
@@ -30,7 +31,12 @@ public class ProfileDataHandler implements Route {
     String name = request.params(":id");
     String profileID = name + "@brown.edu";
 
-    Person person = people.getPersonById(profileID);
+    Person person = null;
+    try {
+      person = people.getPersonById(profileID);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
 
     if (person == null) {
       response.status(404);
@@ -38,7 +44,8 @@ public class ProfileDataHandler implements Route {
 
     Map<String, Object> variables =
         new ImmutableMap.Builder<String, Object>()
-            .put("ingredients", ingredients)
+            .put("fridge", fridgeIngredients)
+            .put("pantry", pantryIngredients)
             .put("favCuisines", person.favoriteCuisines())
             .put("personIngredients", person.ingredients()).build();
 

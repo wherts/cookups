@@ -44,8 +44,8 @@
 	        		Favorite Cuisines:<br>
 	        		<select id="fav-cuisines" multiple="multiple" class="tokenize-sample"></select>
 	        	<#else>
-	        		Favorite Recipes:
-	        		<#list favRecipes as x>
+	        		Favorite Cuisines:
+	        		<#list favCuisines as x>
 	        		${x}
 	        		</#list>
 	        	</#if>
@@ -54,7 +54,8 @@
 	  </div>
       <div class="right half ingred">
       <p class="title h-text">${name}'s Ingredients</p>
-      <div id="fridge">
+      
+      <div id="ingredientInput">
         <#if editable == true>
     		<select id="curr-ingredients" multiple="multiple" class="tokenize-sample ingredient-box"></select>
     	<#else>
@@ -63,7 +64,15 @@
     		</#list>
     	</#if>
       </div>
+          <div id="fridgeHolder">
+                  <div id="fridge"></div>
+          </div>
+          <div id="pantryHolder">
+            <div id="pantry"></div>
+          </div>
+      
   </div>
+  
      <script src="../js/jquery-2.1.1.js"></script>
 	<script src="../js/jquery.tokenize.js"></script>
     <script src="../js/profile.js"></script>
