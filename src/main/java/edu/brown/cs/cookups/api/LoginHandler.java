@@ -26,8 +26,6 @@ public class LoginHandler implements Route {
       String token = auth.getToken(id);
       response.cookie("auth", token);
       response.cookie("id", id);
-      System.out.println("id: " + id + " // token: " + token);
-
       String profilePath = id.split("@")[0];
       response.redirect("/profile/" + profilePath);
     }

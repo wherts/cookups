@@ -63,7 +63,7 @@ public class Recipe {
     if (instructions == null) {
       String instructionString = querier.recipes()
           .getInstructionsByRecipe(id);
-      String[] split = instructionString.split("$");
+      String[] split = instructionString.split("\\$");
       instructions = new ArrayList<>();
       for (String s : split) {
         instructions.add(s);

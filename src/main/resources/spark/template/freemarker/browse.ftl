@@ -1,7 +1,7 @@
 <!DOCTYPE html>
   <head>
     <meta charset="utf-8">
-    <title>${title}</title>
+    <title>Brown Cookups</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/html5bp.css">
@@ -34,10 +34,14 @@
        </div>
      </div>
    <div class="block" id="title">
-      <div class="container"><h1 class="h-text" id="title-text">Browse</h1></div>
+      <div class="container"><h1 class="h-text" id="title-text">Meals</h1></div>
      </div>
      <div class="block c">
-      
+     	<ul>
+			<#list recipes?keys as x>
+				<li class="search-results"><a href="${recipes[x]}">${x}</a></li>
+			</#list>
+		</ul>
      </div>
      <script src="js/jquery-2.1.1.js"></script>
 	<script src="js/jquery.tokenize.js"></script>

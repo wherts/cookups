@@ -1,5 +1,6 @@
-package edu.brown.cs.cookups.api;
+package edu.brown.cs.cookups.views;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,12 +11,16 @@ import spark.TemplateViewRoute;
 
 import com.google.common.collect.ImmutableMap;
 
+import edu.brown.cs.cookups.db.DBManager;
+
 public class BrowseView implements TemplateViewRoute {
   private List<String> names, ids;
+  private DBManager db;
 
-  public BrowseView(List<String> names, List<String> ids) {
+  public BrowseView(DBManager db, List<String> names, List<String> ids) {
     this.names = names;
     this.ids = ids;
+    this.db = db;
   }
 
   @Override
@@ -23,10 +28,18 @@ public class BrowseView implements TemplateViewRoute {
    * Handles the view for ranking suggestions from the text input in the gui.
    */
   public ModelAndView handle(final Request req, final Response res) {
+    String profileLink = req.cookie("id").split("@")[0];
+
+    List<List<String>> recipes = db.recipes().getNamesAndIDs();
+    Map<String, String> recipeMap = new LinkedHashMap<String, String>();
+    for (int i = 0; i < recipes.get(0).size(); i++) {
+      recipeMap.put(recipes.get(1).get(i), "/recipe/" + recipes.get(0).get(i));
+    }
+
     Map<String, Object> variables =
         new ImmutableMap.Builder<String, Object>()
-            .put("names", names)
-            .put("ids", ids).build();
+            .put("recipes", recipeMap)
+            .put("profLink", profileLink).build();
 
     return new ModelAndView(variables, "browse.ftl");
   }

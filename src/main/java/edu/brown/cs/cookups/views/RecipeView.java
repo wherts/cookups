@@ -1,4 +1,4 @@
-package edu.brown.cs.cookups.api;
+package edu.brown.cs.cookups.views;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

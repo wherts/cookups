@@ -15,21 +15,23 @@ import edu.brown.cs.autocomplete.Trie;
 import edu.brown.cs.cookups.api.AuthFilter;
 import edu.brown.cs.cookups.api.Authentication;
 import edu.brown.cs.cookups.api.AutocompleteHandler;
-import edu.brown.cs.cookups.api.BasicView;
-import edu.brown.cs.cookups.api.BrowseView;
 import edu.brown.cs.cookups.api.CookFriendsHandler;
 import edu.brown.cs.cookups.api.CookupHandler;
 import edu.brown.cs.cookups.api.LoginHandler;
-import edu.brown.cs.cookups.api.LoginView;
-import edu.brown.cs.cookups.api.MealView;
+import edu.brown.cs.cookups.api.LogoutHandler;
 import edu.brown.cs.cookups.api.ProfileDataHandler;
-import edu.brown.cs.cookups.api.ProfileView;
-import edu.brown.cs.cookups.api.RecipeView;
 import edu.brown.cs.cookups.api.SearchEngine;
 import edu.brown.cs.cookups.api.SendUsersHandler;
 import edu.brown.cs.cookups.api.SignupHandler;
 import edu.brown.cs.cookups.db.DBLink;
 import edu.brown.cs.cookups.person.PersonManager;
+import edu.brown.cs.cookups.views.BasicView;
+import edu.brown.cs.cookups.views.BrowseView;
+import edu.brown.cs.cookups.views.LoginView;
+import edu.brown.cs.cookups.views.MealView;
+import edu.brown.cs.cookups.views.PersonMealsView;
+import edu.brown.cs.cookups.views.ProfileView;
+import edu.brown.cs.cookups.views.RecipeView;
 import freemarker.template.Configuration;
 
 public class URLHandler {
@@ -76,6 +78,9 @@ public class URLHandler {
     Spark.before("/profileData", new AuthFilter(auth));
     Spark.before("/recipe/:id", new AuthFilter(auth));
     Spark.before("/meal/:id", new AuthFilter(auth));
+    Spark.before("/browse", new AuthFilter(auth));
+    Spark.before("/meals", new AuthFilter(auth));
+
 
     // Basic template rendering routes
     Spark.get("/", new LoginView(auth), freeMarker);
@@ -83,9 +88,11 @@ public class URLHandler {
         new BasicView("cookwfriends.ftl"), freeMarker);
     Spark.get("/cook", new BasicView("cook.ftl"), freeMarker);
     Spark.get("/cookup", new BasicView("cookup.ftl"), freeMarker);
-    Spark.get("/browse", new BrowseView(recipeIDs, recipeNames), freeMarker);
+    Spark
+        .get("/browse", new BrowseView(db, recipeIDs, recipeNames), freeMarker);
     Spark.get("/recipe/:id", new RecipeView(db, people), freeMarker);
-    Spark.get("/meal/:id", new MealView(), freeMarker);
+    Spark.get("/meal/:mealID", new MealView(), freeMarker);
+    Spark.get("/meals", new PersonMealsView(people), freeMarker);
     Spark.get("/profile/:name", new ProfileView(people), freeMarker);
 
     // Form handling routes
@@ -96,6 +103,7 @@ public class URLHandler {
     Spark.post("/search", new SearchEngine(db, people, recipeSearch,
         peopleSearch),
         freeMarker);
+    Spark.get("/logout", new LogoutHandler(), freeMarker);
 
     // JSON data routes
     Spark.get("/allRecipes", new AutocompleteHandler(recipeNames));
