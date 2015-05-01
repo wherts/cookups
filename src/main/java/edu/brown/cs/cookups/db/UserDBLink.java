@@ -64,8 +64,8 @@ public class UserDBLink implements UserDB {
           if (person == null) {
             List<Ingredient> ingredients = getPersonIngredients(id);
             person = people.cachePerson(id,
-                rs.getString(NAME_IDX),
-                ingredients);
+                                        rs.getString(NAME_IDX),
+                                        ingredients);
           }
           users.add(person);
         }
@@ -191,7 +191,7 @@ public class UserDBLink implements UserDB {
 
   @Override
   public void addPerson(Person p) {
-    String query = "INSERT INTO user VALUES (?, ?)";
+    String query = "INSERT OR IGNORE INTO user VALUES (?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(query)) {
       prep.setString(ID_IDX, p.id());
       prep.setString(NAME_IDX, p.name());
