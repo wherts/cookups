@@ -61,10 +61,11 @@ public class IngredientsDBLink implements IngredientDB {
   }
 
   @Override
-  public List<String> getAllIngredientNames() {
-    String query = "SELECT name FROM ingredient";
+  public List<String> getAllIngredientNames(String storage) {
+    String query = "SELECT name FROM ingredient WHERE storage = ?";
     List<String> names = new ArrayList<>();
     try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, storage);
       try (ResultSet rs = prep.executeQuery()) {
 
         while (rs.next()) {
