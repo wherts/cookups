@@ -37,7 +37,7 @@ public class RecipeTest {
       e.printStackTrace();
     }
   }
-
+  
   @Test
   public void testEquals() {
     Recipe r1 = new Recipe("/r/1.1", null);

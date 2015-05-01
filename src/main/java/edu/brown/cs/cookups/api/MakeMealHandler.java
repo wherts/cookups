@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 
 import edu.brown.cs.cookups.RecipeMatcher;
 import edu.brown.cs.cookups.db.DBManager;
+import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.food.Meal;
 import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.Person;
@@ -73,11 +74,16 @@ public class MakeMealHandler implements Route {
     // need to figure out how to parse out selected names
     String[] ids = splitNames(chefs);
     for (String s : ids) {
+      System.out.printf("Looking for %s%n", s);
       Person person = people.getPersonById(s);
       attending.add(person);
     }
 
     for (Person a : attending) {
+      System.out.printf("Adding: %s to the meal%n", a.name());
+      for (Ingredient i : a.ingredients()) {
+        System.out.printf("They have %f of %s%n", i.ounces(), i.id());
+      }
       newMeal.addAttending((User) a);
     }
     List<Recipe> toCook = new ArrayList<>();
@@ -87,6 +93,10 @@ public class MakeMealHandler implements Route {
       e.printStackTrace();
     }
     for (Recipe r : toCook) {
+      System.out.printf("Cooking: %s%n", r.name());
+      for (Ingredient i : r.shoppingList()) {
+        System.out.printf("Need: %f of %s%n", i.ounces(), i.id());
+      }
       newMeal.addRecipe(r);
     }
     newMeal.setName(name);
