@@ -3,6 +3,8 @@ package edu.brown.cs.db;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.BeforeClass;
@@ -10,9 +12,13 @@ import org.junit.Test;
 
 import edu.brown.cs.cookups.db.DBLink;
 import edu.brown.cs.cookups.food.Ingredient;
+import edu.brown.cs.cookups.food.Meal;
+import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.PersonManager;
 import edu.brown.cs.cookups.person.User;
+import edu.brown.cs.cookups.schedule.LatLong;
+import edu.brown.cs.cookups.schedule.Schedule;
 
 public class DBPeopleTest {
 
@@ -127,6 +133,27 @@ public class DBPeopleTest {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+  }
+
+  @Test
+  public void personMealTest()
+    throws ClassNotFoundException, SQLException {
+    DBLink db = new DBLink(DB_PATH);
+    PersonManager people = new PersonManager(db);
+    people.addPerson("Wes", "wh7", Arrays.asList());
+    Schedule sched = new Schedule(LocalDateTime.now(),
+        new LatLong(10, 10));
+    Meal m1 = new Meal(new User("Wes",
+        "wh7",
+        new ArrayList<Ingredient>()), sched);
+    m1.addAttending(new User("Grant",
+        "ggustafs",
+        new ArrayList<Ingredient>()));
+    Recipe r1 = new Recipe("r1", null);
+    m1.addRecipe(r1);
+    String mealID = db.meals().addMeal(m1);
+    people.addMealtoPerson(mealID, "wh7");
+    assertTrue(m1.equals(db.meals().getMealByID(mealID)));
   }
 
 }

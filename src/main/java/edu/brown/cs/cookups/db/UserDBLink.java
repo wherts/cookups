@@ -266,4 +266,35 @@ public class UserDBLink implements UserDB {
     }
     return password;
   }
+
+  @Override
+  public void addPersonMeal(String personID, String mealID) {
+    String query = "INSERT INTO user_meal VALUES (?, ?)";
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, personID);
+      prep.setString(2, mealID);
+      prep.addBatch();
+      prep.executeBatch();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public List<String> getPersonMealIDs(String id) {
+    List<String> meals = new ArrayList<String>();
+    String query = "SELECT meal FROM user_meal WHERE user = ?";
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      try (ResultSet rs = prep.executeQuery()) {
+        while (rs.next()) {
+          meals.add(rs.getString(1));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return meals;
+  }
 }

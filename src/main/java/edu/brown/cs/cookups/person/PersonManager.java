@@ -2,15 +2,14 @@ package edu.brown.cs.cookups.person;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import edu.brown.cs.cookups.dating.Suitor;
 import edu.brown.cs.cookups.db.DBLink;
 import edu.brown.cs.cookups.food.Ingredient;
+import edu.brown.cs.cookups.food.Meal;
 
 public class PersonManager {
   private DBLink db;
@@ -44,7 +43,7 @@ public class PersonManager {
     this.users.put(id, person);
     return person;
   }
-  
+
   public Suitor cacheSuitor(Suitor suitor) {
     this.suitors.put(suitor.person().id(), suitor);
     return suitor;
@@ -69,5 +68,24 @@ public class PersonManager {
 
   public List<Suitor> getAllSuitors() {
     return new ArrayList<>(suitors.values());
+  }
+
+  public void addMealtoPerson(String mealID, String personID) {
+    this.db.users().addPersonMeal(personID, mealID);
+  }
+
+  public List<Meal> getPersonMeals(Person p) {
+    List<String> mealIDs = db.users()
+                             .getPersonMealIDs(p.id());
+    List<Meal> meals = new ArrayList<Meal>();
+
+    for (String id : mealIDs) {
+      Meal m = db.meals().getMealByID(id);
+      if (m != null) {
+        meals.add(m);
+      }
+
+    }
+    return meals;
   }
 }

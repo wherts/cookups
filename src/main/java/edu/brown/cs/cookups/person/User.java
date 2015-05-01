@@ -12,6 +12,10 @@ public class User implements Person {
   private List<Ingredient> ingredients;
   private List<Recipe> favoriteRecipes;
 
+  public User() {
+
+  }
+
   public User(String name, String id,
       List<Ingredient> ingredients2) {
     this.name = name;
@@ -51,18 +55,18 @@ public class User implements Person {
   public List<Recipe> favoriteRecipes() {
     return favoriteRecipes;
   }
-  
+
   @Override
   public boolean equals(Object o) {
-	  if (this == o) {
-		  return true;
-	  }
-	  
-	  if (!(o instanceof User)) {
-		  return false;
-	  }
-	  User u = (User) o;
-	  return this.id.equals(u.id());
+    if (this == o) {
+      return true;
+    }
+
+    if (!(o instanceof User)) {
+      return false;
+    }
+    User u = (User) o;
+    return this.id.equals(u.id());
   }
 
 }

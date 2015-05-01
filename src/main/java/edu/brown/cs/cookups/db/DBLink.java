@@ -29,12 +29,16 @@ public class DBLink implements DBManager {
   public static final String AUTHENTICATION = "authentication(id TEXT, password TEXT, FOREIGN KEY(id) REFERENCES user(id)"
       + "ON DELETE CASCADE ON UPDATE CASCADE)";
   public static final String MEAL = "meal(id TEXT, json TEXT, PRIMARY KEY(id))";
+  public static final String USER_MEAL = "user_meal(user TEXT, meal TEXT, PRIMARY KEY(user, meal), "
+      + "FOREIGN KEY(user) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,"
+      + "FOREIGN KEY(meal) REFERENCES meal(id) ON DELETE CASCADE ON UPDATE CASCADE)";
   public static final String[] TABLE_SCHEMA = { USER,
       INGREDIENT, USER_INGREDIENT, RECIPE,
-      RECIPE_INGREDIENT, AUTHENTICATION };
+      RECIPE_INGREDIENT, AUTHENTICATION, MEAL, USER_MEAL };
   public static final String[] TABLES = { "user",
       "ingredient", "user_ingredient", "recipe",
-      "recipe_ingredient", "authentication" };
+      "recipe_ingredient", "authentication", "meal",
+      "user_meal" };
   public static final int ID_IDX = 1;
   public static final int NAME_IDX = 2;
   public static final int INGREDIENT_IDX = 2;
@@ -46,6 +50,7 @@ public class DBLink implements DBManager {
   private final UserDB users;
   private final IngredientDB ingredients;
   private final RecipeDB recipes;
+  private final MealDB meals;
 
   public DBLink(String db) throws ClassNotFoundException,
       SQLException {
@@ -56,6 +61,7 @@ public class DBLink implements DBManager {
     this.users = new UserDBLink(conn, this);
     this.ingredients = new IngredientsDBLink(conn, this);
     this.recipes = new RecipeDBLink(conn, this);
+    this.meals = new MealDBLink(conn, this);
   }
 
   public void init() {
@@ -258,6 +264,11 @@ public class DBLink implements DBManager {
   @Override
   public RecipeDB recipes() {
     return this.recipes;
+  }
+
+  @Override
+  public MealDB meals() {
+    return this.meals;
   }
 
 }
