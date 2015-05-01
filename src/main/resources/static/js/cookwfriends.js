@@ -37,5 +37,5 @@ function submitCookFriends() {
 	
 	$.post("/cookwfriends", params, function(responseJSON) {
 		console.log("made meal");
-	})
+	});
 }
