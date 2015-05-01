@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class UserDBLink implements UserDB {
   public static final int NAME_IDX = 2;
   public static final int INGREDIENT_IDX = 2;
   public static final int INGREDIENT_QTY_IDX = 3;
+  public static final int EXP_IDX = 4;
   public static final int RECIPE_TEXT_IDX = 3;
   public static final int QTY_IDX = 3;
 
@@ -31,7 +33,7 @@ public class UserDBLink implements UserDB {
 
   @Override
   public void addUserIngredient(String id, Ingredient i) {
-    String query = "INSERT OR IGNORE INTO user_ingredient VALUES (?, ?, ?)";
+    String query = "INSERT OR IGNORE INTO user_ingredient VALUES (?, ?, ?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(query)) {
 
       prep.setString(ID_IDX, id);
@@ -185,9 +187,13 @@ public class UserDBLink implements UserDB {
         while (rs.next()) {
           String ingredID = rs.getString(INGREDIENT_IDX);
           double qty = rs.getDouble(INGREDIENT_QTY_IDX);
-          toRet.add(new Ingredient(ingredID,
+          Ingredient i = new Ingredient(ingredID,
               qty,
-              (DBLink) db));
+              (DBLink) db);
+          String dateStr = rs.getString(EXP_IDX);
+          LocalDateTime date = LocalDateTime.parse(dateStr);
+          i.setDateCreated(date);
+          toRet.add(i);
         }
       } catch (SQLException e) {
         e.printStackTrace();

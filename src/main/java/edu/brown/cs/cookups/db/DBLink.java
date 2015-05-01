@@ -25,7 +25,7 @@ public class DBLink implements DBManager {
   public static final String INGREDIENT = "ingredient(id TEXT, name TEXT, price INTEGER, "
       + "storage TEXT, exp INTEGER, PRIMARY KEY(id))";
   public static final String USER_INGREDIENT = "user_ingredient(user TEXT, ingredient TEXT, qty FLOAT"
-      + ", exp TEXT"
+      + ", exp TEXT NOT NULL"
       + ", PRIMARY KEY(user, ingredient)"
       + ", FOREIGN KEY(user) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE"
       + ", FOREIGN KEY(ingredient) REFERENCES ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)";
@@ -193,7 +193,7 @@ public class DBLink implements DBManager {
   public void importIngredients(File file) {
     try (CSVReader reader = new CSVReader(file)) {
       String[] line;
-      String query = "INSERT OR IGNORE INTO ingredient VALUES (?,?,?,?)";
+      String query = "INSERT OR IGNORE INTO ingredient VALUES (?,?,?,?,?)";
       try (PreparedStatement prep = conn.prepareStatement(query)) {
         while ((line = reader.readLine()) != null) {
           if (line.length != 5) {

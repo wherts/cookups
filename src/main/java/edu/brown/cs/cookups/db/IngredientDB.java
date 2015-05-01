@@ -20,6 +20,8 @@ public interface IngredientDB {
 
   public String storageByID(String id);
 
+  public int expirationByID(String id);
+
   public void defineIngredient(String id, String name,
       double price, String storage, int mins);
 

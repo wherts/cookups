@@ -191,4 +191,23 @@ public class IngredientsDBLink implements IngredientDB {
     return storage;
   }
 
+  @Override
+  public int expirationByID(String id) {
+    String query = "SELECT exp FROM ingredient WHERE id = ?";
+    int exp = 0;
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, id);
+      try (ResultSet rs = prep.executeQuery()) {
+        while (rs.next()) {
+          exp = rs.getInt(1);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return exp;
+  }
+
 }
