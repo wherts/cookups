@@ -30,12 +30,12 @@ function submitCookFriends() {
 		timeStart:  $('#friends-form input[name=time_start]').val(),
 		timeEnd:  $('#friends-form input[name=time_end]').val(),
 		timeStart:  $('#friends-form input[name=time_start]').val(),
-		chefs: chefs,
+		chefs: chefs
 	}
 	
 	console.log(params);
 	
 	$.post("/cookwfriends", params, function(responseJSON) {
 		console.log("made meal");
-	})
+	});
 }

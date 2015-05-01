@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.User;
 import edu.brown.cs.cookups.schedule.LatLong;
 import edu.brown.cs.cookups.schedule.Schedule;
@@ -14,8 +15,8 @@ import edu.brown.cs.cookups.schedule.Schedule;
  * date, and a recipe to make
  * @author wh7 */
 public class Meal {
-  private User host;
-  private List<User> attending;
+  private Person host;
+  private List<Person> attending;
   private LatLong location;
   private Schedule schedule;
   private List<Recipe> recipes;
@@ -28,7 +29,7 @@ public class Meal {
     assert (user != null && s != null);
     this.host = user;
     this.schedule = s;
-    this.attending = new ArrayList<User>();
+    this.attending = new ArrayList<Person>();
     this.recipes = new ArrayList<Recipe>();
   }
 
@@ -110,37 +111,71 @@ public class Meal {
     return ret;
   }
 
+<<<<<<< HEAD
   /** Accessor for guest list of a Meal.
    * @return list of User attending */
   public List<User> attending() {
     List<User> copy = new ArrayList<>();
     for (User p : attending) {
+=======
+  /**
+   * Accessor for guest list of a Meal.
+   * @return list of User attending
+   */
+  public List<Person> attending() {
+    List<Person> copy = new ArrayList<>();
+    for (Person p : attending) {
+>>>>>>> 06a1d7e3bbf5b287805c108c43113eacc50aa13a
 
       copy.add(p);
     }
     return copy;
   }
 
+<<<<<<< HEAD
   /** Method to add a guest to the Meal.
    * @param p new User coming to Meal */
   public void addAttending(User p) {
+=======
+  /**
+   * Method to add a guest to the Meal.
+   * @param a new User coming to Meal
+   */
+  public void addAttending(Person a) {
+>>>>>>> 06a1d7e3bbf5b287805c108c43113eacc50aa13a
 
-    assert (p != null);
-    attending.add(p);
+    assert (a != null);
+    attending.add(a);
   }
 
+<<<<<<< HEAD
   /** Accessor for a Meal's host.
    * @return User object */
   public User host() {
+=======
+  /**
+   * Accessor for a Meal's host.
+   * @return User object
+   */
+  public Person host() {
+>>>>>>> 06a1d7e3bbf5b287805c108c43113eacc50aa13a
 
     return host;
   }
 
   /** Setter for a Meal's host.
    * @param h new host of meal
+<<<<<<< HEAD
    * @return old host */
   public User setHost(User h) {
     User ret = this.host;
+=======
+   * 
+   * @return old host
+   */
+  public Person setHost(User h) {
+    Person ret = this.host;
+>>>>>>> 06a1d7e3bbf5b287805c108c43113eacc50aa13a
     this.host = h;
     return ret;
   }

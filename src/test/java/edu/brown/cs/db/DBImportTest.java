@@ -68,4 +68,30 @@ public class DBImportTest {
       e.printStackTrace();
     }
   }
+
+  @Test
+  public void importUserTest() {
+    try {
+      DBLink db = new DBLink("databases/tests/userImportTest.sqlite3");
+      db.clearDataBase();
+      db.importIngredients(new File(INGREDIENT_PATH));
+      db.importUser(new File("databases/csv/people/grant.csv"));
+    } catch (ClassNotFoundException | SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  @Test
+  public void importUsersTest() {
+    try {
+      DBLink db = new DBLink("databases/tests/userImportTest.sqlite3");
+      db.clearDataBase();
+      db.importIngredients(new File(INGREDIENT_PATH));
+      db.importAllUsers("databases/csv/people/");
+    } catch (ClassNotFoundException | SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
 }

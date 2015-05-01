@@ -39,31 +39,26 @@
       <div class="block c">
       <div class="container">
       <div class="form-box">
-         <form id="cookup-form" method="POST">
+         <div id="cookup-form">
           <p class="subheader-text">Make a Meal</p>	
           Romantic? <br>
-          <input type="radio" name="type" value="true" checked>Yes
-          <input type="radio" name="type" value="false">No
+          <input type="radio" name="type" value="romantic" checked>Yes
+          <input type="radio" name="type" value="platonic">No
           <br><br>
           <div id="romantic-opts">
 	          Gender<br>
 	          Male <input type="range" name="gender"> Female
 	          <br><br>
 	          Orientation (select none for queer)<br>  
-<<<<<<< HEAD
 	          Heterosexual<input type="radio" name="orientation" value="heterosexual">
 	          Homosexual<input type="radio" name="orientation" value="homosexual">
 	          Bisexual<input type="radio" name="orientation" value="bisexual">
-=======
-
-	          Heterosexual<input type="checkbox" name="orientation" value="Heterosexual">
-	          Homosexual<input type="checkbox" name="orientation" value="homosexual">
-	          Bisexual<input type="checkbox" name="orientation" value="bisexual">
->>>>>>> eac4054ebccde86cf848687f83e3e9ed62c4d25c
 	          <br>
 	      </div>
-          <input class="btn" type="submit" value="Cook Up">
-         </form>
+          <input id="cookupButton" onClick=submitCookup() class="btn" type="submit" value="Cook Up">
+         </div>
+      </div>
+      <div id="matches">
       </div>
     </div>
    </div>

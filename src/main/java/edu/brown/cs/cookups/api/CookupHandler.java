@@ -30,7 +30,7 @@ public class CookupHandler implements Route {
   @Override
   public Object handle(Request request, Response response) {
     QueryParamsMap qm = request.queryMap();
-    boolean romantic = Boolean.valueOf(qm.value("type"));
+    boolean romantic = Boolean.valueOf(qm.value("romantic"));
     int gender = 2 * (Integer.valueOf(qm.value("gender")) - 50);
     String orientation = qm.value("orientation");
     Suitor.Builder builder;
@@ -53,9 +53,7 @@ public class CookupHandler implements Route {
         }
       }
       Suitor suitor = builder.build();
-      DateMatcher matcher = new DateMatcher();
-      suitors = matcher.match(people.getAllSuitors(), suitor);
-
+      suitors = DateMatcher.match(people.getAllSuitors(), suitor);
       people.cacheSuitor(suitor);
     } catch (SQLException e) {
       System.err.println("ERROR: No id found.");
