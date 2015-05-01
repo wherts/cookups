@@ -1,12 +1,13 @@
 package edu.brown.cs.cookups;
 
+import java.io.File;
 import java.sql.SQLException;
-import java.util.List;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 import edu.brown.cs.cookups.db.DBLink;
+import edu.brown.cs.cookups.db.DBManager;
 
 public class Main {
   private String[] args;
@@ -35,8 +36,20 @@ public class Main {
   private void run() throws ClassNotFoundException,
     SQLException {
     OptionParser parser = new OptionParser();
-    OptionSpec<String> argv = parser.nonOptions();
-    parser.accepts("ingredients").withRequiredArg();
+    OptionSpec<File> fileSpec = parser.nonOptions()
+                                      .ofType(File.class);
+    OptionSpec<String> dbPathSpec = parser.accepts("db")
+                                          .withRequiredArg()
+                                          .ofType(String.class);
+    OptionSpec<File> ingredientsSpec = parser.accepts("ingredients")
+                                             .withRequiredArg()
+                                             .ofType(File.class);
+    OptionSpec<File> usersSpec = parser.accepts("users")
+                                       .withRequiredArg()
+                                       .ofType(File.class);
+    OptionSpec<File> recipesSpec = parser.accepts("recipes")
+                                         .withRequiredArg()
+                                         .ofType(File.class);
     OptionSet options = null;
     try {
       options = parser.parse(args);
@@ -45,14 +58,53 @@ public class Main {
       System.exit(1);
     }
 
-    List<String> parsedArgs = options.valuesOf(argv);
-    if (parsedArgs.size() != 1) {
+    if (!options.has("db")) {
       System.err.println("ERROR: usage ./run <db>");
       System.exit(1);
     }
-    String db = parsedArgs.get(0);
+    String dbPath = options.valueOf(dbPathSpec);
+    System.out.println("DB is: " + dbPath);
+    DBManager db = new DBLink(dbPath);
+    if (options.has(ingredientsSpec)) {
+      File f = options.valueOf(ingredientsSpec);
+      if (f.isFile() && !f.isDirectory()) {
+        db.importIngredients(f);
+        System.out.println("Imported Ingredients from: "
+            + f.getPath());
+      } else {
+        System.out.println("ERROR: " + f.getPath()
+            + " is not a file");
+      }
 
-    URLHandler gui = new URLHandler(new DBLink(db));
+    }
+
+    if (options.has(usersSpec)) {
+      File dir = options.valueOf(usersSpec);
+      if (!dir.isFile() && dir.isDirectory()) {
+        db.importAllUsers(dir.getPath());
+        System.out.println("Imported Users from: "
+            + dir.getPath());
+      } else {
+        System.out.println("ERROR: " + dir.getPath()
+            + " is not a directory");
+      }
+
+    }
+
+    if (options.has(recipesSpec)) {
+      File dir = options.valueOf(recipesSpec);
+      if (!dir.isFile() && dir.isDirectory()) {
+        db.importAllRecipes(dir.getPath());
+        System.out.println("Imported Recipes from: "
+            + dir.getPath());
+      } else {
+        System.out.println("ERROR: " + dir.getPath()
+            + " is not a directory");
+      }
+
+    }
+
+    URLHandler gui = new URLHandler((DBLink) db);
     gui.runSparkServer();
   }
 }
