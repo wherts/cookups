@@ -93,7 +93,8 @@ public class URLHandler {
     Spark.post("/cookup", new CookupHandler(people));
     Spark.post("/login", new LoginHandler(auth));
     Spark.post("/signup", new SignupHandler(auth, people), freeMarker);
-    Spark.post("/search", new SearchEngine(recipeSearch, peopleSearch),
+    Spark.post("/search", new SearchEngine(db, people, recipeSearch,
+        peopleSearch),
         freeMarker);
 
     // JSON data routes
