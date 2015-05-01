@@ -19,6 +19,7 @@ import edu.brown.cs.cookups.food.Meal;
 import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.PersonManager;
+import edu.brown.cs.cookups.person.User;
 import edu.brown.cs.cookups.schedule.Schedule;
 
 public class CookFriendsHandler implements Route {
@@ -57,7 +58,7 @@ public class CookFriendsHandler implements Route {
     Schedule sched = new Schedule(dateTimeStart, null);
     Meal newMeal = null;
     try { // creating meal object
-      newMeal = new Meal(people.getPersonById(id), sched);
+      newMeal = new Meal((User) people.getPersonById(id), sched);
     } catch (SQLException e) {
       System.err.println(e.getMessage());
       e.printStackTrace();
@@ -81,7 +82,7 @@ public class CookFriendsHandler implements Route {
     }
 
     for (Person a : attending) {
-      newMeal.addAttending(a);
+      newMeal.addAttending((User) a);
     }
     List<Recipe> toCook = new ArrayList<>();
     try {

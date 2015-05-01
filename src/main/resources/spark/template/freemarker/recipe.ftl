@@ -1,12 +1,12 @@
 <!DOCTYPE html>
   <head>
     <meta charset="utf-8">
-    <title>${title}</title>
+    <title>Brown Cookups</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/html5bp.css">
-        <link rel="stylesheet" href="css/stylesheet.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/html5bp.css">
+        <link rel="stylesheet" href="../css/stylesheet.css">
+    <link rel="stylesheet" href="../css/main.css">
   </head>
   <body>
      <!-- HEADER -->
@@ -23,7 +23,7 @@
             <li><a id="cook-link" class="page-link header-text hoverli" href="/cook">Cook</a></li>        
 			<li><a class="page-link header-text" href="/meals">Meals</a></li>
             <li><a class="page-link header-text" href="/browse">Browse</a></li>
-            <li><a class="page-link header-text" href=${profLink}>Profile</a></li> 
+            <li><a class="page-link header-text" href="">Profile</a></li> 
           </ul>
           <ul class="dropdown-menu hoverli">
 	        <li><a href="/cookwfriends">Cook with Friends</a></li>
@@ -32,12 +32,20 @@
         </div> 
        </div>
      </div>
-     ${recipe.id}
-     ${recipe.name}
-     
-     
-     <script src="js/jquery-2.1.1.js"></script>
-	<script src="js/jquery.tokenize.js"></script>
-    <script src="js/main.js"></script>
+     ${recipe.name()}
+     ${recipe.id()}
+ 	 <#list recipe.ingredients() as x>
+		${x.name()}<br>
+		${x.ounces()}
+	 </#list>
+     <#list recipe.shoppingList() as x>
+		${x.name()}<br>
+		${x.ounces()}
+	 </#list>
+	 ${recipe.shoppingList()}
+     ${recipe.name()}
+     <script src="../js/jquery-2.1.1.js"></script>
+	<script src="../js/jquery.tokenize.js"></script>
+    <script src="../js/main.js"></script>
   </body>
 </html>

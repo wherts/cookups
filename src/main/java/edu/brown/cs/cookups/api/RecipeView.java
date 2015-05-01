@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import spark.ModelAndView;
 import spark.Request;
@@ -46,15 +47,23 @@ public class RecipeView implements TemplateViewRoute {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-
+    System.out.println(p.name());
+    System.out.printf("Looking for %s%n", id);
     Recipe recipe = db.recipes().getRecipeById(id);
     Map<String, Double> ingredients = new HashMap<String, Double>();
     List<Person> chefs = new ArrayList<>();
     chefs.add(p);
 
+    System.out.printf("Num of Ingredients: %d%n", p.ingredients().size());
     RecipeMatcher.compileIngredients(chefs, ingredients);
+    Set<String> keys = ingredients.keySet();
+    for (String s : keys) {
+      System.out.printf("I have %f of %s%n", ingredients.get(s), s);
+    }
     RecipeMatcher.buildShoppingList(ingredients, recipe);
-
+    System.out.println(id);
+    System.out.println("ingredients: " + recipe.ingredients());
+    System.out.println(recipe.shoppingList().size());
     Map<String, Object> variables =
         ImmutableMap.of("recipe", recipe);
     return new ModelAndView(variables, "recipe.ftl");
