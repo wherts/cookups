@@ -3,8 +3,6 @@ package edu.brown.cs.db;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import org.junit.Test;
-
 import com.google.gson.Gson;
 
 import edu.brown.cs.cookups.food.Ingredient;
@@ -17,7 +15,7 @@ import edu.brown.cs.cookups.schedule.Schedule;
 public class DBMealTest {
   private static Gson gson = new Gson();
 
-  @Test
+  // @Test
   public void mealJSON() {
     Schedule sched = new Schedule(LocalDateTime.now(),
         new LatLong(10, 10));
