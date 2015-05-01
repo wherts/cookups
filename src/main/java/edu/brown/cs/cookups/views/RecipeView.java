@@ -2,7 +2,6 @@ package edu.brown.cs.cookups.views;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,8 +42,6 @@ public class RecipeView implements TemplateViewRoute {
       id = URLDecoder.decode(idEncoded, "UTF-8");
       p = people.getPersonById(userID);
     } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
-    } catch (SQLException e) {
       e.printStackTrace();
     }
 

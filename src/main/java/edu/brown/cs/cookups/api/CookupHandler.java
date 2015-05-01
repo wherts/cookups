@@ -1,6 +1,5 @@
 package edu.brown.cs.cookups.api;
 
-import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,29 +34,26 @@ public class CookupHandler implements Route {
     String orientation = qm.value("orientation");
     Suitor.Builder builder;
     List<Person> suitors = new ArrayList<>();
-    try {
-      builder = new Suitor.Builder(people.getPersonById(request.cookie("id")));
-      if (!romantic) {
-        builder.setPlatonic();
-      } else {
-        switch (orientation) {
-          case "heterosexual":
-            builder.setStraight();
-            break;
-          case "homosexual":
-            builder.setGay();
-            break;
-          case "bisexual":
-            builder.setBi().setStraight().setGay();
-            break;
-        }
+    builder = new Suitor.Builder(people.getPersonById(request.cookie("id")));
+    if (!romantic) {
+      builder.setPlatonic();
+    } else {
+      switch (orientation) {
+        case "heterosexual":
+          builder.setStraight();
+          break;
+        case "homosexual":
+          builder.setGay();
+          break;
+        case "bisexual":
+          builder.setBi().setStraight().setGay();
+          break;
       }
-      Suitor suitor = builder.setGender(gender).build();
-      suitors = DateMatcher.match(people.getAllSuitors(), suitor);
-      people.cacheSuitor(suitor);
-    } catch (SQLException e) {
-      System.err.println("ERROR: No id found.");
     }
+    Suitor suitor = builder.setGender(gender).build();
+    suitors = DateMatcher.match(people.getAllSuitors(), suitor);
+    people.cacheSuitor(suitor);
+
     List<String[]> toReturn = new ArrayList<>();
     for (Person person : suitors) {
       String[] toAdd = {person.id(), person.name()};

@@ -1,6 +1,5 @@
 package edu.brown.cs.cookups.views;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,11 +27,7 @@ public class PersonMealsView implements TemplateViewRoute {
     String profileLink = "/profile/" + id.split("@")[0];
 
     Person person = null;
-    try {
-      person = people.getPersonById(id);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
+    person = people.getPersonById(id);
 
     if (person == null) {
       response.status(404);

@@ -37,14 +37,14 @@
   <div class="block b">
       <p class="large-header">MealName</p>
       <div id="meal-details">
+      	${meal.name()}
+      	${meal.host()}
+      	${meal.date()}
         <div class="left large-text">Date<br>Time<br>Host<br></div>
         <div class="right large-text alt">Date<br>Time<br>Host<br></div>
       </div>
       <div id="meal-attendees">
         <p class="large-text">Who's Attending</p>
-        List <br>
-        of <br>
-        attendees <br>
       </div>
       <div id="recipe-suggestions">
         <p class="large-text">Recipe Suggestions</p>
