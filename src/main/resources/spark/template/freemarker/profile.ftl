@@ -41,8 +41,8 @@
 	        <p class="name h-text">${name}</p>
 	        <p class="subheader h-text">
 	        	<#if editable == true>
-	        		Favorite Recipes:<br>
-	        		<select id="fav-recipes" multiple="multiple" class="tokenize-sample"></select>
+	        		Favorite Cuisines:<br>
+	        		<select id="fav-cuisines" multiple="multiple" class="tokenize-sample"></select>
 	        	<#else>
 	        		Favorite Recipes:
 	        		<#list favRecipes as x>

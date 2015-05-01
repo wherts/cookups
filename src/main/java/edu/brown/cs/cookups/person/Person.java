@@ -16,5 +16,5 @@ public interface Person {
 
   public Double longitude();
 
-  public List<Recipe> favoriteRecipes();
+  public List<String> favoriteCuisines();
 }

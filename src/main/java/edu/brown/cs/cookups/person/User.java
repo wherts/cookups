@@ -10,7 +10,7 @@ public class User implements Person {
   private String name;
   private String id;
   private List<Ingredient> ingredients;
-  private List<Recipe> favoriteRecipes;
+  private List<String> favoriteCuisines;
 
   public User() {
 
@@ -21,7 +21,7 @@ public class User implements Person {
     this.name = name;
     this.id = id;
     this.ingredients = ingredients2;
-    this.favoriteRecipes = new ArrayList<>();
+    this.favoriteCuisines = new ArrayList<>();
   }
 
   @Override
@@ -52,8 +52,8 @@ public class User implements Person {
   }
 
   @Override
-  public List<Recipe> favoriteRecipes() {
-    return favoriteRecipes;
+  public List<String> favoriteCuisines() {
+    return favoriteCuisines;
   }
 
   @Override
