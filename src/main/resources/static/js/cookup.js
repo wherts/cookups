@@ -14,14 +14,14 @@ function submitCookup() {
 		gender: $("#cookup-form input[name='gender']").val(),
 		orientation: orientation
 	}
-	$.post("/cookup", params, function(responseJSON) {
+	$.post("/makemeal", params, function(responseJSON) {
 		var matches = JSON.parse(responseJSON);
 		people = "<p>Select a person to <em>cookup</em> with:</p><table><tr>";
 		var length = Math.min(matches.length, 5);
 		for (var i = 0; i < length; i++) {
 //			var link = "../assets/people/" + matches[i][0].split("@")[0];
 			var link = "../assets/people/sample-pic.png";
-			people += "<td class='person-option'><div class='match' style='background-image:url("+link+")'></div>"+matches[i][1]+" ("+matches[i][0]+") "+"<td>";
+			people += "<td class='person-option'><div class='match' style='background-image:url("+link+")'></div><br>"+matches[i][1]+" ("+matches[i][0]+") "+"<td>";
 		}
 		
 		people += "</tr></table><div id='cookup-meal-form'>"

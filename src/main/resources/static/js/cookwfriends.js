@@ -34,7 +34,7 @@ function submitCookFriends() {
 	
 	console.log(params);
 	
-	$.post("/cookwfriends", params, function(responseJSON) {
+	$.post("/makemeal", params, function(responseJSON) {
 		console.log("made meal");
 	});
 }

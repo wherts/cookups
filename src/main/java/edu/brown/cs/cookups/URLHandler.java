@@ -15,10 +15,10 @@ import edu.brown.cs.autocomplete.Trie;
 import edu.brown.cs.cookups.api.AuthFilter;
 import edu.brown.cs.cookups.api.Authentication;
 import edu.brown.cs.cookups.api.AutocompleteHandler;
-import edu.brown.cs.cookups.api.CookFriendsHandler;
 import edu.brown.cs.cookups.api.CookupHandler;
 import edu.brown.cs.cookups.api.LoginHandler;
 import edu.brown.cs.cookups.api.LogoutHandler;
+import edu.brown.cs.cookups.api.MakeMealHandler;
 import edu.brown.cs.cookups.api.ProfileDataHandler;
 import edu.brown.cs.cookups.api.SearchEngine;
 import edu.brown.cs.cookups.api.SendUsersHandler;
@@ -102,7 +102,7 @@ public class URLHandler {
     Spark.get("/profile/:name", new ProfileView(people), freeMarker);
 
     // Form handling routes
-    Spark.post("/cookwfriends", new CookFriendsHandler(people, db));
+    Spark.post("/makemeal", new MakeMealHandler(people, db));
     Spark.post("/cookup", new CookupHandler(people));
     Spark.post("/login", new LoginHandler(auth));
     Spark.post("/signup", new SignupHandler(auth, people), freeMarker);
@@ -114,7 +114,8 @@ public class URLHandler {
     // JSON data routes
     Spark.get("/allRecipes", new AutocompleteHandler(recipeNames));
     Spark.get("/allUsers", new SendUsersHandler(userNames, userIDs));
-    Spark.get("/profileData", new ProfileDataHandler(recipeNames, fridgeIngredients, pantryIngredients,
+    Spark.get("/profileData", new ProfileDataHandler(recipeNames,
+        fridgeIngredients, pantryIngredients,
         people));
   }
 

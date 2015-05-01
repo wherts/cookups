@@ -24,13 +24,13 @@ import edu.brown.cs.cookups.person.PersonManager;
 import edu.brown.cs.cookups.person.User;
 import edu.brown.cs.cookups.schedule.Schedule;
 
-public class CookFriendsHandler implements Route {
+public class MakeMealHandler implements Route {
   private PersonManager people;
   private DateTimeFormatter formatter;
   private DBManager dbM;
   private static final Gson GSON = new Gson();
 
-  public CookFriendsHandler(PersonManager p, DBManager d) {
+  public MakeMealHandler(PersonManager p, DBManager d) {
     people = p;
     formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     this.dbM = d;
