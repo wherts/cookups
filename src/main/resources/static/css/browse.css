@@ -1,0 +1,26 @@
+#title-text {
+	color: #FFF;
+	padding-top: 50px;
+	font-size: 36px;
+}
+
+img.recipe {
+    height:80%;
+    width: 80%;
+}
+
+table {
+	width: 100%;
+	text-align: center;
+	margin: 50px 0;
+}
+
+a.recipe {
+	text-decoration: none;
+	color: #FFF;
+}
+
+.recipe-name {
+	font-family: 'gobold_thinregular', sans-serif;
+	font-size: 14px;
+}

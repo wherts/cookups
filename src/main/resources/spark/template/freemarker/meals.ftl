@@ -33,7 +33,7 @@
        </div>
      </div>
    <div class="block" id="title">
-      <div class="container"><h1 class="h-text" id="title-text">Browse</h1></div>
+      <div class="container"><h1 class="h-text" id="title-text">Meals</h1></div>
      </div>
      <div class="block c">
      	<ul>

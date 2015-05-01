@@ -1,5 +1,7 @@
 package edu.brown.cs.cookups.views;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,12 +30,16 @@ public class BrowseView implements TemplateViewRoute {
    * Handles the view for ranking suggestions from the text input in the gui.
    */
   public ModelAndView handle(final Request req, final Response res) {
-//    String profileLink = req.cookie("id").split("@")[0];
     String profileLink = "/profile/" + req.cookie("id").split("@")[0];
     List<List<String>> recipes = db.recipes().getNamesAndIDs();
     Map<String, String> recipeMap = new LinkedHashMap<String, String>();
     for (int i = 0; i < recipes.get(0).size(); i++) {
-      recipeMap.put(recipes.get(1).get(i), "/recipe/" + recipes.get(0).get(i));
+      try {
+        recipeMap.put(recipes.get(1).get(i),
+            "/recipe/" + URLEncoder.encode(recipes.get(0).get(i), "UTF-8"));
+      } catch (UnsupportedEncodingException e) {
+        e.printStackTrace();
+      }
     }
 
     Map<String, Object> variables =

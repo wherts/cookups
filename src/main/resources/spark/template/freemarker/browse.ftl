@@ -33,15 +33,23 @@
         </div> 
        </div>
      </div>
-   <div class="block" id="title">
-      <div class="container"><h1 class="h-text" id="title-text">Meals</h1></div>
+   <div class="block d" id="title">
+      <div class="container"><h1 class="h-text" id="title-text">Browse Recipes</h1></div>
      </div>
-     <div class="block c">
-     	<ul>
-			<#list recipes?keys as x>
-				<li class="search-results"><a href="${recipes[x]}">${x}</a></li>
+     <div class="block d">
+     	<div class="container">
+   		<div class="container">
+     		<table class="recipe">
+				<#list recipes?keys?chunk(5) as row>
+				<tr>
+					<#list row as x>
+						<td><a class="recipe" href="${recipes[x]}"><div class='img-container'><img class="recipe" src="../assets/recipes/flank-steak.jpg"></div><span class="recipe-name">${x}</span></a></td>
+					</#list>
+				</tr>
 			</#list>
-		</ul>
+		</table>
+		</div>
+		</div>
      </div>
      <script src="js/jquery-2.1.1.js"></script>
 	<script src="js/jquery.tokenize.js"></script>
