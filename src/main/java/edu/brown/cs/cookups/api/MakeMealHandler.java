@@ -61,11 +61,13 @@ public class MakeMealHandler implements Route {
     Person host = people.getPersonById(id);
     Meal newMeal = new Meal((User) host, sched);
 
-    if (newMeal != null && dateTimeEnd != null) { // if endtime schedule
-      newMeal.setEnd(dateTimeEnd);
-    } else {
-      System.err.println("ERROR: Could create a meal");
+    if (newMeal == null){
+      System.err.println("ERROR: Could create not a meal");
     }
+
+    if (newMeal != null && dateTimeEnd != null) { // if endtime scheduled
+      newMeal.setEnd(dateTimeEnd);
+    } 
     // add recipes to meal
     List<Person> attending = new ArrayList<>();
     // need to figure out how to parse out selected names

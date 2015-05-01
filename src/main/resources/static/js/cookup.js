@@ -14,7 +14,7 @@ function submitCookup() {
 		gender: $("#cookup-form input[name='gender']").val(),
 		orientation: orientation
 	}
-	$.post("/makemeal", params, function(responseJSON) {
+	$.post("/cookup", params, function(responseJSON) {
 		var matches = JSON.parse(responseJSON);
 		people = "<p>Select a person to <em>cookup</em> with:</p><table><tr>";
 		var length = Math.min(matches.length, 5);
@@ -66,7 +66,7 @@ function makeCookupMeal() {
 				chefs: chef
 		}
 		console.log(params);
-		$.post("/cookwfriends", params, function(responseJSON) {
+		$.post("/makemeal", params, function(responseJSON) {
 			var mealLink = JSON.parse(responseJSON);
 			$('#mealLink').html("<a href='"+mealLink+"'>Meal </a>");
 			console.log("made meal");
