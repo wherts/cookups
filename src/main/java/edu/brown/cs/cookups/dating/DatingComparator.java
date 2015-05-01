@@ -17,17 +17,17 @@ public class DatingComparator implements Comparator<Suitor> {
   public int compare(Suitor suitor1, Suitor suitor2) {
     int recipesInCommon1, recipesInCommon2;
 
-    List<Recipe> recipesToMatch = new ArrayList<>(toMatch.person().favoriteRecipes());
-    List<Recipe> suitorRecipes = new ArrayList<>(suitor1.person().favoriteRecipes());
+    List<String> cuisinesToMatch = new ArrayList<>(toMatch.person().favoriteCuisines());
+    List<String> suitorCuisines = new ArrayList<>(suitor1.person().favoriteCuisines());
 
-    recipesToMatch.retainAll(suitorRecipes);
-    recipesInCommon1 = recipesToMatch.size();
+    cuisinesToMatch.retainAll(suitorCuisines);
+    recipesInCommon1 = cuisinesToMatch.size();
     
-    recipesToMatch = new ArrayList<>(toMatch.person().favoriteRecipes());
-    suitorRecipes = new ArrayList<>(suitor2.person().favoriteRecipes());
+    cuisinesToMatch = new ArrayList<>(toMatch.person().favoriteCuisines());
+    suitorCuisines = new ArrayList<>(suitor2.person().favoriteCuisines());
     
-    recipesToMatch.retainAll(suitorRecipes);
-    recipesInCommon2 = recipesToMatch.size();
+    cuisinesToMatch.retainAll(suitorCuisines);
+    recipesInCommon2 = cuisinesToMatch.size();
 
     int compatability1 = (1 + recipesInCommon1) + (toMatch.sexAppeal(suitor1) + suitor1.sexAppeal(toMatch));
     int compatability2 = (1 + recipesInCommon2) + (toMatch.sexAppeal(suitor2) + suitor2.sexAppeal(toMatch));

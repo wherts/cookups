@@ -44,7 +44,7 @@ public class ProfileView implements TemplateViewRoute {
     String profLink = "/profile/" + name;
     Map<String, Object> variables =
         ImmutableMap.of("name", person.name(), "favRecipes",
-            person.favoriteRecipes(),
+            person.favoriteCuisines(),
             "profLink", profLink, "personIngredients", person.ingredients(),
             "editable", editable);
     return new ModelAndView(variables, "profile.ftl");
