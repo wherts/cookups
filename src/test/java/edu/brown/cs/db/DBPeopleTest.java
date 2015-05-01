@@ -46,7 +46,8 @@ public class DBPeopleTest {
     db.ingredients().defineIngredient("i",
                                       "iodine",
                                       1.0,
-                                      "Pantry");
+                                      "Pantry",
+                                      1);
     Person p = people.addPerson("Ronald Reagan",
                                 "ronald@aol.com",
                                 Arrays.asList(i));
@@ -65,15 +66,18 @@ public class DBPeopleTest {
     db.ingredients().defineIngredient("i",
                                       "iodine",
                                       1.0,
-                                      "Pantry");
+                                      "Pantry",
+                                      1);
     db.ingredients().defineIngredient("j",
                                       "jorga",
                                       1.0,
-                                      "Pantry");
+                                      "Pantry",
+                                      1);
     db.ingredients().defineIngredient("k",
                                       "kilbasa",
                                       1.0,
-                                      "Pantry");
+                                      "Pantry",
+                                      1);
     Ingredient i = new Ingredient("i", 1.1, null);
     Ingredient j = new Ingredient("j", 1.1, null);
     Ingredient k = new Ingredient("k", 1.1, null);
@@ -97,7 +101,8 @@ public class DBPeopleTest {
     db.ingredients().defineIngredient("i",
                                       "iodine",
                                       1.0,
-                                      "Pantry");
+                                      "Pantry",
+                                      1);
     Person p = new User("Ronald Reagan",
         "ronald@aol.com",
         Arrays.asList(i));
@@ -118,7 +123,8 @@ public class DBPeopleTest {
       db.ingredients().defineIngredient("/i/pasta",
                                         "pasta",
                                         1.0,
-                                        "pantry");
+                                        "pantry",
+                                        1);
       db.users()
         .addPerson(new User("Ronald",
             "ronald@aol.com",

@@ -106,13 +106,14 @@ public class IngredientsDBLink implements IngredientDB {
 
   @Override
   public void defineIngredient(String id, String name,
-      double price, String storage) {
-    String command = "INSERT OR IGNORE INTO ingredient VALUES (?, ?, ?, ?)";
+      double price, String storage, int mins) {
+    String command = "INSERT OR IGNORE INTO ingredient VALUES (?, ?, ?, ?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(command)) {
       prep.setString(1, id);
       prep.setString(2, name.trim());
       prep.setDouble(3, price);
       prep.setString(4, storage);
+      prep.setInt(5, mins);
       prep.addBatch();
       prep.executeBatch();
     } catch (SQLException e) {

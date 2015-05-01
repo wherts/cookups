@@ -22,8 +22,7 @@ import edu.brown.cs.cookups.person.User;
 public class DBLinkTest {
 
   public static final String TEST_DB = "databases/tests/DBLinkTest.sqlite3";
-  public static final String INGREDIENT_PATH =
-      "databases/csv/ingredients/ingredientPrice.csv";
+  public static final String INGREDIENT_PATH = "databases/csv/ingredients/ingredientPrice.csv";
   public static final String RECIPE_PATH = "databases/csv/recipes/gazpacho.csv";
   public static final String RECIPE_DIR = "databases/csv/recipes/";
 
@@ -34,9 +33,10 @@ public class DBLinkTest {
       db.clearDataBase();
       Ingredient i = new Ingredient("i", 1.1, null);
       db.ingredients().defineIngredient("i",
-          "iodine",
-          1.0,
-          "Pantry");
+                                        "iodine",
+                                        1.0,
+                                        "Pantry",
+                                        1);
       Person p = new User("Jerry", "qyrt", Arrays.asList(i));
       db.users().addPerson(p);
       assertTrue(db.users().hasPersonByName("Jerry"));
@@ -52,9 +52,10 @@ public class DBLinkTest {
       DBLink db = new DBLink(TEST_DB);
       Ingredient i = new Ingredient("i", 1.1, null);
       db.ingredients().defineIngredient("i",
-          "iodine",
-          1.0,
-          "Pantry");
+                                        "iodine",
+                                        1.0,
+                                        "Pantry",
+                                        1);
       Person p = new User("Jerry", "qyrt", Arrays.asList(i));
       db.users().addPerson(p);
       Person q = db.users().getPersonById("qyrt");
@@ -74,21 +75,25 @@ public class DBLinkTest {
       PersonManager people = new PersonManager(db);
       List<Ingredient> ingreds = new ArrayList<Ingredient>();
       db.ingredients().defineIngredient("a",
-          "apples",
-          1.0,
-          "Pantry");
+                                        "apples",
+                                        1.0,
+                                        "Pantry",
+                                        1);
       db.ingredients().defineIngredient("o",
-          "oranges",
-          1.0,
-          "Pantry");
+                                        "oranges",
+                                        1.0,
+                                        "Pantry",
+                                        1);
       db.ingredients().defineIngredient("c",
-          "carrots",
-          1.0,
-          "Pantry");
+                                        "carrots",
+                                        1.0,
+                                        "Pantry",
+                                        1);
       db.ingredients().defineIngredient("ch",
-          "chees",
-          1.0,
-          "Pantry");
+                                        "chees",
+                                        1.0,
+                                        "Pantry",
+                                        1);
       ingreds.add(new Ingredient("a", 1.0, db));
       ingreds.add(new Ingredient("o", 2.0, db));
       ingreds.add(new Ingredient("c", 3.0, db));
@@ -97,7 +102,7 @@ public class DBLinkTest {
       people.addPerson("Ronald Reagan", "freedom", ingreds);
 
       for (Ingredient i : db.users()
-          .getPersonIngredients("freedom")) {
+                            .getPersonIngredients("freedom")) {
         assertTrue(ingreds.contains(i));
       }
 
@@ -114,13 +119,14 @@ public class DBLinkTest {
       DBLink db = new DBLink(TEST_DB);
       db.clearDataBase();
       db.ingredients().defineIngredient("/i/dairy.1",
-          "Milk",
-          1.0,
-          "Fridge");
+                                        "Milk",
+                                        1.0,
+                                        "Fridge",
+                                        1);
 
       assertTrue(db.ingredients()
-          .getIngredientIDByName("Milk")
-          .equals("/i/dairy.1"));
+                   .getIngredientIDByName("Milk")
+                   .equals("/i/dairy.1"));
 
     } catch (ClassNotFoundException | SQLException e) {
       fail();
@@ -133,13 +139,14 @@ public class DBLinkTest {
       DBLink db = new DBLink(TEST_DB);
       db.clearDataBase();
       db.ingredients().defineIngredient("/i/dairy.1",
-          "Milk",
-          1.0,
-          "Fridge");
+                                        "Milk",
+                                        1.0,
+                                        "Fridge",
+                                        1);
 
       assertTrue(db.ingredients()
-          .getIngredientNameByID("/i/dairy.1")
-          .equals("Milk"));
+                   .getIngredientNameByID("/i/dairy.1")
+                   .equals("Milk"));
 
     } catch (ClassNotFoundException | SQLException e) {
       fail();
@@ -165,23 +172,26 @@ public class DBLinkTest {
     try {
       DBLink db = new DBLink(TEST_DB);
       db.ingredients().defineIngredient("/i/dairy.1",
-          "Milk",
-          1.0,
-          "Fridge");
+                                        "Milk",
+                                        1.0,
+                                        "Fridge",
+                                        1);
       db.ingredients().defineIngredient("/i/dairy.2",
-          "Cream",
-          1.0,
-          "Fridge");
+                                        "Cream",
+                                        1.0,
+                                        "Fridge",
+                                        1);
       db.ingredients().defineIngredient("/i/dairy.3",
-          "Yogurt",
-          1.0,
-          "Fridge");
+                                        "Yogurt",
+                                        1.0,
+                                        "Fridge",
+                                        1);
       List<String> names = Arrays.asList("Milk",
-          "Cream",
-          "Yogurt");
+                                         "Cream",
+                                         "Yogurt");
 
       List<String> results = db.ingredients()
-          .getAllIngredientNames();
+                               .getAllIngredientNames();
       for (String str : names) {
         assertTrue(results.contains(str));
       }
@@ -205,7 +215,7 @@ public class DBLinkTest {
       db.importRecipe(new File(r2));
       db.importRecipe(new File(r3));
       Set<Recipe> recipes = db.recipes()
-          .getRecipesWithIngredient("/i/dairy.5");
+                              .getRecipesWithIngredient("/i/dairy.5");
 
       List<String> recipeIDs = new ArrayList<String>();
       for (Recipe r : recipes) {
@@ -216,7 +226,7 @@ public class DBLinkTest {
       assertTrue(recipeIDs.contains("/r/1.3"));
       assertTrue(recipeIDs.contains("/r/1.4"));
       recipes = db.recipes()
-          .getRecipesWithIngredient("nonexistent");
+                  .getRecipesWithIngredient("nonexistent");
       assertTrue(recipes.isEmpty());
     } catch (ClassNotFoundException | SQLException e) {
       fail();
@@ -230,8 +240,8 @@ public class DBLinkTest {
       db.clearDataBase();
       // butter
       db.recipes().addRecipe("Beef Stew",
-          "/r/stew",
-          "Put in Bowl and Shake");
+                             "/r/stew",
+                             "Put in Bowl and Shake");
       assertTrue(db.recipes().hasRecipe("/r/stew"));
       db.recipes().removeRecipe("/r/stew");
     } catch (ClassNotFoundException | SQLException e) {
@@ -245,33 +255,36 @@ public class DBLinkTest {
       DBLink db = new DBLink(TEST_DB);
       db.clearDataBase();
       db.ingredients().defineIngredient("/i/salt",
-          "salt",
-          1.0,
-          "Pantry");
+                                        "salt",
+                                        1.0,
+                                        "Pantry",
+                                        1);
       db.ingredients().defineIngredient("/i/pepper",
-          "pepper",
-          1.0,
-          "Pantry");
+                                        "pepper",
+                                        1.0,
+                                        "Pantry",
+                                        1);
       db.ingredients().defineIngredient("/i/pasta",
-          "pasta",
-          1.0,
-          "Pantry");
+                                        "pasta",
+                                        1.0,
+                                        "Pantry",
+                                        1);
 
       db.recipes().addRecipe("Beef Stew",
-          "/r/stew",
-          "Put in Bowl and Shake");
+                             "/r/stew",
+                             "Put in Bowl and Shake");
       db.recipes().addRecipeIngredient("/r/stew",
-          "/i/salt",
-          1);
+                                       "/i/salt",
+                                       1);
       db.recipes().addRecipeIngredient("/r/stew",
-          "/i/pepper",
-          4);
+                                       "/i/pepper",
+                                       4);
       db.recipes().addRecipeIngredient("/r/stew",
-          "/i/pasta",
-          7);
+                                       "/i/pasta",
+                                       7);
 
       List<Ingredient> results = db.ingredients()
-          .getIngredientsByRecipe("/r/stew");
+                                   .getIngredientsByRecipe("/r/stew");
       assertTrue(results.contains(new Ingredient("/i/salt",
           1,
           db)));
@@ -294,13 +307,15 @@ public class DBLinkTest {
       DBLink db = new DBLink(TEST_DB);
       db.clearDataBase();
       db.ingredients().defineIngredient("/i/freedom",
-          "freedom",
-          1776.0,
-          "USA");
+                                        "freedom",
+                                        1776.0,
+                                        "USA",
+                                        1);
       db.ingredients().defineIngredient("/i/liberty",
-          "liberty",
-          1776.0,
-          "USA");
+                                        "liberty",
+                                        1776.0,
+                                        "USA",
+                                        1);
       PersonManager people = new PersonManager(db);
       Person ronald1 = new User("Ronald Reagan",
           "freedom",
@@ -309,19 +324,19 @@ public class DBLinkTest {
           "liberty",
           Arrays.asList(new Ingredient("/i/liberty", 42, db)));
       people.addPerson("Ronald Reagan",
-          "freedom",
-          Arrays.asList(new Ingredient("/i/freedom",
-              42,
-              db)));
+                       "freedom",
+                       Arrays.asList(new Ingredient("/i/freedom",
+                           42,
+                           db)));
       people.addPerson("Ronald Reagan",
-          "liberty",
-          Arrays.asList(new Ingredient("/i/liberty",
-              42,
-              db)));
+                       "liberty",
+                       Arrays.asList(new Ingredient("/i/liberty",
+                           42,
+                           db)));
 
       List<Person> results = db.users()
-          .getPersonsByName("Ronald Reagan",
-              people);
+                               .getPersonsByName("Ronald Reagan",
+                                                 people);
       assertTrue(results.contains(ronald1));
       assertTrue(results.contains(ronald2));
       db.users().removePersonById("freedom");
@@ -342,8 +357,8 @@ public class DBLinkTest {
           + "Garnish with shredded carrots, cucumber or scallions";
       // System.out.println(db.getInstructionsByRecipe("/r/1.5"));
       assertTrue(db.recipes()
-          .getInstructionsByRecipe("/r/1.5")
-          .equals(instr));
+                   .getInstructionsByRecipe("/r/1.5")
+                   .equals(instr));
 
     } catch (ClassNotFoundException | SQLException e) {
       fail();
@@ -358,7 +373,7 @@ public class DBLinkTest {
       db.importIngredients(new File(INGREDIENT_PATH));
       db.importRecipe(new File(RECIPE_PATH));
       List<Ingredient> ingredients = db.ingredients()
-          .getIngredientsByRecipe("/r/1.2");
+                                       .getIngredientsByRecipe("/r/1.2");
       Ingredient i1 = new Ingredient("/i/produce.10",
           16.0,
           db);
