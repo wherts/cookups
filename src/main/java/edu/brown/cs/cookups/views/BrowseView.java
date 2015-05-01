@@ -28,8 +28,8 @@ public class BrowseView implements TemplateViewRoute {
    * Handles the view for ranking suggestions from the text input in the gui.
    */
   public ModelAndView handle(final Request req, final Response res) {
-    String profileLink = req.cookie("id").split("@")[0];
-
+//    String profileLink = req.cookie("id").split("@")[0];
+    String profileLink = "/profile/" + req.cookie("id").split("@")[0];
     List<List<String>> recipes = db.recipes().getNamesAndIDs();
     Map<String, String> recipeMap = new LinkedHashMap<String, String>();
     for (int i = 0; i < recipes.get(0).size(); i++) {

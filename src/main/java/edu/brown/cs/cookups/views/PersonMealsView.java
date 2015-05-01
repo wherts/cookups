@@ -25,7 +25,7 @@ public class PersonMealsView implements TemplateViewRoute {
   @Override
   public ModelAndView handle(Request request, Response response) {
     String id = request.cookie("id");
-    String profileLink = id.split("@")[0];
+    String profileLink = "/profile/" + id.split("@")[0];
 
     Person person = null;
     try {

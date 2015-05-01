@@ -1,3 +1,5 @@
+var numberIngredients = 0;
+	
 $(document).ready(function () {
 	$.get("/profileData", function(JSONresponse) {
 		console.log(JSONresponse);
@@ -19,8 +21,6 @@ $(document).ready(function () {
 				ingredient_options += "<option value='"+i+"'>"+ingredients[i-1]+"</option>";
 			}
 		}
-		
-		console.log(cuisine_options);
 		$("#fav-cuisines").html(cuisine_options);
 		$("#fav-cuisines").tokenize({
 				newElements: false,
@@ -29,6 +29,24 @@ $(document).ready(function () {
 		$("#curr-ingredients").html(ingredient_options);
 		$("#curr-ingredients").tokenize({
 				newElements: false,
+		});
+		$(".TokensContainer").bind("DOMSubtreeModified", function() {
+			if ($(".Token").html() == null) {
+				console.log("empty");
+			}
+			else if (numberIngredients != $(".Token").length) {
+				var length = $(".Token").length;
+				var token = $(".Token:nth-child("+length+")");
+				if ($(".Token:nth-child("+length+") .counter").length == 0) {
+					console.log(token);
+					console.log(length);
+					var curr = token[length - 1];
+					console.log(curr);
+					token.append(" <input type='number' class='counter' min='0.1' value='0.1' step='0.1'>oz");
+					$(".TokensContainer").click();
+				}
+				numberIngredients = $(".Token").length;
+			}
 		});
 	});
 });
