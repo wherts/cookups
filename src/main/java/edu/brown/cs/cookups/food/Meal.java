@@ -16,6 +16,7 @@ import edu.brown.cs.cookups.schedule.Schedule;
  * @author wh7
  */
 public class Meal {
+  private String id;
   private User host;
   private List<User> attending;
   private LatLong location;
@@ -199,6 +200,14 @@ public class Meal {
       ret.add(r.copy());
     }
     return ret;
+  }
+
+  public void setID(String id) {
+    this.id = id;
+  }
+
+  public String id() {
+    return this.id;
   }
 
   /**
