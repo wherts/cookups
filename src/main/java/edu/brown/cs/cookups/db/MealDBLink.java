@@ -63,6 +63,7 @@ public class MealDBLink implements MealDB {
     while (hasID(id)) {
       id = getRandID();
     }
+    meal.setID(id);
     this.meals.put(id, meal);
     String command = "INSERT OR IGNORE INTO meal VALUES (?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(command)) {
