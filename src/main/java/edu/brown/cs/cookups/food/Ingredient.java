@@ -82,6 +82,20 @@ public class Ingredient {
         + (time.getDays());
   }
 
+  /**
+   * Method to tell if an ingredient is past
+   * its expiration date.
+   * @return true if this ingredient is expired.
+   * @throws SQLException if ingredient is not
+   * in the database
+   */
+  public boolean isExpired() throws SQLException {
+    //get expiration time in minutes, if 0 return false
+    //get date created
+    //get period, if minutes of period > expiration time
+    return false;
+  }
+
   /** Accessor for all the recipes this ingredient.
    * is used in.
    * @return set of recipes
