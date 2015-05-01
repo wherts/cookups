@@ -10,6 +10,8 @@ public interface DBManager {
 
   public RecipeDB recipes();
 
+  public MealDB meals();
+
   public void clearCache();
 
   public void importIngredients(File file);

@@ -31,4 +31,8 @@ public interface UserDB {
       String password);
 
   public String getPersonPassword(String id);
+
+  public void addPersonMeal(String personID, String mealID);
+
+  public List<String> getPersonMealIDs(String id);
 }
