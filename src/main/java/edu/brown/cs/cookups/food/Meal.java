@@ -6,189 +6,192 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.User;
 import edu.brown.cs.cookups.schedule.LatLong;
 import edu.brown.cs.cookups.schedule.Schedule;
 
-/** This class represents Cookups Meal. Each meal has a host, a list of guests, a
+/**
+ * This class represents Cookups Meal. Each meal has a host, a list of guests, a
  * date, and a recipe to make
- * @author wh7 */
+ * @author wh7
+ */
 public class Meal {
-  private Person host;
-  private List<Person> attending;
+  private User host;
+  private List<User> attending;
   private LatLong location;
   private Schedule schedule;
   private List<Recipe> recipes;
   private String name;
 
-  /** Constructor for a meal.
-   * @param user The host of the meal */
+  /**
+   * Constructor for a meal.
+   * @param user The host of the meal
+   */
   public Meal(User user, Schedule s) {
 
     assert (user != null && s != null);
     this.host = user;
     this.schedule = s;
-    this.attending = new ArrayList<Person>();
+    this.attending = new ArrayList<User>();
     this.recipes = new ArrayList<Recipe>();
   }
 
-  /** Accessor for meal name.
-   * @return meal name */
+  /**
+   * Accessor for meal name.
+   * @return meal name
+   */
   public String name() {
     return name;
   }
 
-  /** Setter for meal name.
+  /**
+   * Setter for meal name.
    * @param n name of meal
-   * @return previous name */
+   * @return previous name
+   */
   public String setName(String n) {
     String oldName = name;
     name = n;
     return oldName;
   }
 
-  /** Accessor for date of meal.
-   * @return localdate */
+  /**
+   * Accessor for date of meal.
+   * @return localdate
+   */
   public LocalDate date() {
     LocalDate d = schedule.date();
     return LocalDate.of(d.getYear(),
-        d.getMonthValue(),
-        d.getDayOfMonth());
+                        d.getMonthValue(),
+                        d.getDayOfMonth());
   }
 
-  /** Accessor for time of meal.
-   * @return localtime */
+  /**
+   * Accessor for time of meal.
+   * @return localtime
+   */
   public LocalTime time() {
     LocalTime t = schedule.time();
     return LocalTime.of(t.getHour(), t.getMinute());
   }
 
-  /** Setter for date of meal.
+  /**
+   * Setter for date of meal.
    * @param lD new date.
-   * @return old date */
+   * @return old date
+   */
   public LocalDate setDate(LocalDate lD) {
     return schedule.changeDate(lD);
   }
 
-  /** Setter for time of meal.
+  /**
+   * Setter for time of meal.
    * @param lT new time.
-   * @return old time */
+   * @return old time
+   */
   public LocalTime setTime(LocalTime lT) {
     return schedule.changeTime(lT);
   }
 
-  /** Accessor for end date.
-   * @return null if no end set */
+  /**
+   * Accessor for end date.
+   * @return null if no end set
+   */
   public LocalDate endDate() {
     return schedule.endDate();
   }
 
-  /** Accessor for end time.
-   * @return null if no end set */
+  /**
+   * Accessor for end time.
+   * @return null if no end set
+   */
   public LocalTime endTime() {
     return schedule.endTime();
   }
 
-  /** Setter for end date and time.
-   * @param lDT ending datetime object */
+  /**
+   * Setter for end date and time.
+   * @param lDT ending datetime object
+   */
   public void setEnd(LocalDateTime lDT) {
     schedule.setEnd(lDT);
   }
 
-  /** Accessor for meal's location.
-   * @return a LatLong object */
+  /**
+   * Accessor for meal's location.
+   * @return a LatLong object
+   */
   public LatLong location() {
     return location;
   }
 
-  /** Setter for a meal's location.
+  /**
+   * Setter for a meal's location.
    * @param l new LatLong location
-   * @return old location */
+   * @return old location
+   */
   public LatLong setLocation(LatLong l) {
     LatLong ret = location;
     this.location = l;
     return ret;
   }
 
-<<<<<<< HEAD
-  /** Accessor for guest list of a Meal.
-   * @return list of User attending */
-  public List<User> attending() {
-    List<User> copy = new ArrayList<>();
-    for (User p : attending) {
-=======
   /**
    * Accessor for guest list of a Meal.
    * @return list of User attending
    */
-  public List<Person> attending() {
-    List<Person> copy = new ArrayList<>();
-    for (Person p : attending) {
->>>>>>> 06a1d7e3bbf5b287805c108c43113eacc50aa13a
+  public List<User> attending() {
+    List<User> copy = new ArrayList<>();
+    for (User p : attending) {
 
       copy.add(p);
     }
     return copy;
   }
 
-<<<<<<< HEAD
-  /** Method to add a guest to the Meal.
-   * @param p new User coming to Meal */
-  public void addAttending(User p) {
-=======
   /**
    * Method to add a guest to the Meal.
-   * @param a new User coming to Meal
+   * @param p new User coming to Meal
    */
-  public void addAttending(Person a) {
->>>>>>> 06a1d7e3bbf5b287805c108c43113eacc50aa13a
-
+  public void addAttending(User a) {
     assert (a != null);
     attending.add(a);
   }
 
-<<<<<<< HEAD
-  /** Accessor for a Meal's host.
-   * @return User object */
-  public User host() {
-=======
   /**
    * Accessor for a Meal's host.
    * @return User object
    */
-  public Person host() {
->>>>>>> 06a1d7e3bbf5b287805c108c43113eacc50aa13a
+  public User host() {
 
     return host;
   }
 
-  /** Setter for a Meal's host.
+  /**
+   * Setter for a Meal's host.
    * @param h new host of meal
-<<<<<<< HEAD
-   * @return old host */
-  public User setHost(User h) {
-    User ret = this.host;
-=======
    * 
    * @return old host
    */
-  public Person setHost(User h) {
-    Person ret = this.host;
->>>>>>> 06a1d7e3bbf5b287805c108c43113eacc50aa13a
+  public User setHost(User h) {
+    User ret = this.host;
     this.host = h;
     return ret;
   }
 
-  /** Add a recipe to a Meal.
-   * @param r new recipe */
+  /**
+   * Add a recipe to a Meal.
+   * @param r new recipe
+   */
 
   public void addRecipe(Recipe r) {
     this.recipes.add(r);
   }
 
-  /** Accessor for a Meal's recipes.
-   * @return list of Recipes */
+  /**
+   * Accessor for a Meal's recipes.
+   * @return list of Recipes
+   */
 
   public List<Recipe> recipes() {
     ArrayList<Recipe> ret = new ArrayList<>();
@@ -198,8 +201,10 @@ public class Meal {
     return ret;
   }
 
-  /** Method for hashing meal object
-   * @return int for hasing */
+  /**
+   * Method for hashing meal object
+   * @return int for hasing
+   */
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -217,8 +222,10 @@ public class Meal {
     return result;
   }
 
-  /** Accessor for object's string.
-   * @return string */
+  /**
+   * Accessor for object's string.
+   * @return string
+   */
   @Override
   public String toString() {
 
@@ -236,8 +243,10 @@ public class Meal {
 
   }
 
-  /** Equality method for an object.
-   * @return true of Meal has same host, recipe, guest list, and date, and time */
+  /**
+   * Equality method for an object.
+   * @return true of Meal has same host, recipe, guest list, and date, and time
+   */
   @Override
   public boolean equals(Object o) {
     if (o == this) {
