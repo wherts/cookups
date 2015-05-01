@@ -13,10 +13,10 @@ import edu.brown.cs.cookups.db.DBManager;
 public class Ingredient {
   private double ounces;
   private String id, name, storage;
-  private LocalDate dateCreated;
   private DBManager querier;
   private Set<Recipe> recipes;
   private double price = 0;
+  private LocalDateTime dateCreated;
 
   /** Public constructor for an ingredient.
    * @param i id
@@ -27,7 +27,6 @@ public class Ingredient {
     id = i;
     ounces = oz;
     querier = dbM;
-    dateCreated = LocalDateTime.now().toLocalDate();
   }
 
   /** Accessor for ingredient id.
@@ -76,10 +75,37 @@ public class Ingredient {
    * @return double elapsed */
   public double elapsed() { // seconds until expiration
     LocalDate curr = LocalDateTime.now().toLocalDate();
-    Period time = Period.between(curr, dateCreated);
+    Period time = Period.between(curr, dateCreated.toLocalDate());
     return (time.getYears() * 365)
         + (time.getMonths() * 30)
         + (time.getDays());
+  }
+
+  /**
+   * Method to tell if an ingredient is past
+   * its expiration date.
+   * @return true if this ingredient is expired.
+   * @throws SQLException if ingredient is not
+   * in the database
+   */
+  public boolean isExpired() throws SQLException {
+    //get expiration time in minutes, if 0 return false
+    //get date created
+    //get period, if minutes of period > expiration time
+    return false;
+  }
+
+  public LocalDateTime setDateCreated(LocalDateTime lDT) {
+    assert (lDT != null);
+    LocalDateTime ret = dateCreated;
+    dateCreated = lDT;
+    return ret;
+  }
+
+  public LocalDateTime getDateCreated() {
+    LocalDateTime ret = LocalDateTime.of(dateCreated.toLocalDate(),
+                                         dateCreated.toLocalTime());
+    return ret;
   }
 
   /** Accessor for all the recipes this ingredient.
