@@ -17,7 +17,8 @@ import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.User;
 
 public class MealDBLink implements MealDB {
-  private static final String CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+  private static final String CHARS =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
   private static final int ID_LENGTH = 9;
   private Map<String, Meal> meals = new HashMap<String, Meal>();
   private DBManager db;
@@ -68,7 +69,7 @@ public class MealDBLink implements MealDB {
     String command = "INSERT OR IGNORE INTO meal VALUES (?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(command)) {
       prep.setString(1, id);
-      prep.setString(2, gson.toJson(meal));
+      prep.setString(2, "");
       prep.addBatch();
       prep.executeBatch();
     } catch (SQLException e) {
