@@ -245,9 +245,7 @@ public class DateMatcherTest {
     List<Person> matches = DateMatcher.match(suitors, queerMan1);
 
     assertTrue(matches.size() == 11);
-    for (Person person : matches) {
-      System.out.println(person.name());
-    }
+
     assertTrue(matches.contains(queerMan2.person()));
     assertTrue(matches.contains(biMan2.person()));
     assertTrue(matches.contains(gayMan1.person()));
