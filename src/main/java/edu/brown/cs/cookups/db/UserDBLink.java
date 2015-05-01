@@ -66,6 +66,10 @@ public class UserDBLink implements UserDB {
             person = people.cachePerson(id,
                                         rs.getString(NAME_IDX),
                                         ingredients);
+            String cuisines = rs.getString(3);
+            if (cuisines != null) {
+              addPersonCuisines(person, cuisines);
+            }
           }
           users.add(person);
         }
@@ -82,6 +86,7 @@ public class UserDBLink implements UserDB {
   public Person getPersonById(String id) {
     String query = "SELECT * FROM user WHERE id = ?";
     String name = "";
+    String cuisines = null;
     try (PreparedStatement prep = conn.prepareStatement(query)) {
       prep.setString(1, id);
       try (ResultSet rs = prep.executeQuery()) {
@@ -91,6 +96,7 @@ public class UserDBLink implements UserDB {
 
         while (rs.next()) {
           name = rs.getString(NAME_IDX);
+          cuisines = rs.getString(3);
         }
       } catch (SQLException e) {
         e.printStackTrace();
@@ -101,7 +107,12 @@ public class UserDBLink implements UserDB {
       return null;
     }
     List<Ingredient> ingredients = getPersonIngredients(id);
-    return new User(name, id, ingredients);
+    Person p = new User(name, id, ingredients);
+    if (cuisines != null) {
+      addPersonCuisines(p, cuisines);
+    }
+    return p;
+
   }
 
   @Override
@@ -191,10 +202,19 @@ public class UserDBLink implements UserDB {
 
   @Override
   public void addPerson(Person p) {
-    String query = "INSERT OR IGNORE INTO user VALUES (?, ?)";
+    String query = "INSERT OR IGNORE INTO user VALUES (?, ?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(query)) {
       prep.setString(ID_IDX, p.id());
       prep.setString(NAME_IDX, p.name());
+      List<String> cuisines = p.favoriteCuisines();
+      if (cuisines != null && cuisines.size() > 0) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(cuisines.get(0));
+        for (int i = 1; i < cuisines.size(); i++) {
+          sb.append("," + cuisines.get(i));
+        }
+        prep.setString(3, sb.toString());
+      }
       prep.addBatch();
       prep.executeBatch();
     } catch (SQLException e) {
@@ -203,6 +223,28 @@ public class UserDBLink implements UserDB {
 
     for (Ingredient i : p.ingredients()) {
       addUserIngredient(p.id(), i);
+    }
+  }
+
+  @Override
+  public void updatePersonCuisines(Person p) {
+    assert (this.hasPersonByID(p.id()));
+    List<String> cuisines = p.favoriteCuisines();
+    if (cuisines == null || cuisines.isEmpty()) {
+      return;
+    }
+    StringBuilder sb = new StringBuilder();
+    sb.append(cuisines.get(0));
+    for (int i = 1; i < cuisines.size(); i++) {
+      sb.append(", " + cuisines.get(i));
+    }
+    String update = "UPDATE user SET cuisines = ? WHERE id = ?";
+    try (PreparedStatement prep = conn.prepareStatement(update)) {
+      prep.setString(1, sb.toString());
+      prep.setString(2, p.id());
+      prep.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
   }
 
@@ -297,4 +339,12 @@ public class UserDBLink implements UserDB {
     }
     return meals;
   }
+
+  private void addPersonCuisines(Person p, String cuisineStr) {
+    String[] cuisines = cuisineStr.split(",");
+    for (String cuisine : cuisines) {
+      p.addCuisine(cuisine.trim());
+    }
+  }
+
 }

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -46,9 +47,9 @@ public class DBPeopleTest {
                                       "iodine",
                                       1.0,
                                       "Pantry");
-    people.addPerson("Ronald Reagan",
-                     "ronald@aol.com",
-                     Arrays.asList(i));
+    Person p = people.addPerson("Ronald Reagan",
+                                "ronald@aol.com",
+                                Arrays.asList(i));
     Person r = people.getPersonById("ronald@aol.com");
     db.users().removePersonById("ronald@aol.com");
     assertTrue(r.id().equals("ronald@aol.com"));
@@ -139,6 +140,7 @@ public class DBPeopleTest {
   public void personMealTest()
     throws ClassNotFoundException, SQLException {
     DBLink db = new DBLink(DB_PATH);
+    db.clearDataBase();
     PersonManager people = new PersonManager(db);
     people.addPerson("Wes", "wh7", Arrays.asList());
     Schedule sched = new Schedule(LocalDateTime.now(),
@@ -154,6 +156,32 @@ public class DBPeopleTest {
     String mealID = db.meals().addMeal(m1);
     people.addMealtoPerson(mealID, "wh7");
     assertTrue(m1.equals(db.meals().getMealByID(mealID)));
+  }
+
+  @Test
+  public void personCuisineTest()
+    throws ClassNotFoundException, SQLException {
+    DBLink db = new DBLink(DB_PATH);
+    db.clearDataBase();
+    PersonManager people = new PersonManager(db);
+    Person p = people.addPerson("Wes",
+                                "wh7",
+                                Arrays.asList());
+    people.addPersonCuisine("wh7", "Tai");
+    people.addPersonCuisine("wh7", "Korean");
+    List<String> expected = Arrays.asList("Tai", "Korean");
+    List<String> result = p.favoriteCuisines();
+    assertTrue(expected.size() == result.size());
+    for (String s : expected) {
+      assertTrue(result.contains(s));
+    }
+    result = db.users()
+               .getPersonById("wh7")
+               .favoriteCuisines();
+    assertTrue(expected.size() == result.size());
+    for (String s : expected) {
+      assertTrue(result.contains(s));
+    }
   }
 
 }

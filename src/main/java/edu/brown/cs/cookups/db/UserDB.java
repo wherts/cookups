@@ -35,4 +35,6 @@ public interface UserDB {
   public void addPersonMeal(String personID, String mealID);
 
   public List<String> getPersonMealIDs(String id);
+
+  public void updatePersonCuisines(Person p);
 }

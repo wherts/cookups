@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.brown.cs.cookups.food.Ingredient;
-import edu.brown.cs.cookups.food.Recipe;
 
 public class User implements Person {
   private String name;
@@ -53,7 +52,7 @@ public class User implements Person {
 
   @Override
   public List<String> favoriteCuisines() {
-    return favoriteCuisines;
+    return this.favoriteCuisines;
   }
 
   @Override
@@ -67,6 +66,11 @@ public class User implements Person {
     }
     User u = (User) o;
     return this.id.equals(u.id());
+  }
+
+  @Override
+  public void addCuisine(String cuisine) {
+    this.favoriteCuisines.add(cuisine);
   }
 
 }
