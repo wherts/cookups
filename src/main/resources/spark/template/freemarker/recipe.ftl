@@ -33,17 +33,16 @@
        </div>
      </div>
      ${recipe.name()}
-     ${recipe.id()}
+     <br>
  	 <#list recipe.ingredients() as x>
-		${x.name()}<br>
-		${x.ounces()}
+		${x.ounces()} oz ${x.name()}<br>
 	 </#list>
+	 <br>
      <#list recipe.shoppingList() as x>
-		${x.name()}<br>
-		${x.ounces()}
+		${x.ounces()} oz ${x.name()}<br>
 	 </#list>
-	 ${recipe.shoppingList()}
-     ${recipe.name()}
+	 <br><br>
+	 ${recipe.instructions()}
      <script src="../js/jquery-2.1.1.js"></script>
 	<script src="../js/jquery.tokenize.js"></script>
     <script src="../js/main.js"></script>

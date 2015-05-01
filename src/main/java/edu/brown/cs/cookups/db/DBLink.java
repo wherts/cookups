@@ -21,30 +21,37 @@ import edu.brown.cs.cookups.person.User;
 
 public class DBLink implements DBManager {
   private Connection conn;
-  public static final String USER = "user(id TEXT, name TEXT, PRIMARY KEY (id))";
-  public static final String INGREDIENT = "ingredient(id TEXT, name TEXT, price INTEGER, storage TEXT, PRIMARY KEY(id))";
-  public static final String USER_INGREDIENT = "user_ingredient(user TEXT, ingredient TEXT, qty FLOAT"
-      + ", PRIMARY KEY(user, ingredient)"
-      + ", FOREIGN KEY(user) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE"
-      + ", FOREIGN KEY(ingredient) REFERENCES ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)";
-  public static final String RECIPE = "recipe(id TEXT, name TEXT, instructions TEXT, PRIMARY KEY(id))";
-  public static final String RECIPE_INGREDIENT = "recipe_ingredient(recipe TEXT, ingredient TEXT, qty FLOAT"
-      + ", PRIMARY KEY(recipe, ingredient)"
-      + ", FOREIGN KEY(recipe) REFERENCES recipe(id) ON DELETE CASCADE ON UPDATE CASCADE"
-      + ", FOREIGN KEY(ingredient) REFERENCES ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)";
-  public static final String AUTHENTICATION = "authentication(id TEXT, password TEXT, FOREIGN KEY(id) REFERENCES user(id)"
-      + "ON DELETE CASCADE ON UPDATE CASCADE)";
+  public static final String USER =
+      "user(id TEXT, name TEXT, PRIMARY KEY (id))";
+  public static final String INGREDIENT =
+      "ingredient(id TEXT, name TEXT, price INTEGER, storage TEXT, PRIMARY KEY(id))";
+  public static final String USER_INGREDIENT =
+      "user_ingredient(user TEXT, ingredient TEXT, qty FLOAT"
+          + ", PRIMARY KEY(user, ingredient)"
+          + ", FOREIGN KEY(user) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE"
+          + ", FOREIGN KEY(ingredient) REFERENCES ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)";
+  public static final String RECIPE =
+      "recipe(id TEXT, name TEXT, instructions TEXT, PRIMARY KEY(id))";
+  public static final String RECIPE_INGREDIENT =
+      "recipe_ingredient(recipe TEXT, ingredient TEXT, qty FLOAT"
+          + ", PRIMARY KEY(recipe, ingredient)"
+          + ", FOREIGN KEY(recipe) REFERENCES recipe(id) ON DELETE CASCADE ON UPDATE CASCADE"
+          + ", FOREIGN KEY(ingredient) REFERENCES ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)";
+  public static final String AUTHENTICATION =
+      "authentication(id TEXT, password TEXT, FOREIGN KEY(id) REFERENCES user(id)"
+          + "ON DELETE CASCADE ON UPDATE CASCADE)";
   public static final String MEAL = "meal(id TEXT, json TEXT, PRIMARY KEY(id))";
-  public static final String USER_MEAL = "user_meal(user TEXT, meal TEXT, PRIMARY KEY(user, meal), "
-      + "FOREIGN KEY(user) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,"
-      + "FOREIGN KEY(meal) REFERENCES meal(id) ON DELETE CASCADE ON UPDATE CASCADE)";
-  public static final String[] TABLE_SCHEMA = { USER,
+  public static final String USER_MEAL =
+      "user_meal(user TEXT, meal TEXT, PRIMARY KEY(user, meal), "
+          + "FOREIGN KEY(user) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE,"
+          + "FOREIGN KEY(meal) REFERENCES meal(id) ON DELETE CASCADE ON UPDATE CASCADE)";
+  public static final String[] TABLE_SCHEMA = {USER,
       INGREDIENT, USER_INGREDIENT, RECIPE,
-      RECIPE_INGREDIENT, AUTHENTICATION, MEAL, USER_MEAL };
-  public static final String[] TABLES = { "user",
+      RECIPE_INGREDIENT, AUTHENTICATION, MEAL, USER_MEAL};
+  public static final String[] TABLES = {"user",
       "ingredient", "user_ingredient", "recipe",
       "recipe_ingredient", "authentication", "meal",
-      "user_meal" };
+      "user_meal"};
   public static final int ID_IDX = 1;
   public static final int NAME_IDX = 2;
   public static final int INGREDIENT_IDX = 2;
@@ -145,7 +152,7 @@ public class DBLink implements DBManager {
         prep.setString(ID_IDX, line[ID_IDX - 1]);
         prep.setString(NAME_IDX, recipe);
         prep.setString(RECIPE_TEXT_IDX,
-                       instructions.toString());
+            instructions.toString());
         prep.addBatch();
         prep.executeBatch();
       } catch (SQLException e) {
@@ -201,11 +208,11 @@ public class DBLink implements DBManager {
           }
           prep.setString(ID_IDX, line[ID_IDX - 1].trim());
           prep.setString(NAME_IDX,
-                         line[NAME_IDX - 1].trim());
+              line[NAME_IDX - 1].trim());
           prep.setString(PRICE_IDX,
-                         line[PRICE_IDX - 1].trim());
+              line[PRICE_IDX - 1].trim());
           prep.setString(STORAGE_IDX,
-                         line[STORAGE_IDX - 1].trim());
+              line[STORAGE_IDX - 1].trim());
           prep.addBatch();
         }
         prep.executeBatch();
@@ -285,6 +292,7 @@ public class DBLink implements DBManager {
       }
       Person p = new User(name, uid, ingredients);
       this.users.addPerson(p);
+      this.users.setPersonPassword(uid, "password");
     } catch (FileNotFoundException e) {
       // TODO Auto-generated catch block
       System.out.println("ERROR: file " + file.getPath()
