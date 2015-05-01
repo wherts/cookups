@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/stylesheet.css">
     <link rel="stylesheet" type="text/css" href="../css/jquery.tokenize.css" />
     <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/meal.css">
   </head>
   <body>
      <!-- HEADER -->
@@ -35,21 +35,47 @@
        </div>
      </div>
   <div class="block b">
-      <p class="large-header">MealName</p>
-      <div id="meal-details">
-      	${meal.name()}
-      	${meal.host()}
-      	${meal.date()}
-        <div class="left large-text">Date<br>Time<br>Host<br></div>
-        <div class="right large-text alt">Date<br>Time<br>Host<br></div>
+      <p class="title">${meal.name()}</p>
+      <div id="meal-details" class="container">
+      	<ul class="meal-headers left">
+      		<li>Host</li>
+      		<li>Date</li>
+      		<li>Time</li>
+		</ul>
+		<ul class="meal-info">
+			<li>${meal.host().name()}</li>
+			<li>${meal.date()}</li>
+			<li>
+			     <#if meal.endTime()??>
+				   ${meal.time()} to ${meal.endTime()}
+				<#else>
+				   ${meal.time()}
+				</#if>
+			</li>
+		</ul>
       </div>
-      <div id="meal-attendees">
-        <p class="large-text">Who's Attending</p>
+  </div>
+  <div class="block a">
+      <div id="meal-attendees" class="container">
+        <p class="h-text">Who's Attending</p>
+		<#list meal.attending() as p>
+			<p>${p.name()}</p>
+		</#list>
       </div>
-      <div id="recipe-suggestions">
-        <p class="large-text">Recipe Suggestions</p>
+  </div>
+  <div class="block b last-div">
+      <div id="recipe-suggestions" class="container">
+        <p class="h-text">Recipe Suggestions</p>
+      	<#list meal.recipes() as r>
+			<p>${r.name()}</p>
+			<p>${r.percentHave()} % completed</p>
+			<p>$ ${r.shoppingPrice()}</p>
+			<p>Need to buy:</p>
+			<#list r.shoppingList() as i>
+				<p>i.name()</p>
+			</#list>
+		</#list>
       </div>
-
   </div>
      <script src="../js/jquery-2.1.1.js"></script>
 	<script src="../js/jquery.tokenize.js"></script>
