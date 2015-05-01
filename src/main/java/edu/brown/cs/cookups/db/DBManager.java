@@ -20,4 +20,6 @@ public interface DBManager {
 
   public void importRecipeIngredients(File file);
 
+  public void importAllUsers(String dir);
+
 }

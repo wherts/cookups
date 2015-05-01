@@ -10,8 +10,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.BeforeClass;
+
+import edu.brown.cs.cookups.food.Ingredient;
+import edu.brown.cs.cookups.person.Person;
+import edu.brown.cs.cookups.person.User;
 
 public class DBLink implements DBManager {
   private Connection conn;
@@ -238,6 +244,51 @@ public class DBLink implements DBManager {
     } catch (FileNotFoundException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void importAllUsers(String dir) {
+    try {
+      Files.walk(Paths.get(dir)).forEach(filePath -> {
+        if (Files.isRegularFile(filePath)) {
+          importUser(new File(filePath.toString()));
+        }
+      });
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  public void importUser(File file) {
+    try (CSVReader reader = new CSVReader(file)) {
+      String[] line = reader.readLine();
+      if (line.length != 2) {
+        System.out.println("ERROR: Bad CSV Format");
+        return;
+      }
+      String name = line[0];
+      String uid = line[1];
+      List<Ingredient> ingredients = new ArrayList<Ingredient>();
+      while ((line = reader.readLine()) != null) {
+        if (line.length != 2) {
+          System.out.println("ERROR: Bad CSV Format");
+          return;
+        }
+        String i = line[0];
+        double amt = Double.parseDouble(line[1]);
+        ingredients.add(new Ingredient(i, amt, this));
+      }
+      Person p = new User(name, uid, ingredients);
+      this.users.addPerson(p);
+    } catch (FileNotFoundException e) {
+      // TODO Auto-generated catch block
+      System.out.println("ERROR: file " + file.getPath()
+          + " does not exist");
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
