@@ -1,5 +1,7 @@
 package edu.brown.cs.cookups.api;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,6 +40,7 @@ public class CookFriendsHandler implements Route {
   public Object handle(Request request, Response response) {
 
     String id = request.cookie("id");
+    String profileLink = id.split("@")[0];
     QueryParamsMap qm = request.queryMap();
 
     String name = qm.value("name"); // name of meal
@@ -45,7 +48,6 @@ public class CookFriendsHandler implements Route {
     String timeStart = qm.value("timeStart"); // start time
     String timeEnd = qm.value("timeEnd"); // not required
     String chefs = qm.value("chefs");
-
 
     String start = date + " " + timeStart;
 
@@ -93,9 +95,16 @@ public class CookFriendsHandler implements Route {
     for (Recipe r : toCook) {
       newMeal.addRecipe(r);
     }
-    // TODO add recipe to DB here???
+    newMeal.setName(name);
 
-    return GSON.toJson(newMeal);
+    String mealLink = null;
+    try {
+      mealLink = "/meal/" + URLEncoder.encode(newMeal.name(), "UTF-8");
+    } catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
+    }
+
+    return GSON.toJson(mealLink);
   }
 
   private String[] splitNames(String n) {

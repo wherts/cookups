@@ -29,7 +29,6 @@ function submitCookFriends() {
 		date: $('#friends-form input[name=date]').val(),
 		timeStart:  $('#friends-form input[name=time_start]').val(),
 		timeEnd:  $('#friends-form input[name=time_end]').val(),
-		timeStart:  $('#friends-form input[name=time_start]').val(),
 		chefs: chefs
 	}
 	

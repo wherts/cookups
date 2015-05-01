@@ -36,7 +36,7 @@
      </div>
   <div class="block b">
       <div class="left half about">
-      	  <div id="fridge-container"><img class="profile-pic" src="../assets/sample-pic.png"></div>
+      	  <div id="fridge-container"><img class="profile-pic" src="../assets/people/sample-pic.png"></div>
 	      <div class="about-me">
 	        <p class="name h-text">${name}</p>
 	        <p class="subheader h-text">

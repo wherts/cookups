@@ -43,7 +43,7 @@
      </div>
       <div class="block c">
       <div class="container">
-      <div class="form-box">
+      <div class="form-box left">
          <div id="cookup-form">
           <p class="subheader-text">Make a Meal</p>	
           Romantic? <br>
@@ -60,10 +60,10 @@
 	          Bisexual<input type="radio" name="orientation" value="bisexual">
 	          <br>
 	      </div>
-          <input id="cookupButton" onClick="submitCookup()" class="btn" type="submit" value="Cook Up">
+          <input id="cookupButton" onClick="submitCookup()" class="btn" type="submit" value="Find Matches">
          </div>
       </div>
-      <div id="matches">
+      <div class="form-box half" id="matches">
       </div>
     </div>
    </div>
