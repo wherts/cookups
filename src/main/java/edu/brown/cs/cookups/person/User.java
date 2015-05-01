@@ -73,4 +73,10 @@ public class User implements Person {
     this.favoriteCuisines.add(cuisine);
   }
 
+  @Override
+  public String url() {
+    String link = "/profile/" + id.split("@")[0];
+    return link;
+  }
+
 }

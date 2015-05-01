@@ -16,3 +16,16 @@
 ul {
 	list-style: none;
 }
+
+.meal-subtitle {
+	font-family: 'gobold_thinregular', sans-serif;
+	font-size: 30px;
+}
+
+#meal-attendees {
+	color: #676D51;
+}
+
+#meal-attendees a {
+	text-decoration: none;
+}

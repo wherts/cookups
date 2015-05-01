@@ -3,6 +3,7 @@ package edu.brown.cs.cookups.api;
 import spark.Filter;
 import spark.Request;
 import spark.Response;
+import spark.Spark;
 
 public class AuthFilter implements Filter {
   private Authentication authenticator;
@@ -19,6 +20,7 @@ public class AuthFilter implements Filter {
 
     if (!authenticated) {
       response.redirect("/");
+      Spark.halt();
     }
   }
 
