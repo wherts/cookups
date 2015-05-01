@@ -2,7 +2,9 @@ package edu.brown.cs.food;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import org.junit.Test;
 
@@ -83,5 +85,36 @@ public class ScheduleTest {
       caught = true;
     }
     assert(caught);
+  }
+
+  @Test
+  public void testChangeDate() {
+    LocalDate yesterday = LocalDateTime.now().minusDays(1).toLocalDate();
+    LocalDate tomorrow = LocalDateTime.now().plusDays(1).toLocalDate();
+    Schedule sched = new Schedule(LocalDateTime.now(), null);
+    boolean caught = false;
+    try {
+      sched.changeDate(yesterday);
+    } catch (AssertionError e) {
+      caught = true;
+    }
+    assert(caught);
+    sched.changeDate(tomorrow);
+  }
+
+  @Test
+  public void testChangeTime() {
+    LocalTime now = LocalDateTime.now().toLocalTime();
+    LocalTime hourLater = now.plusHours(1);
+    LocalTime hourEarlier = now.minusHours(1);
+    Schedule sched = new Schedule(LocalDateTime.now(), null);
+    boolean caught = false;
+    try {
+      sched.changeTime(hourEarlier);
+    } catch (AssertionError e) {
+      caught = true;
+    }
+    assert(caught);
+    sched.changeTime(hourLater);
   }
 }

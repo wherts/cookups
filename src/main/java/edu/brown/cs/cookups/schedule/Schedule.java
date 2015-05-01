@@ -26,10 +26,16 @@ public class Schedule {
    * @param lD new date
    * @return old date */
   public LocalDate changeDate(LocalDate lD) {
-    assert (lD != null);
+    assert (lD != null && !datePassed(lD));
     LocalDate ret = start.toLocalDate();
     this.start = LocalDateTime.of(lD, start.toLocalTime());
     return ret;
+  }
+  
+  private boolean datePassed(LocalDate lD) {
+    LocalDate today = LocalDateTime.now().toLocalDate();
+    Duration duration = Duration.between(today, lD);
+    return duration.isNegative();
   }
 
   /** Accessor for date.
@@ -44,10 +50,16 @@ public class Schedule {
    * @param lT new time
    * @return old time */
   public LocalTime changeTime(LocalTime lT) {
-    assert (lT != null);
+    assert (lT != null && !isPast(lT));
     LocalTime ret = start.toLocalTime();
     this.start = LocalDateTime.of(start.toLocalDate(), lT);
     return ret;
+  }
+  
+  private boolean isPast(LocalTime lT) {
+    LocalTime now = LocalDateTime.now().toLocalTime();
+    Duration duration = Duration.between(now, lT);
+    return duration.isNegative();
   }
 
   /** Accessor for start time.
