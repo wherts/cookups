@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.User;
 import edu.brown.cs.cookups.schedule.LatLong;
 import edu.brown.cs.cookups.schedule.Schedule;
@@ -16,8 +17,8 @@ import edu.brown.cs.cookups.schedule.Schedule;
  * @author wh7
  */
 public class Meal {
-  private User host;
-  private List<User> attending;
+  private Person host;
+  private List<Person> attending;
   private LatLong location;
   private Schedule schedule;
   private List<Recipe> recipes;
@@ -25,14 +26,14 @@ public class Meal {
 
   /**
    * Constructor for a meal.
-   * @param p The host of the meal
+   * @param person The host of the meal
    */
-  public Meal(User p, Schedule s) {
+  public Meal(Person person, Schedule s) {
 
-    assert (p != null && s != null);
-    this.host = p;
+    assert (person != null && s != null);
+    this.host = person;
     this.schedule = s;
-    this.attending = new ArrayList<User>();
+    this.attending = new ArrayList<Person>();
     this.recipes = new ArrayList<Recipe>();
   }
 
@@ -140,9 +141,9 @@ public class Meal {
    * Accessor for guest list of a Meal.
    * @return list of User attending
    */
-  public List<User> attending() {
-    List<User> copy = new ArrayList<>();
-    for (User p : attending) {
+  public List<Person> attending() {
+    List<Person> copy = new ArrayList<>();
+    for (Person p : attending) {
 
       copy.add(p);
     }
@@ -151,19 +152,19 @@ public class Meal {
 
   /**
    * Method to add a guest to the Meal.
-   * @param p new User coming to Meal
+   * @param a new User coming to Meal
    */
-  public void addAttending(User p) {
+  public void addAttending(Person a) {
 
-    assert (p != null);
-    attending.add(p);
+    assert (a != null);
+    attending.add(a);
   }
 
   /**
    * Accessor for a Meal's host.
    * @return User object
    */
-  public User host() {
+  public Person host() {
 
     return host;
   }
@@ -174,8 +175,8 @@ public class Meal {
    * 
    * @return old host
    */
-  public User setHost(User h) {
-    User ret = this.host;
+  public Person setHost(User h) {
+    Person ret = this.host;
     this.host = h;
     return ret;
   }

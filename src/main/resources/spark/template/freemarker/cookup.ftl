@@ -42,8 +42,8 @@
          <div id="cookup-form">
           <p class="subheader-text">Make a Meal</p>	
           Romantic? <br>
-          <input type="radio" name="type" value="true" checked>Yes
-          <input type="radio" name="type" value="false">No
+          <input type="radio" name="type" value="romantic" checked>Yes
+          <input type="radio" name="type" value="platonic">No
           <br><br>
           <div id="romantic-opts">
 	          Gender<br>
@@ -55,8 +55,10 @@
 	          Bisexual<input type="radio" name="orientation" value="bisexual">
 	          <br>
 	      </div>
-          <input class="btn" type="submit" onclick="requestMatches();" value="Cook Up">
+          <input id="cookupButton" onClick=submitCookup() class="btn" type="submit" value="Cook Up">
          </div>
+      </div>
+      <div id="matches">
       </div>
     </div>
    </div>
