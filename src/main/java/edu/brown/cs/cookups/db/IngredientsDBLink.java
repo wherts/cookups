@@ -107,13 +107,14 @@ public class IngredientsDBLink implements IngredientDB {
 
   @Override
   public void defineIngredient(String id, String name,
-      double price, String storage) {
-    String command = "INSERT OR IGNORE INTO ingredient VALUES (?, ?, ?, ?)";
+      double price, String storage, int mins) {
+    String command = "INSERT OR IGNORE INTO ingredient VALUES (?, ?, ?, ?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(command)) {
       prep.setString(1, id);
       prep.setString(2, name.trim());
       prep.setDouble(3, price);
       prep.setString(4, storage);
+      prep.setInt(5, mins);
       prep.addBatch();
       prep.executeBatch();
     } catch (SQLException e) {
@@ -189,6 +190,25 @@ public class IngredientsDBLink implements IngredientDB {
       e.printStackTrace();
     }
     return storage;
+  }
+
+  @Override
+  public int expirationByID(String id) {
+    String query = "SELECT exp FROM ingredient WHERE id = ?";
+    int exp = 0;
+    try (PreparedStatement prep = conn.prepareStatement(query)) {
+      prep.setString(1, id);
+      try (ResultSet rs = prep.executeQuery()) {
+        while (rs.next()) {
+          exp = rs.getInt(1);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return exp;
   }
 
 }

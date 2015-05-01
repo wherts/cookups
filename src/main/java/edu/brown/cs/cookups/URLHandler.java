@@ -58,9 +58,9 @@ public class URLHandler {
     List<List<String>> recipeData = db.recipes().getNamesAndIDs();
     recipeIDs = recipeData.get(0);
     recipeNames = recipeData.get(1);
-    
+
     SampleSuitors.createSuitors(people);
-    
+
     auth = new Authentication(this.db);
 
     recipeSearch = new Engine(new Trie(recipeNames));
@@ -97,7 +97,7 @@ public class URLHandler {
     Spark
         .get("/browse", new BrowseView(db, recipeIDs, recipeNames), freeMarker);
     Spark.get("/recipe/:id", new RecipeView(db, people), freeMarker);
-    Spark.get("/meal/:mealID", new MealView(), freeMarker);
+    Spark.get("/meal/:id", new MealView(db), freeMarker);
     Spark.get("/meals", new PersonMealsView(people), freeMarker);
     Spark.get("/profile/:name", new ProfileView(people), freeMarker);
 

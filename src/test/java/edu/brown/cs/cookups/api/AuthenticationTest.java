@@ -23,9 +23,9 @@ public class AuthenticationTest {
       DBLink db = new DBLink(TEST_DB);
       db.clearDataBase();
       db.ingredients().defineIngredient("/i/pasta",
-                                        "pasta",
-                                        1.0,
-                                        "pantry");
+          "pasta",
+          1.0,
+          "pantry", 0);
       Person p = new User("Ronald",
           "ron@aol.com",
           Arrays.asList(new Ingredient("/i/pasta", 1.0, db)));
@@ -43,9 +43,9 @@ public class AuthenticationTest {
       DBLink db = new DBLink(TEST_DB);
       Authentication a = new Authentication(db);
       assertTrue(a.authenticatePassword("ron@aol.com",
-                                        "freedom"));
+          "freedom"));
       assertTrue(!a.authenticatePassword("ron@aol.com",
-                                         "tyranny"));
+          "tyranny"));
     } catch (ClassNotFoundException | SQLException e) {
       fail();
     }

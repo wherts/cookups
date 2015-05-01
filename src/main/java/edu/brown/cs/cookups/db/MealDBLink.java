@@ -5,22 +5,22 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import com.google.gson.Gson;
 import com.google.gson.InstanceCreator;
 
 import edu.brown.cs.cookups.food.Meal;
-import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.User;
-import edu.brown.cs.cookups.schedule.LatLong;
-import edu.brown.cs.cookups.schedule.Schedule;
 
 public class MealDBLink implements MealDB {
-  private static final String CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+  private static final String CHARS =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
   private static final int ID_LENGTH = 9;
+  private Map<String, Meal> meals = new HashMap<String, Meal>();
   private DBManager db;
   private Connection conn;
   private static final Gson gson = new Gson();
@@ -33,6 +33,10 @@ public class MealDBLink implements MealDB {
 
   @Override
   public Meal getMealByID(String id) {
+    Meal m = meals.get(id);
+    if (m != null) {
+      return m;
+    }
     String query = "SELECT json FROM meal WHERE id = ?";
     String json = "";
     try (PreparedStatement prep = conn.prepareStatement(query)) {
@@ -41,7 +45,9 @@ public class MealDBLink implements MealDB {
       try (ResultSet rs = prep.executeQuery()) {
         while (rs.next()) {
           json = rs.getString(1);
-          return gson.fromJson(json, Meal.class);
+          m = gson.fromJson(json, Meal.class);
+          meals.put(id, m);
+          return m;
         }
       } catch (SQLException e) {
         e.printStackTrace();
@@ -58,10 +64,12 @@ public class MealDBLink implements MealDB {
     while (hasID(id)) {
       id = getRandID();
     }
+    meal.setID(id);
+    this.meals.put(id, meal);
     String command = "INSERT OR IGNORE INTO meal VALUES (?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(command)) {
       prep.setString(1, id);
-      prep.setString(2, gson.toJson(meal));
+      prep.setString(2, "");
       prep.addBatch();
       prep.executeBatch();
     } catch (SQLException e) {
@@ -100,16 +108,6 @@ public class MealDBLink implements MealDB {
     public Person createInstance(Type type) {
       return new User("?", "?", null);
     }
-  }
-
-  private class DBMeal {
-    private User host;
-    private List<User> attending;
-    private LatLong location;
-    private Schedule schedule;
-    private List<Recipe> recipes;
-    private String name;
-
   }
 
 }

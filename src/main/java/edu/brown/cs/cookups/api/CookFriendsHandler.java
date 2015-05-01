@@ -1,5 +1,7 @@
 package edu.brown.cs.cookups.api;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,6 +40,7 @@ public class CookFriendsHandler implements Route {
   public Object handle(Request request, Response response) {
 
     String id = request.cookie("id");
+    String profileLink = id.split("@")[0];
     QueryParamsMap qm = request.queryMap();
 
     String name = qm.value("name"); // name of meal
@@ -45,7 +48,6 @@ public class CookFriendsHandler implements Route {
     String timeStart = qm.value("timeStart"); // start time
     String timeEnd = qm.value("timeEnd"); // not required
     String chefs = qm.value("chefs");
-
 
     String start = date + " " + timeStart;
 
@@ -56,13 +58,9 @@ public class CookFriendsHandler implements Route {
       dateTimeEnd = LocalDateTime.parse(end, formatter);
     }
     Schedule sched = new Schedule(dateTimeStart, null);
-    Meal newMeal = null;
-    try { // creating meal object
-      newMeal = new Meal((User) people.getPersonById(id), sched);
-    } catch (SQLException e) {
-      System.err.println(e.getMessage());
-      e.printStackTrace();
-    }
+    Person host = people.getPersonById(id);
+    Meal newMeal = new Meal((User) host, sched);
+
     if (newMeal != null && dateTimeEnd != null) { // if endtime schedule
       newMeal.setEnd(dateTimeEnd);
     } else {
@@ -73,12 +71,8 @@ public class CookFriendsHandler implements Route {
     // need to figure out how to parse out selected names
     String[] ids = splitNames(chefs);
     for (String s : ids) {
-      try {
-        Person person = people.getPersonById(s);
-        attending.add(person);
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+      Person person = people.getPersonById(s);
+      attending.add(person);
     }
 
     for (Person a : attending) {
@@ -93,9 +87,24 @@ public class CookFriendsHandler implements Route {
     for (Recipe r : toCook) {
       newMeal.addRecipe(r);
     }
-    // TODO add recipe to DB here???
+    newMeal.setName(name);
 
-    return GSON.toJson(newMeal);
+    String mealID = dbM.meals().addMeal(newMeal);
+    for (Person p : newMeal.attending()) {
+      dbM.users().addPersonMeal(p.id(), mealID);
+    }
+    dbM.users().addPersonMeal(id, mealID);
+
+    String mealLink = null;
+    try {
+      mealLink = "/meal/" + URLEncoder.encode(mealID, "UTF-8");
+    } catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
+    }
+
+    System.out.println("breaking");
+    return null;
+    // return GSON.toJson(mealLink);
   }
 
   private String[] splitNames(String n) {

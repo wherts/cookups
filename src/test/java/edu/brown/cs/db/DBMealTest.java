@@ -50,7 +50,5 @@ public class DBMealTest {
     m1.addRecipe(r1);
     String id = db.meals().addMeal(m1);
     Meal m2 = db.meals().getMealByID(id);
-    System.out.println(m2.host().name());
-
   }
 }

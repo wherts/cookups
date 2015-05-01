@@ -5,7 +5,6 @@ $('input:radio[name="type"]').on('change', function(){
 
 
 function submitCookup() {
-	console.log("HERE");
 	var orientation = $("#cookup-form input:radio[name='orientation']:checked").val();
 	if (orientation == null) {
 		orientation = "queer";
@@ -15,14 +14,72 @@ function submitCookup() {
 		gender: $("#cookup-form input[name='gender']").val(),
 		orientation: orientation
 	}
-	console.log(params);
 	$.post("/cookup", params, function(responseJSON) {
 		var matches = JSON.parse(responseJSON);
-		console.log("Cookup requested");
-		people = "<p>Select a person to <em>cookup</em> with:</p>";
-		for (var i = 0; i < matches.length; i++) {
-			people += "<p>" + matches[i][1] + "</p>";
+		people = "<p>Select a person to <em>cookup</em> with:</p><table><tr>";
+		var length = Math.min(matches.length, 5);
+		for (var i = 0; i < length; i++) {
+//			var link = "../assets/people/" + matches[i][0].split("@")[0];
+			var link = "../assets/people/sample-pic.png";
+			people += "<td class='person-option'><div class='match' style='background-image:url("+link+")'></div>"+matches[i][1]+"<td>";
 		}
+		
+		people += "</tr></table><div id='cookup-meal-form'>"
+			+ "<div class='form-entry'>Meal Name<br><input type='text' name='name'></div>"
+			+ "<div class='form-entry'>Date<br><input type='date' name='date'></div>"
+			+ "<div class='form-entry'>Time<br><input type='time' name='time_start'>"
+			+ "to <input type='time' name='time_end'></div>" 
+			+ "<div class='btn-container'><input class='btn' onClick=makeCookupMeal() value='Make Cookup!'></div>" 
+			+ "</div>";
 		$("#matches").html(people);
+		
+		setPersonListener();
+	});
+}
+
+function makeCookupMeal() {
+	var name = $('#cookup-meal-form input[name=name]').val();
+	var date = $('#cookup-meal-form input[name=date]').val();
+	var timeStart = $('#cookup-meal-form input[name=time_start]').val();
+	var timeEnd = $('#cookup-meal-form input[name=time_end]').val();
+	
+	if (document.getElementsByClassName("border").length < 1) {
+		alert("Please select a person to cookup with.");
+	} else if (date === "") {
+		alert("Please select a date for the meal.");
+	} else if (timeStart === "") {
+		alert("Please select a start time for the meal.");
+	} else if (name === "") {
+		alert("Please choose a name for the meal.");
+	}
+	else {
+		var chef = document.getElementsByClassName("border")[0].textContent;
+		if (timeEnd === "") {timeEnd = null};
+		var params = {
+				name: name,
+				date: date,
+				timeStart: timeStart,
+				timeEnd: timeEnd,
+				chefs: chef
+		}
+		console.log(params);
+		$.post("/cookwfriends", params, function(responseJSON) {
+			var mealLink = JSON.parse(responseJSON);
+			$('#mealLink').html("<a href='"+mealLink+"'>Meal </a>");
+			console.log("made meal");
+		});	
+	}
+}
+
+function setPersonListener() {
+	$('.person-option').on('click', function(){
+		removeBorders();
+		$(this).addClass("border");
+	});
+}
+
+function removeBorders() {
+	$('.person-option').each(function(i) {
+		$(this).removeClass("border");
 	});
 }

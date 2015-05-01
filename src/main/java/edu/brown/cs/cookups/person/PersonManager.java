@@ -22,14 +22,29 @@ public class PersonManager {
     suitors = new ConcurrentHashMap<String, Suitor>();
   }
 
-  public Person getPersonById(String id)
-    throws SQLException {
+  public Person getPersonById(String id) {
     Person p = users.get(id);
     if (p == null) {
       p = db.users().getPersonById(id);
-      users.put(id, p);
+      if (p != null) {
+        users.put(id, p);
+      }
     }
     return p;
+  }
+
+  public List<Ingredient> getPersonIngredientsByID(String id) {
+    List<Ingredient> toReturn = new ArrayList<>();
+    List<Ingredient> dbIngs = db.users()
+                                .getPersonIngredients(id);
+    for (Ingredient i : dbIngs) {
+      if (!i.isExpired()) { //not expired
+        toReturn.add(i);
+      } else { //expired -> remove from table
+        db.users().removePersonIngredient(id, i.id());
+      }
+    }
+    return toReturn;
   }
 
   public List<Person> getPersonsByName(String name)
@@ -44,7 +59,7 @@ public class PersonManager {
     return person;
   }
 
-  public void cacheSuitor(Suitor...suitors) {
+  public void cacheSuitor(Suitor... suitors) {
     for (Suitor suitor : suitors) {
       this.suitors.put(suitor.person().id(), suitor);
     }
@@ -54,11 +69,12 @@ public class PersonManager {
     return this.users.get(id);
   }
 
-  public void addPerson(String name, String id,
+  public Person addPerson(String name, String id,
       List<Ingredient> ingredients) throws SQLException {
     Person p = new User(name, id, ingredients);
     db.users().addPerson(p);
     users.put(id, p);
+    return p;
   }
 
   public void removePersonById(String id)
@@ -88,5 +104,14 @@ public class PersonManager {
 
     }
     return meals;
+  }
+
+  public void addPersonCuisine(String id, String cuisine) {
+    Person p = this.getPersonById(id);
+    if (p == null) {
+      return;
+    }
+    p.addCuisine(cuisine);
+    this.db.users().updatePersonCuisines(p);
   }
 }
