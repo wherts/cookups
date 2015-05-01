@@ -1,6 +1,7 @@
 package edu.brown.cs.cookups.food;
 
 import java.sql.SQLException;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -85,20 +86,27 @@ public class Ingredient {
   /**
    * Method for setting an ingredient's creation date.
    * @param lDT new LocalDateTime object
-   * @return old LocalDateTime
+   * @return old LocalDateTime or null if new datetime
+   * is in the future
    */
   public LocalDateTime setDateCreated(LocalDateTime lDT) {
-    assert (lDT != null);
+    assert (lDT != null && notFuture(lDT));
     LocalDateTime ret = dateCreated;
     dateCreated = lDT;
     return ret;
+  }
+
+  private boolean notFuture(LocalDateTime lDT) {
+    Duration duration
+      = Duration.between(lDT, LocalDateTime.now());
+    return !duration.isNegative();
   }
 
   /**
    * Method for accessing an ingredient's creation date.
    * @return LocalDateTime object
    */
-  public LocalDateTime getDateCreated() {
+  public LocalDateTime getDateCreated() { //database call
     LocalDateTime ret = LocalDateTime.of(dateCreated.toLocalDate(),
                                          dateCreated.toLocalTime());
     return ret;
@@ -117,6 +125,19 @@ public class Ingredient {
     return expTime;
   }
   
+  public boolean isExpired() {
+    this.expirationTime(); //ensure expTime is set
+    if (dateCreated == null) {
+      return false;
+    }
+    LocalDateTime now = LocalDateTime.now();
+    Duration duration = Duration.between(this.getDateCreated(), now);
+    if (expTime == 0) { //doesn't expire
+      return false;
+    }
+    return duration.toMinutes() > expTime;
+  }
+
   /** Accessor for all the recipes this ingredient.
    * is used in.
    * @return set of recipes
@@ -196,4 +217,5 @@ public class Ingredient {
   public Ingredient copy() {
     return new Ingredient(id, ounces, querier);
   }
+
 }
