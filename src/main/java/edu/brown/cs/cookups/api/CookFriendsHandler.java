@@ -58,13 +58,9 @@ public class CookFriendsHandler implements Route {
       dateTimeEnd = LocalDateTime.parse(end, formatter);
     }
     Schedule sched = new Schedule(dateTimeStart, null);
-    Meal newMeal = null;
-    try { // creating meal object
-      newMeal = new Meal((User) people.getPersonById(id), sched);
-    } catch (SQLException e) {
-      System.err.println(e.getMessage());
-      e.printStackTrace();
-    }
+    Person host = people.getPersonById(id);
+    Meal newMeal = new Meal((User) host, sched);
+
     if (newMeal != null && dateTimeEnd != null) { // if endtime schedule
       newMeal.setEnd(dateTimeEnd);
     } else {
@@ -75,12 +71,8 @@ public class CookFriendsHandler implements Route {
     // need to figure out how to parse out selected names
     String[] ids = splitNames(chefs);
     for (String s : ids) {
-      try {
-        Person person = people.getPersonById(s);
-        attending.add(person);
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+      Person person = people.getPersonById(s);
+      attending.add(person);
     }
 
     for (Person a : attending) {
@@ -104,7 +96,13 @@ public class CookFriendsHandler implements Route {
       e.printStackTrace();
     }
 
-    return GSON.toJson(mealLink);
+    String mealID = dbM.meals().addMeal(newMeal);
+    for (Person p : newMeal.attending()) {
+      dbM.users().addPersonMeal(p.id(), mealID);
+    }
+    dbM.users().addPersonMeal(id, mealID);
+
+    return GSON.toJson(null);
   }
 
   private String[] splitNames(String n) {

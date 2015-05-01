@@ -1,6 +1,5 @@
 package edu.brown.cs.cookups.views;
 
-import java.sql.SQLException;
 import java.util.Map;
 
 import spark.ModelAndView;
@@ -25,12 +24,8 @@ public class ProfileView implements TemplateViewRoute {
     String name = request.params(":name");
     String profileID = name + "@brown.edu";
 
-    Person person = null;
-    try {
-      person = people.getPersonById(profileID);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
+    Person person = people.getPersonById(profileID);
+
 
     if (person == null) {
       response.status(404);
