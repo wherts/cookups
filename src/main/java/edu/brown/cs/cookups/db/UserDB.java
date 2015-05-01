@@ -16,6 +16,8 @@ public interface UserDB {
 
   public List<Ingredient> getPersonIngredients(String id);
 
+  public void removePersonIngredient(String uid, String iid);
+
   public void removePersonById(String id);
 
   public boolean hasPersonByID(String id);
