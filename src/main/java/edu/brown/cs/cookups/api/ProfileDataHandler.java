@@ -1,6 +1,5 @@
 package edu.brown.cs.cookups.api;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -31,12 +30,7 @@ public class ProfileDataHandler implements Route {
     String name = request.params(":id");
     String profileID = name + "@brown.edu";
 
-    Person person = null;
-    try {
-      person = people.getPersonById(profileID);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
+    Person person = people.getPersonById(profileID);
 
     if (person == null) {
       response.status(404);
