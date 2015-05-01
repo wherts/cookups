@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +23,7 @@ import edu.brown.cs.cookups.person.User;
 public class DBLinkTest {
 
   public static final String TEST_DB = "databases/tests/DBLinkTest.sqlite3";
-  public static final String INGREDIENT_PATH = "databases/csv/ingredients/ingredientPrice.csv";
+  public static final String INGREDIENT_PATH = "databases/csv/ingredients/ingredientExpiration.csv";
   public static final String RECIPE_PATH = "databases/csv/recipes/gazpacho.csv";
   public static final String RECIPE_DIR = "databases/csv/recipes/";
 
@@ -32,6 +33,7 @@ public class DBLinkTest {
       DBLink db = new DBLink(TEST_DB);
       db.clearDataBase();
       Ingredient i = new Ingredient("i", 1.1, null);
+      i.setDateCreated(LocalDateTime.now());
       db.ingredients().defineIngredient("i",
                                         "iodine",
                                         1.0,
@@ -51,6 +53,7 @@ public class DBLinkTest {
     try {
       DBLink db = new DBLink(TEST_DB);
       Ingredient i = new Ingredient("i", 1.1, null);
+      i.setDateCreated(LocalDateTime.now());
       db.ingredients().defineIngredient("i",
                                         "iodine",
                                         1.0,
@@ -98,6 +101,9 @@ public class DBLinkTest {
       ingreds.add(new Ingredient("o", 2.0, db));
       ingreds.add(new Ingredient("c", 3.0, db));
       ingreds.add(new Ingredient("ch", 1.0, db));
+      for (Ingredient i : ingreds) {
+        i.setDateCreated(LocalDateTime.now());
+      }
 
       people.addPerson("Ronald Reagan", "freedom", ingreds);
 
@@ -317,30 +323,26 @@ public class DBLinkTest {
                                         "USA",
                                         1);
       PersonManager people = new PersonManager(db);
-      Person ronald1 = new User("Ronald Reagan",
-          "freedom",
-          Arrays.asList(new Ingredient("/i/freedom", 42, db)));
-      Person ronald2 = new User("Ronald Reagan",
-          "liberty",
-          Arrays.asList(new Ingredient("/i/liberty", 42, db)));
-      people.addPerson("Ronald Reagan",
-                       "freedom",
-                       Arrays.asList(new Ingredient("/i/freedom",
-                           42,
-                           db)));
-      people.addPerson("Ronald Reagan",
-                       "liberty",
-                       Arrays.asList(new Ingredient("/i/liberty",
-                           42,
-                           db)));
+      Ingredient freedom = new Ingredient("/i/freedom",
+          42,
+          db);
+      freedom.setDateCreated(LocalDateTime.now());
+      Person ronald1 = people.addPerson("Ronald Reagan",
+                                        "freedom",
+                                        Arrays.asList(freedom));
+      Ingredient liberty = new Ingredient("/i/liberty",
+          42,
+          db);
+      liberty.setDateCreated(LocalDateTime.now());
+      Person ronald2 = people.addPerson("Ronald Reagan",
+                                        "liberty",
+                                        Arrays.asList(liberty));
 
       List<Person> results = db.users()
                                .getPersonsByName("Ronald Reagan",
                                                  people);
       assertTrue(results.contains(ronald1));
       assertTrue(results.contains(ronald2));
-      db.users().removePersonById("freedom");
-      db.users().removePersonById("liberty");
 
     } catch (ClassNotFoundException | SQLException e) {
       fail();

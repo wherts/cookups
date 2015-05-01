@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -286,7 +287,9 @@ public class DBLink implements DBManager {
         }
         String i = line[0];
         double amt = Double.parseDouble(line[1]);
-        ingredients.add(new Ingredient(i, amt, this));
+        Ingredient ingred = new Ingredient(i, amt, this);
+        ingred.setDateCreated(LocalDateTime.now());
+        ingredients.add(ingred);
       }
       Person p = new User(name, uid, ingredients);
       this.users.addPerson(p);
