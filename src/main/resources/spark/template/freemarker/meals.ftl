@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="css/html5bp.css">
         <link rel="stylesheet" href="css/stylesheet.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/browse.css">
   </head>
   <body>
      <!-- HEADER -->
@@ -34,12 +33,12 @@
        </div>
      </div>
    <div class="block" id="title">
-      <div class="container"><h1 class="h-text" id="title-text">Meals</h1></div>
+      <div class="container"><h1 class="h-text" id="title-text">Browse</h1></div>
      </div>
      <div class="block c">
      	<ul>
-			<#list recipes?keys as x>
-				<li class="search-results"><a href="${recipes[x]}">${x}</a></li>
+			<#list meals as x>
+				<li>${x.name()}</li>
 			</#list>
 		</ul>
      </div>

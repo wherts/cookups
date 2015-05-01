@@ -4,102 +4,91 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.brown.cs.cookups.db.DBLink;
 import edu.brown.cs.cookups.db.DBManager;
-/**
- * This class represents a Recipe
+
+/** This class represents a Recipe
  * object that we use in Cookups.
- * @author wh7
- *
- */
+ * @author wh7 */
 public class Recipe {
   private String id;
   private String name;
-  private String instructions;
+  private List<String> instructions;
   private DBManager querier;
   private List<Ingredient> ingredients, toBuy;
   private double percentHave = 1;
   private double shoppingPrice = 0;
   private static final double CENTS = 100;
 
-  /**
-   * Constructor for the Recipe object.
+  /** Constructor for the Recipe object.
    * @param i all recipes must be instatiated.
-   * with an id.
+   *        with an id.
    * @param q all recipes must be given a way
-   * to query the database for information about
-   * itself
-   */
+   *        to query the database for information about
+   *        itself */
   public Recipe(String i, DBManager q) {
     id = i;
     querier = q;
     toBuy = new ArrayList<>();
   }
 
-  /**
-   * Accessor for recipe id.
-   * @return id string
-   */
+  /** Accessor for recipe id.
+   * @return id string */
   public String id() {
     return id;
   }
 
-  /**
-   * Accessor for recipe's name.
-   * @return name string
-   */
+  /** Accessor for recipe's name.
+   * @return name string */
   public String name() {
     if (name == null) {
       name = querier.recipes()
-                    .getRecipeNameByID(id);
+          .getRecipeNameByID(id);
     }
     return name;
   }
 
-  /**
-   * Accessor for recipe's ingredients.
-   * @return list of ingredients
-   */
+  /** Accessor for recipe's ingredients.
+   * @return list of ingredients */
   public List<Ingredient> ingredients() {
     if (ingredients == null) {
       ingredients = querier.ingredients()
-                           .getIngredientsByRecipe(id);
+          .getIngredientsByRecipe(id);
     }
     return new ArrayList<>(ingredients);
   }
 
-  /**
-   * Accessor for recipe's instructions.
-   * @return string of instructions.
-   */
-  public String instructions() {
+  /** Accessor for recipe's instructions.
+   * @return string of instructions. */
+  public List<String> instructions() {
     if (instructions == null) {
-      instructions = querier.recipes()
-                            .getInstructionsByRecipe(id);
+      String instructionString = querier.recipes()
+          .getInstructionsByRecipe(id);
+      String[] split = instructionString.split("\\$");
+      instructions = new ArrayList<>();
+      for (String s : split) {
+        instructions.add(s);
+      }
     }
+
     return instructions;
   }
 
-  /**
-   * Accessor for ingredients needed
+  /** Accessor for ingredients needed
    * to complete the recipe.
-   * @return list of ingredients.
-   */
+   * @return list of ingredients. */
   public List<Ingredient> shoppingList() {
     return new ArrayList<>(toBuy);
   }
 
-  /**
-   * Accessor for what total percentage (in weight)
+  /** Accessor for what total percentage (in weight)
    * of the ingredients the recipe has.
-   * @return double of percentage
-   */
+   * @return double of percentage */
   public double percentHave() {
     if (toBuy.size() == 0) {
       return 1;
     } else if (percentHave == 1) {
-      //only calculate percenthave once
-      //if it's 1, then it hasn't been set yet
+      // only calculate percenthave once
+      // if it's 1, then it hasn't been set yet
       double need = 0;
       double total = 0;
       for (Ingredient ing : toBuy) {
@@ -113,43 +102,37 @@ public class Recipe {
     return percentHave;
   }
 
-  /**
-   * Accessor for how much money it costs
+  /** Accessor for how much money it costs
    * to complete the recipe.
-   * @return double of price
-   */
+   * @return double of price */
   public double shoppingPrice() {
     if (toBuy.size() == 0) {
       return 0;
     } else if (shoppingPrice == 0) {
-      //only want to calculate the price once from the db
-      //if it's zero then we haven't calculated it yet
+      // only want to calculate the price once from the db
+      // if it's zero then we haven't calculated it yet
       for (Ingredient ing : toBuy) {
-      	try {      		
-      		shoppingPrice += ing.price();
-      	} catch (SQLException se) {
-      		System.err.printf("Couldn't find pricing for %s%n", ing.id());
-      	}
+        try {
+          shoppingPrice += ing.price();
+        } catch (SQLException se) {
+          System.err.printf("Couldn't find pricing for %s%n", ing.id());
+        }
       }
     }
     return shoppingPrice / CENTS;
   }
 
-  /**
-   * Method to add an item to the recipe's shoppinglist.
+  /** Method to add an item to the recipe's shoppinglist.
    * @param ing new ingredient
-   * @param oz amount needed
-   */
+   * @param oz amount needed */
   public void addToShoppingList(Ingredient ing, double oz) {
     toBuy.add(new Ingredient(ing.id(), oz, querier));
   }
 
-  /**
-   * Method for scaling the ingredients of a recipe
+  /** Method for scaling the ingredients of a recipe
    * based on the number of people it will cook for.
    * @param partySize number of people eating the recipe
-   * @return new recipe with new ingredient amounts
-   */
+   * @return new recipe with new ingredient amounts */
   public Recipe scale(double partySize) {
     Recipe toReturn = new Recipe(this.id, this.querier);
     List<Ingredient> ingreds = this.ingredients();
@@ -163,37 +146,29 @@ public class Recipe {
     return toReturn;
   }
 
-  /**
-   * Setter for a recipe's ingredients.
-   * @param scaledIngredients new ingredients
-   */
+  /** Setter for a recipe's ingredients.
+   * @param scaledIngredients new ingredients */
   public void setIngredients(
       List<Ingredient> scaledIngredients) {
     ingredients = scaledIngredients;
   }
 
-  /**
-   * Accessor for Recipe's hashcode.
-   * @return int hashcode
-   */
+  /** Accessor for Recipe's hashcode.
+   * @return int hashcode */
   @Override
   public int hashCode() {
     return id.hashCode();
   }
 
-  /**
-   * Accessor for Recipe to string.
-   * @return string of recipe
-   */
+  /** Accessor for Recipe to string.
+   * @return string of recipe */
   public String toString() {
     return id;
   }
 
-  /**
-   * Equality comparison for a recipe.
+  /** Equality comparison for a recipe.
    * @return true of if the recipes
-   * have the same id
-   */
+   *         have the same id */
   public boolean equals(Object o) {
     if (o == this) {
       return true;
@@ -205,10 +180,8 @@ public class Recipe {
     return id.equals(r.id());
   }
 
-  /**
-   * Method to create a copy of the recipe.
-   * @return new recipe with same id, querier
-   */
+  /** Method to create a copy of the recipe.
+   * @return new recipe with same id, querier */
   public Recipe copy() {
     return new Recipe(id, querier);
   }

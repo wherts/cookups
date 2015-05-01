@@ -1,4 +1,4 @@
-package edu.brown.cs.cookups.api;
+package edu.brown.cs.cookups.views;
 
 import spark.ModelAndView;
 import spark.Request;
@@ -10,7 +10,7 @@ public class MealView implements TemplateViewRoute {
 
   @Override
   public ModelAndView handle(Request request, Response response) {
-    String mealID = request.params(":id");
+    String mealID = request.params(":mealID");
 
     return null;
   }

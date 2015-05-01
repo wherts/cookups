@@ -1,4 +1,4 @@
-package edu.brown.cs.cookups.api;
+package edu.brown.cs.cookups.views;
 
 import java.sql.SQLException;
 import java.util.Map;
