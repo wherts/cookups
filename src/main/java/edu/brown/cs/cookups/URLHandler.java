@@ -38,7 +38,8 @@ import freemarker.template.Configuration;
 public class URLHandler {
   private DBLink db;
   private PersonManager people;
-  private List<String> userIDs, userNames, ingredients, recipeNames, recipeIDs;
+  private List<String> userIDs, userNames, fridgeIngredients,
+      pantryIngredients, recipeNames, recipeIDs;
   private Authentication auth;
   private Engine recipeSearch, peopleSearch;
 
@@ -52,7 +53,8 @@ public class URLHandler {
     List<List<String>> userData = db.users().getNamesAndIDs();
     userIDs = userData.get(0);
     userNames = userData.get(1);
-    ingredients = db.ingredients().getAllIngredientNames();
+    fridgeIngredients = db.ingredients().getAllIngredientNames("Fridge");
+    pantryIngredients = db.ingredients().getAllIngredientNames("Pantry");
     List<List<String>> recipeData = db.recipes().getNamesAndIDs();
     recipeIDs = recipeData.get(0);
     recipeNames = recipeData.get(1);
@@ -112,9 +114,7 @@ public class URLHandler {
     // JSON data routes
     Spark.get("/allRecipes", new AutocompleteHandler(recipeNames));
     Spark.get("/allUsers", new SendUsersHandler(userNames, userIDs));
-
-    Spark.get("/allIngredients", new AutocompleteHandler(ingredients));
-    Spark.get("/profileData", new ProfileDataHandler(recipeNames, ingredients,
+    Spark.get("/profileData", new ProfileDataHandler(recipeNames, fridgeIngredients, pantryIngredients,
         people));
   }
 
