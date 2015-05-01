@@ -53,7 +53,7 @@
           		<input type="time" name="time_start"> to <input type="time" name="time_end">
           </div>
           <div class="form-entry">Add chefs<br><select name="chefs" id="add-chefs" multiple="multiple" class="tokenize-sample"></select></div>
-          <div class="btn-container"><input class="btn" onClick=submitCookFriends() value="Create Meal"></div>
+          <div class="btn-container"><input type='button' class="btn" onClick=submitCookFriends() value="Create Meal"></div>
          </div>
       </div>
     </div>

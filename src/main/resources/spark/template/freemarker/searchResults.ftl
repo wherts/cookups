@@ -8,6 +8,9 @@
         <link rel="stylesheet" href="css/stylesheet.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/cookup.css">
+    <script src="js/jquery-2.1.1.js"></script>
+	<script src="js/jquery.tokenize.js"></script>
+	<script src="js/main.js"></script>
   </head>
   <body>
      <!-- HEADER -->
@@ -33,7 +36,7 @@
         </div> 
        </div>
      </div>
-     <div class="block b">
+     <div class="block b last-div">
      	<div class="container">
      	<h1 class="title">Search Results:</h1>
      	<ul class="search-results">
@@ -46,7 +49,5 @@
 		</ul>
 		</div>
 	 </div>
-     <script src="js/jquery-2.1.1.js"></script>
-	<script src="js/jquery.tokenize.js"></script>
   </body>
 </html>

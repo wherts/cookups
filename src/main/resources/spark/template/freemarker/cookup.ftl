@@ -41,7 +41,7 @@
      <div class="block" id="title">
       <div class="container"><h1 class="h-text" id="title-text">cookup</h1></div>
      </div>
-      <div class="block c">
+      <div class="block c last-div">
       <div class="container">
       <div class="form-box left">
          <div id="cookup-form">
