@@ -33,6 +33,16 @@ public class PersonManager {
     return p;
   }
 
+  public List<Ingredient> getPersonIngredientsByID(String id) {
+    List<Ingredient> toReturn = new ArrayList<>();
+    List<Ingredient> dbIngs = db.users()
+                                .getPersonIngredients(id);
+    for (Ingredient i : dbIngs) {
+      if (!i.isExpired(i.getDateCreated()))
+    }
+    return toReturn;
+  }
+
   public List<Person> getPersonsByName(String name)
     throws SQLException {
     return db.users().getPersonsByName(name, this);

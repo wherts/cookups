@@ -17,6 +17,7 @@ public class Ingredient {
   private Set<Recipe> recipes;
   private double price = 0;
   private LocalDateTime dateCreated;
+  private int expTime = -1;
 
   /** Public constructor for an ingredient.
    * @param i id
@@ -95,6 +96,11 @@ public class Ingredient {
     return false;
   }
 
+  /**
+   * Method for setting an ingredient's creation date.
+   * @param lDT new LocalDateTime object
+   * @return old LocalDateTime
+   */
   public LocalDateTime setDateCreated(LocalDateTime lDT) {
     assert (lDT != null);
     LocalDateTime ret = dateCreated;
@@ -102,12 +108,29 @@ public class Ingredient {
     return ret;
   }
 
+  /**
+   * Method for accessing an ingredient's creation date.
+   * @return LocalDateTime object
+   */
   public LocalDateTime getDateCreated() {
     LocalDateTime ret = LocalDateTime.of(dateCreated.toLocalDate(),
                                          dateCreated.toLocalTime());
     return ret;
   }
 
+  /**
+   * Method for getting the time it
+   * takes for an ingredient to expire.
+   * @return expiration time in minutes
+   */
+  public int expirationTime() {
+    if (expTime == -1) { //hasn't been set
+      expTime = querier.ingredients()
+                       .expirationByID(id);
+    }
+    return expTime;
+  }
+  
   /** Accessor for all the recipes this ingredient.
    * is used in.
    * @return set of recipes
