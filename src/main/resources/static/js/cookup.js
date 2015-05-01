@@ -17,11 +17,12 @@ function submitCookup() {
 	}
 	console.log(params);
 	$.post("/cookup", params, function(responseJSON) {
+		var matches = JSON.parse(responseJSON);
 		console.log("Cookup requested");
 		people = "<p>Select a person to <em>cookup</em> with:</p>";
-//		for (int i = 0; i < 5; i++) {
-//			people += "<p>" + resonseJSON[i].person.name + "</p>";
-//		}
+		for (var i = 0; i < matches.length; i++) {
+			people += "<p>" + matches[i][1] + "</p>";
+		}
 		$("#matches").html(people);
 	});
 }

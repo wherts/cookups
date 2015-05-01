@@ -44,9 +44,10 @@ public class PersonManager {
     return person;
   }
 
-  public Suitor cacheSuitor(Suitor suitor) {
-    this.suitors.put(suitor.person().id(), suitor);
-    return suitor;
+  public void cacheSuitor(Suitor...suitors) {
+    for (Suitor suitor : suitors) {
+      this.suitors.put(suitor.person().id(), suitor);
+    }
   }
 
   public Person getPersonIfCached(String id) {

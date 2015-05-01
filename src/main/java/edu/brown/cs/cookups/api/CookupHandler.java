@@ -52,13 +52,18 @@ public class CookupHandler implements Route {
             break;
         }
       }
-      Suitor suitor = builder.build();
+      Suitor suitor = builder.setGender(gender).build();
       suitors = DateMatcher.match(people.getAllSuitors(), suitor);
       people.cacheSuitor(suitor);
     } catch (SQLException e) {
       System.err.println("ERROR: No id found.");
     }
-    return GSON.toJson(suitors);
+    List<String[]> toReturn = new ArrayList<>();
+    for (Person person : suitors) {
+      String[] toAdd = {person.id(), person.name()};
+      toReturn.add(toAdd);
+    }
+    return GSON.toJson(toReturn);
   }
 
 }

@@ -28,6 +28,7 @@ import edu.brown.cs.cookups.api.RecipeView;
 import edu.brown.cs.cookups.api.SearchEngine;
 import edu.brown.cs.cookups.api.SendUsersHandler;
 import edu.brown.cs.cookups.api.SignupHandler;
+import edu.brown.cs.cookups.dating.SampleSuitors;
 import edu.brown.cs.cookups.db.DBLink;
 import edu.brown.cs.cookups.person.PersonManager;
 import freemarker.template.Configuration;
@@ -53,6 +54,9 @@ public class URLHandler {
     List<List<String>> recipeData = db.recipes().getNamesAndIDs();
     recipeIDs = recipeData.get(0);
     recipeNames = recipeData.get(1);
+    
+    SampleSuitors.createSuitors(people);
+    
     auth = new Authentication(this.db);
 
     recipeSearch = new Engine(new Trie(recipeNames));

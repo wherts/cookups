@@ -8,6 +8,10 @@
         <link rel="stylesheet" href="css/stylesheet.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/cookup.css">
+     <script src="js/jquery-2.1.1.js"></script>
+	<script src="js/jquery.tokenize.js"></script>
+    <script src="js/cookup.js"></script>
+    <script src="js/main.js"></script>
   </head>
   <body>
      <!-- HEADER -->
@@ -55,17 +59,14 @@
 	          Bisexual<input type="radio" name="orientation" value="bisexual">
 	          <br>
 	      </div>
-          <input id="cookupButton" onClick=submitCookup() class="btn" type="submit" value="Cook Up">
+          <input id="cookupButton" onClick="submitCookup()" class="btn" type="submit" value="Cook Up">
          </div>
       </div>
       <div id="matches">
       </div>
     </div>
    </div>
-     <script src="js/jquery-2.1.1.js"></script>
-	<script src="js/jquery.tokenize.js"></script>
-    <script src="js/cookup.js"></script>
-    <script src="js/main.js"></script>
+
 
   </body>
 </html>

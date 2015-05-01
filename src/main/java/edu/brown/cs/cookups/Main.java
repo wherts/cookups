@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
+import edu.brown.cs.cookups.dating.SampleSuitors;
 import edu.brown.cs.cookups.db.DBLink;
 import edu.brown.cs.cookups.db.DBManager;
 
@@ -103,7 +104,6 @@ public class Main {
       }
 
     }
-
     URLHandler gui = new URLHandler((DBLink) db);
     gui.runSparkServer();
   }

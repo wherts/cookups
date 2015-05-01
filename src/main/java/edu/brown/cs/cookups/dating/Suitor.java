@@ -176,7 +176,8 @@ public class Suitor {
         return true;
       }
     }
-    if (!sameSex(suitor1, suitor2)) {//DIFFERENT GENDERS
+    if ((suitor1.isFemale() == suitor2.isMale() 
+        || suitor1.isMale() == suitor2.isFemale())) {//DIFFERENT GENDERS
       if ((suitor1.isStraight() || suitor1.isBi()) && (suitor2.isBi() || suitor2.isStraight())) {//BOTH getStraight() OR ONE getBi() OR BOTH getBi()
         return true;
       }
