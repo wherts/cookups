@@ -15,13 +15,12 @@ import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.PersonManager;
 
 public class ProfileDataHandler implements Route {
-  private List<String> recipes, ingredients;
+  private List<String> ingredients;
   private PersonManager people;
   private static final Gson GSON = new Gson();
 
-  public ProfileDataHandler(List<String> recipes, List<String> ingredients,
+  public ProfileDataHandler(List<String> favoriteCuisines, List<String> ingredients,
       PersonManager people) {
-    this.recipes = recipes;
     this.ingredients = ingredients;
     this.people = people;
   }
@@ -44,9 +43,8 @@ public class ProfileDataHandler implements Route {
 
     Map<String, Object> variables =
         new ImmutableMap.Builder<String, Object>()
-            .put("recipes", recipes)
             .put("ingredients", ingredients)
-            .put("favRecipes", person.favoriteRecipes())
+            .put("favCuisines", person.favoriteCuisines())
             .put("personIngredients", person.ingredients()).build();
 
     return GSON.toJson(variables);
