@@ -35,6 +35,9 @@ function submitCookFriends() {
 	console.log(params);
 	
 	$.post("/makemeal", params, function(responseJSON) {
-		console.log("made meal");
+		var mealLink = JSON.parse(responseJSON);
+		$('#mealLink').html("<a href='"+mealLink+"'>Meal </a>");
+		
+		console.log(mealLink);
 	});
 }

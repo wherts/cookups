@@ -1,0 +1,18 @@
+#meal-details {
+	font-family: 'gobold_thinregular', sans-serif;
+	font-size: 30px;
+	color: #FFF;
+}
+
+.meal-headers {
+	width: 200px;
+	text-align: right;
+}
+
+.meal-info {
+	display:inline-block;
+}
+
+ul {
+	list-style: none;
+}

@@ -56,6 +56,7 @@
           <div class="btn-container"><input type='button' class="btn" onClick=submitCookFriends() value="Create Meal"></div>
          </div>
       </div>
+      <div id="mealLink"></div>
     </div>
    </div>
   </body>

@@ -48,13 +48,14 @@ public class MakeMealHandler implements Route {
     String date = qm.value("date"); // date of meal
     String timeStart = qm.value("timeStart"); // start time
     String timeEnd = qm.value("timeEnd"); // not required
+    System.out.printf("%s%n", timeEnd);
     String chefs = qm.value("chefs");
-
+    System.out.println(date + " " + timeStart + " " + name + " " + chefs);
     String start = date + " " + timeStart;
 
     LocalDateTime dateTimeStart = LocalDateTime.parse(start, formatter);
     LocalDateTime dateTimeEnd = null;
-    if (timeEnd != null) { // if they scheduled an end time
+    if (timeEnd.length() > 0) { // if they scheduled an end time
       String end = date + " " + timeEnd;
       dateTimeEnd = LocalDateTime.parse(end, formatter);
     }
@@ -114,9 +115,7 @@ public class MakeMealHandler implements Route {
       e.printStackTrace();
     }
 
-    System.out.println("breaking");
-    return null;
-    // return GSON.toJson(mealLink);
+    return GSON.toJson(mealLink);
   }
 
   private String[] splitNames(String n) {

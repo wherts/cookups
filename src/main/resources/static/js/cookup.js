@@ -69,7 +69,8 @@ function makeCookupMeal() {
 		$.post("/makemeal", params, function(responseJSON) {
 			var mealLink = JSON.parse(responseJSON);
 			$('#mealLink').html("<a href='"+mealLink+"'>Meal </a>");
-			console.log("made meal");
+			
+			console.log(mealLink);
 		});	
 	}
 }
