@@ -42,7 +42,9 @@
 		${x.ounces()} oz ${x.name()}<br>
 	 </#list>
 	 <br><br>
-	 ${recipe.instructions()}
+     <#list recipe.ingredients() as x>
+		${x}<br>
+	 </#list>
      <script src="../js/jquery-2.1.1.js"></script>
 	<script src="../js/jquery.tokenize.js"></script>
     <script src="../js/main.js"></script>
