@@ -25,7 +25,7 @@ public interface UserDB {
   public List<Person> getPersonsByName(String name,
       PersonManager people);
 
-  public List<String> getAllNames();
+  public List<List<String>> getNamesAndIDs();
 
   public boolean setPersonPassword(String id,
       String password);

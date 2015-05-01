@@ -96,14 +96,16 @@ public class RecipeDBLink implements RecipeDB {
   }
 
   @Override
-  public List<String> getAllRecipeNames() {
-    String query = "SELECT name FROM recipe";
+  public List<List<String>> getNamesAndIDs() {
+    String query = "SELECT id, name FROM recipe";
+    List<String> ids = new ArrayList<>();
     List<String> names = new ArrayList<>();
     try (PreparedStatement prep = conn.prepareStatement(query)) {
       try (ResultSet rs = prep.executeQuery()) {
 
         while (rs.next()) {
-          names.add(rs.getString(1));
+          ids.add(rs.getString(1));
+          names.add(rs.getString(2));
         }
       } catch (SQLException e) {
         e.printStackTrace();
@@ -111,7 +113,11 @@ public class RecipeDBLink implements RecipeDB {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return names;
+
+    List<List<String>> toReturn = new ArrayList<List<String>>();
+    toReturn.add(0, ids);
+    toReturn.add(1, names);
+    return toReturn;
   }
 
   @Override

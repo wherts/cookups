@@ -22,7 +22,7 @@ public class ProfileView implements TemplateViewRoute {
 
   @Override
   public ModelAndView handle(Request request, Response response) {
-    String name = request.params(":id");
+    String name = request.params(":name");
     String profileID = name + "@brown.edu";
 
     Person person = null;

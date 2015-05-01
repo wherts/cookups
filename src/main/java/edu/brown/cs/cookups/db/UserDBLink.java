@@ -64,8 +64,8 @@ public class UserDBLink implements UserDB {
           if (person == null) {
             List<Ingredient> ingredients = getPersonIngredients(id);
             person = people.cachePerson(id,
-                                        rs.getString(NAME_IDX),
-                                        ingredients);
+                rs.getString(NAME_IDX),
+                ingredients);
           }
           users.add(person);
         }
@@ -207,13 +207,15 @@ public class UserDBLink implements UserDB {
   }
 
   @Override
-  public List<String> getAllNames() {
+  public List<List<String>> getNamesAndIDs() {
+    List<String> ids = new ArrayList<String>();
     List<String> names = new ArrayList<String>();
-    String query = "SELECT name FROM user";
+    String query = "SELECT id, name FROM user";
     try (PreparedStatement prep = conn.prepareStatement(query)) {
       try (ResultSet rs = prep.executeQuery()) {
         while (rs.next()) {
-          names.add(rs.getString(1));
+          ids.add(rs.getString(1));
+          names.add(rs.getString(2));
         }
       } catch (SQLException e) {
         e.printStackTrace();
@@ -221,7 +223,11 @@ public class UserDBLink implements UserDB {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return names;
+
+    List<List<String>> toReturn = new ArrayList<List<String>>();
+    toReturn.add(0, ids);
+    toReturn.add(1, names);
+    return toReturn;
   }
 
   @Override

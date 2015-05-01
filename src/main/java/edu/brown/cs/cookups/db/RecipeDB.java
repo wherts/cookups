@@ -25,7 +25,7 @@ public interface RecipeDB {
 
   public String getRecipeNameByID(String id);
 
-  public List<String> getAllRecipeNames();
+  public List<List<String>> getNamesAndIDs();
 
   public Recipe cacheRecipe(String id);
 

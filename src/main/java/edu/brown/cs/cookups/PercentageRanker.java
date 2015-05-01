@@ -9,11 +9,6 @@ public class PercentageRanker implements Comparator<Recipe> {
   public int compare(Recipe o1, Recipe o2) {
     double percent1 = o1.percentHave();
     double percent2 = o2.percentHave();
-    if (percent1 > percent2) {
-      return -1;
-    } else if (percent1 < percent2) {
-      return 1;
-    }
-    return 0;
+    return Double.compare(percent2, percent1);
   }
 }

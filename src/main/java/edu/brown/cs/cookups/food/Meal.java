@@ -28,6 +28,7 @@ public class Meal {
    * @param p The host of the meal
    */
   public Meal(User p, Schedule s) {
+
     assert (p != null && s != null);
     this.host = p;
     this.schedule = s;
@@ -142,6 +143,7 @@ public class Meal {
   public List<User> attending() {
     List<User> copy = new ArrayList<>();
     for (User p : attending) {
+
       copy.add(p);
     }
     return copy;
@@ -152,6 +154,7 @@ public class Meal {
    * @param p new User coming to Meal
    */
   public void addAttending(User p) {
+
     assert (p != null);
     attending.add(p);
   }
@@ -161,12 +164,14 @@ public class Meal {
    * @return User object
    */
   public User host() {
+
     return host;
   }
 
   /**
    * Setter for a Meal's host.
    * @param h new host of meal
+   * 
    * @return old host
    */
   public User setHost(User h) {
@@ -179,6 +184,7 @@ public class Meal {
    * Add a recipe to a Meal.
    * @param r new recipe
    */
+
   public void addRecipe(Recipe r) {
     this.recipes.add(r);
   }
@@ -187,6 +193,7 @@ public class Meal {
    * Accessor for a Meal's recipes.
    * @return list of Recipes
    */
+
   public List<Recipe> recipes() {
     ArrayList<Recipe> ret = new ArrayList<>();
     for (Recipe r : recipes) {
@@ -222,8 +229,19 @@ public class Meal {
    */
   @Override
   public String toString() {
-    return host.toString() + ", " + recipes.toString()
-        + ", " + location.toString();
+
+    StringBuilder sB = new StringBuilder();
+    sB.append(host.toString());
+    sB.append(", ");
+    sB.append(recipes.toString());
+    sB.append(", ");
+    if (location != null) {
+      sB.append(location.toString());
+    } else {
+      sB.append("No location selected");
+    }
+    return sB.toString();
+
   }
 
   /**

@@ -1,11 +1,12 @@
-
 $.get("/allUsers", function(JSONresponse) {
-	var users = JSON.parse(JSONresponse);
+	var response = JSON.parse(JSONresponse);
+	var names = response.names;
+	var ids = response.ids;
+	console.log(response);
 	var options = "";
-	console.log(users);
 	
-	for (var i=1; i<=users.length; i++) {
-		options += "<option value='"+i+"'>"+users[i-1]+"</option>";
+	for (var i=1; i<=names.length; i++) {
+		options += "<option value='"+i+"'>"+names[i-1]+" ("+ids[i-1]+")</span></option>";
 	}
 	$("#add-chefs").html(options);
 	$("#add-chefs").tokenize({
@@ -13,20 +14,15 @@ $.get("/allUsers", function(JSONresponse) {
 	});
 });
 
-function validateSignup() {
-	var email = document.forms["signup-form"]["email"].value;
-	
-	var domain = email.split("@")[1];
-	if (domain !== "brown.edu") {
-		console.log("bad email domain");
-		return false;
-	}
-}
 
 function submitCookFriends() {
 	var chefs="";
+	var delim=",";
     $( "select option:selected" ).each(function() {
-        chefs += ($(this).text())+",";
+    	var regex = /\(([^)]+)\)/;
+    	var text = regex.exec($(this).text())[1];
+    	console.log(text);
+        chefs += text+delim;
       });
 	var params = {
 		name: $('#friends-form input[name=name]').val(),
@@ -34,7 +30,7 @@ function submitCookFriends() {
 		timeStart:  $('#friends-form input[name=time_start]').val(),
 		timeEnd:  $('#friends-form input[name=time_end]').val(),
 		timeStart:  $('#friends-form input[name=time_start]').val(),
-		chefs: chefs
+		chefs: chefs,
 	}
 	
 	console.log(params);
@@ -43,8 +39,3 @@ function submitCookFriends() {
 		console.log("made meal");
 	})
 }
-
-$("input[name='type']").on('change', function(){
-	console.log("why");
-    $('#romantic-opts').toggle();
-});

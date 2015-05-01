@@ -10,6 +10,9 @@ import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+
+import com.google.gson.Gson;
+
 import edu.brown.cs.cookups.RecipeMatcher;
 import edu.brown.cs.cookups.db.DBManager;
 import edu.brown.cs.cookups.food.Meal;
@@ -22,6 +25,7 @@ public class CookFriendsHandler implements Route {
   private PersonManager people;
   private DateTimeFormatter formatter;
   private DBManager dbM;
+  private static final Gson GSON = new Gson();
 
   public CookFriendsHandler(PersonManager p, DBManager d) {
     people = p;
@@ -48,8 +52,6 @@ public class CookFriendsHandler implements Route {
     LocalDateTime dateTimeEnd = null;
     if (timeEnd != null) { // if they scheduled an end time
       String end = date + " " + timeEnd;
-      System.out.println("name " + name + " timestart " + start + " timeEnd "
-          + end);
       dateTimeEnd = LocalDateTime.parse(end, formatter);
     }
     Schedule sched = new Schedule(dateTimeStart, null);
@@ -68,6 +70,15 @@ public class CookFriendsHandler implements Route {
     // add recipes to meal
     List<Person> attending = new ArrayList<>();
     // need to figure out how to parse out selected names
+    String[] ids = splitNames(chefs);
+    for (String s : ids) {
+      try {
+        Person person = people.getPersonById(s);
+        attending.add(person);
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
 
     for (Person a : attending) {
       newMeal.addAttending(a);
@@ -82,15 +93,12 @@ public class CookFriendsHandler implements Route {
       newMeal.addRecipe(r);
     }
     // TODO add recipe to DB here???
-    return newMeal;
+
+    return GSON.toJson(newMeal);
   }
 
   private String[] splitNames(String n) {
     String[] names = n.trim().split(",");
-    for (String s : names) {
-      System.out.println("Name: " + s);
-    }
-
-    return null;
+    return names;
   }
 }

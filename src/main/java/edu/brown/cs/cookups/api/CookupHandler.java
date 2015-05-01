@@ -5,12 +5,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.Gson;
-
 import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+
+import com.google.gson.Gson;
+
 import edu.brown.cs.cookups.dating.DateMatcher;
 import edu.brown.cs.cookups.dating.Suitor;
 import edu.brown.cs.cookups.person.Person;
@@ -54,10 +55,6 @@ public class CookupHandler implements Route {
       Suitor suitor = builder.build();
       DateMatcher matcher = new DateMatcher();
       suitors = matcher.match(people.getAllSuitors(), suitor);
-      
-      //TO DO!
-      //PUT ALL SUITORS (or fixed number) INTO GUI
-
 
       people.cacheSuitor(suitor);
     } catch (SQLException e) {

@@ -2,7 +2,6 @@ package edu.brown.cs.cookups.dating;
 
 import edu.brown.cs.cookups.person.Person;
 
-
 public class Suitor {
   private boolean queer, gay, straight, bi, isPlatonic;
   private Person person;
