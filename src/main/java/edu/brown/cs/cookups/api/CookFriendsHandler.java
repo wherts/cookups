@@ -89,20 +89,22 @@ public class CookFriendsHandler implements Route {
     }
     newMeal.setName(name);
 
-    String mealLink = null;
-    try {
-      mealLink = "/meal/" + URLEncoder.encode(newMeal.name(), "UTF-8");
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
-    }
-
     String mealID = dbM.meals().addMeal(newMeal);
     for (Person p : newMeal.attending()) {
       dbM.users().addPersonMeal(p.id(), mealID);
     }
     dbM.users().addPersonMeal(id, mealID);
 
-    return GSON.toJson(null);
+    String mealLink = null;
+    try {
+      mealLink = "/meal/" + URLEncoder.encode(mealID, "UTF-8");
+    } catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
+    }
+
+    System.out.println("breaking");
+    return null;
+    // return GSON.toJson(mealLink);
   }
 
   private String[] splitNames(String n) {

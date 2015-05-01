@@ -95,7 +95,7 @@ public class URLHandler {
     Spark
         .get("/browse", new BrowseView(db, recipeIDs, recipeNames), freeMarker);
     Spark.get("/recipe/:id", new RecipeView(db, people), freeMarker);
-    Spark.get("/meal/:name", new MealView(db), freeMarker);
+    Spark.get("/meal/:id", new MealView(db), freeMarker);
     Spark.get("/meals", new PersonMealsView(people), freeMarker);
     Spark.get("/profile/:name", new ProfileView(people), freeMarker);
 

@@ -64,6 +64,8 @@ function makeCookupMeal() {
 		}
 		console.log(params);
 		$.post("/cookwfriends", params, function(responseJSON) {
+			var mealLink = JSON.parse(responseJSON);
+			$('#mealLink').html("<a href='"+mealLink+"'>Meal </a>");
 			console.log("made meal");
 		});	
 	}
