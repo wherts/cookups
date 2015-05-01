@@ -11,14 +11,15 @@ import edu.brown.cs.cookups.db.DBLink;
 public class Main {
   private String[] args;
 
-  /** The main constructor.
+  /**
+   * The main constructor.
    * @param args - the command line arguments
-   * @throws SQLException throws SQLException on database
-   * errors
-   * @throws ClassNotFoundException throws
-   * class not found exception on compilation error */
-  public static void main(String[] args) throws ClassNotFoundException,
-      SQLException {
+   * @throws SQLException throws SQLException on database errors
+   * @throws ClassNotFoundException throws class not found exception on
+   *           compilation error
+   */
+  public static void main(String[] args)
+    throws ClassNotFoundException, SQLException {
     new Main(args).run();
   }
 
@@ -27,12 +28,15 @@ public class Main {
     this.args = args;
   }
 
-  /** @throws SQLException
-   * @throws ClassNotFoundException */
-  private void run() throws ClassNotFoundException, SQLException {
+  /**
+   * @throws SQLException
+   * @throws ClassNotFoundException
+   */
+  private void run() throws ClassNotFoundException,
+    SQLException {
     OptionParser parser = new OptionParser();
     OptionSpec<String> argv = parser.nonOptions();
-
+    parser.accepts("ingredients").withRequiredArg();
     OptionSet options = null;
     try {
       options = parser.parse(args);
@@ -47,8 +51,6 @@ public class Main {
       System.exit(1);
     }
     String db = parsedArgs.get(0);
-
-
 
     URLHandler gui = new URLHandler(new DBLink(db));
     gui.runSparkServer();
