@@ -12,15 +12,10 @@ import spark.Request;
 import spark.Response;
 import spark.TemplateViewRoute;
 
-import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableMap;
 
-import edu.brown.cs.cookups.PercentageRanker;
-import edu.brown.cs.cookups.ShoppingPriceRanker;
-import edu.brown.cs.cookups.TotalPriceRanker;
 import edu.brown.cs.cookups.db.DBManager;
 import edu.brown.cs.cookups.food.Meal;
-import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.PersonManager;
 
 public class MealView implements TemplateViewRoute {
@@ -49,7 +44,6 @@ public class MealView implements TemplateViewRoute {
     if (meal == null) {
       response.redirect("/", 404);
     }
-
     String id = request.cookie("id");
     String profLink = "/profile/" + id.split("@")[0];
     Map<String, Object> variables =

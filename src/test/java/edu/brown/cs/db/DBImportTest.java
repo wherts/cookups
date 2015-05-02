@@ -13,7 +13,7 @@ import edu.brown.cs.cookups.food.Recipe;
 
 public class DBImportTest {
 
-  public static final String DB_PATH = "databases/tests/importTest.sqlite3";
+  public static final String DB_PATH = "databases/importTest.sqlite3";
   public static final String INGREDIENT_PATH = "databases/csv/ingredients/ingredientExpiration.csv";
   public static final String RECIPE_PATH = "databases/csv/recipes/gazpacho.csv";
 

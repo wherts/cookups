@@ -47,13 +47,15 @@ function submitCookup() {
 			+ "<div class='form-entry'>Date<br><input type='date' id='datePicker' name='date'></div>"
 			+ "<div class='form-entry'>Time<br><input type='time' id='startTimePicker' name='time_start'>"
 			+ " to <input type='time' id='endTimePicker' name='time_end'></div>" 
-			+ "<div class='btn-container'><input type='button' class='btn' onClick=makeCookupMeal() value='Make Cookup!'></div>" 
+			+ "<div class='btn-container'><input type='button' class='btn' id='makeCookupBtn' onClick=makeCookupMeal() value='Make Cookup!'></div>"
+			+ "<div class='btn-container'><input type='button' class='btn' id='viewCookupBtn' class='btn' value='View Cookup Here!'></div>"
 			+ "</div>";
 		$("#matches").html(people);
 		document.getElementById('datePicker').value = new Date().toDateInputValue();
 		document.getElementById('startTimePicker').value = new Date().toTimeInputValue();
 		document.getElementById('endTimePicker').value = new Date().toEndTimeInputValue();
 		setPersonListener();
+		$("#viewCookupBtn").hide(); //hide cookup button
 	});
 }
 
@@ -87,11 +89,14 @@ function makeCookupMeal() {
 		}
 		console.log(params);
 		$.post("/makemeal", params, function(responseJSON) {
+			$("#makeCookupBtn").hide();
+			$("#viewCookupBtn").show();
 			var mealLink = JSON.parse(responseJSON);
-			$('#mealLink').html("<a href='"+mealLink+"'>Meal </a>");
-			
-			console.log(mealLink);
+			$("#viewCookupBtn").on('click', function() {
+				window.location = mealLink;
+			});
 		});	
+
 	}
 }
 
