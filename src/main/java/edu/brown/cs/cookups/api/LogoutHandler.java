@@ -17,6 +17,7 @@ public class LogoutHandler implements TemplateViewRoute {
     response.removeCookie("auth");
     Map<String, Object> variables =
         ImmutableMap.of("title", "Brown Cookups");
+    response.redirect("/");
     return new ModelAndView(variables, "login.ftl");
   }
 
