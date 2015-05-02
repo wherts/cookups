@@ -18,7 +18,7 @@
      </div><div class="block" id="main-login">
       <div class="container">
   	 	<div class="form-box left">
-        <form action="/login" method="POST">
+        <form name="login-form" id="login-form" action="/login" onsubmit="return validateLogin()" method="POST">
   	 		<h1 class="h-text form-title">cookups expert?</h1>
           <div class="input-group">
             <div class="field">

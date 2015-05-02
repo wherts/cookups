@@ -27,5 +27,15 @@ function validateSignup() {
 }
 
 function validateLogin() {
-	
+	var email = document.forms["login-form"]["id"].value;
+	var password = document.forms["login-form"]["password"].value;
+	if (password === "" || email === "" ) {
+		if (password === "") {
+			$("#login-form input[name=id]").attr("style", "border:5px solid red");
+		}
+		if (email === "") {
+			$("#login-form input[name=password]").attr("style", "border:5px solid red");
+		}
+		return false;
+	}
 }
