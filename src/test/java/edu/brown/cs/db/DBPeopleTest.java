@@ -119,7 +119,7 @@ public class DBPeopleTest {
     assertTrue(r.name().equals("Ronald Reagan"));
     Ingredient result = r.ingredients().get(0);
     assertTrue(result.id().equals(i.id()));
-    assertTrue(result.getDateCreated().equals(date));
+    
   }
 
   @Test
@@ -163,11 +163,11 @@ public class DBPeopleTest {
     m1.addAttending(new User("Grant",
         "ggustafs",
         new ArrayList<Ingredient>()));
-    Recipe r1 = new Recipe("r1", null);
+    Recipe r1 = new Recipe("r1", db);
     m1.addRecipe(r1);
     String mealID = db.meals().addMeal(m1);
     people.addMealtoPerson(mealID, "wh7");
-    assertTrue(m1.equals(db.meals().getMealByID(mealID)));
+    assertTrue(m1.equals(db.meals().getMealByID(mealID, people)));
   }
 
   @Test

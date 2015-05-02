@@ -1,7 +1,41 @@
+.Tokenize {
+	width: 300px;
+}
+
+
+#overlay    {  
+	background:rgba(0,0,0,.75);
+    text-align:center;
+    padding:45px 0 66px 0;
+    opacity:0;
+    -webkit-transition: opacity .25s ease;
+	-moz-transition: opacity .25s ease;
+}
+
+.profile-pic:hover #overlay {
+               opacity:1;}
+
+#edit {
+	font-family:Helvetica;
+    font-weight:900;
+    color:rgba(255,255,255,.85);
+    font-size:20px;
+}
+
+
 .profile-pic {
 	height: 150px;
+	width: 150px;
 	margin: 40px auto 0;
 	border: 1px #F1F5DF solid;
+	background: url("../assets/people/sample-pic.png");
+	box-shadow:inset 1px 1px 40px 0 rgba(0,0,0,.45);
+	border-bottom:2px solid #fff;
+	border-right:2px solid #fff;
+	margin:5% auto 0 auto; 
+	background-size:cover;
+	border-radius:5px;
+	overflow:hidden;
 }
 
 #fridge-container {

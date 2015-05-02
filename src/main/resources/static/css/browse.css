@@ -5,8 +5,12 @@
 }
 
 img.recipe {
-    height:80%;
-    width: 80%;
+    height:125px;
+    width: 200px;
+}
+
+td {
+    width: 200px;
 }
 
 table {

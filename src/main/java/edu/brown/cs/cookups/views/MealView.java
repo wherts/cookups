@@ -21,17 +21,21 @@ import edu.brown.cs.cookups.TotalPriceRanker;
 import edu.brown.cs.cookups.db.DBManager;
 import edu.brown.cs.cookups.food.Meal;
 import edu.brown.cs.cookups.food.Recipe;
+import edu.brown.cs.cookups.person.PersonManager;
 
 public class MealView implements TemplateViewRoute {
   private DBManager db;
+  private PersonManager people;
 
-  public MealView(DBManager db) {
+  public MealView(DBManager db, PersonManager people) {
     this.db = db;
+    this.people = people;
   }
 
   @Override
   public ModelAndView handle(Request request, Response response) {
     String mealEncoded = request.params(":id");
+    String sortType = request.params(":sortby");
     String mealID = null;
     
     try {
@@ -40,7 +44,7 @@ public class MealView implements TemplateViewRoute {
       e.printStackTrace();
     }
 
-    Meal meal = db.meals().getMealByID(mealID);
+    Meal meal = db.meals().getMealByID(mealID, people);
 
     if (meal == null) {
       response.redirect("/", 404);
@@ -48,7 +52,11 @@ public class MealView implements TemplateViewRoute {
     String id = request.cookie("id");
     String profLink = "/profile/" + id.split("@")[0];
     Map<String, Object> variables =
+<<<<<<< HEAD
         ImmutableMap.of("meal", meal, "recipes", meal.recipes(), "profLink", profLink);
+=======
+        ImmutableMap.of("meal", meal, "profLink", profLink, "sortType", sortType);
+>>>>>>> d4416cc2ce44a3e8288c41d5703648c172c996e8
     return new ModelAndView(variables, "meal.ftl");
   }
 

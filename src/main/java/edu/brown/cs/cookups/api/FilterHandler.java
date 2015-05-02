@@ -23,13 +23,16 @@ import edu.brown.cs.cookups.TotalPriceRanker;
 import edu.brown.cs.cookups.db.DBManager;
 import edu.brown.cs.cookups.food.Meal;
 import edu.brown.cs.cookups.food.Recipe;
+import edu.brown.cs.cookups.person.PersonManager;
 
 public class FilterHandler implements Route {
   private static final Gson GSON = new Gson();
   private DBManager dbM;
+  private PersonManager people;
 
-  public FilterHandler(DBManager d) {
+  public FilterHandler(DBManager d, PersonManager p) {
   	this.dbM = d;
+  	this.people = p;
   }
 
   @Override
@@ -44,7 +47,7 @@ public class FilterHandler implements Route {
       e.printStackTrace();
     }
     
-    Meal meal = dbM.meals().getMealByID(mealID);
+    Meal meal = dbM.meals().getMealByID(mealID, people);
     if (meal == null) {
       response.redirect("/", 404);
     }

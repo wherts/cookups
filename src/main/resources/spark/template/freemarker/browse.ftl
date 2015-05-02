@@ -13,7 +13,7 @@
      <!-- HEADER -->
      <div class="block a">
         <div class="header container">
-        <img class="left" src="../assets/logosmall.png" />
+        <a href='/cookup'><img class="left" src="../assets/logosmall.png" /></a>
         <div id="nav">
           <a class="header-text" id="logout" href="/logout">logout</a>
 		  <form id="search-bar" action="/search" method="POST">
@@ -43,8 +43,8 @@
 				<#list recipes?keys?chunk(5) as row>
 				<tr>
 					<#list row as x>
-					    <#assign link = "../assets/recipes/" + x.picPath()+".jpg">
-						<td><a class="recipe" href="${link}"><div class='img-container'><img class="recipe" src="../assets/recipes/flank-steak.jpg"></div><span class="recipe-name">${x}</span></a></td>
+					    <#assign link = "../assets/recipes/" + recipePics[x] + ".jpg">
+						<td><a class="recipe" href="${recipes[x]}"><div class='img-container'><img class="recipe" src="${link}"></div><span class="recipe-name">${x}</span></a></td>
 					</#list>
 				</tr>
 			</#list>

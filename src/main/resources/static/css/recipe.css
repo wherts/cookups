@@ -1,0 +1,66 @@
+.recipe-pic {
+	border: 2px solid #F1F5DF;
+	margin-bottom: 50px;
+}
+
+.img-container {
+	text-align: center;
+}
+
+#recipe-title {
+	text-align: center;
+	color: #FFF;
+}
+
+.recipe-subtitle {
+	font-family: 'gobold_thinregular', sans-serif;
+	font-size: 30px;
+	margin-bottom: 15px;
+}
+
+.ingredient {
+	font-family: 'abeezeeregular', sans-serif;
+	margin: 0;
+}
+
+#ingredients {
+	padding-left: 50px;
+	padding-bottom: 50px;
+}
+
+.need-to-buy {
+	color: #959985;
+	font-size: 11px;
+}
+
+#instructions-header {
+	color: #F1F5DF;
+}
+
+#instructions {
+	padding-left: 50px;
+	padding-bottom: 50px;
+}
+
+.instruction {
+	font-family: 'abeezeeregular', sans-serif;
+	margin: 0;
+	color: #F1F5DF;
+}
+
+table {
+	margin: 20px 0;
+	font-family: 'gobold_thinregular', sans-serif;
+	font-size: 24px;
+	color: #FFF;
+	width: 100%;
+}
+
+td {
+	width: 50%;
+}
+
+.table-right {
+	text-align: right;
+}
+

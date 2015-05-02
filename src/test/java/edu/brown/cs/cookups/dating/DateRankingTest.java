@@ -105,17 +105,17 @@ public class DateRankingTest {
 
     List<Person> matches = DateMatcher.match(suitors, gayMan);
 
-    System.out.println("GAY MAN:");
-    for (Person match : matches) {
-      System.out.println(match.name());
-    }
-
-    matches = DateMatcher.match(suitors, gayWoman);
-    System.out.println("GAY WOMAN:");
-
-    for (Person match : matches) {
-      System.out.println(match.name());
-    }
+//    System.out.println("GAY MAN:");
+//    for (Person match : matches) {
+//      System.out.println(match.name());
+//    }
+//
+//    matches = DateMatcher.match(suitors, gayWoman);
+//    System.out.println("GAY WOMAN:");
+//
+//    for (Person match : matches) {
+//      System.out.println(match.name());
+//    }
   }
 
   @Test

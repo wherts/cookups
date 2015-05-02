@@ -25,7 +25,7 @@ public class RecipeTest {
 
   @Before
   public void initialize() {
-    File file = new File("databases/csv/ingredients/ingredientPrice.csv");
+    File file = new File("databases/csv/ingredients/ingredientExpiration.csv");
     String dir = "databases/csv/recipes";
     try {
       dbM = new DBLink(DB_PATH);
