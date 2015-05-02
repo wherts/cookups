@@ -28,6 +28,8 @@ public class LoginHandler implements Route {
       response.cookie("id", id);
       String profilePath = id.split("@")[0];
       response.redirect("/profile/" + profilePath);
+    } else {
+    response.redirect("/");
     }
     return null;
   }
