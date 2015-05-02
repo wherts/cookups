@@ -9,10 +9,12 @@
     <link rel="stylesheet" type="text/css" href="../css/jquery.tokenize.css" />
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/meal.css">
+    <link rel="stylesheet" href="../css/jquery-ui.css">
     <script src="../js/jquery-2.1.1.js"></script>
     <script src="../js/jquery.tokenize.js"></script>
-    <script src="../js/cookup.js"></script>
+    <script src="../js/meal.js"></script>
     <script src="../js/main.js"></script>
+    <script src="../js/jquery-ui.js"></script>
   </head>
   <body>
      <!-- HEADER -->
@@ -68,6 +70,11 @@
       </div>
   </div>
   <div class="block b last-div">
+         <p>
+            <label for="amount">Price range:</label>
+            <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+        </p>
+      <div id="slider-range"></div>
       <div id="recipe-suggestions" class="container">
         <p class="h-text">Recipe Suggestions</p>
       	<#list meal.recipes() as r>

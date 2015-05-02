@@ -16,7 +16,7 @@ public class Recipe {
   private DBManager querier;
   private List<Ingredient> ingredients, toBuy;
   private double percentNeed = 1;
-  private double shoppingPrice = 0;
+  private double shoppingPrice = 0, totalPrice = 0;
   private static final double CENTS = 100;
 
   /** Constructor for the Recipe object.
@@ -120,6 +120,19 @@ public class Recipe {
       }
     }
     return shoppingPrice / CENTS;
+  }
+
+  public double totalPrice() {
+    if (totalPrice == 0) {
+      for (Ingredient ing : this.ingredients()) {
+        try {
+          totalPrice += ing.price();
+        } catch (SQLException se) {
+          System.err.printf("Couldn't find pricing for %s%n", ing.id());
+        }
+      }
+    }
+    return totalPrice / CENTS;
   }
 
   /** Method to add an item to the recipe's shoppinglist.

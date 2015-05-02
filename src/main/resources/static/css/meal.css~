@@ -29,8 +29,3 @@ ul {
 #meal-attendees a {
 	text-decoration: none;
 }
-
-#range-slider {
-	width: 25%;
-	
-}
