@@ -70,6 +70,9 @@ public class Recipe {
    * @return list of ingredients */
   public List<Ingredient> ingredients() {
     if (ingredients == null) {
+    	if (querier == null) {
+    		return new ArrayList<Ingredient>();
+    	}
       ingredients = querier.ingredients()
           .getIngredientsByRecipe(id);
     }
