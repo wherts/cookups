@@ -97,7 +97,7 @@ public class URLHandler {
     Spark.get("/cookup", new BasicView("cookup.ftl"), freeMarker);
     Spark.get("/browse", new BrowseView(db, recipeIDs, recipeNames), freeMarker);
     Spark.get("/recipe/:id", new RecipeView(db, people), freeMarker);
-    Spark.get("/meal/:id", new MealView(db), freeMarker);
+    Spark.get("/meal/:id", new MealView(db, people), freeMarker);
     Spark.get("/meals", new PersonMealsView(people), freeMarker);
     Spark.get("/profile/:name", new ProfileView(people), freeMarker);
 
@@ -117,7 +117,7 @@ public class URLHandler {
     Spark.get("/profileData", new ProfileDataHandler(recipeNames,
         fridgeIngredients, pantryIngredients,
         people));
-    Spark.post("/meal/:id/:query", new FilterHandler(db));
+    Spark.post("/meal/:id/:query", new FilterHandler(db, people));
     
   }
 
