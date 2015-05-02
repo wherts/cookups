@@ -12,15 +12,10 @@ import spark.Request;
 import spark.Response;
 import spark.TemplateViewRoute;
 
-import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableMap;
 
-import edu.brown.cs.cookups.PercentageRanker;
-import edu.brown.cs.cookups.ShoppingPriceRanker;
-import edu.brown.cs.cookups.TotalPriceRanker;
 import edu.brown.cs.cookups.db.DBManager;
 import edu.brown.cs.cookups.food.Meal;
-import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.PersonManager;
 
 public class MealView implements TemplateViewRoute {
@@ -52,11 +47,7 @@ public class MealView implements TemplateViewRoute {
     String id = request.cookie("id");
     String profLink = "/profile/" + id.split("@")[0];
     Map<String, Object> variables =
-<<<<<<< HEAD
-        ImmutableMap.of("meal", meal, "recipes", meal.recipes(), "profLink", profLink);
-=======
         ImmutableMap.of("meal", meal, "profLink", profLink, "sortType", sortType);
->>>>>>> d4416cc2ce44a3e8288c41d5703648c172c996e8
     return new ModelAndView(variables, "meal.ftl");
   }
 
