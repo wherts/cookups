@@ -70,17 +70,28 @@
       </div>
   </div>
   <div class="block b last-div">
+    <div id="sortAndFilter">
          <p>
             <label for="amount">Price range:</label>
-            <input type="text" id="priceAmount" class="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+            <input type="text" id="priceAmount" class="amount" readonly>
         </p>
       <div id="priceSlider" class="slider-range"></div>
       <p>
             <label for="amount">Percentage of ingredients owned:</label>
-            <input type="text" id="percentAmount" class="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+            <input type="text" id="percentAmount" class="amount" readonly>
       </p>
       <div id="percentSlider" class="slider-range"></div>
-      
+      <br>
+      <span>Sort recipes by:</span>
+      <select id="sortType">
+
+        <option value="least-missing">Least Missing Ingredients</option>
+        <option value="price-asc">Shopping Costs ($-$$$)</option>
+        <option value="price-des">Shopping Costs ($$$-$)</option>
+        <option value="fancy-asc">Meal Fanciness ($-$$$)</option>
+        <option value="fancy-des">Meal Fanciness ($$$-$)</option>
+      </select>
+    </div>
       <div id="recipe-suggestions" class="container">
       <p class="meal-subtitle">Recipe Suggestions</p>
       <div class="container">

@@ -107,6 +107,12 @@ table {
 }
 
 .amount {
+	background-color: #F1F5DF;
+	color: #676D51;;
 	width: 100px;
 	text-align: center;
+}
+
+#sortAndFilter {
+	color: #FFF;
 }
