@@ -27,6 +27,7 @@ p.subheader-text {
 	margin: 0 5px;
 	background-size: contain;
 	background-position: center;
+	background-repeat: no-repeat;
 	height: 80px;
 	width: 80px;
 	display: inline-block;
@@ -40,6 +41,7 @@ table {
 	font-size: 10px;
 	text-align: center;
 	margin-bottom: 10px;
+	
 }
 
 .person-button {
@@ -52,3 +54,7 @@ table {
 	border: 1px solid white;
 }
 
+#search-input {
+	border: none;
+	box-shadow: none;
+}

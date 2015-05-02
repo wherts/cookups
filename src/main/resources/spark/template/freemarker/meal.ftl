@@ -82,16 +82,28 @@
       <div id="percentSlider" class="slider-range"></div>
       
       <div id="recipe-suggestions" class="container">
-        <p class="h-text">Recipe Suggestions</p>
-      	<#list meal.recipes() as r>
-			<p>${r.name()}</p>
-			<p>${r.percentNeed()} % completed</p>
-			<p>$ ${r.shoppingPrice()}</p>
-			<p>Need to buy:</p>
-			<#list r.shoppingList() as i>
-				<p>i.name()</p>
-			</#list>
+      <p class="meal-subtitle">Recipe Suggestions</p>
+      <div class="container">
+        <div id="sliding suggestions">
+        <table><tr>
+      	<#list recipes as r>
+      		<#assign link = "../assets/recipes/" + r.picPath()+".jpg">
+      		<td>
+      			<div class='recipe-pic-container'><img class='recipe-pic' src='${link}'></div>
+      			<p class='recipe-title'>${r.name()}</p><br>
+				<p class='stats'><img class='icon' src='../assets/recipes/fridgeicon.png'><b> ${(100 - r.percentNeed()*100)?round}% </b>recipe completed</p>
+				<p class='stats'><img class='icon' src='../assets/recipes/cart.png'><b>$${r.shoppingPrice()}</b> to complete recipe</p>
+				<p class='shopping-list'>Shopping List:</p>
+				<ul class='list-ingred'>
+				<#list r.shoppingList() as i>
+					<li>${i.name()}</li>
+				</#list>
+				</ul>
+			</td>
 		</#list>
+		</tr></table>
+		</div>
+      </div>
       </div>
   </div>
   </body>

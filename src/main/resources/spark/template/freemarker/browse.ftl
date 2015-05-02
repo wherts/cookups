@@ -43,7 +43,8 @@
 				<#list recipes?keys?chunk(5) as row>
 				<tr>
 					<#list row as x>
-						<td><a class="recipe" href="${recipes[x]}"><div class='img-container'><img class="recipe" src="../assets/recipes/flank-steak.jpg"></div><span class="recipe-name">${x}</span></a></td>
+					    <#assign link = "../assets/recipes/" + x.picPath()+".jpg">
+						<td><a class="recipe" href="${link}"><div class='img-container'><img class="recipe" src="../assets/recipes/flank-steak.jpg"></div><span class="recipe-name">${x}</span></a></td>
 					</#list>
 				</tr>
 			</#list>
