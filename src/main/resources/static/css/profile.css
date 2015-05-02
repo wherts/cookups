@@ -33,7 +33,7 @@
 	border-bottom:2px solid #fff;
 	border-right:2px solid #fff;
 	margin:5% auto 0 auto; 
-	background-size:cover;
+	background-size:cover !important;
 	border-radius:5px;
 	overflow:hidden;
 }
