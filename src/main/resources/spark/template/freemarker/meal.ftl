@@ -65,14 +65,14 @@
   </div>
   <div class="block b last-div">
       <div id="recipe-suggestions" class="container">
-        <p class="h-text">Recipe Suggestions</p>
+        <p class="meal-subtitle">Recipe Suggestions</p>
       	<#list meal.recipes() as r>
 			<p>${r.name()}</p>
 			<p>${r.percentHave()} % completed</p>
 			<p>$ ${r.shoppingPrice()}</p>
 			<p>Need to buy:</p>
 			<#list r.shoppingList() as i>
-				<p>i.name()</p>
+				<p>${i.name()}</p>
 			</#list>
 		</#list>
       </div>

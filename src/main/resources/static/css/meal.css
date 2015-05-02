@@ -1,7 +1,7 @@
 #meal-details {
 	font-family: 'gobold_thinregular', sans-serif;
 	font-size: 30px;
-	color: #FFF;
+	color: #F1F5DF;
 }
 
 .meal-headers {
@@ -11,6 +11,7 @@
 
 .meal-info {
 	display:inline-block;
+	color: #FFF;
 }
 
 ul {
@@ -28,4 +29,10 @@ ul {
 
 #meal-attendees a {
 	text-decoration: none;
+	font-family: 'abeezeeregular', sans-serif;
+	color: #676D51;
+}
+
+#recipe-suggestions {
+	color: #FFF;
 }
