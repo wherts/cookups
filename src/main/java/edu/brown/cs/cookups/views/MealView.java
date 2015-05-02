@@ -45,11 +45,10 @@ public class MealView implements TemplateViewRoute {
     if (meal == null) {
       response.redirect("/", 404);
     }
-
     String id = request.cookie("id");
     String profLink = "/profile/" + id.split("@")[0];
     Map<String, Object> variables =
-        ImmutableMap.of("meal", meal, "profLink", profLink);
+        ImmutableMap.of("meal", meal, "recipes", meal.recipes(), "profLink", profLink);
     return new ModelAndView(variables, "meal.ftl");
   }
 

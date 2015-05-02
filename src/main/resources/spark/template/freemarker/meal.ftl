@@ -83,8 +83,7 @@
       <div id="percentSlider" class="slider-range"></div>
       <br>
       <span>Sort recipes by:</span>
-      <select id="sortType">
-
+      <select id="sortType" value="least-missing" onchange="changeSort()">
         <option value="least-missing">Least Missing Ingredients</option>
         <option value="price-asc">Shopping Costs ($-$$$)</option>
         <option value="price-des">Shopping Costs ($$$-$)</option>
@@ -97,21 +96,23 @@
       <div class="container">
         <div id="sliding suggestions">
         <table><tr>
-      	<#list recipes as r>
-      		<#assign link = "../assets/recipes/" + r.picPath()+".jpg">
-      		<td>
-      			<div class='recipe-pic-container'><img class='recipe-pic' src='${link}'></div>
-      			<p class='recipe-title'>${r.name()}</p><br>
-				<p class='stats'><img class='icon' src='../assets/recipes/fridgeicon.png'><b> ${(100 - r.percentNeed()*100)?round}% </b>recipe completed</p>
-				<p class='stats'><img class='icon' src='../assets/recipes/cart.png'><b>$${r.shoppingPrice()}</b> to complete recipe</p>
-				<p class='shopping-list'>Shopping List:</p>
-				<ul class='list-ingred'>
-				<#list r.shoppingList() as i>
-					<li>${i.name()}</li>
+	        <div id="recipeHolder">
+		      	<#list recipes as r>
+		      		<#assign link = "../assets/recipes/" + r.picPath()+".jpg">
+		      		<td>
+		      			<div class='recipe-pic-container'><img class='recipe-pic' src='${link}'></div>
+		      			<p class='recipe-title'>${r.name()}</p><br>
+						<p class='stats'><img class='icon' src='../assets/recipes/fridgeicon.png'><b> ${(100 - r.percentNeed()*100)?round}% </b>recipe completed</p>
+						<p class='stats'><img class='icon' src='../assets/recipes/cart.png'><b>$${r.shoppingPrice()}</b> to complete recipe</p>
+						<p class='shopping-list'>Shopping List:</p>
+						<ul class='list-ingred'>
+						<#list r.shoppingList() as i>
+							<li>${i.name()}</li>
+						</#list>
+						</ul>
+					</td>
 				</#list>
-				</ul>
-			</td>
-		</#list>
+			</div>
 		</tr></table>
 		</div>
       </div>
