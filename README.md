@@ -4,7 +4,7 @@ TODO
 
 // GUI
 	- Sign up
-	- Upload photo
+	- Upload photo (can just use input type="file")
 	- Testing? think about it
 	- Form validation
 	- Rank recipes
@@ -13,6 +13,7 @@ TODO
 	- Fix Daniel Craig
 	- Fix cookups drop down
 	- Profile save prefences
+	- Make sure blank space doesn't show up upon resizing
 	- Delete X on pantry
 
 // BACKEND

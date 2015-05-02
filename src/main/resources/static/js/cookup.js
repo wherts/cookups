@@ -1,3 +1,22 @@
+Date.prototype.toDateInputValue = (function() {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0,10);
+});
+
+Date.prototype.toTimeInputValue = (function() {
+    var local = new Date(this);
+    local.setHours(this.getHours() + 2);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(11,16);
+});
+
+Date.prototype.toEndTimeInputValue = (function() {
+    var local = new Date(this);
+    local.setHours(this.getHours() + 4);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(11,16);
+});
 
 $('input:radio[name="type"]').on('change', function(){
     $('#romantic-opts').toggle();
@@ -25,13 +44,15 @@ function submitCookup() {
 		
 		people += "</tr></table><div id='cookup-meal-form'>"
 			+ "<div class='form-entry'>Meal Name<br><input class='inset' type='text' name='name'></div>"
-			+ "<div class='form-entry'>Date<br><input type='date' name='date'></div>"
-			+ "<div class='form-entry'>Time<br><input type='time' name='time_start'>"
-			+ "to <input type='time' name='time_end'></div>" 
+			+ "<div class='form-entry'>Date<br><input type='date' id='datePicker' name='date'></div>"
+			+ "<div class='form-entry'>Time<br><input type='time' id='startTimePicker' name='time_start'>"
+			+ "to <input type='time' id='endTimePicker' name='time_end'></div>" 
 			+ "<div class='btn-container'><input type='button' class='btn' onClick=makeCookupMeal() value='Make Cookup!'></div>" 
 			+ "</div>";
 		$("#matches").html(people);
-		
+		document.getElementById('datePicker').value = new Date().toDateInputValue();
+		document.getElementById('startTimePicker').value = new Date().toTimeInputValue();
+		document.getElementById('endTimePicker').value = new Date().toEndTimeInputValue();
 		setPersonListener();
 	});
 }
