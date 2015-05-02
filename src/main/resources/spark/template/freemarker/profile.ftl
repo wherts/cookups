@@ -46,6 +46,7 @@
             </div></div>          
 	      <div class="about-me">
 	        <p class="name h-text">${name}</p>
+	        <input id="updateButton" type="submit" value="Update Profile">
 	        <p class="subheader h-text">
 	        	<#if editable == true>
 	        		Favorite Cuisines:<br>

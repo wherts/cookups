@@ -7,8 +7,10 @@ var personIngredients;
 var updatedIngredients = {};
 
 $(document).ready(function () {
-	$.get("/profileData", function(JSONresponse) {
-		console.log(JSONresponse);
+	var profilePath = window.location.pathname;
+	var split = profilePath.split("/");
+	var addr = "/profileData/" + split[split.length - 1];
+	$.get(addr, function(JSONresponse) {
 		var response = JSON.parse(JSONresponse);
 		fridge = response.fridge;
 		pantry = response.pantry;
@@ -16,9 +18,6 @@ $(document).ready(function () {
 		ingredients = ingredients.sort();
 		favCuisines = response.favCuisines;
 		personIngredients = response.personIngredients;
-		console.log(ingredients);
-		console.log(favCuisines);
-		console.log(personIngredients);
 		
 		var cuisine_options = generateCuisines(favCuisines);
 		var ingredient_options = "";
@@ -164,3 +163,21 @@ function generateCuisines(favCuisines) {
 	}
 	return toReturn;
 }
+
+
+
+$("#updateButton").click(function() {
+	var vals = $("#curr-ingredients").vals();
+	var ingredients = "";
+	for (var i = 0; i < vals.length; i++) {
+		console.log(vals[i]);
+		ingredients += vals[i];
+		ingredients += "$";
+	}
+	var cuisines = $("#fav-cuisines").text();
+	// for (var i = 0; i < cuisines.length; i++) {
+	// 	console.log(cuisines[i]);
+	// 	cuisines += cuisines[i];
+	// 	cuisines += "$";
+	// }
+});

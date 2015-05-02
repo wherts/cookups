@@ -9,6 +9,7 @@ import spark.TemplateViewRoute;
 
 import com.google.common.collect.ImmutableMap;
 
+import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.PersonManager;
 

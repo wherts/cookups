@@ -82,7 +82,7 @@ public class URLHandler {
     Spark.before("/recipe/:id", new AuthFilter(auth));
     Spark.before("/profile/:id", new AuthFilter(auth));
     Spark.before("/allUsers", new AuthFilter(auth));
-    Spark.before("/profileData", new AuthFilter(auth));
+    Spark.before("/profileData/:id", new AuthFilter(auth));
     Spark.before("/recipe/:id", new AuthFilter(auth));
     Spark.before("/meal/:id/:sortby", new AuthFilter(auth));
     Spark.before("/browse", new AuthFilter(auth));
@@ -114,7 +114,7 @@ public class URLHandler {
     // JSON data routes
     Spark.get("/allRecipes", new AutocompleteHandler(recipeNames));
     Spark.get("/allUsers", new SendUsersHandler(userNames, userIDs));
-    Spark.get("/profileData", new ProfileDataHandler(recipeNames,
+    Spark.get("/profileData/:id", new ProfileDataHandler(recipeNames,
         fridgeIngredients, pantryIngredients,
         people));
 //    Spark.post("/meal/:id/:query", new FilterHandler(db, people));
