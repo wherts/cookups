@@ -42,7 +42,7 @@ public class MealDBLink implements MealDB {
   public Meal getMealByID(String id, PersonManager people) {
     Meal m = meals.get(id);
     if (m != null) {
-      //return m;
+      return m;
     }
     String query = "SELECT json FROM meal WHERE id = ?";
     String json = "";
@@ -75,7 +75,6 @@ public class MealDBLink implements MealDB {
     meal.setID(id);
     this.meals.put(id, meal); //caching meal here with new id
     DBMeal m = new DBMeal(meal);
-    System.out.println(gson.toJson(m));
     String command = "INSERT OR IGNORE INTO meal VALUES (?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(command)) {
       prep.setString(1, id);
