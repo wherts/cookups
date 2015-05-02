@@ -46,7 +46,7 @@ function submitCookup() {
 			+ "<div class='form-entry'>Meal Name<br><input class='inset' type='text' name='name'></div>"
 			+ "<div class='form-entry'>Date<br><input type='date' id='datePicker' name='date'></div>"
 			+ "<div class='form-entry'>Time<br><input type='time' id='startTimePicker' name='time_start'>"
-			+ "to <input type='time' id='endTimePicker' name='time_end'></div>" 
+			+ " to <input type='time' id='endTimePicker' name='time_end'></div>" 
 			+ "<div class='btn-container'><input type='button' class='btn' onClick=makeCookupMeal() value='Make Cookup!'></div>" 
 			+ "</div>";
 		$("#matches").html(people);

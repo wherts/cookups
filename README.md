@@ -14,7 +14,6 @@ TODO
 	- Fix cookups drop down
 	- Profile save prefences
 	- Make sure blank space doesn't show up upon resizing
-	- Delete X on pantry
 
 // BACKEND
 	- Unit tests passing
