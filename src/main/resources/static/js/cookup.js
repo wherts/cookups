@@ -19,8 +19,7 @@ function submitCookup() {
 		people = "<p>Select a person to <em>cookup</em> with:</p><table><tr>";
 		var length = Math.min(matches.length, 5);
 		for (var i = 0; i < length; i++) {
-//			var link = "../assets/people/" + matches[i][0].split("@")[0];
-			var link = "../assets/people/sample-pic.png";
+			var link = "../assets/people/" + matches[i][0].split("@")[0]+".jpg";
 			people += "<td class='person-option'><div class='match' style='background-image:url("+link+")'></div><br>"+matches[i][1]+" ("+matches[i][0]+") "+"<td>";
 		}
 		

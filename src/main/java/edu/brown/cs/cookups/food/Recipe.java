@@ -37,6 +37,13 @@ public class Recipe {
     return id;
   }
 
+  /** Derives the path to the picture from the id.
+   * @return picture path */
+  public String picPath() {
+    String path = id.replace("/", "$");
+    return path;
+  }
+
   /** Accessor for recipe's name.
    * @return name string */
   public String name() {
