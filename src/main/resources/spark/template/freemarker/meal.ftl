@@ -3,29 +3,29 @@
     <meta charset="utf-8">
     <title>Brown Cookups</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/html5bp.css">
-    <link rel="stylesheet" href="../css/stylesheet.css">
-    <link rel="stylesheet" type="text/css" href="../css/jquery.tokenize.css" />
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/meal.css">
-    <link rel="stylesheet" href="../css/jquery-ui.css">
-    <script src="../js/jquery-2.1.1.js"></script>
-    <script src="../js/jquery.tokenize.js"></script>
-    <script src="../js/meal.js"></script>
-    <script src="../js/main.js"></script>
-    <script src="../js/jquery-ui.js"></script>
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/html5bp.css">
+    <link rel="stylesheet" href="../../css/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="../../css/jquery.tokenize.css" />
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/meal.css">
+    <link rel="stylesheet" href="../../css/jquery-ui.css">
+    <script src="../../js/jquery-2.1.1.js"></script>
+    <script src="../../js/jquery.tokenize.js"></script>
+    <script src="../../js/meal.js"></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/jquery-ui.js"></script>
   </head>
   <body>
      <!-- HEADER -->
      <div class="block a">
         <div class="header container">
-        <a href='/cookup'><img class="left" src="../assets/logosmall.png" /></a>
+        <a href='/cookup'><img class="left" src="../../assets/logosmall.png" /></a>
         <div id="nav">
           <a class="header-text" id="logout" href="/logout">logout</a>
 		  <form id="search-bar" action="/search" method="POST">
             <input id="search-input" type="text" placeholder="Search" name="term">
-            <button type="submit" id="search-btn"><img src="../assets/search.png" id="search-icon" class="right" /></button>
+            <button type="submit" id="search-btn"><img src="../../assets/search.png" id="search-icon" class="right" /></button>
           </form>
           <ul id="links">
             <li><a id="cook-link" class="page-link header-text hoverli" href="/cook">Cook</a></li>        
@@ -66,90 +66,48 @@
         <p class="meal-subtitle">Who's Attending</p>
 		<#list meal.attending() as p>
 			<#assign x = p.id()?split("@")>
-			<#assign profilePic = "../assets/people/" + x[0] + ".jpg">
+			<#assign profilePic = "../../assets/people/" + x[0] + ".jpg">
 			<p><img class="profile-pic-icon" src="${profilePic}"><a href="${p.url()}">${p.name()}</a></p>
 		</#list>
       </div>
   </div>
   <div class="block b last-div">
-<<<<<<< HEAD
-    <div id="sortAndFilter">
-         <p>
-            <label for="amount">Price range:</label>
-            <input type="text" id="priceAmount" class="amount" readonly>
-        </p>
-      <div id="priceSlider" class="slider-range"></div>
-      <p>
-            <label for="amount">Percentage of ingredients owned:</label>
-            <input type="text" id="percentAmount" class="amount" readonly>
-      </p>
-      <div id="percentSlider" class="slider-range"></div>
-      <br>
-      <span>Sort recipes by:</span>
-      <select id="sortType" value="least-missing" onchange="changeSort()">
-        <option value="least-missing">Least Missing Ingredients</option>
-        <option value="price-asc">Shopping Costs ($-$$$)</option>
-        <option value="price-des">Shopping Costs ($$$-$)</option>
-        <option value="fancy-asc">Meal Fanciness ($-$$$)</option>
-        <option value="fancy-des">Meal Fanciness ($$$-$)</option>
-      </select>
-    </div>
-=======
->>>>>>> d4416cc2ce44a3e8288c41d5703648c172c996e8
       <div id="recipe-suggestions" class="container">
       <p class="meal-subtitle">Recipe Suggestions</p>
-      <div id="sortAndFilter">
-	         <p>
-	            <label for="amount">Price range:</label>
-	            <input type="text" id="priceAmount" class="amount" readonly>
-	        </p>
-	      <div id="priceSlider" class="slider-range"></div>
-	      <p>
-	            <label for="amount">Percentage of ingredients owned:</label>
-	            <input type="text" id="percentAmount" class="amount" readonly>
-	      </p>
-	      <div id="percentSlider" class="slider-range"></div>
-	      <br>
-	      <span>Sort recipes by:</span>
-	      <select id="sortType">
-	
-	        <option value="least-missing">Least Missing Ingredients</option>
-	        <option value="price-asc">Shopping Costs ($-$$$)</option>
-	        <option value="price-des">Shopping Costs ($$$-$)</option>
-	        <option value="fancy-asc">Meal Fanciness ($-$$$)</option>
-	        <option value="fancy-des">Meal Fanciness ($$$-$)</option>
-	      </select>
-   	  </div>
+          <div id="sortAndFilter">
+         <p>
+            <label for="amount">Price range:</label>
+            <div id="priceSlider" class="slider-range"></div>
+            <input type="text" id="priceAmount" class="amount" readonly>
+        </p>
+      <p>
+            <label for="amount">Percentage of ingredients owned:</label>
+            <div id="percentSlider" class="slider-range"></div>
+            <input type="text" id="percentAmount" class="amount" readonly>
+      </p>
+      
+      <br>
+      <span>Sort recipes by:</span>
+      <select id="sortType" value="default">
+        <option value="default">Select an option</option>
+        <option value="least-missing"><a href="/meal/"+${meal.url()}+"/fewest-missing">Least Missing Ingredients</a></option>
+        <option value="price-asc"><a href="/meal/"+${meal.url()}+"/price-asc">Shopping Costs ($-$$$)</a></option>
+        <option value="price-des"><a href="/meal/"+${meal.url()}+"/price-des">Shopping Costs ($$$-$)</a></option>
+        <option value="fancy-asc"><a href="/meal/"+${meal.url()}+"/fancy-asc">Meal Fanciness ($-$$$)</a></option>
+        <option value="fancy-des"><a href="/meal/"+${meal.url()}+"/fancy-des">Meal Fanciness ($$$-$)</a></option>
+      </select>
+    </div>
       <div class="container">
         <div id="sliding suggestions">
         <table><tr>
-<<<<<<< HEAD
-	        <div id="recipeHolder">
-		      	<#list recipes as r>
-		      		<#assign link = "../assets/recipes/" + r.picPath()+".jpg">
-		      		<td>
-		      			<div class='recipe-pic-container'><img class='recipe-pic' src='${link}'></div>
-		      			<p class='recipe-title'>${r.name()}</p><br>
-						<p class='stats'><img class='icon' src='../assets/recipes/fridgeicon.png'><b> ${(100 - r.percentNeed()*100)?round}% </b>recipe completed</p>
-						<p class='stats'><img class='icon' src='../assets/recipes/cart.png'><b>$${r.shoppingPrice()}</b> to complete recipe</p>
-						<p class='shopping-list'>Shopping List:</p>
-						<ul class='list-ingred'>
-						<#list r.shoppingList() as i>
-							<li>${i.name()}</li>
-						</#list>
-						</ul>
-					</td>
-				</#list>
-			</div>
-=======
-      	<#list recipes.sortBy(sortType) as r>
-      		<#assign link = "../assets/recipes/" + r.picPath()+".jpg">
+      	<#list meal.sortRecipes(sortType) as r>
+      		<#assign link = "../../assets/recipes/" + r.picPath()+".jpg">
       		<td><a href="${r.url()}">
       			<div class='recipe-pic-container'><img class='recipe-pic' src='${link}'></div>
       			<p class='recipe-title'>${r.name()}</p><br>
-				<p class='stats'><img class='icon' src='../assets/recipes/fridgeicon.png'><b> ${(100 - r.percentNeed()*100)?round}% </b>recipe completed</p>
+				<p class='stats'><img class='icon' src='../../assets/recipes/fridgeicon.png'><b> ${(100 - r.percentNeed()*100)?round}% </b>recipe completed</p>
 				<#setting number_format="0.##">
-				<p class='stats'><img class='icon' src='../assets/recipes/cart.png'><b>$${r.shoppingPrice()}</b> to complete recipe</p>
+				<p class='stats'><img class='icon' src='../../assets/recipes/cart.png'><b>$${r.shoppingPrice()}</b> to complete recipe</p>
 				<p class='shopping-list'>Shopping List:</p>
 				<ul class='list-ingred'>
 				<#list r.shoppingList() as i>
@@ -158,7 +116,6 @@
 				</ul>
 			</a></td>
 		</#list>
->>>>>>> d4416cc2ce44a3e8288c41d5703648c172c996e8
 		</tr></table>
 		</div>
       </div>
