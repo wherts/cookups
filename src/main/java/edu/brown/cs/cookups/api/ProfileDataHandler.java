@@ -41,8 +41,8 @@ public class ProfileDataHandler implements Route {
         new ImmutableMap.Builder<String, Object>()
             .put("fridge", fridgeIngredients)
             .put("pantry", pantryIngredients)
-            .put("favCuisines", person.favoriteCuisines())
-            .put("personIngredients", person.ingredients()).build();
+            .put("favCuisines", people.getPersonCuisines(person.id()))
+            .put("personIngredients", people.getPersonIngredientsByID(person.id())).build();
 
     return GSON.toJson(variables);
   }
