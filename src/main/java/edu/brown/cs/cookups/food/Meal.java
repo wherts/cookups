@@ -8,6 +8,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import edu.brown.cs.cookups.PercentageRanker;
+import edu.brown.cs.cookups.ShoppingPriceRanker;
+import edu.brown.cs.cookups.TotalPriceRanker;
 import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.schedule.LatLong;
 import edu.brown.cs.cookups.schedule.Schedule;
@@ -187,6 +190,33 @@ public class Meal {
     return ret;
   }
 
+  public List<Recipe> sortRecipes(String sortType) {
+    Comparator<Recipe> comp = null;
+    switch (sortType) { //have to play with reversed()
+      case "fancy-des":
+        comp = new TotalPriceRanker();
+        break;
+      case "fancy-asc":
+        comp = new TotalPriceRanker().reversed();
+        break;
+      case "price-des":
+        comp = new ShoppingPriceRanker();
+        break;
+      case "price-asc":
+        comp = new ShoppingPriceRanker().reversed();
+        break;
+      case "fewest-missing":
+      default:
+        comp = new PercentageRanker();   
+    }
+    ArrayList<Recipe> ret = new ArrayList<>();
+    for (Recipe r : recipes) {
+      ret.add(r.copy());
+    }
+    return ret;
+  }
+
+  
   public void setID(String id) {
     this.id = id;
   }

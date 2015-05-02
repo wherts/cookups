@@ -48,7 +48,7 @@
          <div id="friends-form" method="POST">
 		  <p class="subheader-text">Make a Meal</p>	
 		  <div class="form-entry">Meal Name<br><input type="text" name="name"></div>
-		  <div class="form-entry">Date<br>   <input type="date" id="datePicker" name="date" required></div>
+		  <div class="form-entry">Date<br><span id='date-label'><input type="date" id="datePicker" name="date" required></span></div>
           <div class="form-entry">Time<br>   
           		<input type="time" id="startTimePicker" name="time_start" value="19:30"> to <input type="time" id="endTimePicker" name="time_end">
           </div>

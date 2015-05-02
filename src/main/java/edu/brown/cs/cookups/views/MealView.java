@@ -35,6 +35,7 @@ public class MealView implements TemplateViewRoute {
   @Override
   public ModelAndView handle(Request request, Response response) {
     String mealEncoded = request.params(":id");
+    String sortType = request.params(":sortby");
     String mealID = null;
     
     try {
@@ -52,7 +53,7 @@ public class MealView implements TemplateViewRoute {
     String id = request.cookie("id");
     String profLink = "/profile/" + id.split("@")[0];
     Map<String, Object> variables =
-        ImmutableMap.of("meal", meal, "profLink", profLink);
+        ImmutableMap.of("meal", meal, "profLink", profLink, "sortType", sortType);
     return new ModelAndView(variables, "meal.ftl");
   }
 

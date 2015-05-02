@@ -99,7 +99,7 @@
       <div class="container">
         <div id="sliding suggestions">
         <table><tr>
-      	<#list recipes as r>
+      	<#list recipes.sortBy(sortType) as r>
       		<#assign link = "../assets/recipes/" + r.picPath()+".jpg">
       		<td><a href="${r.url()}">
       			<div class='recipe-pic-container'><img class='recipe-pic' src='${link}'></div>
