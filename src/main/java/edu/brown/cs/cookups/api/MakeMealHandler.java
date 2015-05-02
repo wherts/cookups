@@ -75,24 +75,16 @@ public class MakeMealHandler implements Route {
     // need to figure out how to parse out selected names
     String[] ids = splitNames(chefs);
     for (String s : ids) {
-//      System.out.printf("Looking for %s%n", s);
       Person person = people.getPersonById(s);
       attending.add(person);
     }
 
     for (Person a : attending) {
-//      System.out.printf("Adding: %s to the meal%n", a.name()); //DELTE ME
       for (Ingredient i : a.ingredients()) {
-//        System.out.printf("They have %f of %s%n", i.ounces(), i.id()); //DELETE ME
       }
       newMeal.addAttending((User) a);
     }
-    Person deleteMe = dbM.users().getPersonById(id); //ADD THIS PERSON TO ATTENDING LIST
-//    System.out.printf("%s is hosting%n", id);
-//    for (Ingredient i : deleteMe.ingredients()) { //DELTE THIS
-//      System.out.printf("They have %f of %s%n", i.ounces(), i.id());
-//    }
-    attending.add(deleteMe);
+    attending.add(dbM.users().getPersonById(id)); //ADD THIS PERSON TO ATTENDING LIST
     List<Recipe> toCook = new ArrayList<>();
     try {
       toCook = RecipeMatcher.matchRecipes(attending, dbM);
@@ -100,18 +92,11 @@ public class MakeMealHandler implements Route {
       e.printStackTrace();
     }
     for (Recipe r : toCook) {
-      System.out.printf("Cooking: %s%n", r.name());
       for (Ingredient i : r.shoppingList()) {
-        System.out.printf("Need: %f of %s%n", i.ounces(), i.id());
       }
-      System.out.printf("They need %f of the recipe%n", r.percentNeed());
-      System.out.printf("Completing it would cost %f%n", r.shoppingPrice());
       newMeal.addRecipe(r);
     }
     for (Recipe r : newMeal.recipes()) {
-      System.out.printf("Cooking: %s%n", r.id());
-      System.out.printf("Need %f%n", r.percentNeed());
-      System.out.printf("Cost: %f%n", r.shoppingPrice());
     }
     newMeal.setName(name);
 
@@ -123,11 +108,11 @@ public class MakeMealHandler implements Route {
     
     String mealLink = null;
     try {
-      mealLink = "/meal/" + URLEncoder.encode(mealID, "UTF-8");
+      mealLink = "/meal/" + URLEncoder.encode(mealID, "UTF-8") + "?sort=fancy-asc";
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
-    
+    System.out.printf("Link: %s%n", mealLink);
     return GSON.toJson(mealLink);
   }
 

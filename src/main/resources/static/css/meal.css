@@ -101,3 +101,7 @@ table {
 	text-align: left;
 	margin-left: 10px;
 }
+
+#range-slider {
+	width: 25%;
+}
