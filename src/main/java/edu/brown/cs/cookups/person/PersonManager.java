@@ -70,7 +70,7 @@ public class PersonManager {
   }
 
   public Person addPerson(String name, String id,
-      List<Ingredient> ingredients) throws SQLException {
+      List<Ingredient> ingredients) {
     Person p = new User(name, id, ingredients);
     db.users().addPerson(p);
     users.put(id, p);
@@ -97,7 +97,7 @@ public class PersonManager {
     List<Meal> meals = new ArrayList<Meal>();
 
     for (String id : mealIDs) {
-      Meal m = db.meals().getMealByID(id);
+      Meal m = db.meals().getMealByID(id, this);
       if (m != null) {
         meals.add(m);
       }

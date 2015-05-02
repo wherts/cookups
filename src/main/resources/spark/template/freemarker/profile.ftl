@@ -14,7 +14,7 @@
      <!-- HEADER -->
      <div class="block a">
         <div class="header container">
-        <img class="left" src="../assets/logosmall.png" />
+        <a href='/cookup'><img class="left" src="../assets/logosmall.png" /></a>
         <div id="nav">
           <a class="header-text" id="logout" href="/logout">logout</a>
 		  <form id="search-bar" action="/search" method="POST">
@@ -25,6 +25,7 @@
             <li><a id="cook-link" class="page-link header-text hoverli" href="/cook">Cook</a></li>        
 			<li><a class="page-link header-text" href="/meals">Meals</a></li>
             <li><a class="page-link header-text" href="/browse">Browse</a></li>
+            <#assign profLink = "/people/"+path>
             <li><a class="page-link header-text" href=${profLink}>Profile</a></li> 
           </ul>
           <ul class="dropdown-menu hoverli">
@@ -34,14 +35,15 @@
         </div> 
        </div>
      </div>
-  <div class="block b">
+  <div class="block b last-div">
       <div class="left half about">
+          <#assign picLink = "../assets/people/"+path+".jpg">
       	  <div id="fridge-container">
-            <div class="profile-pic">
+            <div class="profile-pic" style="background:url(${picLink})">
               <div id="overlay">
                 <span id="edit">Change<br>your look</span>
               </div>
-            </div></div>
+            </div></div>          
 	      <div class="about-me">
 	        <p class="name h-text">${name}</p>
 	        <p class="subheader h-text">

@@ -23,9 +23,7 @@ public class ProfileView implements TemplateViewRoute {
   public ModelAndView handle(Request request, Response response) {
     String name = request.params(":name");
     String profileID = name + "@brown.edu";
-
     Person person = people.getPersonById(profileID);
-
 
     if (person == null) {
       response.status(404);
@@ -36,12 +34,9 @@ public class ProfileView implements TemplateViewRoute {
       editable = true;
     }
 
-    String profLink = "/profile/" + name;
     Map<String, Object> variables =
-        ImmutableMap.of("name", person.name(), "favRecipes",
-            person.favoriteCuisines(),
-            "profLink", profLink, "personIngredients", person.ingredients(),
-            "editable", editable);
+        ImmutableMap.of("name", person.name(), "favCuisines", person.favoriteCuisines(), "personIngredients", person.ingredients(),
+            "editable", editable, "path", name);
     return new ModelAndView(variables, "profile.ftl");
   }
 

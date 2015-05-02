@@ -20,11 +20,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/main/resources/static/assets/people/taylor_derosa.jpg</name>
-			<type>1</type>
-			<locationURI>PARENT-7-PROJECT_LOC/home/tderosa/Downloads/taylor_derosa.jpg</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

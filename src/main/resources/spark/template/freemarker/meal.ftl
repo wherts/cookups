@@ -20,7 +20,7 @@
      <!-- HEADER -->
      <div class="block a">
         <div class="header container">
-        <img class="left" src="../assets/logosmall.png" />
+        <a href='/cookup'><img class="left" src="../assets/logosmall.png" /></a>
         <div id="nav">
           <a class="header-text" id="logout" href="/logout">logout</a>
 		  <form id="search-bar" action="/search" method="POST">
@@ -65,44 +65,47 @@
       <div id="meal-attendees" class="container">
         <p class="meal-subtitle">Who's Attending</p>
 		<#list meal.attending() as p>
-			<p><a href="${p.url()}">${p.name()}</a></p>
+			<#assign x = p.id()?split("@")>
+			<#assign profilePic = "../assets/people/" + x[0] + ".jpg">
+			<p><img class="profile-pic-icon" src="${profilePic}"><a href="${p.url()}">${p.name()}</a></p>
 		</#list>
       </div>
   </div>
   <div class="block b last-div">
-    <div id="sortAndFilter">
-         <p>
-            <label for="amount">Price range:</label>
-            <input type="text" id="priceAmount" class="amount" readonly>
-        </p>
-      <div id="priceSlider" class="slider-range"></div>
-      <p>
-            <label for="amount">Percentage of ingredients owned:</label>
-            <input type="text" id="percentAmount" class="amount" readonly>
-      </p>
-      <div id="percentSlider" class="slider-range"></div>
-      <br>
-      <span>Sort recipes by:</span>
-      <select id="sortType">
-
-        <option value="least-missing">Least Missing Ingredients</option>
-        <option value="price-asc">Shopping Costs ($-$$$)</option>
-        <option value="price-des">Shopping Costs ($$$-$)</option>
-        <option value="fancy-asc">Meal Fanciness ($-$$$)</option>
-        <option value="fancy-des">Meal Fanciness ($$$-$)</option>
-      </select>
-    </div>
       <div id="recipe-suggestions" class="container">
       <p class="meal-subtitle">Recipe Suggestions</p>
+      <div id="sortAndFilter">
+	         <p>
+	            <label for="amount">Price range:</label>
+	            <input type="text" id="priceAmount" class="amount" readonly>
+	        </p>
+	      <div id="priceSlider" class="slider-range"></div>
+	      <p>
+	            <label for="amount">Percentage of ingredients owned:</label>
+	            <input type="text" id="percentAmount" class="amount" readonly>
+	      </p>
+	      <div id="percentSlider" class="slider-range"></div>
+	      <br>
+	      <span>Sort recipes by:</span>
+	      <select id="sortType">
+	
+	        <option value="least-missing">Least Missing Ingredients</option>
+	        <option value="price-asc">Shopping Costs ($-$$$)</option>
+	        <option value="price-des">Shopping Costs ($$$-$)</option>
+	        <option value="fancy-asc">Meal Fanciness ($-$$$)</option>
+	        <option value="fancy-des">Meal Fanciness ($$$-$)</option>
+	      </select>
+   	  </div>
       <div class="container">
         <div id="sliding suggestions">
         <table><tr>
-      	<#list recipes as r>
+      	<#list recipes.sortBy(sortType) as r>
       		<#assign link = "../assets/recipes/" + r.picPath()+".jpg">
-      		<td>
+      		<td><a href="${r.url()}">
       			<div class='recipe-pic-container'><img class='recipe-pic' src='${link}'></div>
       			<p class='recipe-title'>${r.name()}</p><br>
 				<p class='stats'><img class='icon' src='../assets/recipes/fridgeicon.png'><b> ${(100 - r.percentNeed()*100)?round}% </b>recipe completed</p>
+				<#setting number_format="0.##">
 				<p class='stats'><img class='icon' src='../assets/recipes/cart.png'><b>$${r.shoppingPrice()}</b> to complete recipe</p>
 				<p class='shopping-list'>Shopping List:</p>
 				<ul class='list-ingred'>
@@ -110,7 +113,7 @@
 					<li>${i.name()}</li>
 				</#list>
 				</ul>
-			</td>
+			</a></td>
 		</#list>
 		</tr></table>
 		</div>

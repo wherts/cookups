@@ -51,20 +51,27 @@ function submitCookFriends() {
     	console.log(text);
         chefs += text+delim;
       });
-	var params = {
-		name: $('#friends-form input[name=name]').val(),
-		date: $('#friends-form input[name=date]').val(),
-		timeStart:  $('#friends-form input[name=time_start]').val(),
-		timeEnd:  $('#friends-form input[name=time_end]').val(),
-		chefs: chefs
-	}
-	
-	console.log(params);
-	
-	$.post("/makemeal", params, function(responseJSON) {
-		var mealLink = JSON.parse(responseJSON);
-		$('#mealLink').html("<a href='"+mealLink+"'>Meal </a>");
+
+    var date = $('#friends-form input[name=date]').val();
+    var today = new Date().toDateInputValue();
+
+    if (date < today) {
+    	console.log('error');
+    	$('#date-label').after("<p style='color:red; margin:0'>Please enter a date in the future.</p>");
+    } else {
+		var params = {
+			name: $('#friends-form input[name=name]').val(),
+			date: date,
+			timeStart:  $('#friends-form input[name=time_start]').val(),
+			timeEnd:  $('#friends-form input[name=time_end]').val(),
+			chefs: chefs
+		}
 		
-		console.log(mealLink);
-	});
+		console.log(params);
+		
+		$.post("/makemeal", params, function(responseJSON) {
+			var mealLink = JSON.parse(responseJSON);
+			$('#mealLink').html("<a href='"+mealLink+"'>Meal </a>");
+		});
+	}
 }

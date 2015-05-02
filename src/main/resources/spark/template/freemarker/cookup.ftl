@@ -18,7 +18,7 @@
      <!-- HEADER -->
      <div class="block a">
         <div class="header container">
-        <img class="left" src="../assets/logosmall.png" />
+        <a href='/cookup'><img class="left" src="../assets/logosmall.png" /></a>
         <div id="nav">
           <a class="header-text" id="logout" href="/logout">logout</a>
 		  <form id="search-bar" action="/search" method="POST">

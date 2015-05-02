@@ -108,11 +108,24 @@ table {
 
 .amount {
 	background-color: #F1F5DF;
-	color: #676D51;;
+	color: #676D51;
 	width: 100px;
 	text-align: center;
 }
 
 #sortAndFilter {
 	color: #FFF;
+	padding: 0 0 20px 50px;
+}
+
+td a {
+	text-decoration: none;
+	color: #FFF;
+}
+
+.profile-pic-icon {
+	height: 50px;
+	width: 50px;
+	border: 2px solid #676D51;
+	margin: 2px 10px 2px 0;
 }
