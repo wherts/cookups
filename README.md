@@ -13,6 +13,7 @@ TODO
 	- Fix Daniel Craig
 	- Fix cookups drop down
 	- Profile save prefences
+	- Delete X on pantry
 
 // BACKEND
 	- Unit tests passing
