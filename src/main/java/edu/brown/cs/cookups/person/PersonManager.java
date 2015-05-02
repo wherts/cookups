@@ -112,6 +112,11 @@ public class PersonManager {
     return meals;
   }
 
+  public List<String> getPersonCuisines(String id) {
+	  Person p = this.getPersonById(id);
+	  return p.favoriteCuisines();
+  }
+  
   public void addPersonCuisine(String id, String cuisine) {
     Person p = this.getPersonById(id);
     if (p == null) {
