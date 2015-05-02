@@ -184,7 +184,6 @@ public class Meal {
    * Add a recipe to a Meal.
    * @param r new recipe
    */
-
   public void addRecipe(Recipe r) {
     this.recipes.add(r);
   }

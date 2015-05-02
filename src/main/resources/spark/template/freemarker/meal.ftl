@@ -9,6 +9,10 @@
     <link rel="stylesheet" type="text/css" href="../css/jquery.tokenize.css" />
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/meal.css">
+    <script src="../js/jquery-2.1.1.js"></script>
+    <script src="../js/jquery.tokenize.js"></script>
+    <script src="../js/cookup.js"></script>
+    <script src="../js/main.js"></script>
   </head>
   <body>
      <!-- HEADER -->
@@ -68,7 +72,7 @@
         <p class="meal-subtitle">Recipe Suggestions</p>
       	<#list meal.recipes() as r>
 			<p>${r.name()}</p>
-			<p>${r.percentHave()} % completed</p>
+			<p>${r.percentNeed()} % completed</p>
 			<p>$ ${r.shoppingPrice()}</p>
 			<p>Need to buy:</p>
 			<#list r.shoppingList() as i>
@@ -77,9 +81,5 @@
 		</#list>
       </div>
   </div>
-     <script src="../js/jquery-2.1.1.js"></script>
-	<script src="../js/jquery.tokenize.js"></script>
-    <script src="../js/profile.js"></script>
-    <script src="../js/main.js"></script>
   </body>
 </html>

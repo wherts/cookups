@@ -8,11 +8,14 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import com.google.gson.Gson;
 import com.google.gson.InstanceCreator;
 
 import edu.brown.cs.cookups.food.Meal;
+import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.User;
 
@@ -20,7 +23,7 @@ public class MealDBLink implements MealDB {
   private static final String CHARS =
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
   private static final int ID_LENGTH = 9;
-  private Map<String, Meal> meals = new HashMap<String, Meal>();
+  private ConcurrentMap<String, Meal> meals = new ConcurrentHashMap<String, Meal>();
   private DBManager db;
   private Connection conn;
   private static final Gson gson = new Gson();
@@ -65,7 +68,7 @@ public class MealDBLink implements MealDB {
       id = getRandID();
     }
     meal.setID(id);
-    this.meals.put(id, meal);
+    this.meals.put(id, meal); //caching meal here with new id
     String command = "INSERT OR IGNORE INTO meal VALUES (?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(command)) {
       prep.setString(1, id);
@@ -109,5 +112,4 @@ public class MealDBLink implements MealDB {
       return new User("?", "?", null);
     }
   }
-
 }

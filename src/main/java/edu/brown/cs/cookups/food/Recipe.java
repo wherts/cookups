@@ -15,7 +15,7 @@ public class Recipe {
   private List<String> instructions;
   private DBManager querier;
   private List<Ingredient> ingredients, toBuy;
-  private double percentHave = 1;
+  private double percentNeed = 1;
   private double shoppingPrice = 0;
   private static final double CENTS = 100;
 
@@ -83,10 +83,10 @@ public class Recipe {
   /** Accessor for what total percentage (in weight)
    * of the ingredients the recipe has.
    * @return double of percentage */
-  public double percentHave() {
+  public double percentNeed() {
     if (toBuy.size() == 0) {
       return 1;
-    } else if (percentHave == 1) {
+    } else if (percentNeed == 1) {
       // only calculate percenthave once
       // if it's 1, then it hasn't been set yet
       double need = 0;
@@ -97,9 +97,9 @@ public class Recipe {
       for (Ingredient i : ingredients) {
         total += i.ounces();
       }
-      percentHave = (need / total);
+      percentNeed = (need / total);
     }
-    return percentHave;
+    return percentNeed;
   }
 
   /** Accessor for how much money it costs
@@ -183,6 +183,12 @@ public class Recipe {
   /** Method to create a copy of the recipe.
    * @return new recipe with same id, querier */
   public Recipe copy() {
-    return new Recipe(id, querier);
+    Recipe ret = new Recipe(id, querier);
+    List<Ingredient> ings = new ArrayList<>(this.ingredients());
+    ret.setIngredients(ings);
+    for (Ingredient i : toBuy) {
+      ret.addToShoppingList(i, i.ounces());
+    }
+    return ret;
   }
 }
