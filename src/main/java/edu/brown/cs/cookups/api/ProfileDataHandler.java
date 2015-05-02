@@ -2,6 +2,7 @@ package edu.brown.cs.cookups.api;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,12 +39,20 @@ public class ProfileDataHandler implements Route {
     if (person == null) {
       response.status(404);
     }
-    List<String> ingredientNames = new ArrayList<>();
+//    List<String> ingredientNames = new ArrayList<>();
+//    for (Ingredient i : people.getPersonIngredientsByID(person.id())) {
+//    	try {
+//	      ingredientNames.add(i.name());
+//      } catch (SQLException e) {
+//	      e.printStackTrace();
+//      }
+//    }
+    Map<String, Double> ingredientNames = new HashMap<>();
     for (Ingredient i : people.getPersonIngredientsByID(person.id())) {
-    	try {
-	      ingredientNames.add(i.name());
+      try {
+        ingredientNames.put(i.name(), i.ounces());
       } catch (SQLException e) {
-	      e.printStackTrace();
+        e.printStackTrace();
       }
     }
     Map<String, Object> variables =
@@ -52,7 +61,6 @@ public class ProfileDataHandler implements Route {
             .put("pantry", pantryIngredients)
             .put("favCuisines", people.getPersonCuisines(person.id()))
             .put("personIngredients", ingredientNames).build();
-
     return GSON.toJson(variables);
   }
 }
