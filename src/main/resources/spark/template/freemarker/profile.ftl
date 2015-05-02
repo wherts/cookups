@@ -38,7 +38,7 @@
       <div class="left half about">
           <#assign picLink = "../assets/people/"+path+".jpg">
       	  <div id="fridge-container">
-            <div class="profile-pic" style="background:url(${picLink})">
+            <div class="profile-pic" style="background:url(${picLink}); background-size: contain">
               <div id="overlay">
                 <span id="edit">Change<br>your look</span>
               </div>

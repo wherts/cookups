@@ -53,7 +53,8 @@
           		<input type="time" id="startTimePicker" name="time_start" value="19:30"> to <input type="time" id="endTimePicker" name="time_end">
           </div>
           <div class="form-entry">Add chefs<br><select name="chefs" id="add-chefs" multiple="multiple" class="tokenize-sample"></select></div>
-          <div class="btn-container"><input type='button' class="btn" onClick=submitCookFriends() value="Create Meal"></div>
+          <div class="btn-container"><input type='button' class="btn" id='makeCookupBtn' onClick=submitCookFriends() value="Create Meal"></div>
+          <div class='btn-container'><input type='button' class='btn' id='viewCookupBtn' class='btn' value='View Cookup Here!'></div>
          </div>
       </div>
       <div id="mealLink"></div>

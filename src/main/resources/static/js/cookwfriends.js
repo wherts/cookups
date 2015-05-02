@@ -19,6 +19,7 @@ Date.prototype.toEndTimeInputValue = (function() {
 });
 
 $(document).ready(function () {
+	$("#viewCookupBtn").hide(); //hide cookup button
 	document.getElementById('datePicker').value = new Date().toDateInputValue();
 	document.getElementById('startTimePicker').value = new Date().toTimeInputValue();
 	document.getElementById('endTimePicker').value = new Date().toEndTimeInputValue();
@@ -71,7 +72,12 @@ function submitCookFriends() {
 		
 		$.post("/makemeal", params, function(responseJSON) {
 			var mealLink = JSON.parse(responseJSON);
-			$('#mealLink').html("<a href='"+mealLink+"'>Meal </a>");
+			$("#c").hide();
+			$("#viewCookupBtn").show();
+			var mealLink = JSON.parse(responseJSON);
+			$("#viewCookupBtn").on('click', function() {
+				window.location = mealLink;
+			});s
 		});
 	}
 }
