@@ -17,8 +17,8 @@ public class PercentageRanker implements Comparator<Recipe> {
    */
   @Override
   public int compare(Recipe o1, Recipe o2) {
-    double percent1 = o1.percentHave();
-    double percent2 = o2.percentHave();
+    double percent1 = o1.percentNeed();
+    double percent2 = o2.percentNeed();
     return Double.compare(percent2, percent1);
   }
 }

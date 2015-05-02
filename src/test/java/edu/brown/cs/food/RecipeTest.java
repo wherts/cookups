@@ -62,7 +62,7 @@ public class RecipeTest {
       rec.addToShoppingList(new Ingredient(ids[i], 0, null), shop[i]);
     }
     rec.setIngredients(ingredients);
-    assertTrue(rec.percentHave() == 0.6);
+    assertTrue(rec.percentNeed() == 0.6);
     // more complex numbers
     double[] t = {15.0, 12.6, 7.5, 0.55, 3.27};
     double[] h = {4.4, 12, 4.8, 0.17, 3.2};
@@ -73,7 +73,7 @@ public class RecipeTest {
       rec.addToShoppingList(new Ingredient(ids[i], 0, null), h[i]);
     }
     rec.setIngredients(ingredients);
-    double percent = rec.percentHave();
+    double percent = rec.percentNeed();
     double rounded = Math.floor(percent * 1000) / 1000;
     assertTrue(rounded == 0.631);
   }
@@ -200,9 +200,9 @@ public class RecipeTest {
     for (int i = 0; i < 5; i++) {
       ingredients.add(new Ingredient(ids[i], need[i], null));
     }
-    assertTrue(rec.percentHave() == 1);
+    assertTrue(rec.percentNeed() == 1);
     rec.setIngredients(ingredients);
-    assertTrue(rec.percentHave() == 1);
+    assertTrue(rec.percentNeed() == 1);
   }
 
   @Test
@@ -216,6 +216,6 @@ public class RecipeTest {
       rec.addToShoppingList(new Ingredient(ids[i], 0, null), amt[i]);
     }
     rec.setIngredients(ingredients);
-    assertTrue(rec.percentHave() == 1);
+    assertTrue(rec.percentNeed() == 1);
   }
 }
