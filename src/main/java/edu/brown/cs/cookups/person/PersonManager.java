@@ -76,6 +76,12 @@ public class PersonManager {
     users.put(id, p);
     return p;
   }
+  
+  public void addPersonIngredient(String uid, Ingredient i) {
+	 Person p = this.getPersonById(uid);
+	 p.ingredients().add(i);
+	 db.users().addUserIngredient(uid, i);
+  }
 
   public void removePersonById(String id)
     throws SQLException {
