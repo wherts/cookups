@@ -77,7 +77,7 @@
       <div id="slider-range"></div>
       <div id="recipe-suggestions" class="container">
         <p class="h-text">Recipe Suggestions</p>
-      	<#list meal.recipes() as r>
+      	<#list recipes as r>
 			<p>${r.name()}</p>
 			<p>${r.percentNeed()} % completed</p>
 			<p>$ ${r.shoppingPrice()}</p>

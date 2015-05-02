@@ -108,11 +108,11 @@ public class MakeMealHandler implements Route {
     
     String mealLink = null;
     try {
-      mealLink = "/meal/" + URLEncoder.encode(mealID, "UTF-8");
+      mealLink = "/meal/" + URLEncoder.encode(mealID, "UTF-8") + "?sort=fancy-asc";
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
-    
+    System.out.printf("Link: %s%n", mealLink);
     return GSON.toJson(mealLink);
   }
 
