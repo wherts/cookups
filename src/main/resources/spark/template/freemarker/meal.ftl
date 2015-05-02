@@ -72,9 +72,15 @@
   <div class="block b last-div">
          <p>
             <label for="amount">Price range:</label>
-            <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+            <input type="text" id="priceAmount" class="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
         </p>
-      <div id="slider-range"></div>
+      <div id="priceSlider" class="slider-range"></div>
+      <p>
+            <label for="amount">Percentage of ingredients owned:</label>
+            <input type="text" id="percentAmount" class="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+      </p>
+      <div id="percentSlider" class="slider-range"></div>
+      
       <div id="recipe-suggestions" class="container">
         <p class="h-text">Recipe Suggestions</p>
       	<#list meal.recipes() as r>

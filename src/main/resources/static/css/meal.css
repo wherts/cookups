@@ -30,7 +30,12 @@ ul {
 	text-decoration: none;
 }
 
-#range-slider {
-	width: 25%;
+.slider-range {
+	width: 200px;
 	
+}
+
+.amount {
+	width: 100px;
+	text-align: center;
 }
