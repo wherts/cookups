@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import edu.brown.cs.cookups.person.User;
+import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.schedule.LatLong;
 import edu.brown.cs.cookups.schedule.Schedule;
 
@@ -19,23 +19,22 @@ import edu.brown.cs.cookups.schedule.Schedule;
  */
 public class Meal {
   private String id;
-  private User host;
-  private List<User> attending;
-  private LatLong location;
+  private Person host;
+  private List<Person> attending;
   private Schedule schedule;
   private List<Recipe> recipes;
   private String name;
 
   /**
    * Constructor for a meal.
-   * @param user The host of the meal
+   * @param Person The host of the meal
    */
-  public Meal(User user, Schedule s) {
+  public Meal(Person Person, Schedule s) {
 
-    assert (user != null && s != null);
-    this.host = user;
+    assert (Person != null && s != null);
+    this.host = Person;
     this.schedule = s;
-    this.attending = new ArrayList<User>();
+    this.attending = new ArrayList<Person>();
     this.recipes = new ArrayList<Recipe>();
   }
 
@@ -86,6 +85,10 @@ public class Meal {
   public LocalDate setDate(LocalDate lD) {
     return schedule.changeDate(lD);
   }
+  
+  public Schedule schedule() {
+	  return this.schedule;
+  }
 
   /**
    * Setter for time of meal.
@@ -121,31 +124,12 @@ public class Meal {
   }
 
   /**
-   * Accessor for meal's location.
-   * @return a LatLong object
-   */
-  public LatLong location() {
-    return location;
-  }
-
-  /**
-   * Setter for a meal's location.
-   * @param l new LatLong location
-   * @return old location
-   */
-  public LatLong setLocation(LatLong l) {
-    LatLong ret = location;
-    this.location = l;
-    return ret;
-  }
-
-  /**
    * Accessor for guest list of a Meal.
-   * @return list of User attending
+   * @return list of Person attending
    */
-  public List<User> attending() {
-    List<User> copy = new ArrayList<>();
-    for (User p : attending) {
+  public List<Person> attending() {
+    List<Person> copy = new ArrayList<>();
+    for (Person p : attending) {
 
       copy.add(p);
     }
@@ -154,18 +138,18 @@ public class Meal {
 
   /**
    * Method to add a guest to the Meal.
-   * @param p new User coming to Meal
+   * @param p new Person coming to Meal
    */
-  public void addAttending(User a) {
+  public void addAttending(Person a) {
     assert (a != null);
     attending.add(a);
   }
 
   /**
    * Accessor for a Meal's host.
-   * @return User object
+   * @return Person object
    */
-  public User host() {
+  public Person host() {
 
     return host;
   }
@@ -176,8 +160,8 @@ public class Meal {
    * 
    * @return old host
    */
-  public User setHost(User h) {
-    User ret = this.host;
+  public Person setHost(Person h) {
+    Person ret = this.host;
     this.host = h;
     return ret;
   }
@@ -224,8 +208,6 @@ public class Meal {
     result = prime * result
         + ((host == null) ? 0 : host.hashCode());
     result = prime * result
-        + ((location == null) ? 0 : location.hashCode());
-    result = prime * result
         + ((recipes == null) ? 0 : recipes.hashCode());
     result = prime * result
         + ((schedule == null) ? 0 : schedule.hashCode());
@@ -244,11 +226,6 @@ public class Meal {
     sB.append(", ");
     sB.append(recipes.toString());
     sB.append(", ");
-    if (location != null) {
-      sB.append(location.toString());
-    } else {
-      sB.append("No location selected");
-    }
     return sB.toString();
 
   }

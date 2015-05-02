@@ -167,7 +167,7 @@ public class DBPeopleTest {
     m1.addRecipe(r1);
     String mealID = db.meals().addMeal(m1);
     people.addMealtoPerson(mealID, "wh7");
-    assertTrue(m1.equals(db.meals().getMealByID(mealID)));
+    assertTrue(m1.equals(db.meals().getMealByID(mealID, people)));
   }
 
   @Test

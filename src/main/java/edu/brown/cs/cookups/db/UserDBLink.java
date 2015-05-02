@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.person.Person;
@@ -22,7 +24,6 @@ public class UserDBLink implements UserDB {
   public static final int EXP_IDX = 4;
   public static final int RECIPE_TEXT_IDX = 3;
   public static final int QTY_IDX = 3;
-
   private final Connection conn;
   private final DBManager db;
 
@@ -349,6 +350,7 @@ public class UserDBLink implements UserDB {
     List<String> meals = new ArrayList<String>();
     String query = "SELECT meal FROM user_meal WHERE user = ?";
     try (PreparedStatement prep = conn.prepareStatement(query)) {
+     prep.setString(1, id);
       try (ResultSet rs = prep.executeQuery()) {
         while (rs.next()) {
           meals.add(rs.getString(1));
