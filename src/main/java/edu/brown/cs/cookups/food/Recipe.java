@@ -1,5 +1,7 @@
 package edu.brown.cs.cookups.food;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,16 @@ public class Recipe {
   public String picPath() {
     String path = id.replace("/", "$");
     return path;
+  }
+  
+  /** Gets the URL of the recipe page
+   * @return url
+   * @throws UnsupportedEncodingException 
+   */
+  public String url() throws UnsupportedEncodingException {
+    String url = null;
+    url = "/recipe/" + URLEncoder.encode(id, "UTF-8");
+    return url;
   }
 
   /** Accessor for recipe's name.

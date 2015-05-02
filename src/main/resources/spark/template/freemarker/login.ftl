@@ -34,7 +34,7 @@
         </form>
   	 	</div>
   	 	<div class="form-box right">
-          <form name="signup-form" action="/signup" onsubmit="return validateSignup()" method="POST">
+          <form name="signup-form" id="signup-form" action="/signup" onsubmit="return validateSignup()" method="POST">
   	 	  	<h1 class="h-text form-title">new here?</h1>
   	 	  	<div class="field">
               <h3 class="field-label h-text">name:</h3>

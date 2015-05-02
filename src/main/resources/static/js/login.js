@@ -1,9 +1,31 @@
 function validateSignup() {
 	var email = document.forms["signup-form"]["email"].value;
+	var name = document.forms["signup-form"]["name"].value;
+	var password = document.forms["signup-form"]["password"].value;
 	
-	var domain = email.split("@")[1];
-	if (domain !== "brown.edu") {
-		console.log("bad email domain");
+	var emailArray = email.split("@");
+	
+	if (name === "" || password === "" || email === "" ) {
+		if (name === "") {
+			$("#signup-form input[name=name]").attr("style", "border:5px solid red");
+		}
+		if (password === "") {
+			$("#signup-form input[name=email]").attr("style", "border:5px solid red");
+		}
+		if (email === "") {
+			$("#signup-form input[name=password]").attr("style", "border:5px solid red");
+		}
+		return false;
+	} else if (emailArray.length < 2) {
+		alert("Not a valid email address.");
 		return false;
 	}
+	else if (emailArray[1] !== "brown.edu") {
+		alert("You must use a Brown University email address.");
+		return false;
+	}
+}
+
+function validateLogin() {
+	
 }

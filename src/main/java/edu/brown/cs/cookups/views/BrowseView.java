@@ -33,18 +33,25 @@ public class BrowseView implements TemplateViewRoute {
     String profileLink = "/profile/" + req.cookie("id").split("@")[0];
     List<List<String>> recipes = db.recipes().getNamesAndIDs();
     Map<String, String> recipeMap = new LinkedHashMap<String, String>();
+    Map<String, String> recipePicMap = new LinkedHashMap<String, String>();
     for (int i = 0; i < recipes.get(0).size(); i++) {
       try {
-        recipeMap.put(recipes.get(1).get(i),
-            "/recipe/" + URLEncoder.encode(recipes.get(0).get(i), "UTF-8"));
+        String name = recipes.get(1).get(i);
+        String id = recipes.get(0).get(i);
+        recipeMap.put(name,
+            "/recipe/" + URLEncoder.encode(id, "UTF-8"));
+        recipePicMap.put(name, id.replace("/", "$"));
       } catch (UnsupportedEncodingException e) {
         e.printStackTrace();
       }
     }
+    
+    System.out.println(recipePicMap.size());
 
     Map<String, Object> variables =
         new ImmutableMap.Builder<String, Object>()
             .put("recipes", recipeMap)
+            .put("recipePics", recipePicMap)
             .put("profLink", profileLink).build();
 
     return new ModelAndView(variables, "browse.ftl");

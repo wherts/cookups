@@ -34,13 +34,13 @@ public class RecipeView implements TemplateViewRoute {
   public ModelAndView handle(Request request, Response response) {
     String idEncoded = request.params(":id");
 
-    String userID = request.cookie("id") + "@brown.edu";
-    Person p = null;
+    String userID = request.cookie("id");
+    String profileLink = "/profile/" + userID.split("@")[0];
+    Person p = people.getPersonById(userID);
 
     String id = null;
     try {
       id = URLDecoder.decode(idEncoded, "UTF-8");
-      p = people.getPersonById(userID);
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
@@ -55,7 +55,7 @@ public class RecipeView implements TemplateViewRoute {
     RecipeMatcher.buildShoppingList(ingredients, recipe);
 
     Map<String, Object> variables =
-        ImmutableMap.of("recipe", recipe);
+        ImmutableMap.of("recipe", recipe, "profLink", profileLink);
     return new ModelAndView(variables, "recipe.ftl");
   }
 
