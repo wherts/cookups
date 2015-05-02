@@ -38,9 +38,6 @@ public class DBMealTest {
 
   @Test
   public void mealJSON() {
-	 if(db.meals() == null) {
-		 System.out.println("FUCK");
-	 }
 	PersonManager people = new PersonManager(db);
     Schedule sched = new Schedule(LocalDateTime.now(),
         new LatLong(10, 10));

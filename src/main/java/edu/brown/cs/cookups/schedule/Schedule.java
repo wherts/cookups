@@ -34,8 +34,9 @@ public class Schedule {
   
   private boolean datePassed(LocalDate lD) {
     LocalDate today = LocalDateTime.now().toLocalDate();
-    Duration duration = Duration.between(today, lD);
-    return duration.isNegative();
+    Period period = Period.between(today, lD);
+    return period.isNegative();
+   
   }
 
   /** Accessor for date.

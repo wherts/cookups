@@ -243,9 +243,9 @@ public class Meal {
       return false;
     }
     Meal m = (Meal) o;
-    return this.host.equals(m.host())
-        && this.recipes.equals(m.recipes())
-        && this.attending.equals(m.attending())
+    return this.host().equals(m.host())
+        && this.recipes().equals(m.recipes())
+        && this.attending().equals(m.attending())
         && this.schedule.date().equals(m.date())
         && this.schedule.time().equals(m.time());
   }
