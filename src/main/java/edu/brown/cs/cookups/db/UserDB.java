@@ -9,6 +9,7 @@ import edu.brown.cs.cookups.person.PersonManager;
 public interface UserDB {
 
   public void addUserIngredient(String id, Ingredient i);
+  
 
   public void addPerson(Person p);
 

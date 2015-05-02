@@ -279,6 +279,8 @@ public class DBLink implements DBManager {
       }
       String name = line[0];
       String uid = line[1];
+      String[] cuisines = reader.readLine();
+      
       List<Ingredient> ingredients = new ArrayList<Ingredient>();
       while ((line = reader.readLine()) != null) {
         if (line.length != 2) {
@@ -293,6 +295,10 @@ public class DBLink implements DBManager {
       }
       Person p = new User(name, uid, ingredients);
       this.users.addPerson(p);
+      for (String s: cuisines) {
+    	  p.addCuisine(s);
+      }
+      this.users.updatePersonCuisines(p);
       this.users.setPersonPassword(uid, "password");
     } catch (FileNotFoundException e) {
       // TODO Auto-generated catch block
