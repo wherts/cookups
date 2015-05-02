@@ -39,8 +39,8 @@
        </div>
      </div>
   <div class="block b">
-      <p class="title">${meal.name()}</p>
       <div id="meal-details" class="container">
+        <p class="title" id="meal-title">${meal.name()}</p>
       	<ul class="meal-headers left">
       		<li>Host</li>
       		<li>Date</li>
@@ -61,9 +61,9 @@
   </div>
   <div class="block a">
       <div id="meal-attendees" class="container">
-        <p class="h-text">Who's Attending</p>
+        <p class="meal-subtitle">Who's Attending</p>
 		<#list meal.attending() as p>
-			<p>${p.name()}</p>
+			<p><a href="${p.url()}">${p.name()}</a></p>
 		</#list>
       </div>
   </div>

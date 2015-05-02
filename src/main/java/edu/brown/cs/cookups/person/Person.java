@@ -9,6 +9,8 @@ public interface Person {
 
   public String id();
 
+  public String url();
+
   public List<Ingredient> ingredients();
 
   public Double latitude();
