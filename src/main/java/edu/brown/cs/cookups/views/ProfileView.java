@@ -9,7 +9,6 @@ import spark.TemplateViewRoute;
 
 import com.google.common.collect.ImmutableMap;
 
-import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.PersonManager;
 
@@ -25,18 +24,22 @@ public class ProfileView implements TemplateViewRoute {
     String name = request.params(":name");
     String profileID = name + "@brown.edu";
     Person person = people.getPersonById(profileID);
-    
+
     if (person == null) {
       response.status(404);
     }
 
     boolean editable = false;
-    if (profileID.equals(request.cookie("id"))) {
+    String userID = request.cookie("id");
+    if (profileID.equals(userID)) {
       editable = true;
     }
+    String path = userID.split("@")[0];
 
     Map<String, Object> variables =
-        ImmutableMap.of("name", person.name(), "favCuisines", person.favoriteCuisines(), "personIngredients", person.ingredients(),
+        ImmutableMap.of("name", person.name(), "favCuisines",
+            person.favoriteCuisines(), "personIngredients",
+            person.ingredients(),
             "editable", editable, "path", name);
     return new ModelAndView(variables, "profile.ftl");
   }

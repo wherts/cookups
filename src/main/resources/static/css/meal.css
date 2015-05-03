@@ -111,8 +111,8 @@ table {
 }
 
 #percentSliderHolder {
-	padding-left: 30px
-;}
+	padding-left: 30px;
+}
 
 .amount {
 	background-color: #F1F5DF;
@@ -124,6 +124,24 @@ table {
 #sortAndFilter {
 	color: #FFF;
 	padding: 0 0 20px 50px;
+	font-family: 'gobold_thinregular', sans-serif;
+
+}
+
+.filter-subheader {
+	font-family: 'abeezeeregular', sans-serif;
+	color: #FFF;
+	display: inline-block;
+	padding: 10px 0;
+	width: 300px;
+}
+
+.slider {
+	display: block;
+}
+
+.slider-range {
+	display: inline-block;
 }
 
 td a {

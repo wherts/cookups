@@ -15,7 +15,8 @@ $(document).ready(function () {
 		ingredients = ingredients.sort();
 		favCuisines = response.favCuisines;
 		personIngredients = response.personIngredients;
-		
+		updateFridgeAndPantryNoEdit();
+
 		var cuisine_options = generateCuisines(favCuisines);
 		var ingredient_options = "";
 		for (var i = 1; i <= ingredients.length; i++) {
@@ -77,12 +78,33 @@ $(document).ready(function () {
 				var value = $(this).val();
 				var name = $(this).attr("name");
 				// personIngredients[name] = parseFloat(value);
-				personIngredients[name] = value;
+				personIngredients[name] = parseFloat(value);
 			});
 			updateFridgeAndPantry();
 		});
 	});
 });
+
+function updateFridgeAndPantryNoEdit() {
+	var newHtmlFridge = "";
+	var newHtmlPantry = "";
+	var ings = $("#ingredientInput span");
+	console.log(ings);
+	for (var i = 1; i <= ings.length; i++) {
+		var toPut = $("#ingredientInput span:nth-child("+i+")").html();
+		console.log(toPut);
+		var ingredient = $("#ingredientInput span:nth-child("+i+")").attr("value");
+		console.log(ingredient);
+		if ($.inArray(ingredient, fridge) != -1) {
+			newHtmlFridge += "<p class='ingredientName' id='"+ingredient+"'>"+toPut+"</p>";
+		}
+		else if ($.inArray(ingredient, pantry) != -1) {
+			newHtmlPantry += "<p class='ingredientName' id='"+ingredient+"'>"+toPut+"</p>";
+		}
+	}
+	$("#fridge").html(newHtmlFridge);
+	$("#pantry").html(newHtmlPantry);
+}
 
 function updateFridgeAndPantry() {
 	var newHtmlFridge = "";
@@ -92,7 +114,7 @@ function updateFridgeAndPantry() {
 	for (var i = 0; i < counters.length; i++) {
 		var counter = counters[i];
 		var name = counter.name;
-		personIngredients[name] = counter.value;
+		personIngredients[name] = parseFloat(counter.value);
 		if ($.inArray(name, fridge) != -1) {
 			newHtmlFridge += "<p class='ingredientName' id='"+name+"'>"+name+"</p>";
 		}
@@ -209,37 +231,18 @@ function getCurrentID() {
 
 $("#updateButton").click(function() {
 	//send personIngredients
-	var favs = $("#fav-cuisines .Token .favorite");
-//	console.log(favs);
-	for (var i=1; i <=favs.length; i++) {
-		console.log(favs[i-1]);
-		if (favs[i-1].selected == 'selected') {
-			console.log(favs[i-1].text()); //collect favorite cuisines	
-		}
+	var favoriteSpans = $("#about .Token span");
+	var favCuisines = "";
+	for (var i=1; i <= favoriteSpans.length; i++) {
+		favCuisines += $("#about .Token:nth-child(" + i+ ") span").html();
+		favCuisines += ","; //for splitting on backend
 	}
-	
-	// for (var i = 0; i < cuisines.length; i++) {
-	// 	console.log(cuisines[i]);
-	// 	cuisines += cuisines[i];
-	// 	cuisines += "$";
-	// }
+
 	var cuisines;
 	var addr = "/updateProfile/" + getCurrentID();
-	var keys = Object.keys(personIngredients);
-	var values = [keys.length];
-	for (var i = 0; i < keys.length; i++) {
-		values[i] = personIngredients[keys[i]];
-	}
-	var values = "";
 	var postParams = {
-		personIngs : JSON.stringify(personIngredients)
-		// favoriteCuisines : cuisines
+		personIngs : JSON.stringify(personIngredients),
+		 favorites : favCuisines
 	};
-	console.log(keys);
-	console.log(values);
-	
-	console.log(addr);
-	console.log(personIngredients);
-	console.log(postParams);
 	$.post(addr, postParams);
 });

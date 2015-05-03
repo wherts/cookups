@@ -168,7 +168,6 @@ public class Meal {
         break;
       case "fancy-asc":
         comp = new TotalPriceRanker();
-        System.out.println("fancy");
         break;
       case "price-des":
         comp = new ShoppingPriceRanker().reversed();
@@ -176,18 +175,14 @@ public class Meal {
         break;
       case "price-asc":
         comp = new ShoppingPriceRanker();
-        System.out.println("price");
         break;
       case "fewest-missing":
       default:
-        comp = new PercentageRanker();
+        comp = new PercentageRanker().reversed();
     }
     ArrayList<Recipe> ret = new ArrayList<>();
     for (Recipe r : recipes) {
       ret.add(r.copy());
-    }
-    for (Recipe r : ret) {
-      System.out.println(r.name());
     }
     ret.sort(comp);
     System.out.println();

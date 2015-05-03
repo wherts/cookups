@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentMap;
 import com.google.gson.Gson;
 import com.google.gson.InstanceCreator;
 
+import edu.brown.cs.cookups.RecipeMatcher;
 import edu.brown.cs.cookups.food.Meal;
 import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.Person;
@@ -152,17 +153,24 @@ public class MealDBLink implements MealDB {
 		  }
 	  }
 	  
-	  public Meal getMeal(PersonManager people, DBManager dbM) {
+	  public Meal getMeal(PersonManager people, DBManager dbM) throws SQLException {
 		  Person host = people.getPersonById(this.hostID);
 		  Schedule sched = this.schedule;
 		  Meal meal = new Meal(host, sched);
 		  meal.setID(this.id);
 		  if (this.attending != null) {
 			  rebuildAttending(this.attending, people, meal);
+			  List<Person> chefs = new ArrayList<>(meal.attending());
+			  chefs.add(host);
+			  List<Recipe> recipes = RecipeMatcher.matchRecipes(chefs, dbM);
+			  for (Recipe r : recipes) {
+			    meal.addRecipe(r);
+			  }
 		  }
-		  if (this.recipes != null) {
-			  rebuildRecipes(this.recipes, meal, dbM);
-		  }
+		  
+//		  if (this.recipes != null) {
+//			  rebuildRecipes(this.recipes, meal, dbM);
+//		  }
 		  if (this.name != null) {
 			  meal.setName(this.name);
 		  }
