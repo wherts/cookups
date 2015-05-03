@@ -12,7 +12,10 @@ $(document).ready(function() {
 			max: 500,
 			values: [ 0, 500 ],
 			slide: function( event, ui ) {
-				$( "#priceAmount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+				priceLow = ui.values[ 0 ];
+				priceHigh = ui.values[ 1 ];
+				$( "#priceAmount" ).val( "$" + priceLow + " - $" + priceHigh );
+				reloadInRange();
 			}
 		});
 		priceLow = $( "#priceSlider" ).slider( "values", 0 );
@@ -25,32 +28,40 @@ $(document).ready(function() {
 			max: 100,
 			values: [ 0, 100 ],
 			slide: function( event, ui ) {
-				$( "#percentAmount" ).val(ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%");
+				percentLow = ui.values[ 0 ];
+				percentHigh = ui.values[ 1 ];
+				$( "#percentAmount" ).val(percentLow + "% - " + percentHigh + "%");
+				reloadInRange();
 			}
 		});
 		percentLow = $( "#percentSlider" ).slider( "values", 0 );
 		percentHigh = $( "#percentSlider" ).slider( "values", 1 );
 		$( "#percentAmount" ).val(percentLow + "% - " + percentHigh + "%");
+
 	}); //ends ready
 
-function changeSort() {
-	var sortType = $("#sortType").val();
+function reloadInRange() {
+	var recipes = $(".allRecipes table td");
+	var numbers = $(".allRecipes table tr b");
+	console.log(recipes.length);
+	console.log(numbers.length);
+	for (var i=0; i<numbers.length;i+=2) {
 
-	var params = {
-		sort : sortType
-		// priceLow : priceLow,
-		// priceHigh : priceHigh,
-		// percentLow : percentLow,
-		// percentHigh : percentHigh
-	};
-	console.log(mealPath);
-	var getAddr = "http://localhost:3456/meal/" + mealPath.split("/")[2] + "/" + sortType;
-	console.log("ADDR " + getAddr);
-	$.get(getAddr, function (responseObject) {
-		
-		//display recipes here
+		var percent = numbers[i].innerHTML.trim();
+		percent = percent.substring(0, percent.length - 1);
+		percent = parseFloat(percent);
 
-	});
+		var price = numbers[i+1].innerHTML.trim();
+		price = price.substring(1, price.length);
+		price = parseFloat(price);
+
+		if (percent > percentHigh || percent < percentLow || price > priceHigh || price < priceLow) {
+			recipes[i/2].hidden = true;
+		}
+		else {
+			recipes[i/2].hidden = false;
+		}
+	}
 }
 
 function reverseRecipes() {

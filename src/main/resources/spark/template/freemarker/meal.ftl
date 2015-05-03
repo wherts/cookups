@@ -71,20 +71,24 @@
             <div id="percentSlider" class="slider-range"></div>
             <input type="text" id="percentAmount" class="amount" readonly>
       </div>
+      <a name="sort"></a>
       <h3 id='sort-header' class='recipe-filter-subheader'>Sort by:</h3>
       <div id="sortType" value="default">
       	<#assign leastMissing = "/meal/"+meal.url()+"/fewest-missing">
-        <input type="button" class="sort-btn btn" value="Least Missing Ingredients" onClick="location.href='${leastMissing}'"></input>
+        <input type="button" class="sort-btn btn" value="Least Missing Ingredients" onClick="location.href='${leastMissing}#sort'"></input>
       	<#assign shoppingCosts = "/meal/"+meal.url()+"/price-asc">
-        <input type="button" class="sort-btn btn" value="Shopping Costs" onClick="location.href='${shoppingCosts}'"></input>
+        <input type="button" class="sort-btn btn" value="Shopping Costs" onClick="location.href='${shoppingCosts}#sort'"></input>
       	<#assign mealFanciness = "/meal/"+meal.url()+"/fancy-asc">
-        <input type="button" class="sort-btn btn" value="Meal Fanciness" onClick="location.href='${mealFanciness}'"></input>
+        <input type="button" class="sort-btn btn" value="Meal Fanciness" onClick="location.href='${mealFanciness}#sort'"></input>
       </div>
         <input id="reverseButton" onclick="reverseRecipes()" type="button" class="sort-btn btn" value="Reverse Order"></input>
     </div>
       <div class="container">
         <div id="sliding suggestions" class="allRecipes">
-        <table><tr>
+        <div class="scroller scroller-left"><i class="icon-chevron-left icon-3x"></i></div>
+        <div class="scroller scroller-right"><i class="icon-chevron-right icon-3x"></i></div>
+        <table><tr class="recipe-holder">
+        
       	<#list meal.sortRecipes(sortType) as r>
       		<#assign link = "/assets/recipes/" + r.picPath()+".jpg">
       		<td><a href="${r.url()}">
