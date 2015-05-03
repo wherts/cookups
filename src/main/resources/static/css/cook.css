@@ -1,6 +1,7 @@
 #title {
-	background-image: url(../assets/cook.png);
+	background-image: url(../assets/cookwfriends-background.png);
 	height: 250px;
+	background-position: center;
 }
 
 .link {
@@ -16,12 +17,37 @@
 	text-shadow: 2px 2px #000;
 }
 
+.link a {
+	height: 100%;
+	width: 100%;
+	background: url(../assets/friends-cook.jpg);
+}
+
 #cookfriends-link {
+	text-align: center;
+	line-height: 10;
+	font-size: 45px;
+	color: #FFFFFF;
+	text-shadow: 2px 2px #000;
 	width: 50%;
-	height: 300px;
+	height: 100%;
+	background: url(../assets/friends-cook.jpg);
+	background-size: cover;
+	background-position: center;
+	display: inline-block;
 }
 
 #cookup-link {
+		text-align: center;
+
+	line-height: 10;
+	font-size: 45px;
+	color: #FFFFFF;
+	text-shadow: 2px 2px #000;
 	width: 50%;
-	height: 300px;
+	height: 100%;
+	background: url(../assets/cookup-cook.jpg);
+	background-size: cover;
+	background-position: center;
+	display: inline-block;
 }

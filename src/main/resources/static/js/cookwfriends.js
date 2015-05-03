@@ -72,12 +72,12 @@ function submitCookFriends() {
 		
 		$.post("/makemeal", params, function(responseJSON) {
 			var mealLink = JSON.parse(responseJSON);
-			$("#c").hide();
+			$("#makeCookupBtn").hide();
 			$("#viewCookupBtn").show();
 			var mealLink = JSON.parse(responseJSON);
 			$("#viewCookupBtn").on('click', function() {
 				window.location = mealLink;
-			});s
+			});
 		});
 	}
 }

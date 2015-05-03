@@ -33,26 +33,39 @@ public class ProfileUpdateHandler implements Route {
   	String uid = request.params(":id") + "@brown.edu";
   	QueryParamsMap qm = request.queryMap();
   	String ingredients = qm.value("personIngs");
-  	String trimmed = ingredients.substring(1, ingredients.length() - 1);
+  	String cuisines = qm.value("favorites");
+  	//breaking down ingredients mapping
+  	String trimmed = trimEnds(ingredients);
   	String[] pairs = trimmed.split(",");
   	Map<String, Double> map = new HashMap<>();
   	for (int i = 0; i < pairs.length; i++) {
   	  String[] split = pairs[i].split(":");
   	  String key = split[0];
   	  String value = split[1];
-  	  map.put(key.substring(1, key.length() - 1), Double.parseDouble(value));
+  	  map.put(trimEnds(key), Double.parseDouble(value));
   	}
-  	System.out.println(map);
   	List<Ingredient> newIngredients = new ArrayList<>();
   	for (String key : map.keySet()) {
   	  String id = dbM.ingredients().getIngredientIDByName(key);
   	  Ingredient i = new Ingredient(id, map.get(key), dbM);
   	  newIngredients.add(i);
   	}
-  	//ideally just update user ingredients with the list, getting foreign key constraints
   	
+  	//parsing out cuisine information
+  	System.out.println("Cuisines: " + cuisines);
+  	String[] splitCuisines = cuisines.split(",");
+  	List<String> newCuisines = new ArrayList<>();
+  	for (String s : splitCuisines) {
+  	  newCuisines.add(s);
+  	}
+  	System.out.println(newIngredients);
+  	System.out.println(newCuisines);
+  	//ideally just update user ingredients and cuisines with the list, getting foreign key constraints
   	
-  	//unpack map and put in database
   	return new Object();
+  }
+
+  private String trimEnds(String str) {
+    return str.substring(1, str.length() - 1);
   }
 }
