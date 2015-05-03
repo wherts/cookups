@@ -72,10 +72,10 @@
         <input type="button" class="btn" value="Shopping Costs"><a href="/meal/"+meal.url()+"/price-asc"></a></input>
         <input type="button" class="btn" value="Meal Fanciness"><a href="/meal/"+meal.url()+"/fancy-asc"></a></input>
       </div>
-        <input type="button" class="btn" value="Reverse Order"></input>
+        <input id="reverseButton" onclick="reverseRecipes()" type="button" class="btn" value="Reverse Order"></input>
     </div>
       <div class="container">
-        <div id="sliding suggestions">
+        <div id="sliding suggestions" class="allRecipes">
         <table><tr>
       	<#list meal.sortRecipes(sortType) as r>
       		<#assign link = "/assets/recipes/" + r.picPath()+".jpg">
