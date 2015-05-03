@@ -55,12 +55,12 @@
           <div id="sortAndFilter">
          <div class="slider">
             <h3>Filter by:</h3>
-            <label for="amount">Price range:</label>
+            <label class="filter-subheader" for="amount">Price range:</label>
             <div id="priceSlider" class="slider-range"></div>
             <input type="text" id="priceAmount" class="amount" readonly>
         </div>
       <div class="slider" id="percentSliderHolder">
-            <label for="amount">Percentage of ingredients owned:</label>
+            <label class="filter-subheader" for="amount">Percentage of ingredients owned:</label>
             <div id="percentSlider" class="slider-range"></div>
             <input type="text" id="percentAmount" class="amount" readonly>
       </div>
@@ -86,8 +86,7 @@
       			<div class='recipe-pic-container'><img class='recipe-pic' src='${link}'></div>
       			<p class='recipe-title'>${r.name()}</p><br>
 				<p class='stats'><img class='icon' src='/assets/recipes/fridgeicon.png'><b> ${(100 - r.percentNeed()*100)?round}% </b>recipe completed</p>
-				<#setting number_format="0.##">
-				<p class='stats'><img class='icon' src='/assets/recipes/cart.png'><b>$${r.shoppingPrice()}</b> to complete recipe</p>
+				<p class='stats'><img class='icon' src='/assets/recipes/cart.png'><b>$#{r.shoppingPrice(); m2M2}</b> to complete recipe</p>
 				<p class='shopping-list'>Shopping List:</p>
 				<ul class='list-ingred'>
 				<#list r.shoppingList() as i>

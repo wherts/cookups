@@ -31,12 +31,9 @@ public class SignupHandler implements TemplateViewRoute {
     String id = qm.value("email");
     String name = qm.value("name");
     String pass = qm.value("password");
+
     List<Ingredient> i = new ArrayList<Ingredient>();
-
-
     people.addPerson(name, id, i);
-
-
     auth.setPassword(id, pass);
     String token = auth.getToken(id);
     auth.authenticate(id, token);

@@ -23,6 +23,7 @@ import edu.brown.cs.cookups.api.ProfileDataHandler;
 import edu.brown.cs.cookups.api.ProfileUpdateHandler;
 import edu.brown.cs.cookups.api.SearchEngine;
 import edu.brown.cs.cookups.api.SendUsersHandler;
+import edu.brown.cs.cookups.api.SignupFilter;
 import edu.brown.cs.cookups.api.SignupHandler;
 import edu.brown.cs.cookups.dating.SampleSuitors;
 import edu.brown.cs.cookups.db.DBLink;
@@ -87,6 +88,7 @@ public class URLHandler {
     Spark.before("/meal/:id/:sortby", new AuthFilter(auth));
     Spark.before("/browse", new AuthFilter(auth));
     Spark.before("/meals", new AuthFilter(auth));
+    Spark.before("/signup", new SignupFilter(people));
 
 
     // Basic template rendering routes
@@ -95,7 +97,8 @@ public class URLHandler {
         new BasicView("cookwfriends.ftl"), freeMarker);
     Spark.get("/cook", new BasicView("cook.ftl"), freeMarker);
     Spark.get("/cookup", new BasicView("cookup.ftl"), freeMarker);
-    Spark.get("/browse", new BrowseView(db, recipeIDs, recipeNames), freeMarker);
+    Spark
+        .get("/browse", new BrowseView(db, recipeIDs, recipeNames), freeMarker);
     Spark.get("/recipe/:id", new RecipeView(db, people), freeMarker);
     Spark.get("/meal/:id/:sortby", new MealView(db, people), freeMarker);
     Spark.get("/meals", new PersonMealsView(people), freeMarker);
@@ -118,8 +121,8 @@ public class URLHandler {
         fridgeIngredients, pantryIngredients,
         people));
     Spark.post("/updateProfile/:id", new ProfileUpdateHandler(db, people));
-//    Spark.post("/meal/:id/:query", new FilterHandler(db, people));
-    
+    // Spark.post("/meal/:id/:query", new FilterHandler(db, people));
+
   }
 
   private static FreeMarkerEngine createEngine() {
