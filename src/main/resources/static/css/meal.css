@@ -106,6 +106,10 @@ table {
 	width: 200px;
 }
 
+.slider {
+	display: inline-block;
+}
+
 .amount {
 	background-color: #F1F5DF;
 	color: #676D51;
@@ -116,6 +120,24 @@ table {
 #sortAndFilter {
 	color: #FFF;
 	padding: 0 0 20px 50px;
+	font-family: 'gobold_thinregular', sans-serif;
+
+}
+
+.filter-subheader {
+	font-family: 'abeezeeregular', sans-serif;
+	color: #FFF;
+	display: inline-block;
+	padding: 10px 0;
+	width: 300px;
+}
+
+.slider {
+	display: block;
+}
+
+.slider-range {
+	display: inline-block;
 }
 
 td a {

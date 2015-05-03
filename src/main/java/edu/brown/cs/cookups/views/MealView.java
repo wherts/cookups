@@ -2,9 +2,6 @@ package edu.brown.cs.cookups.views;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 import spark.ModelAndView;
@@ -32,7 +29,7 @@ public class MealView implements TemplateViewRoute {
     String mealEncoded = request.params(":id");
     String sortType = request.params(":sortby");
     String mealID = null;
-    
+
     try {
       mealID = URLDecoder.decode(mealEncoded, "UTF-8");
     } catch (UnsupportedEncodingException e) {
@@ -47,7 +44,7 @@ public class MealView implements TemplateViewRoute {
     String id = request.cookie("id");
     String profLink = "/profile/" + id.split("@")[0];
     Map<String, Object> variables =
-        ImmutableMap.of("meal", meal, "profLink", profLink, "sortType", sortType);
+        ImmutableMap.of("meal", meal, "path", profLink, "sortType", sortType);
     return new ModelAndView(variables, "meal.ftl");
   }
 

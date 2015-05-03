@@ -52,3 +52,7 @@ function changeSort() {
 
 	});
 }
+
+function reverseRecipes() {
+	$(".allRecipes table tr").html($(".allRecipes tr td").get().reverse());
+}

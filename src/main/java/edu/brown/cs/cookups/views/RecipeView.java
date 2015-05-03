@@ -55,7 +55,7 @@ public class RecipeView implements TemplateViewRoute {
     RecipeMatcher.buildShoppingList(ingredients, recipe);
 
     Map<String, Object> variables =
-        ImmutableMap.of("recipe", recipe, "profLink", profileLink);
+        ImmutableMap.of("recipe", recipe, "path", profileLink);
     return new ModelAndView(variables, "recipe.ftl");
   }
 

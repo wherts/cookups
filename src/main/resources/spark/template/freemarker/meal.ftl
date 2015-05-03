@@ -3,43 +3,21 @@
     <meta charset="utf-8">
     <title>Brown Cookups</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../../css/normalize.css">
-    <link rel="stylesheet" href="../../css/html5bp.css">
-    <link rel="stylesheet" href="../../css/stylesheet.css">
-    <link rel="stylesheet" type="text/css" href="../../css/jquery.tokenize.css" />
-    <link rel="stylesheet" href="../../css/main.css">
-    <link rel="stylesheet" href="../../css/meal.css">
-    <link rel="stylesheet" href="../../css/jquery-ui.css">
-    <script src="../../js/jquery-2.1.1.js"></script>
-    <script src="../../js/jquery.tokenize.js"></script>
-    <script src="../../js/meal.js"></script>
-    <script src="../../js/main.js"></script>
-    <script src="../../js/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/html5bp.css">
+    <link rel="stylesheet" href="/css/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="/css/jquery.tokenize.css" />
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/meal.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css">
+    <script src="/js/jquery-2.1.1.js"></script>
+    <script src="/js/jquery.tokenize.js"></script>
+    <script src="/js/meal.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/jquery-ui.js"></script>
   </head>
   <body>
-     <!-- HEADER -->
-     <div class="block a">
-        <div class="header container">
-        <a href='/cookup'><img class="left" src="../../assets/logosmall.png" /></a>
-        <div id="nav">
-          <a class="header-text" id="logout" href="/logout">logout</a>
-		  <form id="search-bar" action="/search" method="POST">
-            <input id="search-input" type="text" placeholder="Search" name="term">
-            <button type="submit" id="search-btn"><img src="../../assets/search.png" id="search-icon" class="right" /></button>
-          </form>
-          <ul id="links">
-            <li><a id="cook-link" class="page-link header-text hoverli" href="/cook">Cook</a></li>        
-			<li><a class="page-link header-text" href="/meals">Meals</a></li>
-            <li><a class="page-link header-text" href="/browse">Browse</a></li>
-            <li><a class="page-link header-text" href=${profLink}>Profile</a></li> 
-          </ul>
-          <ul class="dropdown-menu hoverli">
-	        <li><a href="/cookwfriends">Cook with Friends</a></li>
-	        <li><a href="/cookup">CookUp</a></li>
-		  </ul>
-        </div> 
-       </div>
-     </div>
+  <#include "/header.ftl">  
   <div class="block b">
       <div id="meal-details" class="container">
         <p class="title" id="meal-title">${meal.name()}</p>
@@ -66,7 +44,7 @@
         <p class="meal-subtitle">Who's Attending</p>
 		<#list meal.attending() as p>
 			<#assign x = p.id()?split("@")>
-			<#assign profilePic = "../../assets/people/" + x[0] + ".jpg">
+			<#assign profilePic = "/assets/people/" + x[0] + ".jpg">
 			<p><img class="profile-pic-icon" src="${profilePic}"><a href="${p.url()}">${p.name()}</a></p>
 		</#list>
       </div>
@@ -75,39 +53,40 @@
       <div id="recipe-suggestions" class="container">
       <p class="meal-subtitle">Recipe Suggestions</p>
           <div id="sortAndFilter">
-         <p>
-            <label for="amount">Price range:</label>
+         <div class="slider">
+            <h3>Filter by:</h3>
+            <label class="filter-subheader" for="amount">Price range:</label>
             <div id="priceSlider" class="slider-range"></div>
             <input type="text" id="priceAmount" class="amount" readonly>
-        </p>
-      <p>
-            <label for="amount">Percentage of ingredients owned:</label>
+        </div>
+      <div class="slider" id="percentSliderHolder">
+            <label class="filter-subheader" for="amount">Percentage of ingredients owned:</label>
             <div id="percentSlider" class="slider-range"></div>
             <input type="text" id="percentAmount" class="amount" readonly>
-      </p>
+      </div>
       
       <br>
-      <span>Sort recipes by:</span>
-      <select id="sortType" value="default">
-        <option value="default">Select an option</option>
-        <option value="least-missing"><a href="/meal/"+meal.url()+"/fewest-missing">Least Missing Ingredients</a></option>
-        <option value="price-asc"><a href="/meal/"+meal.url()+"/price-asc">Shopping Costs ($-$$$)</a></option>
-        <option value="price-des"><a href="/meal/"+meal.url()+"/price-des">Shopping Costs ($$$-$)</a></option>
-        <option value="fancy-asc"><a href="/meal/"+meal.url()+"/fancy-asc">Meal Fanciness ($-$$$)</a></option>
-        <option value="fancy-des"><a href="/meal/"+meal.url()+"/fancy-des">Meal Fanciness ($$$-$)</a></option>
-      </select>
+      <h3>Sort by:</h3>
+      <div id="sortType" value="default">
+      	<#assign leastMissing = "/meal/"+meal.url()+"/fewest-missing">
+        <input type="button" class="btn" value="Least Missing Ingredients" onClick="location.href='${leastMissing}'"></input>
+      	<#assign shoppingCosts = "/meal/"+meal.url()+"/price-asc">
+        <input type="button" class="btn" value="Shopping Costs" onClick="location.href='${shoppingCosts}'"></input>
+      	<#assign mealFanciness = "/meal/"+meal.url()+"/fancy-asc">
+        <input type="button" class="btn" value="Meal Fanciness" onClick="location.href='${mealFanciness}'"></input>
+      </div>
+        <input id="reverseButton" onclick="reverseRecipes()" type="button" class="btn" value="Reverse Order"></input>
     </div>
       <div class="container">
-        <div id="sliding suggestions">
+        <div id="sliding suggestions" class="allRecipes">
         <table><tr>
       	<#list meal.sortRecipes(sortType) as r>
-      		<#assign link = "../../assets/recipes/" + r.picPath()+".jpg">
+      		<#assign link = "/assets/recipes/" + r.picPath()+".jpg">
       		<td><a href="${r.url()}">
       			<div class='recipe-pic-container'><img class='recipe-pic' src='${link}'></div>
       			<p class='recipe-title'>${r.name()}</p><br>
-				<p class='stats'><img class='icon' src='../../assets/recipes/fridgeicon.png'><b> ${(100 - r.percentNeed()*100)?round}% </b>recipe completed</p>
-				<#setting number_format="0.##">
-				<p class='stats'><img class='icon' src='../../assets/recipes/cart.png'><b>$${r.shoppingPrice()}</b> to complete recipe</p>
+				<p class='stats'><img class='icon' src='/assets/recipes/fridgeicon.png'><b> ${(100 - r.percentNeed()*100)?round}% </b>recipe completed</p>
+				<p class='stats'><img class='icon' src='/assets/recipes/cart.png'><b>$#{r.shoppingPrice(); m2M2}</b> to complete recipe</p>
 				<p class='shopping-list'>Shopping List:</p>
 				<ul class='list-ingred'>
 				<#list r.shoppingList() as i>
