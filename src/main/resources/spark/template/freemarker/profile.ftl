@@ -45,32 +45,35 @@
             </div></div>          
 	      <div id="about" class="about-me">
 	        <p class="name h-text">${name}</p>
-	        <input id="updateButton" type="submit" value="Update Profile">
+	           <#if editable == true>
+	               <input id="updateButton" class="btn" type="submit" value="Update Profile">
+	           </#if>
 	        <p class="subheader h-text">
 	        	<#if editable == true>
 	        		Favorite Cuisines:<br>
 	        		<select id="fav-cuisines" multiple="multiple" class="tokenize-sample"></select>
 	        	<#else>
-	        		Favorite Cuisines:
-	        		<#list favCuisines as x>
-	        		${x}
-	        		</#list>
+	        		<span class="name h-text">Favorite Cuisines:</span>
+	        		 <#list favCuisines as x>
+	        		     <br><span style="margin-left:35px; font-size:20px;">${x}</span>
+	        		 </#list>
 	        	</#if>
 	        </p>
 	      </div>
 	  </div>
       <div class="right half ingred">
-      <p class="title h-text">${name}'s Ingredients</p>
-      
-      <div id="ingredientInput">
-        <#if editable == true>
-    		<select id="curr-ingredients" multiple="multiple" class="tokenize-sample ingredient-box"></select>
-    	<#else>
-		    <#list personIngredients as x>
-    		${x}
-    		</#list>
-    	</#if>
-      </div>
+      <p class="title h-text">${name}'s Kitchen</p>
+      <#if editable == true>
+             <div id="ingredientInput">
+             <select id="curr-ingredients" multiple="multiple" class="tokenize-sample ingredient-box"></select>
+             </div>
+      <#else>
+            <div id="ingredientInput" style="display:none">
+            <#list personIngredients as x>
+              <span hidden='true' value="${x.name()}">${x.name()}, ${x.ounces()} oz</span>
+            </#list>             
+            </div>
+      </#if>
           <div id="fridgeHolder">
                   <div id="fridge"></div>
           </div>

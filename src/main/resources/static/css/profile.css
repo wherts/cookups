@@ -166,3 +166,11 @@
 .TokensContainer {
 	width: 100%;
 }
+
+#updateButton {
+	margin-left: 225px;
+}
+
+#cuisinesList {
+	margin-left: 50px;
+}
