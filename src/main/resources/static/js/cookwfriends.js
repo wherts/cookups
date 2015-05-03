@@ -71,13 +71,11 @@ function submitCookFriends() {
 		console.log(params);
 		
 		$.post("/makemeal", params, function(responseJSON) {
-			var mealLink = JSON.parse(responseJSON);
-			$("#makeCookupBtn").hide();
-			$("#viewCookupBtn").show();
-			var mealLink = JSON.parse(responseJSON);
-			$("#viewCookupBtn").on('click', function() {
-				window.location = mealLink;
-			});
+			var url = window.location.href;
+			var path = window.location.pathname;
+			var prefix = url.replace(path, "");
+			var mealLink = prefix + JSON.parse(responseJSON);
+			window.location.replace(mealLink);
 		});
 	}
 }

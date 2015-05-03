@@ -63,13 +63,13 @@ public class MakeMealHandler implements Route {
     Person host = people.getPersonById(id);
     Meal newMeal = new Meal((User) host, sched);
 
-    if (newMeal == null){
+    if (newMeal == null) {
       System.err.println("ERROR: Could create not a meal");
     }
 
     if (newMeal != null && dateTimeEnd != null) { // if endtime scheduled
       newMeal.setEnd(dateTimeEnd);
-    } 
+    }
     // add recipes to meal
     List<Person> attending = new ArrayList<>();
     // need to figure out how to parse out selected names
@@ -84,7 +84,8 @@ public class MakeMealHandler implements Route {
       }
       newMeal.addAttending((User) a);
     }
-    attending.add(dbM.users().getPersonById(id)); //ADD THIS PERSON TO ATTENDING LIST
+    attending.add(dbM.users().getPersonById(id)); // ADD THIS PERSON TO
+                                                  // ATTENDING LIST
     List<Recipe> toCook = new ArrayList<>();
     try {
       toCook = RecipeMatcher.matchRecipes(attending, dbM);
@@ -105,14 +106,13 @@ public class MakeMealHandler implements Route {
       dbM.users().addPersonMeal(p.id(), mealID);
     }
     dbM.users().addPersonMeal(id, mealID);
-    
+
     String mealLink = null;
     try {
       mealLink = "/meal/" + URLEncoder.encode(mealID, "UTF-8") + "/default";
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
-    System.out.printf("Link: %s%n", mealLink);
     return GSON.toJson(mealLink);
   }
 
