@@ -184,17 +184,17 @@ td a {
 }
 
 #sort-header {
-	float: right;
+	float: left;
 }
 
 #sortType {
-	float: right;
+	float: left;
 	clear: both;
 }
 
 #reverseButton {
-	float: left;
-	clear:left;
+	float: right;
+	clear:right;
 }
 
 .sort-btn {

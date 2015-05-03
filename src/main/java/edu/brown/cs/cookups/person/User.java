@@ -69,14 +69,19 @@ public class User implements Person {
   }
 
   @Override
-  public void addCuisine(String cuisine) {
-    this.favoriteCuisines.add(cuisine);
+  public void setCuisines(List<String> cuisines) {
+    this.favoriteCuisines = cuisines;
   }
 
   @Override
   public String url() {
     String link = "/profile/" + id.split("@")[0];
     return link;
+  }
+
+  @Override
+  public void setIngredients(List<Ingredient> ingredients) {
+    this.ingredients = ingredients;
   }
 
 }
