@@ -113,6 +113,10 @@ table {
 	display: inline-block;
 }
 
+#percentSliderHolder {
+	padding-left: 30px;
+}
+
 .amount {
 	background-color: #676D51;
 	color: #F1F5DF;

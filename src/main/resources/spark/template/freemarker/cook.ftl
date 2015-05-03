@@ -11,15 +11,8 @@
   </head>
   <body>
   <#include "/header.ftl">  
-   <div class="block" id="title">
-      <div class="container"><h1 class="h-text" id="title-text">Brown CookUps</h1></div>
-     </div>
-     <div class="block c">
-      <div class="container">
-        <a href="/cookwfriends" id="cookfriends-link" class="left h-text link">cook with friends</a>
-        <a href="/cookup" id="cookup-link" class="right h-text link">cook up</a>
-      </div>
-     </div>
+    <div class="pic-link left" id="cookfriends-link"><a class="h-text link" href="/cookwfriends">cook with friends</a></div>
+    <div class="pic-link right" id="cookup-link"><a class="h-text link" href="/cookup">cookup</a></div>
      <script src="js/jquery-2.1.1.js"></script>
 	<script src="js/jquery.tokenize.js"></script>
     <script src="js/main.js"></script>
