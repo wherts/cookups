@@ -53,27 +53,26 @@
       <div id="recipe-suggestions" class="container">
       <p class="meal-subtitle">Recipe Suggestions</p>
           <div id="sortAndFilter">
-         <p>
+         <div class="slider">
+            <h3>Filter by:</h3>
             <label for="amount">Price range:</label>
             <div id="priceSlider" class="slider-range"></div>
             <input type="text" id="priceAmount" class="amount" readonly>
-        </p>
-      <p>
+        </div>
+      <div class="slider" id="percentSliderHolder">
             <label for="amount">Percentage of ingredients owned:</label>
             <div id="percentSlider" class="slider-range"></div>
             <input type="text" id="percentAmount" class="amount" readonly>
-      </p>
+      </div>
       
       <br>
-      <span>Sort recipes by:</span>
-      <select id="sortType" value="default">
-        <option value="default">Select an option</option>
-        <option value="least-missing"><a href="/meal/"+meal.url()+"/fewest-missing">Least Missing Ingredients</a></option>
-        <option value="price-asc"><a href="/meal/"+meal.url()+"/price-asc">Shopping Costs ($-$$$)</a></option>
-        <option value="price-des"><a href="/meal/"+meal.url()+"/price-des">Shopping Costs ($$$-$)</a></option>
-        <option value="fancy-asc"><a href="/meal/"+meal.url()+"/fancy-asc">Meal Fanciness ($-$$$)</a></option>
-        <option value="fancy-des"><a href="/meal/"+meal.url()+"/fancy-des">Meal Fanciness ($$$-$)</a></option>
-      </select>
+      <h3>Sort by:</h3>
+      <div id="sortType" value="default">
+        <input type="button" class="btn" value="Least Missing Ingredients"><a href="/meal/"+meal.url()+"/fewest-missing"></a></input>
+        <input type="button" class="btn" value="Shopping Costs"><a href="/meal/"+meal.url()+"/price-asc"></a></input>
+        <input type="button" class="btn" value="Meal Fanciness"><a href="/meal/"+meal.url()+"/fancy-asc"></a></input>
+      </div>
+        <input type="button" class="btn" value="Reverse Order"></input>
     </div>
       <div class="container">
         <div id="sliding suggestions">

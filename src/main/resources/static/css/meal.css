@@ -106,6 +106,14 @@ table {
 	width: 200px;
 }
 
+.slider {
+	display: inline-block;
+}
+
+#percentSliderHolder {
+	padding-left: 30px;
+}
+
 .amount {
 	background-color: #F1F5DF;
 	color: #676D51;

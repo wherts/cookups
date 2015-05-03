@@ -19,6 +19,7 @@
             <div class="profile-pic" style="background:url(${picLink}); background-size: contain">
               <div id="overlay">
                 <span id="edit">Change<br>your look</span>
+                <input type="file" id="uploadPicture"></input>
               </div>
             </div></div>          
 	      <div id="about" class="about-me">
