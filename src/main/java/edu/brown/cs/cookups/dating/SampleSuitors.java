@@ -9,7 +9,7 @@ public interface SampleSuitors {
   static void createSuitors(PersonManager people) throws SQLException {
     Person anna = people.getPersonById("ak@brown.edu");
     Person sean = people.getPersonById("bond007@brown.edu");
-    Person daniel = people.getPersonById("realBond@brown.edu");
+    Person daniel = people.getPersonById("realBond007@brown.edu");
     Person halle = people.getPersonById("berrydelicious@brown.edu");
     Person albie = people.getPersonById("albert_brown@brown.edu");
     Person taylor = people.getPersonById("taylor_derosa@brown.edu");
