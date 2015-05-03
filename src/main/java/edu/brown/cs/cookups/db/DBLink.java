@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -35,7 +36,8 @@ public class DBLink implements DBManager {
       + ", PRIMARY KEY(recipe, ingredient)"
       + ", FOREIGN KEY(recipe) REFERENCES recipe(id) ON DELETE CASCADE ON UPDATE CASCADE"
       + ", FOREIGN KEY(ingredient) REFERENCES ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)";
-  public static final String AUTHENTICATION = "authentication(id TEXT, password TEXT, FOREIGN KEY(id) REFERENCES user(id)"
+  public static final String AUTHENTICATION = "authentication(id TEXT, password TEXT"
+      + ", PRIMARY KEY(id), FOREIGN KEY(id) REFERENCES user(id)"
       + "ON DELETE CASCADE ON UPDATE CASCADE)";
   public static final String MEAL = "meal(id TEXT, json TEXT, PRIMARY KEY(id))";
   public static final String USER_MEAL = "user_meal(user TEXT, meal TEXT, PRIMARY KEY(user, meal), "
@@ -280,7 +282,7 @@ public class DBLink implements DBManager {
       String name = line[0];
       String uid = line[1];
       String[] cuisines = reader.readLine();
-      
+
       List<Ingredient> ingredients = new ArrayList<Ingredient>();
       while ((line = reader.readLine()) != null) {
         if (line.length != 2) {
@@ -295,9 +297,7 @@ public class DBLink implements DBManager {
       }
       Person p = new User(name, uid, ingredients);
       this.users.addPerson(p);
-      for (String s: cuisines) {
-    	  p.addCuisine(s);
-      }
+      p.setCuisines(Arrays.asList(cuisines));
       this.users.updatePersonCuisines(p);
       this.users.setPersonPassword(uid, "password");
     } catch (FileNotFoundException e) {

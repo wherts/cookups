@@ -38,9 +38,9 @@ public class PersonManager {
     List<Ingredient> dbIngs = db.users()
                                 .getPersonIngredients(id);
     for (Ingredient i : dbIngs) {
-      if (!i.isExpired()) { //not expired
+      if (!i.isExpired()) { // not expired
         toReturn.add(i);
-      } else { //expired -> remove from table
+      } else { // expired -> remove from table
         db.users().removePersonIngredient(id, i.id());
       }
     }
@@ -76,11 +76,11 @@ public class PersonManager {
     users.put(id, p);
     return p;
   }
-  
+
   public void addPersonIngredient(String uid, Ingredient i) {
-	 Person p = this.getPersonById(uid);
-	 p.ingredients().add(i);
-	 db.users().addUserIngredient(uid, i);
+    Person p = this.getPersonById(uid);
+    p.ingredients().add(i);
+    db.users().addUserIngredient(uid, i);
   }
 
   public void removePersonById(String id)
@@ -113,16 +113,21 @@ public class PersonManager {
   }
 
   public List<String> getPersonCuisines(String id) {
-	  Person p = this.getPersonById(id);
-	  return p.favoriteCuisines();
-  }
-  
-  public void addPersonCuisine(String id, String cuisine) {
     Person p = this.getPersonById(id);
-    if (p == null) {
-      return;
+    return p.favoriteCuisines();
+  }
+
+  public void updateUser(String id,
+      List<Ingredient> newIngredients, List<String> cuisines) {
+    Person p = this.getPersonById(id);
+    p.setCuisines(cuisines);
+    db.users().updatePersonCuisines(p);
+
+    db.users().removePersonIngredients(id);
+    for (Ingredient i : newIngredients) {
+      db.users().addUserIngredient(id, i);
+
     }
-    p.addCuisine(cuisine);
-    this.db.users().updatePersonCuisines(p);
+    p.setIngredients(newIngredients);
   }
 }
