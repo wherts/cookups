@@ -210,7 +210,7 @@ function getCurrentID() {
 $("#updateButton").click(function() {
 	//send personIngredients
 	var favs = $("#fav-cuisines .Token .favorite");
-	console.log(favs);
+//	console.log(favs);
 	for (var i=1; i <=favs.length; i++) {
 		console.log(favs[i-1]);
 		if (favs[i-1].selected == 'selected') {
@@ -225,13 +225,21 @@ $("#updateButton").click(function() {
 	// }
 	var cuisines;
 	var addr = "/updateProfile/" + getCurrentID();
+	var keys = Object.keys(personIngredients);
+	var values = [keys.length];
+	for (var i = 0; i < keys.length; i++) {
+		values[i] = personIngredients[keys[i]];
+	}
+	var values = "";
 	var postParams = {
-		personIngs : personIngredients,
+		personIngs : JSON.stringify(personIngredients)
 		// favoriteCuisines : cuisines
 	};
+	console.log(keys);
+	console.log(values);
+	
 	console.log(addr);
 	console.log(personIngredients);
-	$.post(addr, postParams, function(responseJSON) {
-		//do nothing
-	});
+	console.log(postParams);
+	$.post(addr, postParams);
 });
