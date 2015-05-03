@@ -68,9 +68,12 @@
       <br>
       <h3>Sort by:</h3>
       <div id="sortType" value="default">
-        <input type="button" class="btn" value="Least Missing Ingredients"><a href="/meal/"+meal.url()+"/fewest-missing"></a></input>
-        <input type="button" class="btn" value="Shopping Costs"><a href="/meal/"+meal.url()+"/price-asc"></a></input>
-        <input type="button" class="btn" value="Meal Fanciness"><a href="/meal/"+meal.url()+"/fancy-asc"></a></input>
+      	<#assign leastMissing = "/meal/"+meal.url()+"/fewest-missing">
+        <input type="button" class="btn" value="Least Missing Ingredients" onClick="location.href='${leastMissing}'"></input>
+      	<#assign shoppingCosts = "/meal/"+meal.url()+"/price-asc">
+        <input type="button" class="btn" value="Shopping Costs" onClick="location.href='${shoppingCosts}'"></input>
+      	<#assign mealFanciness = "/meal/"+meal.url()+"/fancy-asc">
+        <input type="button" class="btn" value="Meal Fanciness" onClick="location.href='${mealFanciness}'"></input>
       </div>
         <input type="button" class="btn" value="Reverse Order"></input>
     </div>
