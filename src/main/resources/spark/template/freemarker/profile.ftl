@@ -44,7 +44,7 @@
                 <span id="edit">Change<br>your look</span>
               </div>
             </div></div>          
-	      <div class="about-me">
+	      <div id="about" class="about-me">
 	        <p class="name h-text">${name}</p>
 	        <input id="updateButton" type="submit" value="Update Profile">
 	        <p class="subheader h-text">

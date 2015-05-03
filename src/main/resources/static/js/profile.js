@@ -6,9 +6,7 @@ var favCuisines;
 var personIngredients;
 
 $(document).ready(function () {
-	var profilePath = window.location.pathname;
-	var split = profilePath.split("/");
-	var addr = "/profileData/" + split[split.length - 1];
+	var addr = "/profileData/" + getCurrentID();
 	$.get(addr, function(JSONresponse) {
 		var response = JSON.parse(JSONresponse);
 		fridge = response.fridge;
@@ -78,7 +76,8 @@ $(document).ready(function () {
 			$(".new-counter").change(function() {
 				var value = $(this).val();
 				var name = $(this).attr("name");
-				personIngredients[name] = parseFloat(value);
+				// personIngredients[name] = parseFloat(value);
+				personIngredients[name] = value;
 			});
 			updateFridgeAndPantry();
 		});
@@ -89,10 +88,11 @@ function updateFridgeAndPantry() {
 	var newHtmlFridge = "";
 	var newHtmlPantry = "";
 	var counters = $("#ingredientInput .Token .counter");
+	personIngredients = {}; //new hashmap for new ingredients (fridge and pantry have been updated)
 	for (var i = 0; i < counters.length; i++) {
 		var counter = counters[i];
 		var name = counter.name;
-		
+		personIngredients[name] = counter.value;
 		if ($.inArray(name, fridge) != -1) {
 			newHtmlFridge += "<p class='ingredientName' id='"+name+"'>"+name+"</p>";
 		}
@@ -200,14 +200,38 @@ function generateCuisines(favCuisines) {
 	return toReturn;
 }
 
+function getCurrentID() {
+	var profilePath = window.location.pathname;
+	var split = profilePath.split("/");
+	return split[split.length - 1];
+}
 
 
 $("#updateButton").click(function() {
 	//send personIngredients
-	var cuisines = $("#fav-cuisines").text();
+	var favs = $("#fav-cuisines .Token .favorite");
+	console.log(favs);
+	for (var i=1; i <=favs.length; i++) {
+		console.log(favs[i-1]);
+		if (favs[i-1].selected == 'selected') {
+			console.log(favs[i-1].text()); //collect favorite cuisines	
+		}
+	}
+	
 	// for (var i = 0; i < cuisines.length; i++) {
 	// 	console.log(cuisines[i]);
 	// 	cuisines += cuisines[i];
 	// 	cuisines += "$";
 	// }
+	var cuisines;
+	var addr = "/updateProfile/" + getCurrentID();
+	var postParams = {
+		personIngs : personIngredients,
+		// favoriteCuisines : cuisines
+	};
+	console.log(addr);
+	console.log(personIngredients);
+	$.post(addr, postParams, function(responseJSON) {
+		//do nothing
+	});
 });
