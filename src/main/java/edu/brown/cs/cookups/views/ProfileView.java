@@ -25,7 +25,7 @@ public class ProfileView implements TemplateViewRoute {
     String name = request.params(":name");
     String profileID = name + "@brown.edu";
     Person person = people.getPersonById(profileID);
-
+    
     if (person == null) {
       response.status(404);
     }

@@ -25,8 +25,7 @@
             <li><a id="cook-link" class="page-link header-text hoverli" href="/cook">Cook</a></li>        
 			<li><a class="page-link header-text" href="/meals">Meals</a></li>
             <li><a class="page-link header-text" href="/browse">Browse</a></li>
-            <#assign profLink = "/people/"+path>
-            <li><a class="page-link header-text" href=${profLink}>Profile</a></li> 
+            <li><a class="page-link header-text" href=${path}>Profile</a></li> 
           </ul>
           <ul class="dropdown-menu hoverli">
 	        <li><a href="/cookwfriends">Cook with Friends</a></li>
@@ -39,7 +38,7 @@
       <div class="left half about">
           <#assign picLink = "../assets/people/"+path+".jpg">
       	  <div id="fridge-container">
-            <div class="profile-pic" style="background:url(${picLink})">
+            <div class="profile-pic" style="background:url(${picLink}); background-size: contain">
               <div id="overlay">
                 <span id="edit">Change<br>your look</span>
                 <input type="file" id="uploadPicture"></input>
