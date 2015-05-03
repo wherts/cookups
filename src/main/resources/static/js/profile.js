@@ -237,12 +237,7 @@ $("#updateButton").click(function() {
 		favCuisines += $("#about .Token:nth-child(" + i+ ") span").html();
 		favCuisines += ","; //for splitting on backend
 	}
-	
-	// for (var i = 0; i < cuisines.length; i++) {
-	// 	console.log(cuisines[i]);
-	// 	cuisines += cuisines[i];
-	// 	cuisines += "$";
-	// }
+
 	var cuisines;
 	var addr = "/updateProfile/" + getCurrentID();
 	var postParams = {
