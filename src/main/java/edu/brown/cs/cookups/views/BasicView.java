@@ -21,7 +21,7 @@ public class BasicView implements TemplateViewRoute {
     String id = request.cookie("id");
     String profLink = "/profile/" + id.split("@")[0];
     Map<String, Object> variables =
-        ImmutableMap.of("title", "Brown Cookups", "profLink", profLink);
+        ImmutableMap.of("title", "Brown Cookups", "path", profLink);
     return new ModelAndView(variables, path);
   }
 }

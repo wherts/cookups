@@ -45,14 +45,14 @@ public class BrowseView implements TemplateViewRoute {
         e.printStackTrace();
       }
     }
-    
+
     System.out.println(recipePicMap.size());
 
     Map<String, Object> variables =
         new ImmutableMap.Builder<String, Object>()
             .put("recipes", recipeMap)
             .put("recipePics", recipePicMap)
-            .put("profLink", profileLink).build();
+            .put("path", profileLink).build();
 
     return new ModelAndView(variables, "browse.ftl");
   }

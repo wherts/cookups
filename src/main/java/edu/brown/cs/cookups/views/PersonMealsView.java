@@ -38,7 +38,7 @@ public class PersonMealsView implements TemplateViewRoute {
     Map<String, Object> variables =
         new ImmutableMap.Builder<String, Object>()
             .put("meals", meals)
-            .put("profLink", profileLink).build();
+            .put("path", profileLink).build();
 
     return new ModelAndView(variables, "meals.ftl");
   }

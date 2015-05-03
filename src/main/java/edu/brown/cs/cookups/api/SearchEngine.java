@@ -72,7 +72,7 @@ public class SearchEngine implements TemplateViewRoute {
 
     Map<String, Object> variables =
         ImmutableMap
-            .of("recipes", recipeMap, "people", peopleMap, "profLink",
+            .of("recipes", recipeMap, "people", peopleMap, "path",
                 profileLink);
     return new ModelAndView(variables, "searchResults.ftl");
   }
