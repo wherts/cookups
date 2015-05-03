@@ -1,5 +1,7 @@
 package edu.brown.cs.cookups.food;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -49,6 +51,11 @@ public class Meal {
     return name;
   }
 
+  public String url() throws UnsupportedEncodingException {
+    String url = URLEncoder.encode(id, "UTF-8");
+    return url;
+  }
+  
   /**
    * Setter for meal name.
    * @param n name of meal

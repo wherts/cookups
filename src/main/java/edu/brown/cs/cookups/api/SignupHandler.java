@@ -35,18 +35,18 @@ public class SignupHandler implements TemplateViewRoute {
     List<Ingredient> i = new ArrayList<Ingredient>();
 
     
-      people.addPerson(name, id, i);
+    people.addPerson(name, id, i);
     
 
     auth.setPassword(id, pass);
     String token = auth.getToken(id);
     auth.authenticate(id, token);
-
-    System.out.println("signed up!!");
-    String profLink = "/profile/" + id.split("@")[1];
+    
+    String path = id.split("@")[0];
+    String profLink = "/profile/" + path;
     Map<String, Object> variables =
-        ImmutableMap.of("name", name, "favRecipes", "",
-            "profLink", profLink, "editable", true);
+        ImmutableMap.of("name", name, "favCuisines", "",
+            "profLink", profLink, "editable", true, "path", path);
     return new ModelAndView(variables, "profile.ftl");
   }
 
