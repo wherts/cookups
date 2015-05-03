@@ -11,7 +11,7 @@
         <li><a id="cook-link" class="page-link header-text hoverli" href="/cook">Cook</a></li>        
 		<li><a class="page-link header-text" href="/meals">Meals</a></li>
         <li><a class="page-link header-text" href="/browse">Browse</a></li>
-        <li><a class="page-link header-text" href=${path}>Profile</a></li> 
+        <li><a class="page-link header-text" href=${path}>My Kitchen</a></li> 
       </ul>
       <ul class="dropdown-menu hoverli">
         <li><a href="/cookwfriends">Cook with Friends</a></li>

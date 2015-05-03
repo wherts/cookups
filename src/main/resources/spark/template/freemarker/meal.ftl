@@ -19,42 +19,49 @@
   <body>
   <#include "/header.ftl">  
   <div class="block b">
-      <div id="meal-details" class="container">
-        <p class="title" id="meal-title">${meal.name()}</p>
-      	<ul class="meal-headers left">
-      		<li>Host</li>
-      		<li>Date</li>
-      		<li>Time</li>
-		</ul>
-		<ul class="meal-info">
-			<li>${meal.host().name()}</li>
-			<li>${meal.date()}</li>
-			<li>
-			     <#if meal.endTime()??>
-				   ${meal.time()} to ${meal.endTime()}
-				<#else>
-				   ${meal.time()}
-				</#if>
-			</li>
-		</ul>
+  	  <div class='container'>
+  	  	  <p class="title" id="meal-title">${meal.name()}</p>
+	      <div id="meal-details" class="left half">
+	      	<ul class="meal-headers left">
+	      		<li>Host</li>
+	      		<li>Date</li>
+	      		<li>Time</li>
+			</ul>
+			<ul class="meal-info">
+				<li>${meal.host().name()}</li>
+				<li>${meal.date()}</li>
+				<li>
+				     <#if meal.endTime()??>
+					   ${meal.time()} to ${meal.endTime()}
+					<#else>
+					   ${meal.time()}
+					</#if>
+				</li>
+			</ul>
+			</div>
+			<div id='whos-attending' class="right half">
+			<ul class='meal-headers left'>
+				<li>Who's Attending</li>
+			</ul>
+			<ul class='meal-info'>
+				<li>
+					<#list meal.attending() as p>
+						<#assign x = p.id()?split("@")>
+						<#assign profilePic = "/assets/people/" + x[0] + ".jpg">
+						<p class='people-list'><img class="profile-pic-icon meal-attendees" src="${profilePic}"><a class='meal-attendees' href="${p.url()}">${p.name()}</a></p>
+					</#list>
+				</li>
+			</ul>
+			</div>
+	      </div>
       </div>
   </div>
-  <div class="block a">
-      <div id="meal-attendees" class="container">
-        <p class="meal-subtitle">Who's Attending</p>
-		<#list meal.attending() as p>
-			<#assign x = p.id()?split("@")>
-			<#assign profilePic = "/assets/people/" + x[0] + ".jpg">
-			<p><img class="profile-pic-icon" src="${profilePic}"><a href="${p.url()}">${p.name()}</a></p>
-		</#list>
-      </div>
-  </div>
-  <div class="block b last-div">
+  <div class="block a last-div">
       <div id="recipe-suggestions" class="container">
       <p class="meal-subtitle">Recipe Suggestions</p>
           <div id="sortAndFilter">
+          <h3 class='recipe-filter-subheader'>Filter by:</h3>
          <div class="slider">
-            <h3>Filter by:</h3>
             <label class="filter-subheader" for="amount">Price range:</label>
             <div id="priceSlider" class="slider-range"></div>
             <input type="text" id="priceAmount" class="amount" readonly>
@@ -64,18 +71,16 @@
             <div id="percentSlider" class="slider-range"></div>
             <input type="text" id="percentAmount" class="amount" readonly>
       </div>
-      
-      <br>
-      <h3>Sort by:</h3>
+      <h3 id='sort-header' class='recipe-filter-subheader'>Sort by:</h3>
       <div id="sortType" value="default">
       	<#assign leastMissing = "/meal/"+meal.url()+"/fewest-missing">
-        <input type="button" class="btn" value="Least Missing Ingredients" onClick="location.href='${leastMissing}'"></input>
+        <input type="button" class="sort-btn btn" value="Least Missing Ingredients" onClick="location.href='${leastMissing}'"></input>
       	<#assign shoppingCosts = "/meal/"+meal.url()+"/price-asc">
-        <input type="button" class="btn" value="Shopping Costs" onClick="location.href='${shoppingCosts}'"></input>
+        <input type="button" class="sort-btn btn" value="Shopping Costs" onClick="location.href='${shoppingCosts}'"></input>
       	<#assign mealFanciness = "/meal/"+meal.url()+"/fancy-asc">
-        <input type="button" class="btn" value="Meal Fanciness" onClick="location.href='${mealFanciness}'"></input>
+        <input type="button" class="sort-btn btn" value="Meal Fanciness" onClick="location.href='${mealFanciness}'"></input>
       </div>
-        <input id="reverseButton" onclick="reverseRecipes()" type="button" class="btn" value="Reverse Order"></input>
+        <input id="reverseButton" onclick="reverseRecipes()" type="button" class="sort-btn btn" value="Reverse Order"></input>
     </div>
       <div class="container">
         <div id="sliding suggestions" class="allRecipes">

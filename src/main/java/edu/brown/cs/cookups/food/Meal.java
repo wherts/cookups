@@ -185,7 +185,6 @@ public class Meal {
       ret.add(r.copy());
     }
     ret.sort(comp);
-    System.out.println();
     return ret;
   }
 
