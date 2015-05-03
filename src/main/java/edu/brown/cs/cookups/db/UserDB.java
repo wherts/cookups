@@ -9,7 +9,6 @@ import edu.brown.cs.cookups.person.PersonManager;
 public interface UserDB {
 
   public void addUserIngredient(String id, Ingredient i);
-  
 
   public void addPerson(Person p);
 
@@ -18,6 +17,8 @@ public interface UserDB {
   public List<Ingredient> getPersonIngredients(String id);
 
   public void removePersonIngredient(String uid, String iid);
+
+  public void removePersonIngredients(String id);
 
   public void removePersonById(String id);
 

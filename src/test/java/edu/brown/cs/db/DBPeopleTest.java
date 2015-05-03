@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import edu.brown.cs.cookups.db.DBLink;
@@ -97,6 +98,49 @@ public class DBPeopleTest {
     assertTrue(r.ingredients().contains(k));
   }
 
+  @AfterClass
+  public static void updatePerson()
+    throws ClassNotFoundException, SQLException {
+    DBLink db = new DBLink(DB_PATH);
+    PersonManager people = new PersonManager(db);
+    db.ingredients().defineIngredient("i",
+                                      "iodine",
+                                      1.0,
+                                      "Pantry",
+                                      1);
+    db.ingredients().defineIngredient("j",
+                                      "jorga",
+                                      1.0,
+                                      "Pantry",
+                                      1);
+    db.ingredients().defineIngredient("k",
+                                      "kilbasa",
+                                      1.0,
+                                      "Pantry",
+                                      1);
+    Ingredient i = new Ingredient("i", 1.1, db);
+    i.setDateCreated(LocalDateTime.now());
+    Ingredient j = new Ingredient("j", 1.1, db);
+    j.setDateCreated(LocalDateTime.now());
+    people.addPerson("Ronald Reagan",
+                     "ronald@aol.com",
+                     Arrays.asList(i, j));
+    Person r = people.getPersonById("ronald@aol.com");
+    assertTrue(r.ingredients().contains(i));
+    assertTrue(r.ingredients().contains(j));
+    i = new Ingredient("i", 6.6, db);
+    Ingredient k = new Ingredient("k", 1.1, db);
+    k.setDateCreated(LocalDateTime.now());
+    people.updateUser("ronald@aol.com",
+                      Arrays.asList(i, k),
+                      Arrays.asList("Tai", "Mongolian"));
+    r = people.getPersonById("ronald@aol.com");
+    assertTrue(r.ingredients().contains(i));
+    assertTrue(r.ingredients().contains(k));
+    assertTrue(r.favoriteCuisines().contains("Tai"));
+    assertTrue(r.favoriteCuisines().contains("Mongolian"));
+  }
+
   @Test
   public void getPersonTest()
     throws ClassNotFoundException, SQLException {
@@ -119,7 +163,7 @@ public class DBPeopleTest {
     assertTrue(r.name().equals("Ronald Reagan"));
     Ingredient result = r.ingredients().get(0);
     assertTrue(result.id().equals(i.id()));
-    
+
   }
 
   @Test
@@ -167,7 +211,8 @@ public class DBPeopleTest {
     m1.addRecipe(r1);
     String mealID = db.meals().addMeal(m1);
     people.addMealtoPerson(mealID, "wh7");
-    assertTrue(m1.equals(db.meals().getMealByID(mealID, people)));
+    assertTrue(m1.equals(db.meals().getMealByID(mealID,
+                                                people)));
   }
 
   @Test
@@ -179,8 +224,8 @@ public class DBPeopleTest {
     Person p = people.addPerson("Wes",
                                 "wh7",
                                 Arrays.asList());
-    people.addPersonCuisine("wh7", "Tai");
-    people.addPersonCuisine("wh7", "Korean");
+    List<String> cuisines = Arrays.asList("Tai", "Korean");
+    people.updateUser("wh7", Arrays.asList(), cuisines);
     List<String> expected = Arrays.asList("Tai", "Korean");
     List<String> result = p.favoriteCuisines();
     assertTrue(expected.size() == result.size());

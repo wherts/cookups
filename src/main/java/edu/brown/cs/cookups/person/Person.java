@@ -19,6 +19,8 @@ public interface Person {
 
   public List<String> favoriteCuisines();
 
-  public void addCuisine(String cuisine);
+  public void setCuisines(List<String> cuisines);
+
+  public void setIngredients(List<Ingredient> ingredients);
 
 }
