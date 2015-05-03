@@ -16,11 +16,11 @@ import edu.brown.cs.cookups.api.AuthFilter;
 import edu.brown.cs.cookups.api.Authentication;
 import edu.brown.cs.cookups.api.AutocompleteHandler;
 import edu.brown.cs.cookups.api.CookupHandler;
-import edu.brown.cs.cookups.api.FilterHandler;
 import edu.brown.cs.cookups.api.LoginHandler;
 import edu.brown.cs.cookups.api.LogoutHandler;
 import edu.brown.cs.cookups.api.MakeMealHandler;
 import edu.brown.cs.cookups.api.ProfileDataHandler;
+import edu.brown.cs.cookups.api.ProfileUpdateHandler;
 import edu.brown.cs.cookups.api.SearchEngine;
 import edu.brown.cs.cookups.api.SendUsersHandler;
 import edu.brown.cs.cookups.api.SignupHandler;
@@ -117,6 +117,7 @@ public class URLHandler {
     Spark.get("/profileData/:id", new ProfileDataHandler(recipeNames,
         fridgeIngredients, pantryIngredients,
         people));
+    Spark.post("/updateProfile/:id", new ProfileUpdateHandler(db, people));
 //    Spark.post("/meal/:id/:query", new FilterHandler(db, people));
     
   }

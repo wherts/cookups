@@ -90,11 +90,11 @@
       <span>Sort recipes by:</span>
       <select id="sortType" value="default">
         <option value="default">Select an option</option>
-        <option value="least-missing"><a href="/meal/"+${meal.url()}+"/fewest-missing">Least Missing Ingredients</a></option>
-        <option value="price-asc"><a href="/meal/"+${meal.url()}+"/price-asc">Shopping Costs ($-$$$)</a></option>
-        <option value="price-des"><a href="/meal/"+${meal.url()}+"/price-des">Shopping Costs ($$$-$)</a></option>
-        <option value="fancy-asc"><a href="/meal/"+${meal.url()}+"/fancy-asc">Meal Fanciness ($-$$$)</a></option>
-        <option value="fancy-des"><a href="/meal/"+${meal.url()}+"/fancy-des">Meal Fanciness ($$$-$)</a></option>
+        <option value="least-missing"><a href="/meal/"+meal.url()+"/fewest-missing">Least Missing Ingredients</a></option>
+        <option value="price-asc"><a href="/meal/"+meal.url()+"/price-asc">Shopping Costs ($-$$$)</a></option>
+        <option value="price-des"><a href="/meal/"+meal.url()+"/price-des">Shopping Costs ($$$-$)</a></option>
+        <option value="fancy-asc"><a href="/meal/"+meal.url()+"/fancy-asc">Meal Fanciness ($-$$$)</a></option>
+        <option value="fancy-des"><a href="/meal/"+meal.url()+"/fancy-des">Meal Fanciness ($$$-$)</a></option>
       </select>
     </div>
       <div class="container">
