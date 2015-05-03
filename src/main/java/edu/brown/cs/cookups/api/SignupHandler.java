@@ -1,6 +1,5 @@
 package edu.brown.cs.cookups.api;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,19 +33,19 @@ public class SignupHandler implements TemplateViewRoute {
     String pass = qm.value("password");
     List<Ingredient> i = new ArrayList<Ingredient>();
 
-    
+
     people.addPerson(name, id, i);
-    
+
 
     auth.setPassword(id, pass);
     String token = auth.getToken(id);
     auth.authenticate(id, token);
-    
+
     String path = id.split("@")[0];
     String profLink = "/profile/" + path;
     Map<String, Object> variables =
-        ImmutableMap.of("name", name, "favCuisines", "",
-            "profLink", profLink, "editable", true, "path", path);
+        ImmutableMap.of("name", name, "favCuisines", "", "editable", true,
+            "path", path);
     return new ModelAndView(variables, "profile.ftl");
   }
 

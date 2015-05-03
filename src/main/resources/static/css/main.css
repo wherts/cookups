@@ -187,11 +187,15 @@ ul.search-results a{
 	font-family: 'gobold_thinregular', sans-serif;
 	font-size: 14px;
 	text-align: right;
-	display: block;
 	text-decoration: none;
 	padding-bottom: 5px;
 	position: relative;	
 	top: -15px ;
+}
+
+#logout-container {
+	display: block;
+	text-align: right;
 }
 
 .btn {
