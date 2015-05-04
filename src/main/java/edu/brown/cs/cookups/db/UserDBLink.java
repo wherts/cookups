@@ -32,7 +32,9 @@ public class UserDBLink implements UserDB {
 
   @Override
   public void addUserIngredient(String id, Ingredient i) {
-    addUserIngredient(id, i, LocalDateTime.now());
+    LocalDateTime time = LocalDateTime.now();
+    i.setDateCreated(time);
+    addUserIngredient(id, i, time);
   }
 
   @Override
@@ -44,8 +46,7 @@ public class UserDBLink implements UserDB {
       prep.setString(ID_IDX, id);
       prep.setString(INGREDIENT_IDX, i.id());
       prep.setFloat(INGREDIENT_QTY_IDX, (float) i.ounces());
-      prep.setString(EXP_IDX, LocalDateTime.now()
-                                           .toString());
+      prep.setString(EXP_IDX, ldt.toString());
       prep.addBatch();
       prep.executeBatch();
       prep.close();

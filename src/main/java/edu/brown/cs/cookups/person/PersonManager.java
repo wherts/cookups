@@ -125,7 +125,6 @@ public class PersonManager {
   public void updateUser(String id,
       List<Ingredient> updateIngredients,
       List<String> cuisines) {
-    System.out.println("called");
     Person p = this.getPersonById(id);
     p.setCuisines(cuisines);
     db.users().updatePersonCuisines(p);
@@ -138,6 +137,7 @@ public class PersonManager {
       if (oldIngreds.contains(i)) {
         staticIngreds.add(i);
         Ingredient old = oldIngredMap.get(i.id());
+
         i.setDateCreated(old.getDateCreated());
 
       } else {
@@ -146,14 +146,16 @@ public class PersonManager {
 
     }
     db.users().removePersonIngredients(id);
-    // for (Ingredient i : staticIngreds) {
-    // db.users().addUserIngredient(id,
-    // i,
-    // i.getDateCreated());
-    // }
-    // for (Ingredient i : newIngreds) {
-    // db.users().addUserIngredient(id, i);
-    // }
-    p.setIngredients(updateIngredients);
+    for (Ingredient i : staticIngreds) {
+      db.users().addUserIngredient(id,
+                                   i,
+                                   i.getDateCreated());
+
+    }
+    for (Ingredient i : newIngreds) {
+      db.users().addUserIngredient(id, i);
+
+    }
+    p.setIngredients(db.users().getPersonIngredients(id));
   }
 }
