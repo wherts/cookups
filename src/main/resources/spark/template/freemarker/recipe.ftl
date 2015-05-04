@@ -58,5 +58,6 @@
      <script src="../js/jquery-2.1.1.js"></script>
 	<script src="../js/jquery.tokenize.js"></script>
     <script src="../js/main.js"></script>
+    <script src="../js/recipe.js"></script>
   </body>
 </html>

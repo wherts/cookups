@@ -1,3 +1,8 @@
+html {
+	background-color: #414346;
+}
+
+
 #search-bar {
 	position: relative;
 	top: -10px;
@@ -51,9 +56,9 @@
 }
 
 /* DARK GRAY */
-.d {
+/*.d {
 	background-color: #2E2F28;
-}
+}*/
 
 .block {
 	width: 100%;

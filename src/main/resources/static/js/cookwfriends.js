@@ -30,16 +30,18 @@ $.get("/allUsers", function(JSONresponse) {
 	var response = JSON.parse(JSONresponse);
 	var names = response.names;
 	var ids = response.ids;
-	console.log(response);
 	var options = "";
 	
 	for (var i=1; i<=names.length; i++) {
-		options += "<option value='"+i+"'>"+names[i-1]+" ("+ids[i-1]+")</span></option>";
+		if (ids[i-1] != $("#kitchen-link").attr("href").split("/")[2] + "@brown.edu") {
+			options += "<option value='"+i+"'>"+names[i-1]+" ("+ids[i-1]+")</span></option>";
+		}
 	}
 	$("#add-chefs").html(options);
 	$("#add-chefs").tokenize({
 			newElements: false,
 	});
+
 });
 
 function validateForm(chefs) {

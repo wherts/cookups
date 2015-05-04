@@ -1,3 +1,19 @@
+#meals-title {
+	background-image: url(../assets/meal-title.jpg);
+	height: 250px;
+	background-size: 100%;
+	background-position-y: -100px;
+}
+
+#meals-text {
+	line-height: 4;
+	font-size: 60px;
+	color: #FFFFFF;
+	text-shadow: 2px 2px #000;
+}
+
+
+
 #meal-details {
 	font-family: 'gobold_thinregular', sans-serif;
 	font-size: 25px;
@@ -171,6 +187,7 @@ td a {
 	text-decoration: none;
 	font-family: 'abeezeeregular', sans-serif;
 	color: #FFF;
+	font-size: 70px;
 }
 
 #meal-title {

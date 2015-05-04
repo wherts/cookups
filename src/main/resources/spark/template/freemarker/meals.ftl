@@ -12,7 +12,7 @@
   <body>
   <#include "/header.ftl">  
    <div class="block c" id="title">
-      <div class="container"><h1 class="meal-subtitle" id="title-text">Meals</h1><div>
+    <div class="block" id="meals-title"><h1 id="meals-text" class="h-text">meals</h1></div>
      <div class="block c last-div">
      	<div class='container'>
      	<ul>

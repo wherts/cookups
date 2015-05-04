@@ -1,13 +1,8 @@
 #title {
-	background-image: url(../assets/cookwfriends-background.png);
+	background-image: url(../assets/pans.jpg);
 	height: 250px;
 	background-position: center;
-}
-
-.link {
-	color: white;
-	text-decoration: none;
-	display: block;
+	background-size: 100%;
 }
 
 #title-text {
@@ -17,20 +12,35 @@
 	text-shadow: 2px 2px #000;
 }
 
+.link {
+	color: white;
+	text-decoration: none;
+	display: block;
+}
+
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
 .link a {
-	height: 100%;
-	width: 100%;
+	position: relative;
+/*	height: 100%;
+	width: 100%;*/
 	background: url(../assets/friends-cook.jpg);
 }
 
 #cookfriends-link {
 	text-align: center;
-	line-height: 10;
+	line-height: 13;
 	font-size: 45px;
 	color: #FFFFFF;
 	text-shadow: 2px 2px #000;
 	width: 50%;
-	height: 100%;
 	background: url(../assets/friends-cook.jpg);
 	background-size: cover;
 	background-position: center;
@@ -38,14 +48,13 @@
 }
 
 #cookup-link {
-		text-align: center;
+	text-align: center;
 
-	line-height: 10;
+	line-height: 13;
 	font-size: 45px;
 	color: #FFFFFF;
 	text-shadow: 2px 2px #000;
 	width: 50%;
-	height: 100%;
 	background: url(../assets/cookup-cook.jpg);
 	background-size: cover;
 	background-position: center;
