@@ -36,7 +36,7 @@
      		<div id='ingredients'>
 			 	 <#list recipe.ingredients() as x>
 					<p class='ingredient'>
-						${x.ounces()} oz ${x.name()}
+						<span>${x.ounces()} oz ${x.name()}</span>
 						<#if recipe.shoppingList()?seq_contains(x)>
 							<span class='need-to-buy'> (need to buy)</span>
 						</#if>
@@ -58,5 +58,6 @@
      <script src="../js/jquery-2.1.1.js"></script>
 	<script src="../js/jquery.tokenize.js"></script>
     <script src="../js/main.js"></script>
+    <script src="../js/recipe.js"></script>
   </body>
 </html>
