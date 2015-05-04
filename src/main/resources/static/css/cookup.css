@@ -60,5 +60,10 @@ table {
 }
 
 #cookup-form {
-	padding-left: 50px;
+	padding-left: 80%;
+	width: 100%;
+}
+
+.slideLeft {
+	padding-left: 50px !important;	
 }
