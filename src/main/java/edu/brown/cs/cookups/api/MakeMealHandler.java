@@ -3,6 +3,7 @@ package edu.brown.cs.cookups.api;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -60,19 +61,25 @@ public class MakeMealHandler implements Route {
     if (timeEnd.length() > 0) { // if they scheduled an end time
       String end = date + " " + timeEnd;
       dateTimeEnd = LocalDateTime.parse(end, formatter);
-      // Check the before issue here!!
+      Duration duration = Duration.between(dateTimeStart.toLocalTime(),
+                                           dateTimeEnd.toLocalTime());
+      if (duration.isNegative()) {
+        dateTimeEnd = LocalDateTime.of(dateTimeEnd.plusDays(1)
+                                                  .toLocalDate(),
+                                       dateTimeEnd.toLocalTime());
+      }
     }
     Schedule sched = new Schedule(dateTimeStart, null);
     Person host = people.getPersonById(id);
     Meal newMeal = new Meal((User) host, sched);
 
-    if (newMeal == null){
+    if (newMeal == null) {
       System.err.println("ERROR: Could create not a meal");
     }
 
     if (newMeal != null && dateTimeEnd != null) { // if endtime scheduled
       newMeal.setEnd(dateTimeEnd);
-    } 
+    }
     // add recipes to meal
     List<Person> attending = new ArrayList<>();
     // need to figure out how to parse out selected names
@@ -87,7 +94,11 @@ public class MakeMealHandler implements Route {
       }
       newMeal.addAttending((User) a);
     }
-    attending.add(dbM.users().getPersonById(id)); //ADD THIS PERSON TO ATTENDING LIST
+
+    if (!attending.contains(host)) {
+      attending.add(host); // adding host here
+    }
+
     List<Recipe> toCook = new ArrayList<>();
     try {
       toCook = RecipeMatcher.matchRecipes(attending, dbM);
@@ -108,7 +119,7 @@ public class MakeMealHandler implements Route {
       dbM.users().addPersonMeal(p.id(), mealID);
     }
     dbM.users().addPersonMeal(id, mealID);
-    
+
     String mealLink = null;
     try {
       mealLink = "/meal/"

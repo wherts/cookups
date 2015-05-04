@@ -77,8 +77,9 @@ public class ProfileUpdateHandler implements Route {
       newCuisines.add(s);
     }
 
-    // ideally just update user ingredients and cuisines with the list, getting
-    // foreign key constraints
+    // System.out.println(newIngredients);
+    // System.out.println(newCuisines);
+
     people.updateUser(uid, newIngredients, newCuisines);
 
     return new Object();
