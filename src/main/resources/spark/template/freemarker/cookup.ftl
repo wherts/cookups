@@ -30,7 +30,7 @@
           <br><br>
           <div id="romantic-opts">
 	          Gender<br>
-	          Male <input type="range" name="gender"> Female
+	          Male <input type="range" id="slider" onchange="sliderChange();" name="gender"> Female
 	          <br><br>
 	          Orientation (select none for queer)<br>  
 	          Heterosexual<input type="radio" name="orientation" value="heterosexual">
