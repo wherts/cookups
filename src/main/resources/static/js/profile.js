@@ -266,7 +266,7 @@ function uploadPhoto(params) {
     	};
     	reader.readAsDataURL(file);
 
-    	ALSO WORKING:
+    	// ALSO WORKING:
     	var textReader = new FileReader();
 	    return textReader.readAsText(file);
 
