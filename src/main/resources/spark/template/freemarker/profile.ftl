@@ -59,6 +59,7 @@
            <#if editable == true>
                 <br>
                <input id="updateButton" class="btn" type="submit" value="Update Kitchen">
+               <div id="foodler-container"></div>
            </#if>
         </p>
       </div>

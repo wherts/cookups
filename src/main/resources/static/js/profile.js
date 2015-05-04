@@ -32,13 +32,14 @@ function createProfile() {
 		$("#fav-cuisines").tokenize({
 				newElements: false,
 		});
-		
+
 		$("#curr-ingredients").html(ingredient_options);
 		$("#curr-ingredients").tokenize({
 				newElements: false,
 		});
 		
 		var len = $("#ingredientInput .TokensContainer .Token").length;
+
 		for (var i = 1; i <= len; i++) {
 			var ing = $("#ingredientInput .TokensContainer .Token:nth-child("+i+") span");
 			if ($.inArray(ing.html(), fridge) != -1) {
@@ -55,7 +56,10 @@ function createProfile() {
 			var name = $(this).attr("name");
 			personIngredients[name] = parseFloat(value);
 		});
-		
+		foodler();
+		$(".about .TokensContainer").bind("DOMSubtreeModified", function () {
+			foodler();
+		});
 		$("#ingredientInput .TokensContainer").bind("DOMSubtreeModified", function() {
 			
 			if ($("#ingredientInput .Token").html() != null && numberIngredients != $("#ingredientInput .Token").length) {
@@ -138,6 +142,119 @@ function updateFridgeAndPantry() {
 	}
 	$("#fridge").html(newHtmlFridge);
 	$("#pantry").html(newHtmlPantry);
+}
+
+
+function getCurrentID() {
+	var profilePath = window.location.pathname;
+	var split = profilePath.split("/");
+	return split[split.length - 1];
+}
+
+
+$("#updateButton").click(function() {
+	//send personIngredients
+	var favoriteSpans = $("#about .Token span");
+	var favCuisines = "";
+	for (var i=1; i <= favoriteSpans.length; i++) {
+		favCuisines += $("#about .Token:nth-child(" + i+ ") span").html();
+		favCuisines += ","; //for splitting on backend
+	}
+		var postParams = {
+		personIngs : JSON.stringify(personIngredients),
+		favorites : favCuisines,
+		image : image
+	};
+	var image = uploadPhoto(postParams);
+	//console.log("IMAAAAAGE: "+image)
+	var cuisines;
+
+	var addr = "/updateProfile/" + getCurrentID();
+
+	$.post(addr, postParams);
+	alert("Profile Updated! Thanks for submitting new information.");
+});
+
+function uploadPhoto(params) {
+	var file = document.getElementById('uploadPicture').files[0];
+	if (file) {
+		var reader = new FileReader();
+ 	    reader.onload = function(e) {
+            // browser completed reading file - display it
+            $('#profPic').css({background: "url(" + e.target.result + ")"});
+            console.log(e.target.result);
+		    //return e.target.result;
+    		// return link;
+    		postImage(params, e.target.result);
+    	};
+    	reader.readAsDataURL(file);
+
+    	// ALSO WORKING:
+    	var textReader = new FileReader();
+	    return textReader.readAsText(file);
+
+
+	    // formData = new FormData();
+	    // if(!!file.type.match(/image.*/)){
+	    //   formData.append("image", file);
+	    //   return formData;
+	    // } else{
+	    //   alert('Not a valid image!');
+	    //   return false;
+	    // }
+	} else {
+		return false;
+	}
+
+}
+
+function postImage(postParams, image) {
+	console.log("IMAGEEEE 2: " + image);
+	var addr = "/updateProfile/" + getCurrentID();
+	postParams.image = image;
+	$.post(addr, postParams);
+}
+
+
+function foodler() {
+	console.log("GO");
+	var cuisines = ["Breakfast",
+		"Burgers",
+		"Catering",
+		"Chinese",
+		"Deli",
+		"Italian",
+		"Japanese",
+		"Mediterranean",
+		"Pizza",
+		"Seafood",
+		"Sushi",
+		"Thai"];
+	var questions = ["Too lazy to cook today?", 
+	"Not feeling the same old same old?", 
+	"Bummed that Cookups only has 15 recipes?",
+	"Hate cooking?",
+	"Don't have a kitchen?",
+	"Did you wake up with a case of the Mondays?",
+	"No friends to cook with?"];
+	var resolutions = ["Not to fear!", "Oh, please!", "Hey, take a chill pill.",
+		"Boy do we have a solution for you.", "You know what that means!"];
+	var l = $(".about span").length;
+	for (var i=0; i<l; i++) {
+		var name = $(".about span")[i].innerHTML;
+		console.log(name);
+		if ($.inArray(name, cuisines) != -1) {
+			var phrase = "<br><div id='foodler'>" + questions[getRandomInt(0, questions.length)] + " " + resolutions[getRandomInt(0, resolutions.length)];
+			phrase += " Click below to get your favorite cuisine delivered immediately:";
+			phrase += "<a target='_blank' href='http://www.foodler.com/providence/" + name + "'><br><img src='../assets/foodler.png' id='foodler-img' width='300px'></a>";
+			phrase += "</div>";
+			$("#foodler-container").html(phrase);
+		}
+	}
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 function generateCuisines(favCuisines) {
@@ -234,74 +351,4 @@ function generateCuisines(favCuisines) {
 		}
 	}
 	return toReturn;
-}
-
-function getCurrentID() {
-	var profilePath = window.location.pathname;
-	var split = profilePath.split("/");
-	return split[split.length - 1];
-}
-
-
-$("#updateButton").click(function() {
-	//send personIngredients
-	var favoriteSpans = $("#about .Token span");
-	var favCuisines = "";
-	for (var i=1; i <= favoriteSpans.length; i++) {
-		favCuisines += $("#about .Token:nth-child(" + i+ ") span").html();
-		favCuisines += ","; //for splitting on backend
-	}
-		var postParams = {
-		personIngs : JSON.stringify(personIngredients),
-		favorites : favCuisines,
-		image : image
-	};
-	var image = uploadPhoto(postParams);
-	//console.log("IMAAAAAGE: "+image)
-	var cuisines;
-
-	var addr = "/updateProfile/" + getCurrentID();
-
-	$.post(addr, postParams);
-	alert("Profile Updated! Thanks for submitting new information.");
-});
-
-function uploadPhoto(params) {
-	var file = document.getElementById('uploadPicture').files[0];
-	if (file) {
-		var reader = new FileReader();
- 	    reader.onload = function(e) {
-            // browser completed reading file - display it
-            $('#profPic').css({background: "url(" + e.target.result + ")"});
-            console.log(e.target.result);
-		    //return e.target.result;
-    		// return link;
-    		postImage(params, e.target.result);
-    	};
-    	reader.readAsDataURL(file);
-
-    	// ALSO WORKING:
-    	var textReader = new FileReader();
-	    return textReader.readAsText(file);
-
-
-	    // formData = new FormData();
-	    // if(!!file.type.match(/image.*/)){
-	    //   formData.append("image", file);
-	    //   return formData;
-	    // } else{
-	    //   alert('Not a valid image!');
-	    //   return false;
-	    // }
-	} else {
-		return false;
-	}
-
-}
-
-function postImage(postParams, image) {
-	console.log("IMAGEEEE 2: " + image);
-	var addr = "/updateProfile/" + getCurrentID();
-	postParams.image = image;
-	$.post(addr, postParams);
 }

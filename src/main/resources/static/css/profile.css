@@ -1,5 +1,5 @@
 .Tokenize {
-	width: 300px;
+	width: 476px;
 }
 
 #title {
@@ -77,7 +77,7 @@
 }
 
 .about-me {
-	margin-top: 100px;
+	margin-top: 50px;
 	margin-left: 200px;
 }
 
@@ -121,7 +121,7 @@
 }
 
 #fridgeHolder {
-	margin-left: 100px;
+	margin-left: 10%;
 	width: 250px !important;
 	height: 300px !important;
 	margin-top: 15px;
@@ -134,7 +134,7 @@
 }
 
 #pantryHolder {
-	margin-right: 100px;
+	margin-right: 10%;
 	width: 200px;
 	height: 300px;
 	margin-top: 10px;
@@ -220,9 +220,25 @@
 	font-size: 12px;
 	margin-right: 10px;
 	margin-bottom: 10px;
-	margin-left: 90px;
+	margin-left: 170px;
 }
 
 html {
 	background-color: #676D51;
+}
+
+#foodler {
+	background: rgb(255, 153, 0);
+	padding: 20px;
+	padding-bottom: 0px;
+	border-radius: 10px;
+	margin-right: 72px;
+	color: #393D28;
+	font-family: 'abeezeeregular', sans-serif;
+}
+
+#foodler-img {
+	position: relative;
+	margin-left: 80px;
+	margin-top: 10px;
 }
