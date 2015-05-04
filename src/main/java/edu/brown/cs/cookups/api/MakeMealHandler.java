@@ -50,14 +50,17 @@ public class MakeMealHandler implements Route {
     String timeEnd = qm.value("timeEnd"); // not required
     System.out.printf("%s%n", timeEnd);
     String chefs = qm.value("chefs");
-    System.out.println(date + " " + timeStart + " " + name + " " + chefs);
+    System.out.println(date + " " + timeStart + " " + name
+        + " " + chefs);
     String start = date + " " + timeStart;
 
-    LocalDateTime dateTimeStart = LocalDateTime.parse(start, formatter);
+    LocalDateTime dateTimeStart = LocalDateTime.parse(start,
+                                                      formatter);
     LocalDateTime dateTimeEnd = null;
     if (timeEnd.length() > 0) { // if they scheduled an end time
       String end = date + " " + timeEnd;
       dateTimeEnd = LocalDateTime.parse(end, formatter);
+      // Check the before issue here!!
     }
     Schedule sched = new Schedule(dateTimeStart, null);
     Person host = people.getPersonById(id);
@@ -108,7 +111,8 @@ public class MakeMealHandler implements Route {
     
     String mealLink = null;
     try {
-      mealLink = "/meal/" + URLEncoder.encode(mealID, "UTF-8") + "/default";
+      mealLink = "/meal/"
+          + URLEncoder.encode(mealID, "UTF-8") + "/default";
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
