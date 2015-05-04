@@ -217,7 +217,6 @@ function postImage(postParams, image) {
 
 
 function foodler() {
-	console.log("GO");
 	var cuisines = ["Breakfast",
 		"Burgers",
 		"Catering",

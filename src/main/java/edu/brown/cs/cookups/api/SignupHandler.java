@@ -31,7 +31,7 @@ public class SignupHandler implements TemplateViewRoute {
     String id = qm.value("email");
     String name = qm.value("name");
     String pass = qm.value("password");
-
+    System.out.printf("ID: %s Name: %s Pass: %s%n", id, name, pass);
     List<Ingredient> i = new ArrayList<Ingredient>();
     people.addPerson(name, id, i);
     auth.setPassword(id, pass);
@@ -40,10 +40,15 @@ public class SignupHandler implements TemplateViewRoute {
 
     String path = id.split("@")[0];
     String profLink = "/profile/" + path;
+    
+    response.cookie("auth", token);
+    response.cookie("id", id);
+    
+    System.out.printf("Path: %s ProfLink: %s%n", path, profLink);
     Map<String, Object> variables =
         ImmutableMap.of("name", name, "favCuisines", "", "editable", true,
             "path", path);
+    response.redirect(profLink);
     return new ModelAndView(variables, "profile.ftl");
   }
-
 }

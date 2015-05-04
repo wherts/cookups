@@ -26,5 +26,4 @@ public class SignupFilter implements Filter {
       Spark.halt();
     }
   }
-
 }
