@@ -34,7 +34,6 @@ public class ProfileUpdateHandler implements Route {
 
   @Override
   public Object handle(Request request, Response response) {
-<<<<<<< HEAD
   	String uid = request.params(":id") + "@brown.edu";
   	QueryParamsMap qm = request.queryMap();
 
@@ -58,42 +57,6 @@ public class ProfileUpdateHandler implements Route {
       System.err.println("Couldn't save");
     }
 
-    
-    
-  	String ingredients = qm.value("personIngs");
-  	String cuisines = qm.value("favorites");
-  	//breaking down ingredients mapping
-  	String trimmed = trimEnds(ingredients);
-  	String[] pairs = trimmed.split(",");
-  	Map<String, Double> map = new HashMap<>();
-  	for (int i = 0; i < pairs.length; i++) {
-  	  String[] split = pairs[i].split(":");
-  	  String key = split[0];
-  	  String value = split[1];
-  	  map.put(trimEnds(key), Double.parseDouble(value));
-  	}
-  	List<Ingredient> newIngredients = new ArrayList<>();
-  	for (String key : map.keySet()) {
-  	  String id = dbM.ingredients().getIngredientIDByName(key);
-  	  Ingredient i = new Ingredient(id, map.get(key), dbM);
-  	  newIngredients.add(i);
-  	}
-  	
-  	//parsing out cuisine information
-  	System.out.println("Cuisines: " + cuisines);
-  	String[] splitCuisines = cuisines.split(",");
-  	List<String> newCuisines = new ArrayList<>();
-  	for (String s : splitCuisines) {
-  	  newCuisines.add(s);
-  	}
-  	System.out.println(newIngredients);
-  	System.out.println(newCuisines);
-  	//ideally just update user ingredients and cuisines with the list, getting foreign key constraints
-  	
-  	return new Object();
-=======
-    String uid = request.params(":id") + "@brown.edu";
-    QueryParamsMap qm = request.queryMap();
     String ingredients = qm.value("personIngs");
     String cuisines = qm.value("favorites");
     // breaking down ingredients mapping
@@ -128,7 +91,6 @@ public class ProfileUpdateHandler implements Route {
     // foreign key constraints
 
     return new Object();
->>>>>>> 230365d9bc3beba22ff897309abc1caef3c11f54
   }
 
   private String trimEnds(String str) {
