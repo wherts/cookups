@@ -1,5 +1,7 @@
 package edu.brown.cs.cookups.views;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import spark.ModelAndView;
@@ -9,6 +11,7 @@ import spark.TemplateViewRoute;
 
 import com.google.common.collect.ImmutableMap;
 
+import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.PersonManager;
 
@@ -35,11 +38,11 @@ public class ProfileView implements TemplateViewRoute {
       editable = true;
     }
     String path = userID.split("@")[0];
-
+    List<Ingredient> ingredients = people.getPersonIngredientsByID(profileID);
     Map<String, Object> variables =
         ImmutableMap.of("name", person.name(), "favCuisines",
             person.favoriteCuisines(), "personIngredients",
-            person.ingredients(),
+            ingredients,
             "editable", editable, "path", name);
     return new ModelAndView(variables, "profile.ftl");
   }

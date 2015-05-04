@@ -1,6 +1,7 @@
 package edu.brown.cs.cookups.person;
 
 import java.util.List;
+import java.util.Map;
 
 import edu.brown.cs.cookups.food.Ingredient;
 
@@ -12,6 +13,8 @@ public interface Person {
   public String url();
 
   public List<Ingredient> ingredients();
+
+  public Map<String, Ingredient> ingredientsMap();
 
   public Double latitude();
 

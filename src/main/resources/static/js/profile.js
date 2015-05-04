@@ -249,7 +249,8 @@ $("#updateButton").click(function() {
 
 	var addr = "/updateProfile/" + getCurrentID();
 
-	//$.post(addr, postParams);
+	$.post(addr, postParams);
+	alert("Profile Updated! Thanks for submitting new information.");
 });
 
 function uploadPhoto(params) {

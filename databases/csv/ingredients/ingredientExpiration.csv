@@ -6,7 +6,7 @@
 /i/produce.1.4,Leek,9,Fridge,10080
 /i/produce.2,Bread,16,Pantry,5760
 /i/produce.2.1,Baguette,20,Pantry,5760
-/i/produce.3,Asparagus,18,Fridge,10080
+/i/produce.3,Asparagus,18,Fridge,1
 /i/produce.4,Corn,6,Fridge,10080
 /i/produce.5,Scallions,9,Fridge,10080
 /i/produce.6,Peanut Butter,30,Pantry,0
@@ -37,7 +37,7 @@
 /i/baking.0,Flour,5,Pantry,0
 /i/baking.1,Light Brown Sugar,8,Pantry,0
 /i/baking.1.1,White Sugar,8,Pantry,0
-/i/baking.2,Pizza Dough,325,Pantry,10080
+/i/baking.2,Pizza Dough,20,Pantry,10080
 /i/baking.3,Baking Soda,56,Pantry,0
 /i/baking.4,Cornstarch,8,Pantry,0
 /i/baking.5,Baking Powder,56,Pantry,0

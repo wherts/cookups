@@ -1,7 +1,9 @@
 package edu.brown.cs.cookups.person;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.brown.cs.cookups.food.Ingredient;
 
@@ -82,6 +84,15 @@ public class User implements Person {
   @Override
   public void setIngredients(List<Ingredient> ingredients) {
     this.ingredients = ingredients;
+  }
+
+  @Override
+  public Map<String, Ingredient> ingredientsMap() {
+    Map<String, Ingredient> toRet = new HashMap<String, Ingredient>();
+    for (Ingredient i : this.ingredients) {
+      toRet.put(i.id(), i);
+    }
+    return toRet;
   }
 
 }
