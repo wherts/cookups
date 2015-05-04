@@ -9,8 +9,8 @@ $(document).ready(function() {
 		$( "#priceSlider" ).slider({
 			range: true,
 			min: 0,
-			max: 500,
-			values: [ 0, 500 ],
+			max: 250,
+			values: [ 0, 250 ],
 			slide: function( event, ui ) {
 				priceLow = ui.values[ 0 ];
 				priceHigh = ui.values[ 1 ];
@@ -21,7 +21,7 @@ $(document).ready(function() {
 		priceLow = $( "#priceSlider" ).slider( "values", 0 );
 		priceHigh = $( "#priceSlider" ).slider( "values", 1 );
 		$( "#priceAmount" ).val( "$" + priceLow + " - $" + priceHigh );
-		
+
 		$( "#percentSlider" ).slider({
 			range: true,
 			min: 0,
@@ -37,7 +37,7 @@ $(document).ready(function() {
 		percentLow = $( "#percentSlider" ).slider( "values", 0 );
 		percentHigh = $( "#percentSlider" ).slider( "values", 1 );
 		$( "#percentAmount" ).val(percentLow + "% - " + percentHigh + "%");
-
+		reloadInRange();
 	}); //ends ready
 
 function reloadInRange() {

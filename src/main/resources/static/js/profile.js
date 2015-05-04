@@ -85,6 +85,7 @@ $(document).ready(function () {
 	});
 });
 
+
 function updateFridgeAndPantryNoEdit() {
 	var newHtmlFridge = "";
 	var newHtmlPantry = "";
@@ -237,12 +238,56 @@ $("#updateButton").click(function() {
 		favCuisines += $("#about .Token:nth-child(" + i+ ") span").html();
 		favCuisines += ","; //for splitting on backend
 	}
-
-	var cuisines;
-	var addr = "/updateProfile/" + getCurrentID();
-	var postParams = {
+		var postParams = {
 		personIngs : JSON.stringify(personIngredients),
-		 favorites : favCuisines
+		favorites : favCuisines,
+		image : image
 	};
-	$.post(addr, postParams);
+	var image = uploadPhoto(postParams);
+	//console.log("IMAAAAAGE: "+image)
+	var cuisines;
+
+	var addr = "/updateProfile/" + getCurrentID();
+
+	//$.post(addr, postParams);
 });
+
+function uploadPhoto(params) {
+	var file = document.getElementById('uploadPicture').files[0];
+	if (file) {
+		var reader = new FileReader();
+ 	    reader.onload = function(e) {
+            // browser completed reading file - display it
+            $('#profPic').css({background: "url(" + e.target.result + ")"});
+            console.log(e.target.result);
+		    //return e.target.result;
+    		// return link;
+    		postImage(params, e.target.result);
+    	};
+    	reader.readAsDataURL(file);
+
+    	ALSO WORKING:
+    	var textReader = new FileReader();
+	    return textReader.readAsText(file);
+
+
+	    // formData = new FormData();
+	    // if(!!file.type.match(/image.*/)){
+	    //   formData.append("image", file);
+	    //   return formData;
+	    // } else{
+	    //   alert('Not a valid image!');
+	    //   return false;
+	    // }
+	} else {
+		return false;
+	}
+
+}
+
+function postImage(postParams, image) {
+	console.log("IMAGEEEE 2: " + image);
+	var addr = "/updateProfile/" + getCurrentID();
+	postParams.image = image;
+	$.post(addr, postParams);
+}
