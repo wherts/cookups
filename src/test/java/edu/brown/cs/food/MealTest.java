@@ -38,8 +38,8 @@ public class MealTest {
     m1.addRecipe(r1);
     m2.addRecipe(r2);
     m3.addRecipe(r1);
-    LocalTime now = LocalDateTime.now().toLocalTime().plusHours(1);
-    LocalTime hourLater = LocalDateTime.now().toLocalTime().plusHours(2);
+    LocalTime now = LocalDateTime.now().toLocalTime().plusMinutes(1);
+    LocalTime hourLater = LocalDateTime.now().toLocalTime().plusMinutes(2);
     m1.setTime(now);
     m2.setTime(hourLater);
     m3.setTime(now);

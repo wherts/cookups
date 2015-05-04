@@ -129,6 +129,7 @@ public class PersonManager {
     Person p = this.getPersonById(id);
     p.setCuisines(cuisines);
     db.users().updatePersonCuisines(p);
+
     List<Ingredient> oldIngreds = p.ingredients();
     Map<String, Ingredient> oldIngredMap = p.ingredientsMap();
     List<Ingredient> staticIngreds = new ArrayList<Ingredient>();
@@ -142,6 +143,7 @@ public class PersonManager {
       } else {
         newIngreds.add(i);
       }
+
     }
     db.users().removePersonIngredients(id);
     // for (Ingredient i : staticIngreds) {

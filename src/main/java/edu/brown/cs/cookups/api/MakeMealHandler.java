@@ -94,9 +94,11 @@ public class MakeMealHandler implements Route {
       }
       newMeal.addAttending((User) a);
     }
+
     if (!attending.contains(host)) {
       attending.add(host); // adding host here
     }
+
     List<Recipe> toCook = new ArrayList<>();
     try {
       toCook = RecipeMatcher.matchRecipes(attending, dbM);
@@ -125,6 +127,7 @@ public class MakeMealHandler implements Route {
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
+    System.out.printf("Link: %s%n", mealLink);
     return GSON.toJson(mealLink);
   }
 

@@ -187,7 +187,7 @@ public class Ingredient {
       return false;
     }
     Ingredient i = (Ingredient) o;
-    return (this.id.equals(i.id()) && this.ounces() == i.ounces);
+    return this.id.equals(i.id());
   }
 
   /** Accessor for ingredient's hashcode.

@@ -1,3 +1,5 @@
+var requested = false;
+
 Date.prototype.toDateInputValue = (function() {
     var local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
@@ -18,12 +20,30 @@ Date.prototype.toEndTimeInputValue = (function() {
     return local.toJSON().slice(11,16);
 });
 
-$('input:radio[name="type"]').on('change', function(){
-    $('#romantic-opts').toggle();
+$(document).ready(function () {
+	$("input:radio[name='type']").on('change', function(){
+	    $('#romantic-opts').toggle();
+	    sliderChange();
+	});
+
+	$('input:radio[name="orientation"]').on('change', function(){
+	    sliderChange();
+	});
 });
 
 
+function sliderChange() {
+	console.log("HI");
+	if (requested) {
+		submitCookup();
+	}
+}
+
 function submitCookup() {
+	if (!requested) {
+		$("#cookup-form").addClass("slideLeft");
+	}
+	requested = true;
 	var orientation = $("#cookup-form input:radio[name='orientation']:checked").val();
 	if (orientation == null) {
 		orientation = "queer";

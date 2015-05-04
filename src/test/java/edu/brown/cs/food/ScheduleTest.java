@@ -105,16 +105,16 @@ public class ScheduleTest {
   @Test
   public void testChangeTime() {
     LocalTime now = LocalDateTime.now().toLocalTime();
-    LocalTime hourLater = now.plusHours(1);
-    LocalTime hourEarlier = now.minusHours(1);
+    LocalTime minLater = now.plusMinutes(1);
+    LocalTime minEarlier = now.minusMinutes(1);
     Schedule sched = new Schedule(LocalDateTime.now(), null);
     boolean caught = false;
     try {
-      sched.changeTime(hourEarlier);
+      sched.changeTime(minEarlier);
     } catch (AssertionError e) {
       caught = true;
     }
     assert(caught);
-    sched.changeTime(hourLater);
+    sched.changeTime(minLater);
   }
 }
