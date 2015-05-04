@@ -23,11 +23,11 @@
           <div class="input-group">
             <div class="field">
               <h3 class="field-label h-text">email:</h3>
-              <input class="input" type="text" name="id"><br>
+              <input class="input" type="text" name="id" maxlength="30"><br>
             </div>
             <div class="field">
               <h3 class="field-label h-text">password:</h3>
-              <input class="input" type="password" name="password"><br>
+              <input class="input" type="password" name="password" maxlength="30"><br>
             </div>
           </div>
           <input class="login-btn btn h-text" type="submit" value="login">
@@ -38,15 +38,15 @@
   	 	  	<h1 class="h-text form-title">new here?</h1>
   	 	  	<div class="field">
               <h3 class="field-label h-text">name:</h3>
-              <input class="input" type="text" name="name"><br>
+              <input class="input" type="text" name="name" maxlength="30"><br>
             </div>
             <div class="field">
               <h3 class="field-label h-text">email:</h3>
-              <input class="input" type="text" name="email"><br>
+              <input class="input" type="text" name="email" maxlength="30"><br>
             </div>
             <div class="field">
               <h3 class="field-label h-text">password:</h3>
-              <input class="input" type="password" name="password"><br>
+              <input class="input" type="password" name="password" maxlength="14"><br>
             </div>
             <input class="login-btn btn h-text" type="submit" value="Sign Up">
           </form>

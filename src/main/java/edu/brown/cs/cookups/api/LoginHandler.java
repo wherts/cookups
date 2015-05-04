@@ -20,7 +20,8 @@ public class LoginHandler implements Route {
     String pass = qm.value("password");
 
     // Authenticate password
-    boolean authenticated = auth.authenticatePassword(id, pass);
+    boolean authenticated = auth.authenticatePassword(id,
+                                                      pass);
 
     if (authenticated) {
       String token = auth.getToken(id);
@@ -29,7 +30,7 @@ public class LoginHandler implements Route {
       String profilePath = id.split("@")[0];
       response.redirect("/profile/" + profilePath);
     } else {
-    response.redirect("/");
+      response.redirect("/");
     }
     return null;
   }

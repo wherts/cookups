@@ -19,9 +19,14 @@ public class LoginView implements TemplateViewRoute {
   }
 
   @Override
-  public ModelAndView handle(Request request, Response response) {
-    Map<String, Object> variables =
-        ImmutableMap.of("title", "Brown Cookups");
+  public ModelAndView handle(Request request,
+      Response response) {
+    Map<String, Object> variables = ImmutableMap.of("title",
+                                                    "Brown Cookups");
+    for (Object o : request.attributes()) {
+      System.out.println(o);
+    }
+    // System.out.println(auth);
     return new ModelAndView(variables, "login.ftl");
   }
 }

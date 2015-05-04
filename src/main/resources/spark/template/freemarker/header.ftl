@@ -15,7 +15,7 @@
       </ul>
       <ul class="dropdown-menu hoverli">
         <li><a href="/cookwfriends">Cook with Friends</a></li>
-        <li><a href="/cookup">CookUp</a></li>
+        <li><a href="/cookup">cookup<img src="/assets/heart.png" style="float:right;padding-right:10px;" width="15px"/></a></li>
 	  </ul>
     </div> 
    </div>
