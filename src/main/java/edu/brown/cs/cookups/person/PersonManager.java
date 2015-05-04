@@ -130,7 +130,6 @@ public class PersonManager {
     db.users().removePersonIngredients(id);
     for (Ingredient i : newIngredients) {
       db.users().addUserIngredient(id, i);
-
     }
     p.setIngredients(newIngredients);
   }
