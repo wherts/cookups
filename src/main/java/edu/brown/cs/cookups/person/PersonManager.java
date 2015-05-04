@@ -3,6 +3,7 @@ package edu.brown.cs.cookups.person;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -122,16 +123,35 @@ public class PersonManager {
   }
 
   public void updateUser(String id,
-      List<Ingredient> newIngredients, List<String> cuisines) {
+      List<Ingredient> updateIngredients,
+      List<String> cuisines) {
+    System.out.println("called");
     Person p = this.getPersonById(id);
     p.setCuisines(cuisines);
     db.users().updatePersonCuisines(p);
+    List<Ingredient> oldIngreds = p.ingredients();
+    Map<String, Ingredient> oldIngredMap = p.ingredientsMap();
+    List<Ingredient> staticIngreds = new ArrayList<Ingredient>();
+    List<Ingredient> newIngreds = new ArrayList<Ingredient>();
+    for (Ingredient i : updateIngredients) {
+      if (oldIngreds.contains(i)) {
+        staticIngreds.add(i);
+        Ingredient old = oldIngredMap.get(i.id());
+        i.setDateCreated(old.getDateCreated());
 
-    db.users().removePersonIngredients(id);
-    for (Ingredient i : newIngredients) {
-      db.users().addUserIngredient(id, i);
-
+      } else {
+        newIngreds.add(i);
+      }
     }
-    p.setIngredients(newIngredients);
+    db.users().removePersonIngredients(id);
+    // for (Ingredient i : staticIngreds) {
+    // db.users().addUserIngredient(id,
+    // i,
+    // i.getDateCreated());
+    // }
+    // for (Ingredient i : newIngreds) {
+    // db.users().addUserIngredient(id, i);
+    // }
+    p.setIngredients(updateIngredients);
   }
 }

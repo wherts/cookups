@@ -32,6 +32,12 @@ public class UserDBLink implements UserDB {
 
   @Override
   public void addUserIngredient(String id, Ingredient i) {
+    addUserIngredient(id, i, LocalDateTime.now());
+  }
+
+  @Override
+  public void addUserIngredient(String id, Ingredient i,
+      LocalDateTime ldt) {
     String query = "INSERT OR IGNORE INTO user_ingredient VALUES (?, ?, ?, ?)";
     try (PreparedStatement prep = conn.prepareStatement(query)) {
 

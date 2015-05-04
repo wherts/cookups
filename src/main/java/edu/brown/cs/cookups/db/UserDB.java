@@ -1,5 +1,6 @@
 package edu.brown.cs.cookups.db;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import edu.brown.cs.cookups.food.Ingredient;
@@ -9,6 +10,9 @@ import edu.brown.cs.cookups.person.PersonManager;
 public interface UserDB {
 
   public void addUserIngredient(String id, Ingredient i);
+
+  public void addUserIngredient(String id, Ingredient i,
+      LocalDateTime ldt);
 
   public void addPerson(Person p);
 

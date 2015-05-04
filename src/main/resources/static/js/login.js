@@ -82,15 +82,17 @@ function checkEmailExists() {
 	$.post("/emailValidator", params, function(response) {
 		var responseObject = JSON.parse(response);
 		emailExists = responseObject.valid;
+		console.log(emailExists);
 	});
 }
 
+
 $(document).ready(function() {
-	$("#login-form").keyup(function() {
+	$("#login-form").change(function() {
 	checkLogin();
 	});
 
-	$("#signup-form input[name=email]").keyup(function() {
+	$("#signup-form input[name=email]").change(function() {
 	checkEmailExists();
 	})
 });
