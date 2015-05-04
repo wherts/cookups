@@ -33,6 +33,10 @@ public class PersonManager {
     return p;
   }
 
+  public boolean hasPersonByID(String id) {
+    return db.users().hasPersonByID(id);
+  }
+
   public List<Ingredient> getPersonIngredientsByID(String id) {
     List<Ingredient> toReturn = new ArrayList<>();
     List<Ingredient> dbIngs = db.users()

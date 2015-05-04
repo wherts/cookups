@@ -13,10 +13,12 @@ public class AuthFilter implements Filter {
   }
 
   @Override
-  public void handle(Request request, Response response) throws Exception {
+  public void handle(Request request, Response response)
+    throws Exception {
     String id = request.cookie("id");
     String token = request.cookie("auth");
-    boolean authenticated = authenticator.authenticate(id, token);
+    boolean authenticated = authenticator.authenticate(id,
+                                                       token);
 
     if (!authenticated) {
       response.redirect("/");

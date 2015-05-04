@@ -42,8 +42,46 @@ $.get("/allUsers", function(JSONresponse) {
 	});
 });
 
+function validateForm(chefs) {
+	var mealName = $("#friends-form input[name=name]").val();
+	var date = $('#friends-form input[name=date]').val();
+	var startTime = $('#friends-form input[name=time_start]').val();
+	var endTime = $('#friends-form input[name=time_end]').val();
+	
+	$("#friends-form input[name=name]").removeAttr("style");
+	$("#friends-form input[name=date]").removeAttr("style");
+	$("#friends-form input[name=time_start]").removeAttr("style");
+	$("#friends-form input[name=time_end]").removeAttr("style");
+	$('.TokensContainer').removeAttr("style");
+
+	if (mealName == "") {
+		$("#friends-form input[name=name]").attr("style", "border:5px solid red");
+		return false;
+	}
+
+	if (date == "") {
+		$("#friends-form input[name=date]").attr("style", "border:5px solid red");
+		return false;
+	}
+
+	if (startTime == "") {
+		$('#friends-form input[name=time_start]').attr("style", "border:5px solid red");
+		return false;
+	}
+
+	if (endTime == "") {
+		$('#friends-form input[name=time_end]').attr("style", "border:5px solid red");
+		return false;
+	}
+	if (chefs == "") {
+		$('.TokensContainer').attr("style", "border:5px solid red");
+		return false;
+	}
+	return true;
+}
 
 function submitCookFriends() {
+
 	var chefs="";
 	var delim=",";
     $( "select option:selected" ).each(function() {
@@ -52,7 +90,9 @@ function submitCookFriends() {
     	console.log(text);
         chefs += text+delim;
       });
-
+	if (!validateForm(chefs)) {
+		return;
+	}
     var date = $('#friends-form input[name=date]').val();
     var today = new Date().toDateInputValue();
 

@@ -13,9 +13,11 @@ import com.google.gson.Gson;
 import edu.brown.cs.autocomplete.Engine;
 import edu.brown.cs.autocomplete.Trie;
 import edu.brown.cs.cookups.api.AuthFilter;
+import edu.brown.cs.cookups.api.AuthValidator;
 import edu.brown.cs.cookups.api.Authentication;
 import edu.brown.cs.cookups.api.AutocompleteHandler;
 import edu.brown.cs.cookups.api.CookupHandler;
+import edu.brown.cs.cookups.api.EmailValidator;
 import edu.brown.cs.cookups.api.LoginHandler;
 import edu.brown.cs.cookups.api.LogoutHandler;
 import edu.brown.cs.cookups.api.MakeMealHandler;
@@ -40,24 +42,28 @@ import freemarker.template.Configuration;
 public class URLHandler {
   private DBLink db;
   private PersonManager people;
-  private List<String> userIDs, userNames, fridgeIngredients,
-      pantryIngredients, recipeNames, recipeIDs;
+  private List<String> userIDs, userNames,
+      fridgeIngredients, pantryIngredients, recipeNames,
+      recipeIDs;
   private Authentication auth;
   private Engine recipeSearch, peopleSearch;
 
   private final static Gson GSON = new Gson();
 
   public URLHandler(DBLink db)
-      throws ClassNotFoundException,
-      SQLException {
+      throws ClassNotFoundException, SQLException {
     this.db = db;
     people = new PersonManager(this.db);
-    List<List<String>> userData = db.users().getNamesAndIDs();
+    List<List<String>> userData = db.users()
+                                    .getNamesAndIDs();
     userIDs = userData.get(0);
     userNames = userData.get(1);
-    fridgeIngredients = db.ingredients().getAllIngredientNames("Fridge");
-    pantryIngredients = db.ingredients().getAllIngredientNames("Pantry");
-    List<List<String>> recipeData = db.recipes().getNamesAndIDs();
+    fridgeIngredients = db.ingredients()
+                          .getAllIngredientNames("Fridge");
+    pantryIngredients = db.ingredients()
+                          .getAllIngredientNames("Pantry");
+    List<List<String>> recipeData = db.recipes()
+                                      .getNamesAndIDs();
     recipeIDs = recipeData.get(0);
     recipeNames = recipeData.get(1);
 
@@ -90,37 +96,60 @@ public class URLHandler {
     Spark.before("/meals", new AuthFilter(auth));
     Spark.before("/signup", new SignupFilter(people));
 
-
     // Basic template rendering routes
     Spark.get("/", new LoginView(auth), freeMarker);
     Spark.get("/cookwfriends",
-        new BasicView("cookwfriends.ftl"), freeMarker);
-    Spark.get("/cook", new BasicView("cook.ftl"), freeMarker);
-    Spark.get("/cookup", new BasicView("cookup.ftl"), freeMarker);
-    Spark
-        .get("/browse", new BrowseView(db, recipeIDs, recipeNames), freeMarker);
-    Spark.get("/recipe/:id", new RecipeView(db, people), freeMarker);
-    Spark.get("/meal/:id/:sortby", new MealView(db, people), freeMarker);
-    Spark.get("/meals", new PersonMealsView(people), freeMarker);
-    Spark.get("/profile/:name", new ProfileView(people), freeMarker);
+              new BasicView("cookwfriends.ftl"),
+              freeMarker);
+    Spark.get("/cook",
+              new BasicView("cook.ftl"),
+              freeMarker);
+    Spark.get("/cookup",
+              new BasicView("cookup.ftl"),
+              freeMarker);
+    Spark.get("/browse", new BrowseView(db,
+        recipeIDs,
+        recipeNames), freeMarker);
+    Spark.get("/recipe/:id",
+              new RecipeView(db, people),
+              freeMarker);
+    Spark.get("/meal/:id/:sortby",
+              new MealView(db, people),
+              freeMarker);
+    Spark.get("/meals",
+              new PersonMealsView(people),
+              freeMarker);
+    Spark.get("/profile/:name",
+              new ProfileView(people),
+              freeMarker);
 
     // Form handling routes
     Spark.post("/makemeal", new MakeMealHandler(people, db));
     Spark.post("/cookup", new CookupHandler(people));
     Spark.post("/login", new LoginHandler(auth));
-    Spark.post("/signup", new SignupHandler(auth, people), freeMarker);
-    Spark.post("/search", new SearchEngine(db, people, recipeSearch,
-        peopleSearch),
-        freeMarker);
+    Spark.post("/signup",
+               new SignupHandler(auth, people),
+               freeMarker);
+    Spark.post("/search", new SearchEngine(db,
+        people,
+        recipeSearch,
+        peopleSearch), freeMarker);
     Spark.get("/logout", new LogoutHandler(), freeMarker);
-
+    Spark.post("/authValidator", new AuthValidator(auth));
+    Spark.post("/emailValidator",
+               new EmailValidator(people));
     // JSON data routes
-    Spark.get("/allRecipes", new AutocompleteHandler(recipeNames));
-    Spark.get("/allUsers", new SendUsersHandler(userNames, userIDs));
-    Spark.get("/profileData/:id", new ProfileDataHandler(recipeNames,
-        fridgeIngredients, pantryIngredients,
-        people));
-    Spark.post("/updateProfile/:id", new ProfileUpdateHandler(db, people));
+    Spark.get("/allRecipes",
+              new AutocompleteHandler(recipeNames));
+    Spark.get("/allUsers", new SendUsersHandler(userNames,
+        userIDs));
+    Spark.get("/profileData/:id",
+              new ProfileDataHandler(recipeNames,
+                  fridgeIngredients,
+                  pantryIngredients,
+                  people));
+    Spark.post("/updateProfile/:id",
+               new ProfileUpdateHandler(db, people));
     // Spark.post("/meal/:id/:query", new FilterHandler(db, people));
 
   }
@@ -132,7 +161,7 @@ public class URLHandler {
       config.setDirectoryForTemplateLoading(templates);
     } catch (IOException ioe) {
       System.out.printf("ERROR: Unable use %s for template loading.%n",
-          templates);
+                        templates);
       System.exit(1);
     }
     return new FreeMarkerEngine(config);

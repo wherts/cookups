@@ -15,11 +15,13 @@ public class SignupFilter implements Filter {
   }
 
   @Override
-  public void handle(Request request, Response response) throws Exception {
+  public void handle(Request request, Response response)
+    throws Exception {
     QueryParamsMap qm = request.queryMap();
     String id = qm.value("email");
 
-    if (people.getPersonById(id) != null) {
+    if (people.hasPersonByID(id)) {
+      System.out.println("ID exists");
       response.redirect("/");
       Spark.halt();
     }
