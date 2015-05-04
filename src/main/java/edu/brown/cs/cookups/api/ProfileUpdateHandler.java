@@ -1,15 +1,9 @@
 package edu.brown.cs.cookups.api;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.imageio.ImageIO;
 
 import spark.QueryParamsMap;
 import spark.Request;
@@ -34,28 +28,27 @@ public class ProfileUpdateHandler implements Route {
 
   @Override
   public Object handle(Request request, Response response) {
-  	String uid = request.params(":id") + "@brown.edu";
-  	QueryParamsMap qm = request.queryMap();
+    String uid = request.params(":id") + "@brown.edu";
+    QueryParamsMap qm = request.queryMap();
 
-  	
-    BufferedImage img = null;
-    try {
-      URL url = new URL(qm.value("image"));
-      System.out.println(url.getPath());
-      img = ImageIO.read(url);
-    } catch (IOException e) {
-      e.printStackTrace();
-      System.err.println("Couldn't open");
-    }
-    try {
-      // retrieve image
-      BufferedImage bi = img;
-      File outputfile = new File("saved.png");
-      ImageIO.write(bi, "png", outputfile);
-    } catch (IOException e) {
-      e.printStackTrace();
-      System.err.println("Couldn't save");
-    }
+    // BufferedImage img = null;
+    // try {
+    // URL url = new URL(qm.value("image"));
+    // System.out.println(url.getPath());
+    // img = ImageIO.read(url);
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // System.err.println("Couldn't open");
+    // }
+    // try {
+    // // retrieve image
+    // BufferedImage bi = img;
+    // File outputfile = new File("saved.png");
+    // ImageIO.write(bi, "png", outputfile);
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // System.err.println("Couldn't save");
+    // }
 
     String ingredients = qm.value("personIngs");
     String cuisines = qm.value("favorites");
@@ -78,7 +71,6 @@ public class ProfileUpdateHandler implements Route {
     }
 
     // parsing out cuisine information
-    System.out.println("Cuisines: " + cuisines);
     String[] splitCuisines = cuisines.split(",");
     List<String> newCuisines = new ArrayList<>();
     for (String s : splitCuisines) {
