@@ -5,7 +5,9 @@ var ingredients;
 var favCuisines;
 var personIngredients;
 
-$(document).ready(function () {
+$(document).ready(createProfile());
+
+function createProfile() {
 	var addr = "/profileData/" + getCurrentID();
 	$.get(addr, function(JSONresponse) {
 		var response = JSON.parse(JSONresponse);
@@ -77,13 +79,24 @@ $(document).ready(function () {
 			$(".new-counter").change(function() {
 				var value = $(this).val();
 				var name = $(this).attr("name");
-				// personIngredients[name] = parseFloat(value);
 				personIngredients[name] = parseFloat(value);
 			});
 			updateFridgeAndPantry();
 		});
 	});
-});
+	$("#kitchen-link").attr("href", getCookie("id").split("@")[0]);
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
 
 
 function updateFridgeAndPantryNoEdit() {

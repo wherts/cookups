@@ -1,6 +1,6 @@
  <div class="block a">
     <div class="header container">
-    <a href='/cookup'><img class="left" src="/assets/logosmall.png" /></a>
+    <a href='/cook'><img class="left" src="/assets/logosmall.png" /></a>
     <div id="nav">
       <div id='logout-container'><a class="header-text" id="logout" href="/logout">logout</a></div>
 	  <form id="search-bar" action="/search" method="POST">

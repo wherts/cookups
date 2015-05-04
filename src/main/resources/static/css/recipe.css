@@ -64,3 +64,20 @@ td {
 	text-align: right;
 }
 
+
+.sort-btn {
+	background-color: #676D51;
+	font-family: 'abeezeeregular', sans-serif;
+	color: #F1F5DF;
+	border: none;
+	margin-top: 0;
+	font-size: 12px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.recipe-filter-subheader {
+	margin: 0;
+	font-family: 'abeezeeregular', sans-serif;
+
+}

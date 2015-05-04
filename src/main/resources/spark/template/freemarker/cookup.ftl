@@ -19,23 +19,23 @@
      <div class="block" id="title">
       <div class="container"><h1 class="h-text" id="title-text">cookup</h1></div>
      </div>
-      <div class="block c last-div">
+      <div class="block c">
       <div class="container">
       <div class="form-box left">
          <div id="cookup-form">
           <p class="subheader-text">Make a Meal</p>	
           Romantic? <br>
           <input type="radio" name="type" value="romantic" checked>Yes
-          <input type="radio" name="type" value="platonic">No
+          <input type="radio" name="type" style="margin-left:20px;" value="platonic">No
           <br><br>
           <div id="romantic-opts">
 	          Gender<br>
 	          Male <input type="range" id="slider" onchange="sliderChange();" name="gender"> Female
 	          <br><br>
-	          Orientation (select none for queer)<br>  
-	          Heterosexual<input type="radio" name="orientation" value="heterosexual">
-	          Homosexual<input type="radio" name="orientation" value="homosexual">
-	          Bisexual<input type="radio" name="orientation" value="bisexual">
+	          Orientation (queer is not checking a box)<br>
+            <input type="radio" name="orientation" value="homosexual">Homosexual
+	          <input type="radio" name="orientation" style="margin-left:20px;" value="heterosexual">Heterosexual
+	          <input type="radio" name="orientation" style="margin-left:20px;" value="bisexual">Bisexual
 	          <br>
 	      </div>
           <input id="cookupButton" onClick="submitCookup()" class="btn" type="submit" value="Find Matches">

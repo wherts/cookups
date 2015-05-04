@@ -10,13 +10,13 @@ function validateSignup() {
 	$("#signup-form input[name=email]").removeAttr("style");
 	if (name == "" || password == "" || email == "" ) {
 		if (name == "") {
-			$("#signup-form input[name=name]").attr("style", "border:5px solid red");
+			$("#signup-form input[name=name]").attr("style", "border: 3px solid rgba(255, 184, 0, 0.77)");
 		} 
 		if (password == "") {
-			$("#signup-form input[name=password]").attr("style", "border:5px solid red");
+			$("#signup-form input[name=password]").attr("style", "border: 3px solid rgba(255, 184, 0, 0.77)");
 		} 
 		if (email == "") {
-			$("#signup-form input[name=email]").attr("style", "border:5px solid red");
+			$("#signup-form input[name=email]").attr("style", "border: 3px solid rgba(255, 184, 0, 0.77)");
 		} 
 		return false;
 	} else if (emailArray.length < 2) {
@@ -33,7 +33,16 @@ function validateSignup() {
 		alert("That email already exists");
 		return false;
 	}
+	console.log(emailArray[0]);
+	// setCookie(emailArray[0]);
 }
+
+
+// function setCookie(id) {
+//     document.cookie = "id=" + id;
+// }
+
+
 var valid = false;
 function validateLogin() {
 	var email = document.forms["login-form"]["id"].value;
@@ -42,10 +51,10 @@ function validateLogin() {
 	$("#login-form input[name=id]").removeAttr("style");
 	if (password == "" || email == "" ) {
 		if (password == "") {
-			$("#login-form input[name=password]").attr("style", "border:5px solid red");
+			$("#login-form input[name=password]").attr("style", "border: 3px solid rgba(255, 184, 0, 0.77)");
 		}
 		if (email == "") {
-			$("#login-form input[name=id]").attr("style", "border:5px solid red");
+			$("#login-form input[name=id]").attr("style", "border: 3px solid rgba(255, 184, 0, 0.77)");
 		} 
 		return false;
 	}

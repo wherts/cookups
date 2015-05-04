@@ -19,3 +19,15 @@
 input {
 	margin: 5px auto;
 }
+
+.btn {
+	background-color: #F1F5DF;
+	font-family: 'abeezeeregular', sans-serif;
+	color: #222;
+	border: none;
+	margin-top: 0;
+	font-size: 12px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 100px;
+}

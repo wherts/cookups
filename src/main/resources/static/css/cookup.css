@@ -13,6 +13,7 @@
 .form-box {
 	padding: 50px 0;
 	color: #FFFFFF;
+	width: 470px !important;
 }
 
 p.subheader-text {
@@ -24,12 +25,11 @@ p.subheader-text {
 }
 
 .match {
-	margin: 0 5px;
-	background-size: contain;
+	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
-	height: 80px;
-	width: 80px;
+	height: 120px;
+	width: 128px;
 	display: inline-block;
 }
 
@@ -51,7 +51,7 @@ table {
 }
 
 .border {
-	border: 1px solid white;
+	border: 2px solid rgb(192, 96, 96);
 }
 
 #search-input {
@@ -66,4 +66,25 @@ table {
 
 .slideLeft {
 	padding-left: 50px !important;	
+}
+
+.btn {
+	background-color: #F1F5DF;
+	font-family: 'abeezeeregular', sans-serif;
+	color: #222;
+	border: none;
+	margin-top: 20px;
+	font-size: 12px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 90px;
+}
+
+input {
+	margin-top: 10px;
+	margin-right: 3px;
+}
+
+#cookup-meal-form {
+	margin: 0 auto;
 }
