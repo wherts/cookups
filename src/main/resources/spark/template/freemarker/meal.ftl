@@ -99,7 +99,7 @@
 				<p class='shopping-list'>Shopping List:</p>
 				<ul class='list-ingred'>
 				<#list r.shoppingList() as i>
-					<li>${i.name()}</li>
+					<li>${i.name()}: ${i.ounces()} oz</li>
 				</#list>
 				</ul>
 			</a></td>
