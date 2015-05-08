@@ -67,7 +67,7 @@
                <input id="dateButton" class="btn" onclick="showPopup()" type="submit" value="Change Dating Preferences">
                <input id="updateButton" class="btn" onclick="updateKitchen()" type="submit" value="Update Kitchen">
               </div>
-               <div id="foodler-container"></div>
+              <div id="foodler-container"></div>
            </#if>
         </p>
       </div>

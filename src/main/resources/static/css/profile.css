@@ -239,8 +239,9 @@ html {
 
 #foodler-img {
 	position: relative;
-	margin-left: 80px;
-	margin-top: 10px;
+	width: 80% !important;
+	margin: 0 auto;
+	margin-left: 10%;
 }
 
 #dateSignup {
@@ -251,6 +252,15 @@ html {
 	text-align: center;
 	border-width: 8px;
 	border-color: red;
+}
+
+#dateButton {
+	float: left;
+	margin-left: 0% !important;
+}
+
+#updateButton {
+	margin-left: 10% !important;
 }
 
 #cancel {
