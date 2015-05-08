@@ -24,6 +24,7 @@ import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.PersonManager;
 import edu.brown.cs.cookups.person.User;
+import edu.brown.cs.cookups.schedule.LatLong;
 import edu.brown.cs.cookups.schedule.Schedule;
 
 public class MakeMealHandler implements Route {
@@ -49,10 +50,9 @@ public class MakeMealHandler implements Route {
     String date = qm.value("date"); // date of meal
     String timeStart = qm.value("timeStart"); // start time
     String timeEnd = qm.value("timeEnd"); // not required
-    System.out.printf("%s%n", timeEnd);
+    String location = qm.value("location");
     String chefs = qm.value("chefs");
-    System.out.println(date + " " + timeStart + " " + name
-        + " " + chefs);
+
     String start = date + " " + timeStart;
 
     LocalDateTime dateTimeStart = LocalDateTime.parse(start,
@@ -69,13 +69,19 @@ public class MakeMealHandler implements Route {
                                        dateTimeEnd.toLocalTime());
       }
     }
+    
     Schedule sched = new Schedule(dateTimeStart, null);
+    
+    if (location != "") {
+      String[] locArray = location.split(",");
+      Double lat = Double.parseDouble(locArray[0]);
+      Double lng = Double.parseDouble(locArray[1]);
+      LatLong loc = new LatLong(lat, lng);
+      sched.changeLocation(loc);
+    }
+    
     Person host = people.getPersonById(id);
     Meal newMeal = new Meal((User) host, sched);
-
-    if (newMeal == null) {
-      System.err.println("ERROR: Could create not a meal");
-    }
 
     if (newMeal != null && dateTimeEnd != null) { // if endtime scheduled
       newMeal.setEnd(dateTimeEnd);
@@ -127,7 +133,6 @@ public class MakeMealHandler implements Route {
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
-    System.out.printf("Link: %s%n", mealLink);
     return GSON.toJson(mealLink);
   }
 

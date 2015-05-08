@@ -1,3 +1,7 @@
+var map;
+var currPos;
+var mealLocation;
+
 Date.prototype.toDateInputValue = (function() {
     var local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
@@ -23,6 +27,7 @@ $(document).ready(function () {
 	document.getElementById('datePicker').value = new Date().toDateInputValue();
 	document.getElementById('startTimePicker').value = new Date().toTimeInputValue();
 	document.getElementById('endTimePicker').value = new Date().toEndTimeInputValue();
+	initMap();
 });
 
 
@@ -56,34 +61,17 @@ function validateForm(chefs) {
 	$("#friends-form input[name=time_end]").removeAttr("style");
 	$('.TokensContainer').removeAttr("style");
 
-	if (mealName == "") {
-		$("#friends-form input[name=name]").attr("style", "border:5px solid red");
-		return false;
-	}
-
-	if (date == "") {
-		$("#friends-form input[name=date]").attr("style", "border:5px solid red");
-		return false;
-	}
-
-	if (startTime == "") {
-		$('#friends-form input[name=time_start]').attr("style", "border:5px solid red");
-		return false;
-	}
-
-	if (endTime == "") {
-		$('#friends-form input[name=time_end]').attr("style", "border:5px solid red");
-		return false;
-	}
-	if (chefs == "") {
-		$('.TokensContainer').attr("style", "border:5px solid red");
+	if (mealName == "" || date == "" || startTime == "" || chefs == "") {
+		if (mealName == "") { $("#friends-form input[name=name]").attr("style", "border:5px solid red");}
+		if (date == "") {$("#friends-form input[name=date]").attr("style", "border:5px solid red");}
+		if (startTime == "") {$('#friends-form input[name=time_start]').attr("style", "border:5px solid red");}
+		if (chefs == "") {$('.TokensContainer').attr("style", "border:5px solid red");}
 		return false;
 	}
 	return true;
 }
 
 function submitCookFriends() {
-
 	var chefs="";
 	var delim=",";
     $( "select option:selected" ).each(function() {
@@ -91,10 +79,12 @@ function submitCookFriends() {
     	var text = regex.exec($(this).text())[1];
     	console.log(text);
         chefs += text+delim;
-      });
+    });
+    
 	if (!validateForm(chefs)) {
 		return;
 	}
+	
     var date = $('#friends-form input[name=date]').val();
     var today = new Date().toDateInputValue();
 
@@ -102,12 +92,24 @@ function submitCookFriends() {
     	console.log('error');
     	$('#date-label').after("<p style='color:red; margin:0'>Please enter a date in the future.</p>");
     } else {
+    	var location;
+    	if (mealLocation == null) {
+    		location = null;
+    	} else {
+			var latLng = mealLocation.getPosition();
+			
+			var latitude = latLng.lat();
+			var longitude = latLng.lng();
+    		location = latitude + "," + longitude;
+    	}
+    	
 		var params = {
 			name: $('#friends-form input[name=name]').val(),
 			date: date,
 			timeStart:  $('#friends-form input[name=time_start]').val(),
 			timeEnd:  $('#friends-form input[name=time_end]').val(),
-			chefs: chefs
+			chefs: chefs,
+			location: location,
 		}
 		
 		console.log(params);
@@ -120,4 +122,69 @@ function submitCookFriends() {
 			window.location.replace(mealLink);
 		});
 	}
+}
+
+function initMap() {
+  var mapOptions = {
+    zoom: 16
+  };
+  map = new google.maps.Map(document.getElementById('map-container'), mapOptions);
+
+  // Try HTML5 geolocation
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	  
+	  currPos = new google.maps.Circle({
+	  	map: map,
+	  	center: pos,
+	  	clickable: false,
+	  	radius: 10,
+	  	strokeColor: "#2e7bee",
+	  	strokeOpacity: 0.4,
+	  	fillColor: "#2e7bee",
+	  	fillOpacity: 1,
+	  	strokeWeight: 15,
+	  });
+      map.setCenter(pos);
+    }, function() {
+      handleNoGeolocation(true);
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleNoGeolocation(false);
+  }
+  
+  google.maps.event.addListener(map, 'click', function(e) {
+    var point = new google.maps.LatLng(e.latLng.lat(), e.latLng.lng());
+    
+    if (mealLocation == null) {
+    	mealLocation = new google.maps.Marker({
+    		position: point,
+    		clickable: false,
+    		map: map,
+    		
+    	});
+    } else {
+    	mealLocation.setPosition(point);
+    }
+    
+  });
+}
+
+function handleNoGeolocation(errorFlag) {
+  if (errorFlag) {
+    var content = 'Error: The Geolocation service failed.';
+  } else {
+    var content = 'Error: Your browser doesn\'t support geolocation.';
+  }
+
+  var options = {
+    map: map,
+    position: new google.maps.LatLng(41.826206, -71.403273),
+    content: content
+  };
+
+  var infowindow = new google.maps.InfoWindow(options);
+  map.setCenter(options.position);
 }

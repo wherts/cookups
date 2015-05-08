@@ -11,10 +11,11 @@
     <link rel="stylesheet" href="/css/meal.css">
     <link rel="stylesheet" href="/css/jquery-ui.css">
     <script src="/js/jquery-2.1.1.js"></script>
+    <script src="/js/jquery-ui.js"></script>
     <script src="/js/jquery.tokenize.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArVp3KDIUpuzIfG_eDzQ4biYu29k15Cv8"></script>
     <script src="/js/meal.js"></script>
     <script src="/js/main.js"></script>
-    <script src="/js/jquery-ui.js"></script>
   </head>
   <body>
   <#include "/header.ftl">  
@@ -26,6 +27,9 @@
 	      		<li>Host</li>
 	      		<li>Date</li>
 	      		<li>Time</li>
+	      		<#if meal.location()??>
+	      		<li>Location</li>
+	      		</#if>
 			</ul>
 			<ul class="meal-info">
 				<li>${meal.host().name()}</li>
@@ -37,6 +41,11 @@
 					   ${meal.time()}
 					</#if>
 				</li>
+				<#if meal.location()??>
+	      			<li><div id='map-container'></div></li>
+	      			<#assign loc = meal.location().getLat() + "," + meal.location().getLong()>
+	      			<input type="hidden" id="latlng" value="${loc}" />
+	      		</#if>
 			</ul>
 			</div>
 			<div id='whos-attending' class="right half">

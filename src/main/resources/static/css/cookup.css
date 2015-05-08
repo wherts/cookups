@@ -13,7 +13,6 @@
 .form-box {
 	padding: 50px 0;
 	color: #FFFFFF;
-	width: 470px !important;
 }
 
 p.subheader-text {
@@ -22,6 +21,8 @@ p.subheader-text {
 
 #matches {
 	display: inline-block;
+	padding-left: 50px;
+	font-family: 'abeezeeregular', sans-serif;
 }
 
 .match {
@@ -62,6 +63,7 @@ table {
 #cookup-form {
 	padding-left: 80%;
 	width: 100%;
+	font-family: 'abeezeeregular', sans-serif;
 }
 
 .slideLeft {
@@ -86,5 +88,22 @@ input {
 }
 
 #cookup-meal-form {
+	overflow: auto;
+	width: 100%;
+	padding-top: 25px;
+}
+
+#map-container {
+	height: 250px;
+	width: 250px;
+}
+
+#map-form-container {
+	padding-left: 40px;
+	padding-bottom: 25px;
+}
+
+#makeCookupBtn {
+	display: block;
 	margin: 0 auto;
 }

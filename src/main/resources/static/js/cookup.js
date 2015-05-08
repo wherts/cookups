@@ -1,4 +1,7 @@
 var requested = false;
+var map;
+var currPos;
+var mealLocation;
 
 Date.prototype.toDateInputValue = (function() {
     var local = new Date(this);
@@ -63,19 +66,19 @@ function submitCookup() {
 		}
 		
 		people += "</tr></table><div id='cookup-meal-form'>"
-			+ "<div class='form-entry'>Meal Name<br><input class='inset' type='text' name='name'></div>"
+			+ "<div class='left half'><div class='form-entry'>Meal Name<br><input class='inset' type='text' name='name'></div>"
 			+ "<div class='form-entry'>Date<br><input type='date' id='datePicker' name='date'></div>"
 			+ "<div class='form-entry'>Time<br><input type='time' id='startTimePicker' name='time_start'>"
 			+ " to <input type='time' id='endTimePicker' name='time_end'></div>" 
+			+ "</div><div class='right half'><div id='map-form-container'>Select a location for your meal<div id='map-container'></div></div></div>"
 			+ "<div class='btn-container'><input type='button' class='btn' id='makeCookupBtn' onClick=makeCookupMeal() value='Make Cookup!'></div>"
-			+ "<div class='btn-container'><input type='button' class='btn' id='viewCookupBtn' class='btn' value='View Cookup Here!'></div>"
 			+ "</div>";
 		$("#matches").html(people);
 		document.getElementById('datePicker').value = new Date().toDateInputValue();
 		document.getElementById('startTimePicker').value = new Date().toTimeInputValue();
 		document.getElementById('endTimePicker').value = new Date().toEndTimeInputValue();
 		setPersonListener();
-		$("#viewCookupBtn").hide(); //hide cookup button
+		initMap();
 	});
 }
 
@@ -100,14 +103,26 @@ function makeCookupMeal() {
     	var chef = regex.exec(text)[1];
     	console.log(chef);
 		if (timeEnd === "") {timeEnd = null};
+		
+		var location;
+    	if (mealLocation == null) {
+    		location = null;
+    	} else {
+			var latLng = mealLocation.getPosition();
+			
+			var latitude = latLng.lat();
+			var longitude = latLng.lng();
+    		location = latitude + "," + longitude;
+    	}
+		
 		var params = {
 				name: name,
 				date: date,
 				timeStart: timeStart,
 				timeEnd: timeEnd,
-				chefs: chef
+				chefs: chef,
+				location: location,
 		}
-		console.log(params);
 		$.post("/makemeal", params, function(responseJSON) {
 			var url = window.location.href;
 			var path = window.location.pathname;
@@ -130,4 +145,70 @@ function removeBorders() {
 	$('.person-option').each(function(i) {
 		$(this).removeClass("border");
 	});
+}
+
+
+function initMap() {
+  var mapOptions = {
+    zoom: 16
+  };
+  map = new google.maps.Map(document.getElementById('map-container'), mapOptions);
+
+  // Try HTML5 geolocation
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	  
+	  currPos = new google.maps.Circle({
+	  	map: map,
+	  	center: pos,
+	  	clickable: false,
+	  	radius: 10,
+	  	strokeColor: "#2e7bee",
+	  	strokeOpacity: 0.4,
+	  	fillColor: "#2e7bee",
+	  	fillOpacity: 1,
+	  	strokeWeight: 15,
+	  });
+      map.setCenter(pos);
+    }, function() {
+      handleNoGeolocation(true);
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleNoGeolocation(false);
+  }
+  
+  google.maps.event.addListener(map, 'click', function(e) {
+    var point = new google.maps.LatLng(e.latLng.lat(), e.latLng.lng());
+    
+    if (mealLocation == null) {
+    	mealLocation = new google.maps.Marker({
+    		position: point,
+    		clickable: false,
+    		map: map,
+    		
+    	});
+    } else {
+    	mealLocation.setPosition(point);
+    }
+    
+  });
+}
+
+function handleNoGeolocation(errorFlag) {
+  if (errorFlag) {
+    var content = 'Error: The Geolocation service failed.';
+  } else {
+    var content = 'Error: Your browser doesn\'t support geolocation.';
+  }
+
+  var options = {
+    map: map,
+    position: new google.maps.LatLng(41.826206, -71.403273),
+    content: content
+  };
+
+  var infowindow = new google.maps.InfoWindow(options);
+  map.setCenter(options.position);
 }
