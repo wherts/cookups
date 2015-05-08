@@ -42,7 +42,7 @@
            </div>
     <#else>
           <div id="ingredientInput" style="display:none">
-          <#list personIngredients as x>
+          <#list wrapper.ingredients() as x>
             <span hidden='true' value="${x.name()}">${x.name()}, ${x.ounces()} oz</span>
           </#list>             
           </div>
@@ -68,6 +68,10 @@
                <input id="updateButton" class="btn" onclick="updateKitchen()" type="submit" value="Update Kitchen">
               </div>
               <div id="foodler-container"></div>
+           <#else>
+              <br>
+              <div id="email-container"><a href="mailto:${path}@brown.edu" id="email" target="_blank"><div id="email"></div></a>
+            </div>
            </#if>
         </p>
       </div>

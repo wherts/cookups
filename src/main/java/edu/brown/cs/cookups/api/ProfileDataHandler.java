@@ -63,20 +63,12 @@ public class ProfileDataHandler implements Route {
           new ImmutableMap.Builder<String, Object>()
           .put("fridge", fridgeIngredients)
           .put("pantry", pantryIngredients)
-          .put("gay", suitor.isGay())
-          .put("bi", suitor.isBi())
-          .put("queer", suitor.isQueer())
-          .put("gender", suitor.getGender())
-          .put("platonic", suitor.isPlatonic())
           .put("favCuisines", people.getPersonCuisines(person.id()))
           .put("personIngredients", ingredientNames).build();
     } else {
       variables =
           new ImmutableMap.Builder<String, Object>()
-          .put("fridge", fridgeIngredients)
-          .put("queer", true)
-          .put("gender", 50)
-          .put("platonic", false)          
+          .put("fridge", fridgeIngredients)        
           .put("pantry", pantryIngredients)
           .put("favCuisines", people.getPersonCuisines(person.id()))
           .put("personIngredients", ingredientNames).build();

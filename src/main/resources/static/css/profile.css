@@ -273,3 +273,18 @@ html {
 	margin-right: 10% !important;
 	margin-left: 0 !important;
 }
+
+#email {
+	background: url("../assets/email.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 60px;
+	height: 60px;
+}
+
+#email-container {
+	width: 60px;
+	height: 60px;
+	margin-left: 10%;
+	margin-top: 7%;
+}
