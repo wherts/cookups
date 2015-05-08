@@ -158,4 +158,8 @@ public class PersonManager {
     }
     p.setIngredients(db.users().getPersonIngredients(id));
   }
+
+  public Suitor getSuitor(String id) {
+    return this.suitors.get(id);
+  }
 }

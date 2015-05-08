@@ -242,3 +242,24 @@ html {
 	margin-left: 80px;
 	margin-top: 10px;
 }
+
+#dateSignup {
+	position: fixed;
+	background-color: white;
+	border-radius: 10px;
+	width: 30%;
+	text-align: center;
+	border-width: 8px;
+	border-color: red;
+}
+
+#cancel {
+	float: left;
+	margin-left: 10% !important;
+}
+
+#updateDate {
+	float: right;
+	margin-right: 10% !important;
+	margin-left: 0 !important;
+}

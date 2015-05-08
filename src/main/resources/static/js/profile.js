@@ -9,6 +9,7 @@ $(document).ready(createProfile());
 
 function createProfile() {
 	var addr = "/profileData/" + getCurrentID();
+	$("#dateSignup").hide();
 	$.get(addr, function(JSONresponse) {
 		var response = JSON.parse(JSONresponse);
 		fridge = response.fridge;
@@ -107,7 +108,6 @@ function updateFridgeAndPantryNoEdit() {
 	var newHtmlFridge = "";
 	var newHtmlPantry = "";
 	var ings = $("#ingredientInput span");
-	console.log(ings);
 	for (var i = 1; i <= ings.length; i++) {
 		var toPut = $("#ingredientInput span:nth-child("+i+")").html();
 		console.log(toPut);
@@ -241,7 +241,6 @@ function foodler() {
 	var l = $(".about span").length;
 	for (var i=0; i<l; i++) {
 		var name = $(".about span")[i].innerHTML;
-		console.log(name);
 		if ($.inArray(name, cuisines) != -1) {
 			var phrase = "<br><div id='foodler'>" + questions[getRandomInt(0, questions.length)] + " " + resolutions[getRandomInt(0, resolutions.length)];
 			phrase += " Click below to get your favorite cuisine delivered immediately:";
@@ -350,4 +349,31 @@ function generateCuisines(favCuisines) {
 		}
 	}
 	return toReturn;
+}
+
+$("#dateButton").click(function(e) {
+	$("#dateSignup").lightbox_me({
+		centered: true
+	});
+	//pull values and cacheSuitor using cookuphandler
+	e.preventDefault();
+});
+
+function closePopup() {
+	$("#dateSignup").trigger('close');
+	$("#dateSignup").hider();
+}
+
+function turnOnOrientation(type) {
+	switch (type) {
+		case "bi":
+			$("#bi").prop('checked', true);
+			break;
+		case "gay":
+			$("#gay").prop('checked', true);
+			break;
+		case "straight":
+			$("#straight").prop('checked', true);
+			break;
+	}
 }

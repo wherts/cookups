@@ -13,6 +13,7 @@ import spark.Route;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
+import edu.brown.cs.cookups.dating.Suitor;
 import edu.brown.cs.cookups.food.Ingredient;
 import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.PersonManager;
@@ -55,12 +56,31 @@ public class ProfileDataHandler implements Route {
         e.printStackTrace();
       }
     }
-    Map<String, Object> variables =
-        new ImmutableMap.Builder<String, Object>()
-            .put("fridge", fridgeIngredients)
-            .put("pantry", pantryIngredients)
-            .put("favCuisines", people.getPersonCuisines(person.id()))
-            .put("personIngredients", ingredientNames).build();
+    Suitor suitor = people.getSuitor(person.id());
+    Map<String, Object> variables;
+    if (suitor != null) {
+      variables =
+          new ImmutableMap.Builder<String, Object>()
+          .put("fridge", fridgeIngredients)
+          .put("pantry", pantryIngredients)
+          .put("gay", suitor.isGay())
+          .put("bi", suitor.isBi())
+          .put("queer", suitor.isQueer())
+          .put("gender", suitor.getGender())
+          .put("platonic", suitor.isPlatonic())
+          .put("favCuisines", people.getPersonCuisines(person.id()))
+          .put("personIngredients", ingredientNames).build();
+    } else {
+      variables =
+          new ImmutableMap.Builder<String, Object>()
+          .put("fridge", fridgeIngredients)
+          .put("queer", true)
+          .put("gender", 50)
+          .put("platonic", false)          
+          .put("pantry", pantryIngredients)
+          .put("favCuisines", people.getPersonCuisines(person.id()))
+          .put("personIngredients", ingredientNames).build();
+    }
     return GSON.toJson(variables);
   }
 }
