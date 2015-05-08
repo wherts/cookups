@@ -102,7 +102,6 @@ function submitCookFriends() {
 			var longitude = latLng.lng();
     		location = latitude + "," + longitude;
     	}
-    	console.log("location " + location);
     	
 		var params = {
 			name: $('#friends-form input[name=name]').val(),

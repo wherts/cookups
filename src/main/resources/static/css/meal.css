@@ -273,3 +273,8 @@ td a {
 	border: 1px dotted #111;
    vertical-align:middle;
 }
+
+#map-container {
+	height: 200px;
+	width: 200px;
+}

@@ -13,6 +13,7 @@ import edu.brown.cs.cookups.PercentageRanker;
 import edu.brown.cs.cookups.ShoppingPriceRanker;
 import edu.brown.cs.cookups.TotalPriceRanker;
 import edu.brown.cs.cookups.person.Person;
+import edu.brown.cs.cookups.schedule.LatLong;
 import edu.brown.cs.cookups.schedule.Schedule;
 
 /** This class represents Cookups Meal. Each meal has a host, a list of guests, a
@@ -80,10 +81,20 @@ public class Meal {
     return schedule.changeDate(lD);
   }
 
+  /** Accessor for schedule object.
+   * @return schedule
+   */
   public Schedule schedule() {
     return this.schedule;
   }
 
+  /**
+   * Location accessor
+   */
+  public LatLong location() {
+    return schedule.location();
+  }
+  
   /** Setter for time of meal.
    * @param lT new time.
    * @return old time */

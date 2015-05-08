@@ -3,6 +3,7 @@ var priceHigh;
 var percentLow;
 var percentHigh;
 var mealPath;
+var map;
 
 $(document).ready(function() {
 		mealPath = window.location.pathname;
@@ -38,7 +39,26 @@ $(document).ready(function() {
 		percentHigh = $( "#percentSlider" ).slider( "values", 1 );
 		$( "#percentAmount" ).val(percentLow + "% - " + percentHigh + "%");
 		reloadInRange();
+		if ($('#map-container').length) {
+			initMap();
+		}
 	}); //ends ready
+
+function initMap() {
+  var mapOptions = {
+    zoom: 14
+  };
+  map = new google.maps.Map(document.getElementById('map-container'), mapOptions);
+  var latlng = document.getElementById('latlng').value.split(",");
+  console.log("point: " + latlng[0] + "," + latlng[1]);
+  var point = new google.maps.LatLng(latlng[0], latlng[1]);
+  map.setCenter(point);
+  var mealLocation = new google.maps.Marker({
+		position: point,
+		clickable: false,
+		map: map,
+  });
+}
 
 function reloadInRange() {
 	var recipes = $(".allRecipes table td");

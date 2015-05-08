@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/cookup.css">
      <script src="js/jquery-2.1.1.js"></script>
 	<script src="js/jquery.tokenize.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArVp3KDIUpuzIfG_eDzQ4biYu29k15Cv8"></script>
     <script src="js/cookup.js"></script>
     <script src="js/main.js"></script>
   </head>

@@ -24,6 +24,7 @@ import edu.brown.cs.cookups.food.Recipe;
 import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.person.PersonManager;
 import edu.brown.cs.cookups.person.User;
+import edu.brown.cs.cookups.schedule.LatLong;
 import edu.brown.cs.cookups.schedule.Schedule;
 
 public class MakeMealHandler implements Route {
@@ -50,7 +51,6 @@ public class MakeMealHandler implements Route {
     String timeStart = qm.value("timeStart"); // start time
     String timeEnd = qm.value("timeEnd"); // not required
     String location = qm.value("location");
-    System.out.println(location);
     String chefs = qm.value("chefs");
 
     String start = date + " " + timeStart;
@@ -69,7 +69,17 @@ public class MakeMealHandler implements Route {
                                        dateTimeEnd.toLocalTime());
       }
     }
+    
     Schedule sched = new Schedule(dateTimeStart, null);
+    
+    if (location != "") {
+      String[] locArray = location.split(",");
+      Double lat = Double.parseDouble(locArray[0]);
+      Double lng = Double.parseDouble(locArray[1]);
+      LatLong loc = new LatLong(lat, lng);
+      sched.changeLocation(loc);
+    }
+    
     Person host = people.getPersonById(id);
     Meal newMeal = new Meal((User) host, sched);
 

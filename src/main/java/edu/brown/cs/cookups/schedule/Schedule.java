@@ -131,6 +131,9 @@ public class Schedule {
   /** Accessor for location.
    * @return location */
   public LatLong location() {
+    if (location == null) {
+      return null;
+    }
     return new LatLong(location.getLat(), location.getLong());
   }
 
