@@ -64,8 +64,8 @@
            <#if editable == true>
                 <br>
               <div id="btnContainer">
-               <input id="dateButton" class="btn" onclick="showPopup()" type="submit" value="Update Dating Preferences">
-               <input id="updateButton" class="btn" type="submit" value="Update Kitchen">
+               <input id="dateButton" class="btn" onclick="showPopup()" type="submit" value="Change Dating Preferences">
+               <input id="updateButton" class="btn" onclick="updateKitchen()" type="submit" value="Update Kitchen">
               </div>
                <div id="foodler-container"></div>
            </#if>
@@ -85,7 +85,7 @@
       <br><br>
       <div id="romantic-opts">
         Gender<br>
-        Male <input type="range" id="slider" onchange="sliderChange();" name="gender" value="${wrapper.gender()}"> Female
+        Male <input type="range" id="slider" name="gender" value="${wrapper.gender()}"> Female
         <br><br>
         Orientation (queer is not checking a box)<br>
         <input id="gay" type="radio" name="orientation" value="homosexual">Homosexual

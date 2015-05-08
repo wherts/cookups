@@ -357,7 +357,6 @@ function generateCuisines(favCuisines) {
 }
 
 function showPopup() {
-	console.log("F");
 	$("#dateSignup").show();
 	$("#dateSignup").lightbox_me({
 		centered: true
@@ -365,9 +364,29 @@ function showPopup() {
 	//pull values and cacheSuitor using cookuphandler
 }
 
-$("#updateButton").click(function() {
+function updateKitchen() {
+	console.log("j");
+	//send personIngredients
+	var favoriteSpans = $("#about .Token span");
+	var favCuisines = "";
+	for (var i=1; i <= favoriteSpans.length; i++) {
+		favCuisines += $("#about .Token:nth-child(" + i+ ") span").html();
+		favCuisines += ","; //for splitting on backend
+	}
+		var postParams = {
+		personIngs : JSON.stringify(personIngredients),
+		favorites : favCuisines,
+		image : image
+	};
+	var image = uploadPhoto(postParams);
+	//console.log("IMAAAAAGE: "+image)
+	var cuisines;
+	console.log(postParams);
+	var addr = "/updateProfile/" + getCurrentID();
 
-});
+	$.post(addr, postParams);
+	alert("Profile Updated! Thanks for submitting new information.");
+}
 
 function closePopup() {
 	$("#dateSignup").trigger('close');
@@ -386,4 +405,18 @@ function turnOnOrientation(type) {
 			$("#straight").prop('checked', true);
 			break;
 	}
+}
+
+function submitCookup() {
+	var orientation = $("#dateSignup input:radio[name='orientation']:checked").val();
+	if (orientation == null) {
+		orientation = "queer";
+	}
+	var params = {
+		romantic: $("#dateSignup input:radio[name='type']:checked").val() == "romantic",
+		gender: $("#dateSignup input[name='gender']").val(),
+		orientation: orientation
+	}
+	$.post("/cookup", params);
+	closePopup();
 }
