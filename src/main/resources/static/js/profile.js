@@ -5,11 +5,15 @@ var ingredients;
 var favCuisines;
 var personIngredients;
 
-$(document).ready(createProfile());
+$(document).ready(function () {
+	createProfile();
+	$("input:radio[name='type']").on('change', function(){
+	    $('#romantic-opts').toggle();
+	});
+});
 
 function createProfile() {
 	var addr = "/profileData/" + getCurrentID();
-	$("#dateSignup").hide();
 	$.get(addr, function(JSONresponse) {
 		var response = JSON.parse(JSONresponse);
 		fridge = response.fridge;
@@ -90,6 +94,7 @@ function createProfile() {
 		});
 	});
 	$("#kitchen-link").attr("href", getCookie("id").split("@")[0]);
+	closePopup();
 }
 
 function getCookie(cname) {
@@ -351,17 +356,22 @@ function generateCuisines(favCuisines) {
 	return toReturn;
 }
 
-$("#dateButton").click(function(e) {
+function showPopup() {
+	console.log("F");
+	$("#dateSignup").show();
 	$("#dateSignup").lightbox_me({
 		centered: true
 	});
 	//pull values and cacheSuitor using cookuphandler
-	e.preventDefault();
+}
+
+$("#updateButton").click(function() {
+
 });
 
 function closePopup() {
 	$("#dateSignup").trigger('close');
-	$("#dateSignup").hider();
+	$("#dateSignup").hide();
 }
 
 function turnOnOrientation(type) {

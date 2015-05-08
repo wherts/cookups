@@ -9,6 +9,11 @@
     <link rel="stylesheet" type="text/css" href="../css/jquery.tokenize.css" />
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/profile.css">
+    <script src="../js/jquery-2.1.1.js"></script>
+    <script src="../js/jquery.tokenize.js"></script>
+    <script src="../js/profile.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/jquery.lightbox_me.js"></script>
   </head>
   <body>
   <#include "/header.ftl">  
@@ -59,7 +64,7 @@
            <#if editable == true>
                 <br>
               <div id="btnContainer">
-               <input id="dateButton" class="btn" type="submit" value="Update Dating Preferences">
+               <input id="dateButton" class="btn" onclick="showPopup()" type="submit" value="Update Dating Preferences">
                <input id="updateButton" class="btn" type="submit" value="Update Kitchen">
               </div>
                <div id="foodler-container"></div>
@@ -68,14 +73,19 @@
       </div>
     </div>
 
-    <div id="dateSignup">
+    <div id="dateSignup" style="display:none">
       Romantic?<br>
-      <input type="radio" name="type" value="romantic" checked>Yes
-      <input type="radio" name="type" style="margin-left:20px;" value="platonic" checked="${platonic}">No
+      <#if wrapper.platonic() == false>
+        <input type="radio" name="type" value="romantic" checked>Yes
+        <input type="radio" name="type" style="margin-left:20px;" value="platonic">No
+      <#else>
+        <input type="radio" name="type" value="romantic">Yes
+        <input type="radio" name="type" style="margin-left:20px;" value="platonic" checked>No
+      </#if>
       <br><br>
       <div id="romantic-opts">
         Gender<br>
-        Male <input type="range" id="slider" onchange="sliderChange();" name="gender" value="${gender}"> Female
+        Male <input type="range" id="slider" onchange="sliderChange();" name="gender" value="${wrapper.gender()}"> Female
         <br><br>
         Orientation (queer is not checking a box)<br>
         <input id="gay" type="radio" name="orientation" value="homosexual">Homosexual
@@ -83,26 +93,21 @@
         <input id="bi" type="radio" name="orientation" style="margin-left:20px;" value="bisexual">Bisexual
         <br>
         <script type="text/javascript">
-          <#if queer == false>
-            <#if bi == true>
+          <#if wrapper.queer() == false>
+            <#if wrapper.bi() == true>
               turnOnOrientation("bi");
-            <#elseif gay == true>
+            <#elseif wrapper.gay() == true>
               turnOnOrientation("gay");
             <#else>
               turnOnOrientation("straight");
             </#if>
           </#if>
         </script>
-        <div id="btn_container">
-          <input id="cancel" onClick="closePopup()" class="btn" type="submit" value="Cancel">
-          <input id="updateDate" onClick="submitCookup()" class="btn" type="submit" value="Update">
-        </div>
     </div>    
+    <div id="btn_container">
+      <input id="cancel" onClick="closePopup()" class="btn" type="submit" value="Cancel">
+      <input id="updateDate" onClick="submitCookup()" class="btn" type="submit" value="Update">
+    </div>
 
-    <script src="../js/jquery-2.1.1.js"></script>
-    <script src="../js/jquery.tokenize.js"></script>
-    <script src="../js/profile.js"></script>
-    <script src="../js/main.js"></script>
-    <script src="../js/jquery.lightbox_me.js"></script>
   </body>
 </html>
