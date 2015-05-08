@@ -39,11 +39,11 @@ input[type="time"].focus {
   box-shadow: inset 1px 1px 2px 0 #c9c9c9;
 }
 
-.form-box {
-	width: 500px;
-	margin: 0 auto;
-}
-
 .form-entry {
 	padding-bottom: 20px;
+	font-family: 'abeezeeregular', sans-serif;
+}
+
+#friends-form {
+	padding: 25px 0;
 }

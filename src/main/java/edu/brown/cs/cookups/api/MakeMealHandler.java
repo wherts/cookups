@@ -49,10 +49,10 @@ public class MakeMealHandler implements Route {
     String date = qm.value("date"); // date of meal
     String timeStart = qm.value("timeStart"); // start time
     String timeEnd = qm.value("timeEnd"); // not required
-    System.out.printf("%s%n", timeEnd);
+    String location = qm.value("location");
+    System.out.println(location);
     String chefs = qm.value("chefs");
-    System.out.println(date + " " + timeStart + " " + name
-        + " " + chefs);
+
     String start = date + " " + timeStart;
 
     LocalDateTime dateTimeStart = LocalDateTime.parse(start,
@@ -72,10 +72,6 @@ public class MakeMealHandler implements Route {
     Schedule sched = new Schedule(dateTimeStart, null);
     Person host = people.getPersonById(id);
     Meal newMeal = new Meal((User) host, sched);
-
-    if (newMeal == null) {
-      System.err.println("ERROR: Could create not a meal");
-    }
 
     if (newMeal != null && dateTimeEnd != null) { // if endtime scheduled
       newMeal.setEnd(dateTimeEnd);
@@ -127,7 +123,6 @@ public class MakeMealHandler implements Route {
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
-    System.out.printf("Link: %s%n", mealLink);
     return GSON.toJson(mealLink);
   }
 
