@@ -16,9 +16,11 @@ import edu.brown.cs.cookups.person.Person;
 import edu.brown.cs.cookups.schedule.LatLong;
 import edu.brown.cs.cookups.schedule.Schedule;
 
-/** This class represents Cookups Meal. Each meal has a host, a list of guests, a
+/**
+ * This class represents Cookups Meal. Each meal has a host, a list of guests, a
  * date, and a recipe to make
- * @author wh7 */
+ * @author wh7
+ */
 public class Meal {
   private String id;
   private Person host;
@@ -27,8 +29,10 @@ public class Meal {
   private List<Recipe> recipes;
   private String name;
 
-  /** Constructor for a meal.
-   * @param Person The host of the meal */
+  /**
+   * Constructor for a meal.
+   * @param Person The host of the meal
+   */
   public Meal(Person Person, Schedule s) {
 
     assert (Person != null && s != null);
@@ -38,8 +42,10 @@ public class Meal {
     this.recipes = new ArrayList<Recipe>();
   }
 
-  /** Accessor for meal name.
-   * @return meal name */
+  /**
+   * Accessor for meal name.
+   * @return meal name
+   */
   public String name() {
     return name;
   }
@@ -49,39 +55,48 @@ public class Meal {
     return url;
   }
 
-  /** Setter for meal name.
+  /**
+   * Setter for meal name.
    * @param n name of meal
-   * @return previous name */
+   * @return previous name
+   */
   public String setName(String n) {
     String oldName = name;
     name = n;
     return oldName;
   }
 
-  /** Accessor for date of meal.
-   * @return localdate */
+  /**
+   * Accessor for date of meal.
+   * @return localdate
+   */
   public LocalDate date() {
     LocalDate d = schedule.date();
     return LocalDate.of(d.getYear(),
-        d.getMonthValue(),
-        d.getDayOfMonth());
+                        d.getMonthValue(),
+                        d.getDayOfMonth());
   }
 
-  /** Accessor for time of meal.
-   * @return localtime */
+  /**
+   * Accessor for time of meal.
+   * @return localtime
+   */
   public LocalTime time() {
     LocalTime t = schedule.time();
     return LocalTime.of(t.getHour(), t.getMinute());
   }
 
-  /** Setter for date of meal.
+  /**
+   * Setter for date of meal.
    * @param lD new date.
-   * @return old date */
+   * @return old date
+   */
   public LocalDate setDate(LocalDate lD) {
     return schedule.changeDate(lD);
   }
 
-  /** Accessor for schedule object.
+  /**
+   * Accessor for schedule object.
    * @return schedule
    */
   public Schedule schedule() {
@@ -94,34 +109,44 @@ public class Meal {
   public LatLong location() {
     return schedule.location();
   }
-  
-  /** Setter for time of meal.
+
+  /**
+   * Setter for time of meal.
    * @param lT new time.
-   * @return old time */
+   * @return old time
+   */
   public LocalTime setTime(LocalTime lT) {
     return schedule.changeTime(lT);
   }
 
-  /** Accessor for end date.
-   * @return null if no end set */
+  /**
+   * Accessor for end date.
+   * @return null if no end set
+   */
   public LocalDate endDate() {
     return schedule.endDate();
   }
 
-  /** Accessor for end time.
-   * @return null if no end set */
+  /**
+   * Accessor for end time.
+   * @return null if no end set
+   */
   public LocalTime endTime() {
     return schedule.endTime();
   }
 
-  /** Setter for end date and time.
-   * @param lDT ending datetime object */
+  /**
+   * Setter for end date and time.
+   * @param lDT ending datetime object
+   */
   public void setEnd(LocalDateTime lDT) {
     schedule.setEnd(lDT);
   }
 
-  /** Accessor for guest list of a Meal.
-   * @return list of Person attending */
+  /**
+   * Accessor for guest list of a Meal.
+   * @return list of Person attending
+   */
   public List<Person> attending() {
     List<Person> copy = new ArrayList<>();
     for (Person p : attending) {
@@ -131,37 +156,55 @@ public class Meal {
     return copy;
   }
 
-  /** Method to add a guest to the Meal.
-   * @param p new Person coming to Meal */
+  /**
+   * Method to add a guest to the Meal.
+   * @param p new Person coming to Meal
+   */
   public void addAttending(Person a) {
     assert (a != null);
     attending.add(a);
   }
 
-  /** Accessor for a Meal's host.
-   * @return Person object */
+  /**
+   * Accessor for a Meal's host.
+   * @return Person object
+   */
   public Person host() {
 
     return host;
   }
 
-  /** Setter for a Meal's host.
+  /**
+   * Setter for a Meal's host.
    * @param h new host of meal
-   * @return old host */
+   * @return old host
+   */
   public Person setHost(Person h) {
     Person ret = this.host;
     this.host = h;
     return ret;
   }
 
-  /** Add a recipe to a Meal.
-   * @param r new recipe */
+  /**
+   * Add a recipe to a Meal.
+   * @param r new recipe
+   */
   public void addRecipe(Recipe r) {
     this.recipes.add(r);
   }
 
-  /** Accessor for a Meal's recipes.
-   * @return list of Recipes */
+  /**
+   * Clears the recipe list.
+   * 
+   */
+  public void clearRecipes() {
+    this.recipes.clear();
+  }
+
+  /**
+   * Accessor for a Meal's recipes.
+   * @return list of Recipes
+   */
 
   public List<Recipe> recipes() {
     ArrayList<Recipe> ret = new ArrayList<>();
@@ -174,22 +217,22 @@ public class Meal {
   public List<Recipe> sortRecipes(String sortType) {
     Comparator<Recipe> comp = null;
     switch (sortType) { // have to play with reversed()
-      case "fancy-des":
-        comp = new TotalPriceRanker().reversed();
-        break;
-      case "fancy-asc":
-        comp = new TotalPriceRanker();
-        break;
-      case "price-des":
-        comp = new ShoppingPriceRanker().reversed();
+    case "fancy-des":
+      comp = new TotalPriceRanker().reversed();
+      break;
+    case "fancy-asc":
+      comp = new TotalPriceRanker();
+      break;
+    case "price-des":
+      comp = new ShoppingPriceRanker().reversed();
 
-        break;
-      case "price-asc":
-        comp = new ShoppingPriceRanker();
-        break;
-      case "fewest-missing":
-      default:
-        comp = new PercentageRanker().reversed();
+      break;
+    case "price-asc":
+      comp = new ShoppingPriceRanker();
+      break;
+    case "fewest-missing":
+    default:
+      comp = new PercentageRanker().reversed();
     }
     ArrayList<Recipe> ret = new ArrayList<>();
     for (Recipe r : recipes) {
@@ -207,8 +250,10 @@ public class Meal {
     return this.id;
   }
 
-  /** Method for hashing meal object
-   * @return int for hasing */
+  /**
+   * Method for hashing meal object
+   * @return int for hasing
+   */
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -224,8 +269,10 @@ public class Meal {
     return result;
   }
 
-  /** Accessor for object's string.
-   * @return string */
+  /**
+   * Accessor for object's string.
+   * @return string
+   */
   @Override
   public String toString() {
 
@@ -238,8 +285,10 @@ public class Meal {
 
   }
 
-  /** Equality method for an object.
-   * @return true of Meal has same host, recipe, guest list, and date, and time */
+  /**
+   * Equality method for an object.
+   * @return true of Meal has same host, recipe, guest list, and date, and time
+   */
   @Override
   public boolean equals(Object o) {
     if (o == this) {

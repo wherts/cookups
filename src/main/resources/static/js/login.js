@@ -75,6 +75,7 @@ function checkLogin() {
 		uid:email,
 		password:password 
 	};
+	valid = true;
 	$.post("/authValidator", params, function(response) {
 		var responseObject = JSON.parse(response);
 		valid = responseObject.valid;
