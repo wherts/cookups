@@ -32,8 +32,8 @@ public class RecipeView implements TemplateViewRoute {
 
   @Override
   public ModelAndView handle(Request request, Response response) {
-    String idEncoded = request.params(":id");
-
+    String[] param = request.params(":id").split("%26");
+    String idEncoded = param[0];
     String userID = request.cookie("id");
     String profileLink = "/profile/" + userID.split("@")[0];
     Person p = people.getPersonById(userID);

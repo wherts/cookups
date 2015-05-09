@@ -157,6 +157,15 @@ public class Meal {
   }
 
   /**
+   * Size of Meal.
+   * @return number of Person attending
+   */
+  public int size() {
+    return attending.size() + 1;
+  }
+
+  
+  /**
    * Method to add a guest to the Meal.
    * @param p new Person coming to Meal
    */

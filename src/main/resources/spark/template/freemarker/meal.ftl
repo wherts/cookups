@@ -100,7 +100,7 @@
         
       	<#list meal.sortRecipes(sortType) as r>
       		<#assign link = "/assets/recipes/" + r.picPath()+".jpg">
-      		<td><a href="${r.url()}">
+      		<td><a href="${r.url()}%26${meal.size()}">
       			<div class='recipe-pic-container'><img class='recipe-pic' src='${link}'></div>
       			<p class='recipe-title'>${r.name()}</p><br>
 				<p class='stats'><img class='icon' src='/assets/recipes/fridgeicon.png'><b> ${(100 - r.percentNeed()*100)?round}% </b>recipe completed</p>
