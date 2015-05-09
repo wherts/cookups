@@ -81,3 +81,10 @@ td {
 	font-family: 'abeezeeregular', sans-serif;
 
 }
+
+#servings {
+	margin: 10px;
+	background: floralwhite;
+	width: 40px;
+	-webkit-writing-mode: horizontal-tb;
+}
