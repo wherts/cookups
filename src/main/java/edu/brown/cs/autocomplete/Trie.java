@@ -69,45 +69,29 @@ public class Trie {
     String prev = null;
 
     for (String s : words) {
-      Count c = unigram.get(s);
+      String sCopy = s;
+      Count c = unigram.get(sCopy.toLowerCase());
       if (c == null) {
-        unigram.put(s, new Count());
+        unigram.put(sCopy.toLowerCase(), new Count());
         size++;
-        add(s);
+        add(sCopy.toLowerCase(), s);
       } else {
         c.increment();
       }
-
-      if (prev != null) {
-        HashMap<String, Count> map = bigram.get(prev);
-        if (map == null) {
-          HashMap<String, Count> val = new HashMap<String, Count>();
-          val.put(s, new Count());
-          bigram.put(prev, val);
-        } else {
-          Count biC = map.get(s);
-          if (biC == null) {
-            map.put(s, new Count());
-          } else {
-            biC.increment();
-          }
-        }
-      }
-      prev = s;
     }
   }
 
   /** Iteratively adds a word to the Trie.
-   * @param word The word to add */
-  public void add(String word) {
+   * @param wordLC The word to add */
+  public void add(String wordLC, String word) {
     TrieNode curr = root;
-    for (int i = 0; i < word.length(); i++) {
-      TrieNode child = curr.getChild(word.charAt(i));
+    for (int i = 0; i < wordLC.length(); i++) {
+      TrieNode child = curr.getChild(wordLC.charAt(i));
       if (child == null) {
-        child = new TrieNode(word.charAt(i), false);
-        curr.addChild(word.charAt(i), child);
+        child = new TrieNode(wordLC.charAt(i), false);
+        curr.addChild(wordLC.charAt(i), child);
       }
-      if (i == word.length() - 1) {
+      if (i == wordLC.length() - 1) {
         child.endTrue();
         child.setWord(word);
       }

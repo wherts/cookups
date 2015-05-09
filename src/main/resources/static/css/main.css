@@ -90,16 +90,12 @@ html {
 	color: #FFF;
 }
 
-ul.search-results {
-	list-style: none;
-	height: auto;
+.subtitle {
+	font-family: 'gobold_thinregular', sans-serif;
+	font-size: 30px;
+	color: #FFF;
 }
 
-ul.search-results a{
-	color: #FFF;
-	font-family: 'abeezeeregular', sans-serif;
-	font-size: 20px;
-}
 
 .h-text {
 	font-family: 'gobold_thinregular', sans-serif;

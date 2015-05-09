@@ -58,6 +58,7 @@ public class URLHandler {
                                     .getNamesAndIDs();
     userIDs = userData.get(0);
     userNames = userData.get(1);
+    
     fridgeIngredients = db.ingredients()
                           .getAllIngredientNames("Fridge");
     pantryIngredients = db.ingredients()
@@ -67,12 +68,11 @@ public class URLHandler {
     recipeIDs = recipeData.get(0);
     recipeNames = recipeData.get(1);
 
-    SampleSuitors.createSuitors(people);
-
-    auth = new Authentication(this.db);
-
     recipeSearch = new Engine(new Trie(recipeNames));
     peopleSearch = new Engine(new Trie(userNames));
+    
+    SampleSuitors.createSuitors(people);
+    auth = new Authentication(this.db);
   }
 
   public void runSparkServer() {
@@ -93,6 +93,7 @@ public class URLHandler {
     Spark.before("/recipe/:id", new AuthFilter(auth));
     Spark.before("/meal/:id/:sortby", new AuthFilter(auth));
     Spark.before("/browse", new AuthFilter(auth));
+    Spark.before("/search", new AuthFilter(auth));
     Spark.before("/meals", new AuthFilter(auth));
     Spark.before("/signup", new SignupFilter(people));
 

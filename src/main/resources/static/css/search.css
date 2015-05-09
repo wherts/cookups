@@ -1,0 +1,27 @@
+#title {
+	background-image: url(../assets/search-background.jpg);
+	height: 250px;
+}
+
+#title-text {
+	line-height: 4;
+	font-size: 60px;
+	color: #FFFFFF;
+	text-shadow: 2px 2px #000;
+}
+
+.search-results {
+	list-style: none;
+	height: auto;
+	color: #FFF;
+	font-family: 'abeezeeregular', sans-serif;
+	font-size: 20px;
+}
+
+.search-results a{
+	list-style: none;
+	height: auto;
+	color: #FFF;
+	font-family: 'abeezeeregular', sans-serif;
+	font-size: 20px;
+}

@@ -42,7 +42,7 @@ public class SearchEngine implements TemplateViewRoute {
     String term = qm.value("term");
 
     // For all the recipes, find their ID to generate an encoded URL
-    List<String> recipeResults = recipes.generate(term);
+    List<String> recipeResults = recipes.generate(term.toLowerCase());
     Map<String, String> recipeMap = new LinkedHashMap<String, String>();
     for (String r : recipeResults) {
       String recipeID = db.recipes().getRecipeByName(r).id();
@@ -55,7 +55,7 @@ public class SearchEngine implements TemplateViewRoute {
 
     // Find all people names that start with the prefix, then find all people
     // objects
-    List<String> peopleAutcomplete = people.generate(term);
+    List<String> peopleAutcomplete = people.generate(term.toLowerCase());
     List<Person> peeps = new ArrayList<>();
     for (String p : peopleAutcomplete) {
       try {
